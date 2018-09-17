@@ -6,6 +6,7 @@
 package de.bws.entities;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,15 +23,18 @@ public class Benutzer implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    @Column(name = "BENUTZERNAME")
+    private String benutzername;
+    
+    @Column(name = "SALT")
+    private String salt;
+    
+    @Column(name = "PASSWORT")
+    private String passwort;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
+//*************************** Methoden ****************************
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -54,6 +58,58 @@ public class Benutzer implements Serializable {
     @Override
     public String toString() {
         return "de.bws.entities.Benutzer[ id=" + id + " ]";
+    }
+    
+    //******************** Getter- und Setter *********************
+    
+    public Long getId() {
+        return id;
+    }
+
+    private void setId(Long p_id) {
+        this.id = p_id;
+    }
+
+    /**
+     * @return the benutzername
+     */
+    public String getBenutzername() {
+        return benutzername;
+    }
+
+    /**
+     * @param p_benutzername the benutzername to set
+     */
+    public void setBenutzername(String p_benutzername) {
+        this.benutzername = p_benutzername;
+    }
+
+    /**
+     * @return the salt
+     */
+    public String getSalt() {
+        return salt;
+    }
+
+    /**
+     * @param p_salt the salt to set
+     */
+    private void setSalt(String p_salt) {
+        this.salt = p_salt;
+    }
+
+    /**
+     * @return the passwort
+     */
+    public String getPasswort() {
+        return passwort;
+    }
+
+    /**
+     * @param p_passwort the passwort to set
+     */
+    public void setPasswort(String p_passwort) {
+        this.passwort = p_passwort;
     }
     
 }
