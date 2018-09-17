@@ -1,0 +1,29 @@
+<ui:composition template="./template.xhtml"
+                        xmlns="http://www.w3.org/1999/xhtml"
+                        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                        xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+            <ui:define name="title">
+                <button id="top"/>
+            </ui:define>
+
+            <ui:define name="top">
+                <div class="input-group">
+                    <span class="input-group-label">$</span>
+                    <input class="input-group-field"/>
+                        <div class="input-group-button">
+                            <input type="submit" class="button" value="Submit"/>
+                        </div>
+                </div>
+            </ui:define>
+
+            <ui:define name="content">
+                content
+            </ui:define>
+
+            <ui:define name="bottom">
+                footer
+            </ui:define>
+
+        </ui:composition>
+
