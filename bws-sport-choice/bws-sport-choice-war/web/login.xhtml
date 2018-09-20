@@ -1,29 +1,52 @@
-<ui:composition template="./template.xhtml"
-                        xmlns="http://www.w3.org/1999/xhtml"
-                        xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-                        xmlns:h="http://xmlns.jcp.org/jsf/html">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./template.xhtml">
 
             <ui:define name="title">
-                <button id="top"/>
-            </ui:define>
-
-            <ui:define name="top">
-                <div class="input-group">
-                    <span class="input-group-label">$</span>
-                    <input class="input-group-field"/>
-                        <div class="input-group-button">
-                            <input type="submit" class="button" value="Submit"/>
-                        </div>
-                </div>
+                Login
             </ui:define>
 
             <ui:define name="content">
-                content
+                <h:form>
+                    <h2 style="text-align: center;">Willkommen auf der Login-Seite!</h2>
+
+                    <div class="row">
+                        <div class="small-12 columns small-centered">
+                            <div class="panel paper">
+                                <p> Informationstext</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <fieldset>
+                        <legend>Login</legend>
+                        <div class="input-group">
+                            <span class="input-group-label">E-Mail</span>
+                            <h:inputText id="email" class="input-group-field" />
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-label">Passwort</span>
+                            <h:inputSecret id="passwort" class="input-group-field" />
+                        </div>
+                        <div>
+                            <h:commandButton class="small button" id="login" value="Einloggen" action="login" type="submit"/>
+                        </div>
+                    </fieldset>
+                </h:form>
             </ui:define>
 
             <ui:define name="bottom">
-                footer
+                
             </ui:define>
 
         </ui:composition>
 
+    </body>
+</html>
