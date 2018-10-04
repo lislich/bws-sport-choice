@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">  
+
+    <body>
+
+        <ui:composition template="../template.xhtml">
+
+            <ui:define name="title">
+                Kurswahl
+            </ui:define>
+
+            <ui:define name="content">
+                <div class="row">
+                    <div class="small-12 columns small-centered">
+                        <fieldset>
+                            <legend>Kurswahl</legend>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th width="100">Kurs</th>
+                                        <th width="50">1. Wahl</th>
+                                        <th width="50">2. Wahl</th>
+                                        <th width="50">3. Wahl</th>
+                                        <th width="50">max. Teilnehmer</th>
+                                        <th width="50">Auslastung in %</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ui:repeat var="kurs" value="">
+
+                                        <tr>
+                                            <td>Titel</td>
+                                            <td>
+                                                <input type="radio" name="wahlEins" id="" ></input>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="wahlZwei" id="" ></input>
+                                            </td>
+                                            <td>
+                                                <input type="radio" name="wahlDrei" id="" ></input>
+                                            </td>
+                                            <td>50</td>
+                                            <td>80</td>
+                                        </tr>
+                                        
+                                    </ui:repeat>
+                                </tbody>
+                            </table>
+                            <h:commandButton class="small button" id="wahlSpeichern" type="submit" value="Wahl speichern" action="1" />
+                        </fieldset>
+                    </div>                    
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

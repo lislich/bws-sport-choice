@@ -1,3 +1,15 @@
+#togglebar{
+    visibility: hidden;
+}
+
+#hinweis{
+    margin-bottom: 15px !important;
+}
+
+.area{
+    margin-top: 15px !important;
+}
+
 .panel.paper {
     background-image: url(../imgs/linedpaper.png);
     background-position: 0 7px;

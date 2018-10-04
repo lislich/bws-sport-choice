@@ -56,15 +56,25 @@
                 </section>
             </nav>
             <div class="sticky sticky-nav hide-for-small hide-on-print">
-                <ul class="medium-block-grid-6 large-block-grid-8 text-center ul-nav" data-topbar="">                    
+                <ul id="togglebar" class="medium-block-grid-6 large-block-grid-8 text-center ul-nav" data-topbar="">                    
                     <li>
                         <a onClick="event.preventDefault();
                         window.print();" href="#">
                             <i class="fi-print"></i><span>Drucken</span>
                         </a>
                     </li>
+                    <li>
+                        <h:link outcome="kursAnlegen">
+                            <i class="fi-clipboard-notes"></i><span>Kurs anlegen</span>
+                        </h:link>                      
+                    </li>
+                    <li>
+                        <a onClick="" href="#">
+                            <i class="fi-clipboard-pencil"></i><span>Kurs bearbeiten</span>
+                        </a>
+                    </li>
                 </ul>
-                <i class="fi-eye ul-nav-toggle">Menu</i>
+                <i id="menu" class="fi-eye ul-nav-toggle" onclick="document.getElementById('togglebar').style.visibility = 'visible'">Menu</i>
             </div>
         </div>
 
