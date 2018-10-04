@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./securedTemplate.xhtml">
+
+            <ui:define name="title">
+                Kurse anschauen
+            </ui:define>
+
+            <ui:define name="content">
+                <div id="kurseLehrer" class="row">
+                    <div class="small-12 columns small-centered">
+                        <fieldset>
+                            <legend>Ihre Kurse</legend>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th width="100">Kurs</th>
+                                        <th width="250">Beschreibung</th>
+                                        <th width="50">Stufe</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ui:repeat var="kurs" value="">
+
+                                        <tr>
+                                            <td><h:link outcome="kursAnschauen">Titel</h:link></td>
+                                            <td>. . .</td>
+                                            <td>12</td>
+                                        </tr>
+                                    </ui:repeat>
+                                </tbody>
+                            </table>
+                        </fieldset>
+                    </div>                    
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

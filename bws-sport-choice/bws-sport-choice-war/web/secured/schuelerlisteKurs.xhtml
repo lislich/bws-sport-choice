@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <body>
+
+        <ui:composition template="./securedTemplate.xhtml">
+
+            <ui:define name="title">
+                Schüler im Kurs
+            </ui:define>
+
+            <ui:define name="content">
+                <div id="schuelerKurs" class="row">
+                    <div class="small-12 columns small-centered">
+                        <fieldset>
+                            <legend>Schülerliste</legend>
+                            <table>
+                                    <thead>
+                                        <tr>
+                                            <th width="100">Vorname</th>
+                                            <th width="100">Name</th>
+                                            <th width="50">Tutor</th>
+                                            <th width="50">Stufe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ui:repeat var="schueler" value="">
+
+                                            <tr>
+                                                <td>Max</td>
+                                                <td>Mustermann</td>
+                                                <td>Gg</td>
+                                                <td>12</td>
+                                            </tr>
+
+                                        </ui:repeat>
+                                    </tbody>
+                                </table>
+                        </fieldset>
+                    </div>                    
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,56 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./securedTemplate.xhtml">
+
+            <ui:define name="title">
+                Kurse zuweisen
+            </ui:define>
+
+            <ui:define name="content">
+
+                <div id="kursZuweisen" class="row">
+                    <h:form>
+                        <div class="small-12 columns small-centered">
+                            <fieldset>
+                                <legend>Kurszuweisung</legend>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th width="100">Vorname</th>
+                                            <th width="50">Name</th>
+                                            <th width="50">Tutor</th>
+                                            <th width="50">Kurs</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ui:repeat var="schueler" value="">
+
+                                            <tr>
+                                                <td>Max</td>
+                                                <td>Mustermann</td>
+                                                <td>Gg</td>
+                                                <td>
+                                                    <select name="kursZuweisen" id="" />
+                                                </td>
+                                            </tr>
+
+                                        </ui:repeat>
+                                    </tbody>
+                                </table>
+                                <h:commandButton class="small button" id="zuweisungSpeichern" type="submit" value="Speichern" action="1" />
+                            </fieldset>
+                        </div>
+                    </h:form>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./securedTemplate.xhtml">
+
+            <ui:define name="title">
+                Benutzer verwalten
+            </ui:define>
+
+            <ui:define name="content">
+                <div class="row">
+                    <div class="small-12 columns small-centered">
+                        <h:form>
+                            <fieldset>
+                                <legend>Benutzerverwaltung</legend>
+                                <div class="row collapse">
+                                    <div class="small-4 columns">
+                                        <span class="prefix">Rolle</span>
+                                    </div>
+                                    <div class="small-8 columns mobile-input">
+                                        <select id="rolle" class="input-group-field" />
+                                    </div> 
+                                </div>
+                                <div class="row collapse">
+                                    <div class="small-4 columns">
+                                        <span class="prefix">Stufe</span>
+                                    </div>
+                                    <div class="small-8 columns mobile-input">
+                                        <select id="stufe" class="input-group-field" />
+                                    </div> 
+                                </div>
+                                
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th width="100">Vorname</th>
+                                            <th width="100">Name</th>
+                                            <th width="100">Benutzername</th>
+                                            <th width="50">Kurs</th>
+                                            <th width="50">Tutor</th>
+                                            <th width="25">Stufe</th>
+                                            <th><input type="checkbox" id="auswahl" /></th>
+                                        </tr>
+                                    </thead>    
+                                    <tbody>
+                                        <ui:repeat var="person" value="">
+
+                                            <tr>
+                                                <td>Max</td>
+                                                <td>Mustermann</td>
+                                                <td>maxmust</td>
+                                                <td>UWF</td>
+                                                <td>Gg</td>
+                                                <td>12</td>
+                                                <td><input type="checkbox" id="" /></td>
+                                            </tr>
+                                        </ui:repeat>
+                                    </tbody>
+                                </table>
+                                <h:commandButton class="small button" value="Anlegen.." action="1" />
+                                <h:commandButton class="small button" value="Ändern.." action="2" />
+                                <h:commandButton class="small button" value="Löschen" action="3" />
+                                <h:commandButton class="small button" value="Hochstufen" action="4" />
+                                <h:commandButton class="small button" value="Abstufen" action="5" />
+                            </fieldset>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

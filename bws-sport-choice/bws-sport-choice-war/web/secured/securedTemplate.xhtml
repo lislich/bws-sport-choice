@@ -15,11 +15,13 @@
         <link href="../resources/css/app.css" rel="stylesheet" type="text/css" />
         <link href="../resources/css/foundation-icons.css" rel="stylesheet" type="text/css" />
         
-        <script src="../resources/js/vendor/jquery.js" />
-        <script sc="../resources/js/app.js" />
+        <script src="../resources/js/jquery-3.3.1.min.js" />
+        
         <script src="../resources/js/vendor/foundation.js" />
         <script src="../resources/js/vendor/foundation.min.js" />
         <script src="../resources/js/vendor/what-input.js" />
+        
+        <script src="../resources/js/app.js" />
         
         <title><ui:insert name="title">Facelets Template</ui:insert></title>
     </h:head>
@@ -32,7 +34,6 @@
                     <li class="name logo">
                         <h2>BWS Sport Choice</h2>
                     </li>
-                    <li class="toggle-topbar menu-icon "><a href=""><span>Menu</span></a></li>
                 </ul>
                 <section class="top-bar-section">
                     <ul class="right">
@@ -68,9 +69,44 @@
                         </h:link>                      
                     </li>
                     <li>
+                        <h:link outcome="kurslisteLehrer">
+                            <i class="fi-list-bullet"></i><span>Ihre Kurse</span>
+                        </h:link>                      
+                    </li>
+                    <li>
                         <a onClick="" href="#">
                             <i class="fi-clipboard-pencil"></i><span>Kurs bearbeiten</span>
                         </a>
+                    </li>
+                    <li>
+                        <h:link outcome="kursWechseln">
+                            <i class="fi-loop"></i><span>Kurs wechseln</span>
+                        </h:link>                      
+                    </li>
+                    <li>
+                        <h:link outcome="kurseAlle">
+                            <i class="fi-list-bullet"></i><span>Alle Kurse</span>
+                        </h:link>                      
+                    </li>
+                    <li>
+                        <h:link outcome="wahlzeitraum">
+                            <i class="fi-calendar"></i><span>Wahlzeitraum</span>
+                        </h:link>                      
+                    </li>
+                    <li>
+                        <h:link outcome="kursZuweisen">
+                            <i class="fi-clipboard-pencil"></i><span>Kurs zuweisen</span>
+                        </h:link>                      
+                    </li>
+                    <li>
+                        <h:link outcome="benutzerAnlegen">
+                            <i class="fi-torso"></i><span>Benutzer anlegen</span>
+                        </h:link>                      
+                    </li>
+                    <li>
+                        <h:link outcome="benutzerVerwalten">
+                            <i class="fi-wrench"></i><span>Benutzer verwalten</span>
+                        </h:link>                      
                     </li>
                 </ul>
                 <i id="menu" class="fi-eye ul-nav-toggle" onclick="document.getElementById('togglebar').style.visibility = 'visible'">Menu</i>

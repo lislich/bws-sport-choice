@@ -1,13 +1,9 @@
-#togglebar{
-    visibility: hidden;
-}
-
 #hinweis{
     margin-bottom: 15px !important;
 }
 
-.area{
-    margin-top: 15px !important;
+.hide{
+    visibility: hidden;
 }
 
 .panel.paper {
@@ -54,4 +50,6 @@
     font-family: "ClickerScript-Regular";
 }
 
-
+img{
+    background-image: url(../imgs/logo.svg);
+}

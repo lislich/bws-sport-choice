@@ -14,46 +14,60 @@
             </ui:define>
 
             <ui:define name="content">
-                <div class="row">
+                <h1></h1>
+                <div id="keineWahl" class="row">
                     <div class="small-12 columns small-centered">
-                        <fieldset>
-                            <legend>Kurswahl</legend>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th width="100">Kurs</th>
-                                        <th width="50">1. Wahl</th>
-                                        <th width="50">2. Wahl</th>
-                                        <th width="50">3. Wahl</th>
-                                        <th width="50">max. Teilnehmer</th>
-                                        <th width="50">Auslastung in %</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <ui:repeat var="kurs" value="">
-
-                                        <tr>
-                                            <td>Titel</td>
-                                            <td>
-                                                <input type="radio" name="wahlEins" id="" ></input>
-                                            </td>
-                                            <td>
-                                                <input type="radio" name="wahlZwei" id="" ></input>
-                                            </td>
-                                            <td>
-                                                <input type="radio" name="wahlDrei" id="" ></input>
-                                            </td>
-                                            <td>50</td>
-                                            <td>80</td>
-                                        </tr>
-                                        
-                                    </ui:repeat>
-                                </tbody>
-                            </table>
-                            <h:commandButton class="small button" id="wahlSpeichern" type="submit" value="Wahl speichern" action="1" />
-                        </fieldset>
-                    </div>                    
+                        <div class="panel paper">
+                            <p> Du kannst zur Zeit keine Wahl abgeben.</p>
+                            <p> Die Einteilung hat noch nicht stattgefunden.</p>
+                            <p> Du bist in folgendem Kurs: </p>
+                        </div>
+                    </div>
                 </div>
+                <div id="wahlAbgeben" class="row">
+                    <h:form>
+                        <div class="small-12 columns small-centered">
+                            <fieldset>
+                                <legend>Kurswahl</legend>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th width="100">Kurs</th>
+                                            <th width="50">1. Wahl</th>
+                                            <th width="50">2. Wahl</th>
+                                            <th width="50">3. Wahl</th>
+                                            <th width="50">max. Teilnehmer</th>
+                                            <th width="50">Auslastung in %</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <ui:repeat var="kurs" value="">
+
+                                            <tr>
+                                                <td>Titel</td>
+                                                <td>
+                                                    <input type="radio" name="wahlEins" id="UWFEins" ></input>
+                                                </td>
+                                                <td>
+                                                    <input type="radio" name="wahlZwei" id="UWFZwei" ></input>
+                                                </td>
+                                                <td>
+                                                    <input type="radio" name="wahlDrei" id="UWFDrei" ></input>
+                                                </td>
+                                                <td>50</td>
+                                                <td>80</td>
+                                            </tr>
+
+                                        </ui:repeat>
+                                    </tbody>
+                                </table>
+                                <h:commandButton class="small button" id="wahlSpeichern" type="submit" value="Wahl speichern" action="1" />
+                            </fieldset>
+                        </div>
+                        </h:form>
+                </div>
+                
+
             </ui:define>
 
         </ui:composition>

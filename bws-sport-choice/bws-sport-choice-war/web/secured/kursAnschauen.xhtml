@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./securedTemplate.xhtml">
+
+            <ui:define name="title">
+                Kurs anschauen
+            </ui:define>
+
+            <ui:define name="content">
+                <div id="kursAnschauen" class="row">
+                    <div class="small-12 columns small-centered">
+                        <fieldset>
+                            <legend>Kurstitel</legend>
+                            <p>Max. Teilnehmer: </p>
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th width="10">%</th>
+                                        <th width="90">Unterrichtsthemen</th>
+                                        <th width="100">Schwerpunkte</th>
+                                        <th width="100">Bewertung</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>50</td>
+                                        <td>Thema 1</td>
+                                        <td>. . .</td>
+                                        <td>. . .</td>
+                                    </tr>
+                                    <tr>
+                                        <td>50</td>
+                                        <td>Thema 2</td>
+                                        <td>. . .</td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>Hinweise:</td>
+                                        <td>. . .</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h:link outcome="schuelerlisteKurs">Hier einsehen welche Schüler eingewählt wurden.</h:link>
+                        </fieldset>
+                    </div>                    
+                </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

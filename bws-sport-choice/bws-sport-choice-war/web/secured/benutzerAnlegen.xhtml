@@ -7,9 +7,9 @@
     <body>
 
         <ui:composition template="./securedTemplate.xhtml">
-       
+
             <ui:define name="title">
-                Kurs anlegen
+                Benutzer anlegen
             </ui:define>
 
             <ui:define name="content">
@@ -17,71 +17,62 @@
                     <div class="small-12 columns small-centered">
                         <h:form>
                             <fieldset>
-                                <legend>Kurs anlegen</legend>
+                                <legend>Benutzer anlegen</legend>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
-                                        <span class="prefix">Titel</span>
+                                        <span class="prefix">Rolle</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="titel" class="input-group-field" />
+                                        <select id="rolle" class="input-group-field" />
                                     </div>
                                 </div>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
-                                        <span class="prefix">Kürzel</span>
+                                        <span class="prefix">Name</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="kuerzel" class="input-group-field" />
+                                        <h:inputText id="name" class="input-group-field" />
                                     </div>
                                 </div>                                
                                 <div class="row collapse">
                                     <div class="small-4 columns">
+                                        <span class="prefix">Vorname</span>
+                                    </div>
+                                    <div class="small-8 columns mobile-input">
+                                        <h:inputText id="vorname" class="input-group-field" />
+                                    </div>
+                                </div>
+                                <div class="row collapse area">
+                                    <div class="small-4 columns">
+                                        <span class="prefix">Tutor</span>
+                                    </div>
+                                    <div class="small-8 columns mobile-input">
+                                        <h:inputText id="tutor" class="input-group-field" />
+                                    </div>
+                                </div>
+                                <div class="row collapse area">
+                                    <div class="small-4 columns">
                                         <span class="prefix">Stufe</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <select id="stufe" class="input-group-field" />
-                                    </div>
-                                </div>
-                                <div class="row collapse area">
-                                    <div class="small-4 columns">
-                                        <span class="prefix">Bewertung</span>
-                                    </div>
-                                    <div class="small-8 columns mobile-input">
-                                        <textarea id="bewertung" class="input-group-field" />
-                                    </div>
-                                </div>
-                                <div class="row collapse area">
-                                    <div class="small-4 columns">
-                                        <span class="prefix">Hinweis</span>
-                                    </div>
-                                    <div class="small-8 columns mobile-input">
-                                        <textarea id="hinweis" class="input-group-field"/>
+                                        <select id="stufe" class="input-group-field"/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
-                                        <span class="prefix">Teilnehmerzahl</span>
+                                        <span class="prefix">Benutzername</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <input type="number" min="1" max="50" value="1" step="1" id="kuerzel" class="input-group-field" />
+                                        <h:inputText id="benutzername" class="input-group-field" />
                                     </div>
                                 </div>
-                                <div class="row collapse">
-                                    <div class="small-4 columns">
-                                        <span class="prefix">Themengleich mit</span>
-                                    </div>
-                                    <div class="small-8 columns mobile-input">
-                                        <select id="themengleich" class="input-group-field" />
-                                    </div>
-                                </div>
-
                                 <div>
-                                    <h:commandButton class="small button" id="kursAnlegen" value="Anlegen" action="anlegen" type="submit"/>
+                                    <h:commandButton class="small button" id="benutzerAnlegen" value="Anlegen" action="anlegen" type="submit"/>
                                 </div>
                             </fieldset>
                         </h:form>
                     </div>
-                    </div>
+                </div>
             </ui:define>
 
         </ui:composition>
