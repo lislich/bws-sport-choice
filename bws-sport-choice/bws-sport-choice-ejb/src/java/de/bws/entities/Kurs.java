@@ -66,7 +66,7 @@ public class Kurs implements Serializable {
     private List<Thema> thema = new ArrayList<>();    
     
     @OneToOne(fetch = FetchType.LAZY)
-    @Column(name = "THEMENGLEICH_ID", nullable = true)
+    @JoinColumn(name = "THEMENGLEICH_ID", nullable = true)
     private Kurs themengleich;
     
     @ManyToOne(fetch = FetchType.LAZY)
