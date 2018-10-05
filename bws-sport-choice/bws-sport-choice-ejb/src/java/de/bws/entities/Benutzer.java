@@ -18,7 +18,6 @@ import javax.persistence.PersistenceUnit;
  * @author Lisa
  */
 @Entity
-@PersistenceUnit(unitName = "bws-sport-choice-ejbPU")
 public class Benutzer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -96,7 +95,7 @@ public class Benutzer implements Serializable {
     /**
      * @param p_salt the salt to set
      */
-    private void setSalt(String p_salt) {
+    public void setSalt(String p_salt) {
         this.salt = p_salt;
     }
 

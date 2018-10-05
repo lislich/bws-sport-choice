@@ -11,14 +11,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PersistenceUnit;
 
 /**
  *
  * @author joshua
  */
 @Entity
-@PersistenceUnit(unitName = "bws-sport-choice-ejbPU")
 public class Thema implements Serializable {
 
     private static final long serialVersionUID = 1L;

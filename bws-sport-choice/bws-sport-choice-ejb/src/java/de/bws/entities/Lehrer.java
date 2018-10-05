@@ -8,14 +8,12 @@ package de.bws.entities;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.PersistenceUnit;
 
 /**
  *
  * @author joshua
  */
 @Entity
-@PersistenceUnit(unitName = "bws-sport-choice-ejbPU")
 public class Lehrer extends Person implements Serializable {
 
     private static final long serialVersionUID = 1L;

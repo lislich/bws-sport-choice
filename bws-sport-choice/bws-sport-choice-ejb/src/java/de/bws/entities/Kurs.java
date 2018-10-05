@@ -23,9 +23,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceUnit;
-import javax.persistence.Query;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -34,7 +31,6 @@ import javax.persistence.TemporalType;
  * @author joshua
  */
 @Entity
-@PersistenceUnit(unitName = "bws-sport-choice-ejbPU")
 public class Kurs implements Serializable {
 
     private EntityManager em;
