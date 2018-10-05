@@ -10,12 +10,14 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.PersistenceUnit;
 
 /**
  *
  * @author joshua
  */
 @Entity
+@PersistenceUnit(unitName = "bws-sport-choice-ejbPU")
 public class Schueler extends Person implements Serializable{
 
     private static final long serialVersionUID = 1L;
