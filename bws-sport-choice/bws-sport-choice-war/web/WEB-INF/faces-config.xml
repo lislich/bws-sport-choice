@@ -131,6 +131,10 @@
         <from-outcome>kurseAlle</from-outcome>
         <to-view-id>secured/kurseAlle.xhtml</to-view-id>
       </navigation-case>
+      <navigation-case>
+        <from-outcome>kursBearbeiten</from-outcome>
+        <to-view-id>secured/kursBearbeiten.xhtml</to-view-id>
+      </navigation-case>
     </navigation-rule>
     
     
@@ -428,4 +432,46 @@
       </navigation-case> 
     </navigation-rule>
           
+     <!-- ######################### Kurs bearbeiten #################################################### -->      
+    <navigation-rule>
+      <from-view-id>/secured/kursBearbeiten.xhtml</from-view-id>
+      <navigation-case>
+          <from-outcome>faq</from-outcome>
+          <to-view-id>faq.xhtml</to-view-id>
+      </navigation-case>   
+      <navigation-case>
+        <from-outcome>kontakt</from-outcome>
+        <to-view-id>kontakt.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>kursAnlegen</from-outcome>
+        <to-view-id>secured/kursAnlegen.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>kurslisteLehrer</from-outcome>
+        <to-view-id>secured/kurseLehrer.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>kursWechseln</from-outcome>
+        <to-view-id>secured/kursWechsel.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>kurseAlle</from-outcome>
+        <to-view-id>secured/kurseAlle.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>schuelerlisteKurs</from-outcome>
+        <to-view-id>secured/schuelerlisteKurs.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>wahlzeitraum</from-outcome>
+        <to-view-id>secured/wahlzeitraum.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>kursZuweisen</from-outcome>
+        <to-view-id>secured/kurseZuweisen.xhtml</to-view-id>
+      </navigation-case>
+    </navigation-rule>
+    
+    
 </faces-config>

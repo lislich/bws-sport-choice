@@ -9,7 +9,7 @@
         <ui:composition template="./securedTemplate.xhtml">
 
             <ui:define name="title">
-                Kurs anlegen
+                Kurs bearbeiten
             </ui:define>
 
             <ui:define name="content">
@@ -17,13 +17,13 @@
                     <div class="small-12 columns small-centered">
                         <h:form>
                             <fieldset>
-                                <legend>Kurs anlegen</legend>
+                                <legend>Kurs bearbeiten</legend>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Titel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="titel" class="input-group-field" />
+                                        <h:inputText id="titel" class="input-group-field" value="xx"/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -31,7 +31,7 @@
                                         <span class="prefix">Kürzel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="kuerzel" class="input-group-field" />
+                                        <h:inputText id="kuerzel" class="input-group-field" value="xx"/>
                                     </div>
                                 </div>                                
                                 <div class="row collapse">
@@ -39,7 +39,7 @@
                                         <span class="prefix">Stufe</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <select id="stufe" class="input-group-field" />
+                                        <select id="stufe" class="input-group-field" value=""/>
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -63,7 +63,7 @@
                                         <span class="prefix">Teilnehmerzahl</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <input type="number" min="1" max="50" value="1" step="1" id="kuerzel" class="input-group-field" />
+                                        <input type="number" min="1" max="50" value="" step="1" id="kuerzel" class="input-group-field" />
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -71,7 +71,7 @@
                                         <span class="prefix">Themengleich mit</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <select id="themengleich" class="input-group-field" />
+                                        <select id="themengleich" class="input-group-field" value=""/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -83,12 +83,14 @@
                                             <th width="50"></th>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td><input type="number" min="1" max="100" name="anteil" class="input-group-field"/></td>
-                                                <td><h:inputText id="thema" class="input-group-field"/></td>
-                                                <td><h:inputText id="schwerpunkt" class="input-group-field" /></td>
-                                                <td><input type="checkbox" name="loeschen"/></td>
-                                            </tr>                                           
+                                            <ui:repeat var="kurs" value="">
+                                                <tr>
+                                                    <td><input type="number" min="1" max="100" name="anteil" class="input-group-field" value=""/></td>
+                                                    <td><h:inputText id="thema" class="input-group-field" value=""/></td>
+                                                    <td><h:inputText id="schwerpunkt" class="input-group-field" value=""/></td>
+                                                    <td><input type="checkbox" name="loeschen"/></td>
+                                                </tr>
+                                            </ui:repeat>                                              
                                         </tbody>                                       
                                     </table>                                    
                                 </div>
@@ -97,7 +99,7 @@
                                     <input type="button" class="delete-row" value="Auswahl löschen" />
                                 </form>       
                                 <div>
-                                    <h:commandButton class="small button" id="kursAnlegen" value="Anlegen" action="anlegen" type="submit"/>
+                                    <h:commandButton class="small button" id="kursBearbeiten" value="Speichern" action="speichern" type="submit"/>
                                 </div>
                             </fieldset>
                         </h:form>
