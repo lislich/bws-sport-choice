@@ -32,10 +32,10 @@ public class ThemaJpaController {
         this.em.remove(tmp);
     }
     
-    public void updateThema(Thema p_themaAlt, Thema p_themaUpadte){
-        Thema tmp = this.em.find(Thema.class, p_themaAlt.getId());
-        tmp.setAnteil(p_themaUpadte.getAnteil());
-        tmp.setBeschreibung(p_themaUpadte.getBeschreibung());
+    public void updateThema(Thema p_thema){
+        Thema tmp = this.em.find(Thema.class, p_thema.getId());
+        tmp.setAnteil(p_thema.getAnteil());
+        tmp.setBeschreibung(p_thema.getBeschreibung());
     }
     
     public Thema findThema(long p_id){
@@ -43,7 +43,7 @@ public class ThemaJpaController {
     }
     
     public List<Thema> get(String p_query){
-        Query qu = this.em.createQuery(p_query);
+        Query qu = this.em.createQuery(p_query, Thema.class);
         return qu.getResultList();
     }
 }

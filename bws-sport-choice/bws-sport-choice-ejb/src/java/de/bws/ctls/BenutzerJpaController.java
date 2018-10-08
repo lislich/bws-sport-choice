@@ -32,11 +32,11 @@ public class BenutzerJpaController {
         this.em.remove(tmp);
     }
     
-    public void updateBenutzer(Benutzer p_benutzerAlt, Benutzer p_benutzerUpdate){
-        Benutzer tmp = this.em.find(Benutzer.class, p_benutzerAlt.getId());
-        tmp.setBenutzername(p_benutzerUpdate.getBenutzername());
-        tmp.setPasswort(p_benutzerUpdate.getPasswort());
-        tmp.setSalt(p_benutzerUpdate.getSalt());
+    public void updateBenutzer(Benutzer p_benutzer){
+        Benutzer tmp = this.em.find(Benutzer.class, p_benutzer.getId());
+        tmp.setBenutzername(p_benutzer.getBenutzername());
+        tmp.setPasswort(p_benutzer.getPasswort());
+        tmp.setSalt(p_benutzer.getSalt());
     }
     
     public Benutzer findBenutzer(long p_id){
@@ -44,7 +44,7 @@ public class BenutzerJpaController {
     }
     
     public List<Benutzer> get(String p_query){
-        Query qu = this.em.createQuery(p_query);
+        Query qu = this.em.createQuery(p_query, Benutzer.class);
         return qu.getResultList();
     }
 }

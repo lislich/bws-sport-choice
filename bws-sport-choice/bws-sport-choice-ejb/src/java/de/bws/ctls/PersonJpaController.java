@@ -32,10 +32,10 @@ public class PersonJpaController {
         this.em.remove(tmp);
     }
     
-    public void updatePerson(Person p_personAlt, Person p_personUpadte){
-        Person tmp = this.em.find(Person.class, p_personAlt.getId());
-        tmp.setNachname(p_personUpadte.getNachname());
-        tmp.setVorname(p_personUpadte.getVorname());
+    public void updatePerson(Person p_person){
+        Person tmp = this.em.find(Person.class, p_person.getId());
+        tmp.setNachname(p_person.getNachname());
+        tmp.setVorname(p_person.getVorname());
     }
     
     public Person findPerson(long p_id){
@@ -43,7 +43,7 @@ public class PersonJpaController {
     }
     
     public List<Person> get(String p_query){
-        Query qu = this.em.createQuery(p_query);
+        Query qu = this.em.createQuery(p_query, Person.class);
         return qu.getResultList();
     }
 }

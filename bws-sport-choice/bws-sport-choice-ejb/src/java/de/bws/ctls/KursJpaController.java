@@ -32,19 +32,19 @@ public class KursJpaController {
         this.em.remove(tmp);
     }
     
-    public void upadteKurs(Kurs p_kursAlt, Kurs p_kursUpdate){
-        Kurs tmp = this.em.find(Kurs.class, p_kursAlt.getId());
-        tmp.setBewertung(p_kursUpdate.getBewertung());
-        tmp.setHinweis(p_kursUpdate.getHinweis());
-        tmp.setJahr(p_kursUpdate.getJahr());
-        tmp.setKuerzel(p_kursUpdate.getKuerzel());
-        tmp.setLehrer(p_kursUpdate.getLehrer());
-        tmp.setStufe(p_kursUpdate.getStufe());
-        tmp.setTeilnehmer(p_kursUpdate.getTeilnehmer());
-        tmp.setTeilnehmerzahl(p_kursUpdate.getTeilnehmerzahl());
-        tmp.setThema(p_kursUpdate.getThema());
-        tmp.setThemengleich(p_kursUpdate.getThemengleich());
-        tmp.setTitel(p_kursUpdate.getTitel());
+    public void upadteKurs(Kurs p_kurs){
+        Kurs tmp = this.em.find(Kurs.class, p_kurs.getId());
+        tmp.setBewertung(p_kurs.getBewertung());
+        tmp.setHinweis(p_kurs.getHinweis());
+        tmp.setJahr(p_kurs.getJahr());
+        tmp.setKuerzel(p_kurs.getKuerzel());
+        tmp.setLehrer(p_kurs.getLehrer());
+        tmp.setStufe(p_kurs.getStufe());
+        tmp.setTeilnehmer(p_kurs.getTeilnehmer());
+        tmp.setTeilnehmerzahl(p_kurs.getTeilnehmerzahl());
+        tmp.setThema(p_kurs.getThema());
+        tmp.setThemengleich(p_kurs.getThemengleich());
+        tmp.setTitel(p_kurs.getTitel());
     }
     
     public Kurs find(long p_id){
@@ -52,7 +52,7 @@ public class KursJpaController {
     }
     
     public List<Kurs> get(String p_query){
-        Query qu = this.em.createQuery(p_query);
+        Query qu = this.em.createQuery(p_query, Kurs.class);
         return qu.getResultList();
     }
 }

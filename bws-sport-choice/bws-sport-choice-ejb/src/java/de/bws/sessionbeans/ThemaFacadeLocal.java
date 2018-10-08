@@ -26,8 +26,6 @@ public interface ThemaFacadeLocal {
 
     List<Thema> findAll();
 
-    List<Thema> findRange(int[] range);
-
-    int count();
+    List<Thema> get(String query);
     
 }

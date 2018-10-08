@@ -26,8 +26,6 @@ public interface LehrerFacadeLocal {
 
     List<Lehrer> findAll();
 
-    List<Lehrer> findRange(int[] range);
-
-    int count();
+    List<Lehrer> get(String query);
     
 }

@@ -26,8 +26,6 @@ public interface SchuelerFacadeLocal {
 
     List<Schueler> findAll();
 
-    List<Schueler> findRange(int[] range);
-
-    int count();
+    List<Schueler> get(String query);
     
 }

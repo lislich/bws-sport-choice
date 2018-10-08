@@ -5,28 +5,54 @@
  */
 package de.bws.sessionbeans;
 
+import de.bws.ctls.BenutzerJpaController;
 import de.bws.entities.Benutzer;
+import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.inject.Inject;
 
 /**
  *
  * @author joshua
  */
 @Stateless
-public class BenutzerFacade extends AbstractFacade<Benutzer> implements BenutzerFacadeLocal {
+public class BenutzerFacade implements BenutzerFacadeLocal {
 
-    @PersistenceContext(unitName = "bws-sport-choice-ejbPU")
-    private EntityManager em;
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+    @Inject
+    private BenutzerJpaController ctrl;
 
     public BenutzerFacade() {
-        super(Benutzer.class);
+        
+    }
+
+    @Override
+    public List<Benutzer> get(String query) {
+        return this.ctrl.get(query);
+    }
+
+    @Override
+    public void create(Benutzer benutzer) {
+        this.ctrl.addBenutzer(benutzer);
+    }
+
+    @Override
+    public void edit(Benutzer benutzer) {
+        this.ctrl.updateBenutzer(benutzer);
+    }
+
+    @Override
+    public void remove(Benutzer benutzer) {
+        this.ctrl.removeBenutzer(benutzer);
+    }
+
+    @Override
+    public Benutzer find(Object id) {
+        return this.ctrl.findBenutzer((long) id);
+    }
+
+    @Override
+    public List<Benutzer> findAll() {
+        return this.ctrl.get("SELECT b FROM benutzer b");
     }
     
 }

@@ -25,9 +25,7 @@ public interface KursFacadeLocal {
     Kurs find(Object id);
 
     List<Kurs> findAll();
-
-    List<Kurs> findRange(int[] range);
-
-    int count();
+    
+    List<Kurs> get(String query);
     
 }

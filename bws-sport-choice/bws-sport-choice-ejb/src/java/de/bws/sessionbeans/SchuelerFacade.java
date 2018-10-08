@@ -5,28 +5,54 @@
  */
 package de.bws.sessionbeans;
 
+import de.bws.ctls.SchuelerJpaController;
 import de.bws.entities.Schueler;
+import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.inject.Inject;
 
 /**
  *
  * @author joshua
  */
 @Stateless
-public class SchuelerFacade extends AbstractFacade<Schueler> implements SchuelerFacadeLocal {
+public class SchuelerFacade implements SchuelerFacadeLocal {
 
-    @PersistenceContext(unitName = "bws-sport-choice-ejbPU")
-    private EntityManager em;
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+    @Inject
+    private SchuelerJpaController ctrl;
 
     public SchuelerFacade() {
-        super(Schueler.class);
+        
+    }
+
+    @Override
+    public void create(Schueler schueler) {
+        this.ctrl.addSchueler(schueler);
+    }
+
+    @Override
+    public void edit(Schueler schueler) {
+        this.ctrl.updateSchueler(schueler);
+    }
+
+    @Override
+    public void remove(Schueler schueler) {
+        this.ctrl.removeSchueler(schueler);
+    }
+
+    @Override
+    public Schueler find(Object id) {
+        return this.ctrl.findSchueler((long) id);
+    }
+
+    @Override
+    public List<Schueler> findAll() {
+        return this.get("SELECT s FROM schueler s");
+    }
+
+    @Override
+    public List<Schueler> get(String query) {
+        return this.ctrl.get(query);
     }
     
 }

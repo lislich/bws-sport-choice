@@ -32,17 +32,17 @@ public class StufeJpaController {
         this.em.remove(tmp);
     }
     
-    public void updateStufe(Stufe p_stufeAlt, Stufe p_stufeUpdate){
-        Stufe tmp = this.em.find(Stufe.class, p_stufeAlt.getId());
-        tmp.setBezeichnung(p_stufeUpdate.getBezeichnung());
+    public void updateStufe(Stufe p_stufe){
+        Stufe tmp = this.em.find(Stufe.class, p_stufe.getId());
+        tmp.setBezeichnung(p_stufe.getBezeichnung());
     }
     
-    private Stufe findStufe(long p_id){
+    public Stufe findStufe(long p_id){
         return this.em.find(Stufe.class, p_id);
     }
     
     public List<Stufe> get(String p_query){
-        Query qu = this.em.createQuery(p_query);
+        Query qu = this.em.createQuery(p_query, Stufe.class);
         return qu.getResultList();
     }
 }

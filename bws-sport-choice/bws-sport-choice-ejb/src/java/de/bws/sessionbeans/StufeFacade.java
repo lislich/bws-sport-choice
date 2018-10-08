@@ -5,28 +5,54 @@
  */
 package de.bws.sessionbeans;
 
+import de.bws.ctls.StufeJpaController;
 import de.bws.entities.Stufe;
+import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.inject.Inject;
 
 /**
  *
  * @author joshua
  */
 @Stateless
-public class StufeFacade extends AbstractFacade<Stufe> implements StufeFacadeLocal {
+public class StufeFacade implements StufeFacadeLocal {
 
-    @PersistenceContext(unitName = "bws-sport-choice-ejbPU")
-    private EntityManager em;
-
-    @Override
-    protected EntityManager getEntityManager() {
-        return em;
-    }
+    @Inject
+    private StufeJpaController ctrl;
 
     public StufeFacade() {
-        super(Stufe.class);
+        
+    }
+
+    @Override
+    public void create(Stufe stufe) {
+        this.ctrl.addStufe(stufe);
+    }
+
+    @Override
+    public void edit(Stufe stufe) {
+        this.ctrl.updateStufe(stufe);
+    }
+
+    @Override
+    public void remove(Stufe stufe) {
+        this.ctrl.removeStufe(stufe);
+    }
+
+    @Override
+    public Stufe find(Object id) {
+        return this.ctrl.findStufe((long) id);
+    }
+
+    @Override
+    public List<Stufe> findAll() {
+        return this.ctrl.get("SELECT s FROM stufe s");
+    }
+
+    @Override
+    public List<Stufe> get(String query) {
+        return this.ctrl.get(query);
     }
     
 }

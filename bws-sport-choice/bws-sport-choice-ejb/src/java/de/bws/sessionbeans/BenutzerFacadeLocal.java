@@ -25,9 +25,7 @@ public interface BenutzerFacadeLocal {
     Benutzer find(Object id);
 
     List<Benutzer> findAll();
-
-    List<Benutzer> findRange(int[] range);
-
-    int count();
+    
+    List<Benutzer> get(String query);
     
 }

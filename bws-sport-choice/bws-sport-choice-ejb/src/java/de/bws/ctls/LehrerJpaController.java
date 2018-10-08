@@ -32,11 +32,11 @@ public class LehrerJpaController {
         this.em.remove(tmp);
     }
     
-    public void upadateLehrer(Lehrer p_lehrerAlt, Lehrer p_lehrerUpdate){
-        Lehrer tmp = this.em.find(Lehrer.class, p_lehrerAlt.getId());
-        tmp.setKuerzel(p_lehrerUpdate.getKuerzel());
-        tmp.setNachname(p_lehrerUpdate.getNachname());
-        tmp.setVorname(p_lehrerUpdate.getVorname());
+    public void upadateLehrer(Lehrer p_lehrer){
+        Lehrer tmp = this.em.find(Lehrer.class, p_lehrer.getId());
+        tmp.setKuerzel(p_lehrer.getKuerzel());
+        tmp.setNachname(p_lehrer.getNachname());
+        tmp.setVorname(p_lehrer.getVorname());
     }
     
     public Lehrer findLehrer(long p_id){
@@ -44,7 +44,7 @@ public class LehrerJpaController {
     }
     
     public List<Lehrer> get(String p_query){
-        Query qu = this.em.createQuery(p_query);
+        Query qu = this.em.createQuery(p_query, Lehrer.class);
         return qu.getResultList();
     }
 }

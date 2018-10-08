@@ -26,8 +26,6 @@ public interface StufeFacadeLocal {
 
     List<Stufe> findAll();
 
-    List<Stufe> findRange(int[] range);
-
-    int count();
+    List<Stufe> get(String query);
     
 }

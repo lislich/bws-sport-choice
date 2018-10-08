@@ -26,8 +26,6 @@ public interface PersonFacadeLocal {
 
     List<Person> findAll();
 
-    List<Person> findRange(int[] range);
-
-    int count();
+    List<Person> get(String query);
     
 }

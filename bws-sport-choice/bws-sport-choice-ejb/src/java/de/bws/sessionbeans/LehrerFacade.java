@@ -5,28 +5,54 @@
  */
 package de.bws.sessionbeans;
 
+import de.bws.ctls.LehrerJpaController;
 import de.bws.entities.Lehrer;
+import java.util.List;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.inject.Inject;
 
 /**
  *
  * @author joshua
  */
 @Stateless
-public class LehrerFacade extends AbstractFacade<Lehrer> implements LehrerFacadeLocal {
+public class LehrerFacade implements LehrerFacadeLocal {
 
-    @PersistenceContext(unitName = "bws-sport-choice-ejbPU")
-    private EntityManager em;
+    @Inject
+    private LehrerJpaController ctrl;
+            
+    public LehrerFacade() {
+        
+    }
 
     @Override
-    protected EntityManager getEntityManager() {
-        return em;
+    public void create(Lehrer lehrer) {
+        this.ctrl.addLehrer(lehrer);
     }
 
-    public LehrerFacade() {
-        super(Lehrer.class);
+    @Override
+    public void edit(Lehrer lehrer) {
+        this.ctrl.upadateLehrer(lehrer);
     }
-    
+
+    @Override
+    public void remove(Lehrer lehrer) {
+        this.ctrl.removeLehrer(lehrer);
+    }
+
+    @Override
+    public Lehrer find(Object id) {
+        return this.ctrl.findLehrer((long) id);
+    }
+
+    @Override
+    public List<Lehrer> findAll() {
+        return this.ctrl.get("SELECT l FROM lehrer l");
+    }
+
+    @Override
+    public List<Lehrer> get(String query) {
+        return this.ctrl.get(query);
+    }
+
 }

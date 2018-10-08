@@ -32,11 +32,11 @@ public class SchuelerJpaController {
         this.em.remove(tmp);
     }
     
-    public void updateSchueler(Schueler p_schuelerAlt, Schueler p_schuelerUpdate){
-        Schueler tmp = this.em.find(Schueler.class, p_schuelerAlt);
-        tmp.setStufe(p_schuelerUpdate.getStufe());
-        tmp.setNachname(p_schuelerUpdate.getNachname());
-        tmp.setVorname(p_schuelerUpdate.getVorname());
+    public void updateSchueler(Schueler p_schueler){
+        Schueler tmp = this.em.find(Schueler.class, p_schueler);
+        tmp.setStufe(p_schueler.getStufe());
+        tmp.setNachname(p_schueler.getNachname());
+        tmp.setVorname(p_schueler.getVorname());
     }
     
     public Schueler findSchueler(long p_id){
@@ -44,7 +44,7 @@ public class SchuelerJpaController {
     }
     
     public List<Schueler> get(String p_query){
-        Query qu = this.em.createQuery(p_query);
+        Query qu = this.em.createQuery(p_query, Schueler.class);
         return qu.getResultList();
     } 
 }
