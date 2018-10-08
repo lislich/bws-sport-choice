@@ -37,6 +37,7 @@ public class SchuelerJpaController {
         tmp.setStufe(p_schueler.getStufe());
         tmp.setNachname(p_schueler.getNachname());
         tmp.setVorname(p_schueler.getVorname());
+        tmp.setWahl(p_schueler.getWahl());
     }
     
     public Schueler findSchueler(long p_id){

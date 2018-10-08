@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -23,6 +24,10 @@ public class Schueler extends Person implements Serializable{
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "STUFE_ID")
     private Stufe stufe;
+    
+    @OneToOne
+    @JoinColumn(name = "WAHL", referencedColumnName = "ID")
+    private Wahl wahl;
 
     @Override
     public int hashCode() {
@@ -65,6 +70,20 @@ public class Schueler extends Person implements Serializable{
      */
     public void setStufe(Stufe p_stufe) {
         this.stufe = p_stufe;
+    }
+
+    /**
+     * @return the wahl
+     */
+    public Wahl getWahl() {
+        return wahl;
+    }
+
+    /**
+     * @param wahl the wahl to set
+     */
+    public void setWahl(Wahl wahl) {
+        this.wahl = wahl;
     }
     
 }
