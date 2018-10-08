@@ -37,6 +37,7 @@ public class BenutzerJpaController {
         tmp.setBenutzername(p_benutzer.getBenutzername());
         tmp.setPasswort(p_benutzer.getPasswort());
         tmp.setSalt(p_benutzer.getSalt());
+        tmp.setRolle(p_benutzer.getRolle());
     }
     
     public Benutzer findBenutzer(long p_id){

@@ -5,6 +5,7 @@
  */
 package de.bws.entities;
 
+import de.bws.data.Rolle;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,6 +34,8 @@ public class Benutzer implements Serializable {
     @Column(name = "PASSWORT")
     private String passwort;
 
+    @Column(name = "ROLLE")
+    private Rolle rolle;
 //*************************** Methoden ****************************
     
     @Override
@@ -110,6 +113,20 @@ public class Benutzer implements Serializable {
      */
     public void setPasswort(String p_passwort) {
         this.passwort = p_passwort;
+    }
+
+    /**
+     * @return the rolle
+     */
+    public Rolle getRolle() {
+        return rolle;
+    }
+
+    /**
+     * @param rolle the rolle to set
+     */
+    public void setRolle(Rolle rolle) {
+        this.rolle = rolle;
     }
     
 }
