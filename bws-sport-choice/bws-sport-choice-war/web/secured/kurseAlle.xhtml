@@ -27,13 +27,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <ui:repeat var="kurs" value="">
+                                    <ui:repeat var="kurs" value="#{kurslisteBean.alleKurse}">
 
                                         <tr>
-                                            <td><h:link outcome="kursAnschauen">Titel</h:link></td>
-                                            <td>. . .</td>
-                                            <td>Lehrername</td>
-                                            <td>12</td>
+                                            <td><h:link outcome="kursAnschauen"><h:outputText value="#{kurs.titel}"/></h:link></td>
+                                            <td><h:outputText value="#{kurs.bewertung}"/></td>
+                                            <td><h:outputText value="#{kurs.lehrer.nachname}, #{kurs.lehrer.vorname}"/></td>
+                                            <td><h:outputText value="#{kurs.stufe.bezeichnung}"/></td>
                                         </tr>
                                     </ui:repeat>
                                 </tbody>

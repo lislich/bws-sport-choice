@@ -47,7 +47,7 @@ public class SchuelerFacade implements SchuelerFacadeLocal {
 
     @Override
     public List<Schueler> findAll() {
-        return this.get("SELECT s FROM schueler s");
+        return this.get("SELECT s FROM Schueler s");
     }
 
     @Override

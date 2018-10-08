@@ -47,7 +47,7 @@ public class LehrerFacade implements LehrerFacadeLocal {
 
     @Override
     public List<Lehrer> findAll() {
-        return this.ctrl.get("SELECT l FROM lehrer l");
+        return this.ctrl.get("SELECT l FROM Lehrer l");
     }
 
     @Override

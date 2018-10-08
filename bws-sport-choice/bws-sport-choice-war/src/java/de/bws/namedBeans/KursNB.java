@@ -7,23 +7,30 @@ package de.bws.namedBeans;
 
 import de.bws.entities.Kurs;
 import de.bws.entities.Stufe;
-import de.bws.entities.Thema;
 import de.bws.sessionbeans.KursFacadeLocal;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
-import javax.faces.view.ViewScoped;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.inject.Named;
+import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author Lisa
  */
-@Named("kursBean")
-@ViewScoped
-public class KursNB implements Serializable {
-    @EJB
+@ManagedBean
+//@Named(value = "kursNB")
+@SessionScoped
+public class KursNB implements Serializable{
+
+    /**
+     * Creates a new instance of KursNB
+     */
+    public KursNB() {
+    }
+    
+     @EJB
     private KursFacadeLocal kursBean;
     
     private String titel;
@@ -33,19 +40,17 @@ public class KursNB implements Serializable {
     private String hinweis;
     private int teilnehmerzahl;
     private Kurs themengleich;
-    private List<Thema> thema;
+//    private List<Thema> thema;
     
-    public boolean anlegen(){
+    public void anlegen(){
+        System.out.println("de.bws.namedBeans.KursNB.anlegen()");
         Kurs kurs = new Kurs();
-        kurs.setBewertung(this.bewertung);
-        kurs.setHinweis(this.hinweis);
-        kurs.setKuerzel(this.kuerzel);
-        kurs.setStufe(this.stufe);
-        kurs.setTeilnehmerzahl(this.teilnehmerzahl);
-        kurs.setThema(this.thema);
-        kurs.setTitel(this.titel);
+        kurs.setBewertung(this.getBewertung());
+        kurs.setHinweis(this.getHinweis());
+        kurs.setKuerzel(this.getKuerzel());
+        kurs.setTeilnehmerzahl(this.getTeilnehmerzahl());
+        kurs.setTitel(this.getTitel());
         this.kursBean.create(kurs);
-        return true;
     } 
 
     /**
@@ -56,10 +61,24 @@ public class KursNB implements Serializable {
     }
 
     /**
+     * @param titel the titel to set
+     */
+    public void setTitel(String titel) {
+        this.titel = titel;
+    }
+
+    /**
      * @return the kuerzel
      */
     public String getKuerzel() {
         return kuerzel;
+    }
+
+    /**
+     * @param kuerzel the kuerzel to set
+     */
+    public void setKuerzel(String kuerzel) {
+        this.kuerzel = kuerzel;
     }
 
     /**
@@ -70,10 +89,24 @@ public class KursNB implements Serializable {
     }
 
     /**
+     * @param stufe the stufe to set
+     */
+    public void setStufe(Stufe stufe) {
+        this.stufe = stufe;
+    }
+
+    /**
      * @return the bewertung
      */
     public String getBewertung() {
         return bewertung;
+    }
+
+    /**
+     * @param bewertung the bewertung to set
+     */
+    public void setBewertung(String bewertung) {
+        this.bewertung = bewertung;
     }
 
     /**
@@ -84,10 +117,24 @@ public class KursNB implements Serializable {
     }
 
     /**
+     * @param hinweis the hinweis to set
+     */
+    public void setHinweis(String hinweis) {
+        this.hinweis = hinweis;
+    }
+
+    /**
      * @return the teilnehmerzahl
      */
     public int getTeilnehmerzahl() {
         return teilnehmerzahl;
+    }
+
+    /**
+     * @param teilnehmerzahl the teilnehmerzahl to set
+     */
+    public void setTeilnehmerzahl(int teilnehmerzahl) {
+        this.teilnehmerzahl = teilnehmerzahl;
     }
 
     /**
@@ -98,10 +145,10 @@ public class KursNB implements Serializable {
     }
 
     /**
-     * @return the thema
+     * @param themengleich the themengleich to set
      */
-    public List<Thema> getThema() {
-        return thema;
+    public void setThemengleich(Kurs themengleich) {
+        this.themengleich = themengleich;
     }
     
     

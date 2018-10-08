@@ -21,10 +21,6 @@ public class KursFacade implements KursFacadeLocal {
     @Inject
     private KursJpaController ctrl;
 
-    public KursFacade() {
-
-    }
-
     @Override
     public void create(Kurs kurs) {
         this.ctrl.addKurs(kurs);
@@ -47,7 +43,7 @@ public class KursFacade implements KursFacadeLocal {
 
     @Override
     public List<Kurs> findAll() {
-        return this.ctrl.get("SELECT k FROM kurs k");
+        return this.ctrl.get("SELECT k FROM Kurs k");
     }
 
     @Override

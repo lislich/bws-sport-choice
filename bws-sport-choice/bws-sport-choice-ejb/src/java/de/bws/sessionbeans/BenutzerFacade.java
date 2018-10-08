@@ -52,7 +52,7 @@ public class BenutzerFacade implements BenutzerFacadeLocal {
 
     @Override
     public List<Benutzer> findAll() {
-        return this.ctrl.get("SELECT b FROM benutzer b");
+        return this.ctrl.get("SELECT b FROM Benutzer b");
     }
     
 }

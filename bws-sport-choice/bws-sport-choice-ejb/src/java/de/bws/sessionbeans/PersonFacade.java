@@ -47,7 +47,7 @@ public class PersonFacade implements PersonFacadeLocal {
 
     @Override
     public List<Person> findAll() {
-        return this.ctrl.get("SELECT p FROM person p");
+        return this.ctrl.get("SELECT p FROM Person p");
     }
 
     @Override

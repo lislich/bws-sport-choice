@@ -19,7 +19,7 @@ import javax.persistence.Query;
 @Stateless
 public class KursJpaController {
     
-    @PersistenceContext
+    @PersistenceContext(unitName = "bws-sport-choice-ejbPU")
     private EntityManager em;
     
     public void addKurs(Kurs p_kurs){

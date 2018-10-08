@@ -47,7 +47,7 @@ public class ThemaFacade implements ThemaFacadeLocal {
 
     @Override
     public List<Thema> findAll() {
-        return this.ctrl.get("SELECT t FROM thema t");
+        return this.ctrl.get("SELECT t FROM Thema t");
     }
 
     @Override

@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -23,7 +24,7 @@
                                         <span class="prefix">Titel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="titel" class="input-group-field" value="#{kursBean.titel}"/>
+                                        <h:inputText id="titel" class="input-group-field" value="#{kursNB.titel}"/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -31,7 +32,7 @@
                                         <span class="prefix">Kürzel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="kuerzel" class="input-group-field" value="#{kursBean.kuerzel}"/>
+                                        <h:inputText id="kuerzel" class="input-group-field" value="#{kursNB.kuerzel}"/>
                                     </div>
                                 </div>                                
                                 <div class="row collapse">
@@ -39,7 +40,9 @@
                                         <span class="prefix">Stufe</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <select id="stufe" class="input-group-field" />
+                                        <h:selectOneMenu id="stufe" class="input-group-field" value="#{kursNB.stufe}">
+                                            <f:selectItems value="#{stufeNB.alleStufen}" var="stufe" itemValue="#{stufe.id}" itemLabel="#{stufe.bezeichnung}"/>
+                                        </h:selectOneMenu>
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -47,7 +50,7 @@
                                         <span class="prefix">Bewertung</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputTextarea id="bewertung" class="input-group-field" value="#{kursBean.bewertung}"/>
+                                        <h:inputTextarea id="bewertung" class="input-group-field" value="#{kursNB.bewertung}"/>
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -55,7 +58,7 @@
                                         <span class="prefix">Hinweis</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputTextarea id="hinweis" class="input-group-field" value="#{kursBean.hinweis}"/>
+                                        <h:inputTextarea id="hinweis" class="input-group-field" value="#{kursNB.hinweis}"/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -63,7 +66,7 @@
                                         <span class="prefix">Teilnehmerzahl</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <input type="number" min="1" max="50" value="#{kursBean.teilnehmerzahl}" step="1" id="kuerzel" class="input-group-field" />
+                                        <input type="number" min="1" max="50" value="#{kursNB.teilnehmerzahl}" step="1" id="kuerzel" class="input-group-field" />
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -71,10 +74,12 @@
                                         <span class="prefix">Themengleich mit</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <select id="themengleich" class="input-group-field" />
+                                        <h:selectOneMenu id="themengleich" class="input-group-field" value="#{kursNB.themengleich}">
+                                            <f:selectItems value="#{kurslisteBean.alleKurse}" var="kurs" itemValue="#{kurs.id}" itemLabel="#{kurs.titel}"/>
+                                        </h:selectOneMenu>
                                     </div>
                                 </div>
-                                <div class="row collapse">
+                                <!--<div class="row collapse">
                                     <table id="unterrichtsthemen">
                                         <thead>
                                             <th width="100">Anteil in %</th>
@@ -95,9 +100,9 @@
                                 <form>
                                     <input type="button" class="add-row" value="Zeile hinzufügen" />
                                     <input type="button" class="delete-row" value="Auswahl löschen" />
-                                </form>       
+                                </form>     -->  
                                 <div>
-                                    <h:commandButton class="small button" id="kursAnlegen" value="Anlegen" action="#{kursBean.anlegen()}" type="submit"/>
+                                    <h:commandButton class="small button" id="kursAnlegen" value="Anlegen" action="#{kursNB.anlegen()}"/>
                                 </div>
                             </fieldset>
                         </h:form>

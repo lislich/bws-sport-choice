@@ -47,7 +47,7 @@ public class StufeFacade implements StufeFacadeLocal {
 
     @Override
     public List<Stufe> findAll() {
-        return this.ctrl.get("SELECT s FROM stufe s");
+        return this.ctrl.get("SELECT s FROM Stufe s");
     }
 
     @Override
