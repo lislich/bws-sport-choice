@@ -61,6 +61,10 @@ public class Kurs implements Serializable {
     private String hinweis;
     
     @OneToMany(orphanRemoval = true)
+    @JoinColumn(referencedColumnName = "KURS_ID", name = "KURS_ID")
+//    @JoinTable(name = "SCHUELER_KURS",
+//            joinColumns = @JoinColumn(name = "KURS_ID", referencedColumnName = "KURS_ID"),
+//            inverseJoinColumns = @JoinColumn(name = "THEMA_ID", referencedColumnName = "THEMA_ID"))
     private List<Thema> thema = new ArrayList<>();    
     
     @OneToOne(fetch = FetchType.LAZY)
@@ -74,7 +78,7 @@ public class Kurs implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "SCHUELER_KURS",
             joinColumns = @JoinColumn(name = "KURS_ID", referencedColumnName = "KURS_ID"),
-            inverseJoinColumns = @JoinColumn(name = "SCHUELER_ID", referencedColumnName = "SCHUELER_ID"))
+            inverseJoinColumns = @JoinColumn(name = "SCHUELER_ID", referencedColumnName = "ID"))
     private List<Schueler> teilnehmer = new ArrayList<>();
     
     @ManyToOne(fetch = FetchType.EAGER)

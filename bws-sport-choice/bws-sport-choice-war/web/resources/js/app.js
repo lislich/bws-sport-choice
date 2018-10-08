@@ -69,5 +69,40 @@ $(document).ready(function () {
         });
     });
 
+    // # Benutzer verwalten ####################################################################################
+    
+    $("#auswahl").click(function(){
+        if ($("#auswahl").is(":checked")){
+            $(".loeschen").prop("checked", true);
+        } else{
+            $(".loeschen").prop("checked", false);
+        }
+    });
+    var dialog;
+    dialog = $("#dialog-form").dialog({
+        autoOpen: false,
+        height: 400,
+        width: 350,
+        modal: true,
+        buttons: {
+            "Create an account": addUser,
+            Cancel: function () {
+                dialog.dialog("close");
+            }
+        },
+        close: function () {
+            form[ 0 ].reset();
+            allFields.removeClass("ui-state-error");
+        }
+    });
+
+    form = dialog.find("form").on("submit", function (event) {
+        event.preventDefault();
+        addUser();
+    });
+
+    $("#anlegen").button().on("click", function () {
+        dialog.dialog("open");
+    });
 });
 

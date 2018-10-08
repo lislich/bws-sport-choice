@@ -57,18 +57,37 @@
                                                 <td>UWF</td>
                                                 <td>Gg</td>
                                                 <td>12</td>
-                                                <td><input type="checkbox" id="" /></td>
+                                                <td><input type="checkbox" class="loeschen" id="" /></td>
                                             </tr>
                                         </ui:repeat>
                                     </tbody>
                                 </table>
-                                <h:commandButton class="small button" value="Anlegen.." action="1" />
+                                <h:commandButton class="small button" id="anlegen" value="Anlegen.." action="1" />
                                 <h:commandButton class="small button" value="Ändern.." action="2" />
                                 <h:commandButton class="small button" value="Löschen" action="3" />
                                 <h:commandButton class="small button" value="Hochstufen" action="4" />
                                 <h:commandButton class="small button" value="Abstufen" action="5" />
                             </fieldset>
                         </h:form>
+                        <div id="dialog-form" title="Create new user">
+                            <p class="validateTips">All form fields are required.</p>
+
+                            <form>
+                                <fieldset>
+                                    <label for="name">Name</label>
+                                    <input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all" />
+                                    <label for="email">Email</label>
+                                    <input type="text" name="email" id="email" value="jane@smith.com" class="text ui-widget-content ui-corner-all"/>
+                                    <label for="password">Password</label>
+                                    <input type="password" name="password" id="password" value="xxxxxxx" class="text ui-widget-content ui-corner-all"/>
+
+                                    <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                                    <input type="submit" tabindex="-1" style="position:absolute; top:-1000px"/>
+                                </fieldset>
+                            </form>
+                        </div>
+
+
                     </div>
                 </div>
             </ui:define>

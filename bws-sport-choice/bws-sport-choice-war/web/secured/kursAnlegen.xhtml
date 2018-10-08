@@ -23,7 +23,7 @@
                                         <span class="prefix">Titel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="titel" class="input-group-field" />
+                                        <h:inputText id="titel" class="input-group-field" value="#{kursBean.titel}"/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -31,7 +31,7 @@
                                         <span class="prefix">Kürzel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="kuerzel" class="input-group-field" />
+                                        <h:inputText id="kuerzel" class="input-group-field" value="#{kursBean.kuerzel}"/>
                                     </div>
                                 </div>                                
                                 <div class="row collapse">
@@ -47,7 +47,7 @@
                                         <span class="prefix">Bewertung</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <textarea id="bewertung" class="input-group-field" />
+                                        <h:inputTextarea id="bewertung" class="input-group-field" value="#{kursBean.bewertung}"/>
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -55,7 +55,7 @@
                                         <span class="prefix">Hinweis</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <textarea id="hinweis" class="input-group-field"/>
+                                        <h:inputTextarea id="hinweis" class="input-group-field" value="#{kursBean.hinweis}"/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -63,7 +63,7 @@
                                         <span class="prefix">Teilnehmerzahl</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <input type="number" min="1" max="50" value="1" step="1" id="kuerzel" class="input-group-field" />
+                                        <input type="number" min="1" max="50" value="#{kursBean.teilnehmerzahl}" step="1" id="kuerzel" class="input-group-field" />
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -97,7 +97,7 @@
                                     <input type="button" class="delete-row" value="Auswahl löschen" />
                                 </form>       
                                 <div>
-                                    <h:commandButton class="small button" id="kursAnlegen" value="Anlegen" action="anlegen" type="submit"/>
+                                    <h:commandButton class="small button" id="kursAnlegen" value="Anlegen" action="#{kursBean.anlegen()}" type="submit"/>
                                 </div>
                             </fieldset>
                         </h:form>
