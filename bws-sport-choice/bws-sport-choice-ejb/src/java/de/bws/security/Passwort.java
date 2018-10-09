@@ -5,6 +5,7 @@
  */
 package de.bws.security;
 
+import de.bws.entities.Benutzer;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 import java.util.Base64;
@@ -53,14 +54,13 @@ public class Passwort {
     
     /**
      * 
-     * @param p_eigabe das eigegebene Passwort, das noch gehashed werden muss
-     * @param p_gespeichert das gespeicherte, bereits gehashte Passwort
-     * @param p_salt salt zum hashen des eingegebenen Passworts
+     * @param p_benutzer der Benutzer, der eingeloggt werden soll
+     * @param p_passwort das zu prüfende Passwort
      * @return true - Passwörter stimmen überein, false - Passwörter stimmen nicht überein
      * @throws java.lang.Exception
      */
-    public static boolean pruefen(String p_eigabe, String p_gespeichert, byte[] p_salt) throws Exception{
-        String hash = hashen(p_eigabe, p_salt);
-        return hash.equals(p_gespeichert);
+    public static boolean pruefen(Benutzer p_benutzer, String p_passwort) throws Exception{
+        String hash = hashen(p_passwort, p_benutzer.getSalt());
+        return hash.equals(p_benutzer.getPasswort());
     }
 }

@@ -28,4 +28,6 @@ public interface BenutzerFacadeLocal {
     
     List<Benutzer> get(String query);
     
+    Benutzer getByName(String name);
+    
 }

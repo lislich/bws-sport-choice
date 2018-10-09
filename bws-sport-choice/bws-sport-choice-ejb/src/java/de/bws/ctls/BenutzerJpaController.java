@@ -32,7 +32,7 @@ public class BenutzerJpaController {
         this.em.remove(tmp);
     }
     
-    public void updateBenutzer(Benutzer p_benutzer){
+    public void updateBenutzer(Benutzer p_benutzer) throws Exception{
         Benutzer tmp = this.em.find(Benutzer.class, p_benutzer.getId());
         tmp.setBenutzername(p_benutzer.getBenutzername());
         tmp.setPasswort(p_benutzer.getPasswort());

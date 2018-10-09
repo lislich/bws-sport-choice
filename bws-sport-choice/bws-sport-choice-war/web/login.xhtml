@@ -29,12 +29,15 @@
                             <div class="small-12 columns small-centered">
                                 <fieldset>
                                     <legend>Login</legend>
+                                    <div>
+                                        <h:outputText id="errorLogin" value="#{loginNB.error}"/>
+                                    </div>
                                     <div class="row collapse">
                                         <div class="small-4 columns">
-                                            <span class="prefix">E-Mail</span>
+                                            <span class="prefix">Benutzername</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">
-                                            <h:inputText id="email" class="input-group-field" />
+                                            <h:inputText id="email" class="input-group-field" value="#{loginNB.benutzerName}" />
                                         </div>
                                     </div>
                                     <div class="row collapse">
@@ -42,11 +45,11 @@
                                             <span class="prefix">Passwort</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">
-                                            <h:inputSecret id="passwort" class="input-group-field" />
+                                            <h:inputSecret id="passwort" class="input-group-field" value="#{loginNB.passwort}" />
                                         </div>
                                     </div>                              
                                     <div>
-                                        <h:commandButton class="small button" id="login" value="Login" action="login" type="submit"/>
+                                        <h:commandButton class="small button" id="login" value="Login" action="#{loginNB.login()}" type="submit"/>
                                     </div>
                                 </fieldset>
                             </div>

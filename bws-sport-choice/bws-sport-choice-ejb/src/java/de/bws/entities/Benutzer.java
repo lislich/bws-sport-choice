@@ -6,12 +6,15 @@
 package de.bws.entities;
 
 import de.bws.data.Rolle;
+import de.bws.security.Passwort;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -29,13 +32,18 @@ public class Benutzer implements Serializable {
     private String benutzername;
     
     @Column(name = "SALT")
-    private String salt;
+    private byte[] salt;
     
     @Column(name = "PASSWORT")
     private String passwort;
 
     @Column(name = "ROLLE")
     private Rolle rolle;
+    
+    @OneToOne
+    @JoinColumn(name = "PERSON_ID", referencedColumnName = "ID", nullable = true)
+    private Person person;
+    
 //*************************** Methoden ****************************
     
     @Override
@@ -90,14 +98,14 @@ public class Benutzer implements Serializable {
     /**
      * @return the salt
      */
-    public String getSalt() {
+    public byte[] getSalt() {
         return salt;
     }
 
     /**
      * @param p_salt the salt to set
      */
-    public void setSalt(String p_salt) {
+    public void setSalt(byte[] p_salt) {
         this.salt = p_salt;
     }
 
@@ -110,9 +118,15 @@ public class Benutzer implements Serializable {
 
     /**
      * @param p_passwort the passwort to set
+     * @throws java.lang.Exception
      */
-    public void setPasswort(String p_passwort) {
-        this.passwort = p_passwort;
+    public void setPasswort(String p_passwort) throws Exception {
+        this.setSalt(Passwort.saltGenerieren());
+    }
+    
+    public void setNeuesPasswort(String p_passwort) throws Exception {
+        this.setSalt(Passwort.saltGenerieren());
+        this.passwort = Passwort.hashen(p_passwort, salt);
     }
 
     /**
@@ -127,6 +141,20 @@ public class Benutzer implements Serializable {
      */
     public void setRolle(Rolle rolle) {
         this.rolle = rolle;
+    }
+
+    /**
+     * @return the person
+     */
+    public Person getPerson() {
+        return person;
+    }
+
+    /**
+     * @param person the person to set
+     */
+    public void setPerson(Person person) {
+        this.person = person;
     }
     
 }
