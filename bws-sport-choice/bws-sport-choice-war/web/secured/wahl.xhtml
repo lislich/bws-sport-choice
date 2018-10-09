@@ -41,21 +41,21 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <ui:repeat var="kurs" value="">
+                                        <ui:repeat var="kurs" value="#{kurslisteBean.alleKurse}">
 
                                             <tr>
-                                                <td>Titel</td>
+                                                <td><h:outputText value="#{kurs.titel} - #{kurs.kuerzel}"/></td>
                                                 <td>
-                                                    <input type="radio" name="wahlEins" id="UWFEins" ></input>
+                                                    <input type="radio" class="eins" name="wahl#{kurs.titel}" id="#{kurs.titel}Eins" ></input>
                                                 </td>
                                                 <td>
-                                                    <input type="radio" name="wahlZwei" id="UWFZwei" ></input>
+                                                    <input type="radio" class="zwei" name="wahl#{kurs.titel}" id="#{kurs.titel}Zwei" ></input>
                                                 </td>
                                                 <td>
-                                                    <input type="radio" name="wahlDrei" id="UWFDrei" ></input>
+                                                    <input type="radio" class="drei" name="wahl#{kurs.titel}" id="#{kurs.titel}Drei" ></input>
                                                 </td>
-                                                <td>50</td>
-                                                <td>80</td>
+                                                <td><h:outputText value="#{kurs.teilnehmerzahl}" /></td>
+                                                <td>X</td>
                                             </tr>
 
                                         </ui:repeat>

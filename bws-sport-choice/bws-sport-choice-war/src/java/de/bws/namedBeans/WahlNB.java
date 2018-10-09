@@ -10,6 +10,7 @@ import de.bws.sessionbeans.WahlFacadeLocal;
 import de.bws.sessionbeans.WahlzeitraumFacadeLocal;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -51,10 +52,18 @@ public class WahlNB implements Serializable{
     }
     
     public void saveDatum(){
-        Wahlzeitraum tmp = new Wahlzeitraum();
-        tmp.setBeginn(getBeginn());
-        tmp.setEnde(getEnde());
-        this.wahlzeitraumBean.create(tmp);
+        List<Wahlzeitraum> tmpList;
+        tmpList = wahlzeitraumBean.get("SELECT wz FROM Wahlzeitraum wz");
+        if(tmpList.isEmpty()){
+            Wahlzeitraum tmp = new Wahlzeitraum();
+            tmp.setBeginn(getBeginn());
+            tmp.setEnde(getEnde());
+            this.wahlzeitraumBean.create(tmp);
+        }else{
+            System.out.println("edit");
+            Wahlzeitraum tmp = tmpList.get(0);
+            this.wahlzeitraumBean.edit(tmp);
+        }
     }
     
     /**

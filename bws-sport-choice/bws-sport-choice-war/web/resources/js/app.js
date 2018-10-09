@@ -21,24 +21,27 @@ $(document).ready(function () {
     * Funktion um Doppel-Wahl eines Kurses nicht zuzulassen.
     * Wenn ein Kurs bereits als 1.Wahl angeklickt wurde ist die 2. + 3.Wahl nurnoch bei anderen Kursen möglich.
     */
-    $("#UWFEins").change(function () {
-        if ($("#UWFEins").is(" :checked")) {
-            $("#UWFZwei").attr("disabled", true);
-            $("#UWFDrei").attr("disabled", true);
+    $(".eins").change(function () {
+        if ($(".eins").is(" :checked")) {
+            $(".eins").attr("disabled", true);
+            $(".zwei").attr("disabled", false);
+            $(".drei").attr("disabled", false);
         }
     });
 
-    $("#UWFZwei").change(function () {
-        if ($("#UWFZwei").is(" :checked")) {
-            $("#UWFEins").attr("disabled", true);
-            $("#UWFDrei").attr("disabled", true);
+    $(".zwei").change(function () {
+        if ($(".zwei").is(" :checked")) {
+            $(".zwei").attr("disabled", true);
+            $(".drei").attr("disabled", false);
+            $(".eins").attr("disabled", false);
         }
     });
 
-    $("#UWFDrei").change(function () {
-        if ($("#UWFDrei").is(" :checked")) {
-            $("#UWFZwei").attr("disabled", true);
-            $("#UWFEins").attr("disabled", true);
+    $(".drei").change(function () {
+        if ($(".drei").is(" :checked")) {
+            $(".drei").attr("disabled", true);
+            $(".eins").attr("disabled", false);
+            $(".zwei").attr("disabled", false);
         }
     });
 

@@ -62,14 +62,14 @@
                                         <h:inputTextarea id="hinweis" class="input-group-field" value="#{kursNB.hinweis}"/>
                                     </div>
                                 </div>
-                                <div class="row collapse">
+                                <!--<div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Teilnehmerzahl</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
                                         <input type="number" min="1" max="50" value="#{kursNB.teilnehmerzahl}" step="1" id="kuerzel" class="input-group-field" />
                                     </div>
-                                </div>
+                                </div>-->
                                 <div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Themengleich mit</span>
@@ -101,9 +101,8 @@
                                 <form>
                                     <input type="button" class="add-row" value="Zeile hinzufügen" />
                                     <input type="button" class="delete-row" value="Auswahl löschen" />
-                                </form>                                       
-                                    <h:commandButton class="small button" id="kursAnlegen" value="Anlegen" actionListener="" ></h:commandButton>   -->
-                                <h:commandLink id="kursAnlegen" action="#{kursNB.anlegen()}">Anlegen</h:commandLink>
+                                </form>   -->                                    
+                                <h:commandButton class="small button" id="kursAnlegen" value="Anlegen" action="#{kursNB.anlegen()}" type="submit"></h:commandButton>
                                 </h:form>
                             </fieldset>
                         

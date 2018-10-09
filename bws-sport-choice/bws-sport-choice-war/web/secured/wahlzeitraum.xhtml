@@ -24,7 +24,8 @@
                                             <span class="prefix">Beginndatum</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">
-                                            <input type="date" id="beginn" class="input-group-field" value="#{wahlNB.beginn}"/>
+                                            <h:inputText id="beginn" class="input-group-field" value="#{wahlNB.beginn}" converter="DateConverter" required="true"  />
+                                            <!--<input type="date" id="beginn" class="input-group-field" value="#{wahlNB.beginn}" converter="DateConverter"/>-->
                                         </div>
                                     </div>
                                     <div class="row collapse">
@@ -32,7 +33,8 @@
                                             <span class="prefix">Enddatum</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">
-                                            <input type="date" id="ende" class="input-group-field" value="#{wahlNB.ende}"/>
+                                            <h:inputText id="ende" class="input-group-field" value="#{wahlNB.ende}" converter="DateConverter" required="true"/>
+                                            <!--<input type="date" id="ende" class="input-group-field" value="#{wahlNB.ende}"/>-->
                                         </div>
                                     </div>                              
                                     <div>

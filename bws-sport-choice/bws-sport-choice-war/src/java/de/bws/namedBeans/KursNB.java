@@ -8,13 +8,9 @@ package de.bws.namedBeans;
 import de.bws.entities.Kurs;
 import de.bws.entities.Stufe;
 import de.bws.sessionbeans.KursFacadeLocal;
-import java.io.PrintStream;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.ejb.PostActivate;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
@@ -56,7 +52,7 @@ public class KursNB implements Serializable{
         }
     }
     
-    public String anlegen(){
+    public void anlegen(){
         System.out.println("de.bws.namedBeans.KursNB.anlegen()");
         Kurs kurs = new Kurs();
         kurs.setBewertung(this.getBewertung());
@@ -65,7 +61,6 @@ public class KursNB implements Serializable{
         kurs.setTeilnehmerzahl(this.getTeilnehmerzahl());
         kurs.setTitel(this.getTitel());
         this.kursBean.create(kurs);
-        return "kursAngelegt";
     } 
     
     public void getGewaehlterKurs(){
