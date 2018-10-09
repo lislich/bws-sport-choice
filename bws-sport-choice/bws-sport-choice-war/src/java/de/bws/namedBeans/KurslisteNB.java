@@ -10,6 +10,7 @@ import de.bws.sessionbeans.KursFacadeLocal;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
@@ -37,5 +38,9 @@ public class KurslisteNB implements Serializable {
         this.alleKurse = alleKurse;
     }
     
-    
+    public String setGewaehlterKurs(Kurs kurs){
+        System.out.println("de.bws.namedBeans.KurslisteNB.setGewaehlterKurs()" + kurs.getTitel());
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("gewaehlterKurs", kurs);
+        return "kursAnschauen";
+    }
 }

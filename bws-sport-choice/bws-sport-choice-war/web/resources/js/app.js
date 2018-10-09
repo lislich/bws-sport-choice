@@ -104,5 +104,7 @@ $(document).ready(function () {
     $("#anlegen").button().on("click", function () {
         dialog.dialog("open");
     });
+
+
 });
 

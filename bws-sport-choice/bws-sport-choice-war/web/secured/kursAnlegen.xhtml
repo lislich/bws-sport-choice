@@ -16,9 +16,10 @@
             <ui:define name="content">
                 <div class="row">
                     <div class="small-12 columns small-centered">
-                        <h:form>
+                        
                             <fieldset>
                                 <legend>Kurs anlegen</legend>
+                                <h:form>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Titel</span>
@@ -100,13 +101,13 @@
                                 <form>
                                     <input type="button" class="add-row" value="Zeile hinzufügen" />
                                     <input type="button" class="delete-row" value="Auswahl löschen" />
-                                </form>     -->  
-                                <div>
-                                    <h:commandButton class="small button" id="kursAnlegen" value="Anlegen" action="#{kursNB.anlegen()}"/>
-                                </div>
+                                </form>                                       
+                                    <h:commandButton class="small button" id="kursAnlegen" value="Anlegen" actionListener="" ></h:commandButton>   -->
+                                <h:commandLink id="kursAnlegen" action="#{kursNB.anlegen()}">Anlegen</h:commandLink>
+                                </h:form>
                             </fieldset>
-                        </h:form>
-                    </div>
+                        
+                    </div>  
                 </div>
             </ui:define>
 

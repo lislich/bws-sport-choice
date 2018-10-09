@@ -24,7 +24,7 @@
                                             <span class="prefix">Beginndatum</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">
-                                            <input type="date" id="beginn" class="input-group-field" />
+                                            <input type="date" id="beginn" class="input-group-field" value="#{wahlNB.beginn}"/>
                                         </div>
                                     </div>
                                     <div class="row collapse">
@@ -32,11 +32,11 @@
                                             <span class="prefix">Enddatum</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">
-                                            <input type="date" id="ende" class="input-group-field" />
+                                            <input type="date" id="ende" class="input-group-field" value="#{wahlNB.ende}"/>
                                         </div>
                                     </div>                              
                                     <div>
-                                        <h:commandButton class="small button" id="saveDatum" value="Speichern" action="saveDatum" type="submit"/>
+                                        <h:commandButton class="small button" id="saveDatum" value="Speichern" action="#{wahlNB.saveDatum()}" type="submit"/>
                                     </div>
                                 </fieldset>
                             </div>

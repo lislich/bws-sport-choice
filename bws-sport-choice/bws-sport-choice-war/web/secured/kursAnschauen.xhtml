@@ -16,33 +16,33 @@
                 <div id="kursAnschauen" class="row">
                     <div class="small-12 columns small-centered">
                         <fieldset>
-                            <legend>Kurstitel</legend>
-                            <p>Max. Teilnehmer: </p>
+                            <legend><h:outputText value="#{kursNB.kurs.titel} - #{kursNB.kurs.kuerzel} - #{kursNB.kurs.stufe.bezeichnung} - #{kursNB.kurs.lehrer.kuerzel}" /></legend>
+                            <p>Max. Teilnehmerzahl: #{kursNB.kurs.teilnehmerzahl}</p>
                             <table>
                                 <thead>
                                     <tr>
                                         <th width="10">%</th>
                                         <th width="90">Unterrichtsthemen</th>
                                         <th width="100">Schwerpunkte</th>
-                                        <th width="100">Bewertung</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>50</td>
-                                        <td>Thema 1</td>
-                                        <td>. . .</td>
-                                        <td>. . .</td>
+                                        <ui:repeat var="thema" value="#{kursNB.kurs.thema}">
+                                            <td><h:outputText value="#{thema.anteil}"/></td>
+                                            <td><h:outputText value="#{thema.beschreibung}"/></td>
+                                            <td></td>
+                                        </ui:repeat>                                           
                                     </tr>
                                     <tr>
-                                        <td>50</td>
-                                        <td>Thema 2</td>
-                                        <td>. . .</td>
+                                        <td></td>
+                                        <td>Bewertung:</td>
+                                        <td><h:outputText value="#{kursNB.kurs.bewertung}"/></td>
                                     </tr>
                                     <tr>
                                         <td></td>
                                         <td>Hinweise:</td>
-                                        <td>. . .</td>
+                                        <td><h:outputText value="#{kursNB.kurs.hinweis}"/></td>
                                     </tr>
                                 </tbody>
                             </table>

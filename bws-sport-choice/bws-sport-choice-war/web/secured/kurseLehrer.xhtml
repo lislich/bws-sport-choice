@@ -30,10 +30,10 @@
                                     <ui:repeat var="kurs" value="">
 
                                         <tr>
-                                            <td><h:link outcome="kursAnschauen">Titel</h:link></td>
+                                            <td><h:commandLink action="#{kurslisteBean.setGewaehlterKurs(kurs)}">Titel</h:commandLink>></td>
                                             <td>. . .</td>
                                             <td>12</td>
-                                            <td><h:link value="" outcome="kursBearbeiten"><i class="fi-clipboard-pencil"></i></h:link></td>
+                                            <td><h:commandLink action="#{kurslisteBean.setGewaehlterKurs(kurs)}"><i class="fi-clipboard-pencil"></i></h:commandLink></td>
                                         </tr>
                                     </ui:repeat>
                                 </tbody>

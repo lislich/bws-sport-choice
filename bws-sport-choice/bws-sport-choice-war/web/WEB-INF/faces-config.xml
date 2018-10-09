@@ -97,6 +97,10 @@
         <from-outcome>kurseAlle</from-outcome>
         <to-view-id>secured/kurseAlle.xhtml</to-view-id>
       </navigation-case>
+      <navigation-case>
+          <from-outcome>kursAngelegt</from-outcome>
+          <to-view-id>secured/kursAnlegen.xhtml</to-view-id>
+      </navigation-case>
     </navigation-rule>
     
     

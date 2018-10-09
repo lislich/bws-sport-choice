@@ -8,10 +8,14 @@ package de.bws.namedBeans;
 import de.bws.entities.Kurs;
 import de.bws.entities.Stufe;
 import de.bws.sessionbeans.KursFacadeLocal;
+import java.io.PrintStream;
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.PostActivate;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
@@ -19,9 +23,8 @@ import javax.faces.view.ViewScoped;
  *
  * @author Lisa
  */
-@ManagedBean
-//@Named(value = "kursNB")
-@SessionScoped
+@Named(value = "kursNB")
+@ViewScoped
 public class KursNB implements Serializable{
 
     /**
@@ -33,6 +36,8 @@ public class KursNB implements Serializable{
      @EJB
     private KursFacadeLocal kursBean;
     
+    private Kurs kurs;
+     
     private String titel;
     private String kuerzel;
     private Stufe stufe;
@@ -42,7 +47,16 @@ public class KursNB implements Serializable{
     private Kurs themengleich;
 //    private List<Thema> thema;
     
-    public void anlegen(){
+    @PostConstruct
+    public void init(){
+        try{
+            this.getGewaehlterKurs();
+        }catch(NullPointerException e){
+
+        }
+    }
+    
+    public String anlegen(){
         System.out.println("de.bws.namedBeans.KursNB.anlegen()");
         Kurs kurs = new Kurs();
         kurs.setBewertung(this.getBewertung());
@@ -51,8 +65,17 @@ public class KursNB implements Serializable{
         kurs.setTeilnehmerzahl(this.getTeilnehmerzahl());
         kurs.setTitel(this.getTitel());
         this.kursBean.create(kurs);
+        return "kursAngelegt";
     } 
+    
+    public void getGewaehlterKurs(){
+        this.kurs = ((Kurs) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("gewaehlterKurs"));
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("gewaehlterKurs");
+    }
 
+    
+    
+    
     /**
      * @return the titel
      */
@@ -149,6 +172,20 @@ public class KursNB implements Serializable{
      */
     public void setThemengleich(Kurs themengleich) {
         this.themengleich = themengleich;
+    }
+
+    /**
+     * @return the kurs
+     */
+    public Kurs getKurs() {
+        return kurs;
+    }
+
+    /**
+     * @param kurs the kurs to set
+     */
+    public void setKurs(Kurs kurs) {
+        this.kurs = kurs;
     }
     
     

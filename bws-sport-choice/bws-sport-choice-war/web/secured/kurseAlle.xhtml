@@ -17,6 +17,7 @@
                     <div class="small-12 columns small-centered">
                         <fieldset>
                             <legend>Alle Kurse</legend>
+                            <h:form>
                             <table>
                                 <thead>
                                     <tr>
@@ -30,7 +31,7 @@
                                     <ui:repeat var="kurs" value="#{kurslisteBean.alleKurse}">
 
                                         <tr>
-                                            <td><h:link outcome="kursAnschauen"><h:outputText value="#{kurs.titel}"/></h:link></td>
+                                            <td><h:commandLink action="#{kurslisteBean.setGewaehlterKurs(kurs)}"><h:outputText value="#{kurs.titel}"/></h:commandLink></td>
                                             <td><h:outputText value="#{kurs.bewertung}"/></td>
                                             <td><h:outputText value="#{kurs.lehrer.nachname}, #{kurs.lehrer.vorname}"/></td>
                                             <td><h:outputText value="#{kurs.stufe.bezeichnung}"/></td>
@@ -38,6 +39,7 @@
                                     </ui:repeat>
                                 </tbody>
                             </table>
+                            </h:form>
                         </fieldset>
                     </div>                    
                 </div>
