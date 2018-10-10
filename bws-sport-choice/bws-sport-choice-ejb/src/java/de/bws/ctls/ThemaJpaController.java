@@ -35,7 +35,8 @@ public class ThemaJpaController {
     public void updateThema(Thema p_thema){
         Thema tmp = this.em.find(Thema.class, p_thema.getId());
         tmp.setAnteil(p_thema.getAnteil());
-        tmp.setBeschreibung(p_thema.getBeschreibung());
+        tmp.setBezeichnung(p_thema.getBezeichnung());
+        tmp.setSchwerpunkt(p_thema.getSchwerpunkt());
     }
     
     public Thema findThema(long p_id){

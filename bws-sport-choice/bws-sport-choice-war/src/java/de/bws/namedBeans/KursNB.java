@@ -7,7 +7,9 @@ package de.bws.namedBeans;
 
 import de.bws.entities.Kurs;
 import de.bws.entities.Stufe;
+import de.bws.entities.Thema;
 import de.bws.sessionbeans.KursFacadeLocal;
+import de.bws.sessionbeans.ThemaFacadeLocal;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -23,14 +25,12 @@ import javax.faces.view.ViewScoped;
 @ViewScoped
 public class KursNB implements Serializable{
 
-    /**
-     * Creates a new instance of KursNB
-     */
-    public KursNB() {
-    }
     
      @EJB
     private KursFacadeLocal kursBean;
+     
+     @EJB
+     private ThemaFacadeLocal themaBean;
     
     private Kurs kurs;
      
@@ -41,6 +41,13 @@ public class KursNB implements Serializable{
     private String hinweis;
     private int teilnehmerzahl;
     private Kurs themengleich;
+    private String beschreibung;
+    
+    private String bezeichnung;
+    private String schwerpunkt;
+    private int anteil;
+    
+    
 //    private List<Thema> thema;
     
     @PostConstruct
@@ -53,14 +60,23 @@ public class KursNB implements Serializable{
     }
     
     public void anlegen(){
+        Thema thema = new Thema();
+        thema.setAnteil(anteil);
+        thema.setBezeichnung(beschreibung);
+        thema.setSchwerpunkt(schwerpunkt);
+        this.themaBean.create(thema);
+        
         System.out.println("de.bws.namedBeans.KursNB.anlegen()");
-        Kurs kurs = new Kurs();
-        kurs.setBewertung(this.getBewertung());
-        kurs.setHinweis(this.getHinweis());
-        kurs.setKuerzel(this.getKuerzel());
-        kurs.setTeilnehmerzahl(this.getTeilnehmerzahl());
-        kurs.setTitel(this.getTitel());
-        this.kursBean.create(kurs);
+        Kurs kursT = new Kurs();
+        kursT.setBewertung(this.getBewertung());
+        kursT.setHinweis(this.getHinweis());
+        kursT.setKuerzel(this.getKuerzel());
+        kursT.setTeilnehmerzahl(this.getTeilnehmerzahl());
+        kursT.setTitel(this.getTitel());
+        kursT.setBeschreibung(beschreibung);
+        kursT.addThema(thema);
+        
+        this.kursBean.create(kursT);      
     } 
     
     public void getGewaehlterKurs(){
@@ -181,6 +197,62 @@ public class KursNB implements Serializable{
      */
     public void setKurs(Kurs kurs) {
         this.kurs = kurs;
+    }
+
+    /**
+     * @return the beschreibung
+     */
+    public String getBeschreibung() {
+        return beschreibung;
+    }
+
+    /**
+     * @param beschreibung the beschreibung to set
+     */
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+
+    /**
+     * @return the bezeichnung
+     */
+    public String getBezeichnung() {
+        return bezeichnung;
+    }
+
+    /**
+     * @param bezeichnung the bezeichnung to set
+     */
+    public void setBezeichnung(String bezeichnung) {
+        this.bezeichnung = bezeichnung;
+    }
+
+    /**
+     * @return the schwerpunkt
+     */
+    public String getSchwerpunkt() {
+        return schwerpunkt;
+    }
+
+    /**
+     * @param schwerpunkt the schwerpunkt to set
+     */
+    public void setSchwerpunkt(String schwerpunkt) {
+        this.schwerpunkt = schwerpunkt;
+    }
+
+    /**
+     * @return the anteil
+     */
+    public int getAnteil() {
+        return anteil;
+    }
+
+    /**
+     * @param anteil the anteil to set
+     */
+    public void setAnteil(int anteil) {
+        this.anteil = anteil;
     }
     
     

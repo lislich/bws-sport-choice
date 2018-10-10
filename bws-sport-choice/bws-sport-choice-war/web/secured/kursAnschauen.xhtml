@@ -18,6 +18,7 @@
                         <fieldset>
                             <legend><h:outputText value="#{kursNB.kurs.titel} - #{kursNB.kurs.kuerzel} - #{kursNB.kurs.stufe.bezeichnung} - #{kursNB.kurs.lehrer.kuerzel}" /></legend>
                             <p>Max. Teilnehmerzahl: #{kursNB.kurs.teilnehmerzahl}</p>
+                            <p>Beschreibung: #{kursNB.kurs.beschreibung}</p>
                             <table>
                                 <thead>
                                     <tr>
@@ -27,13 +28,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <ui:repeat var="thema" value="#{kursNB.kurs.thema}">
+                                    <ui:repeat var="thema" value="#{kursNB.kurs.thema}">
+                                        <tr>
                                             <td><h:outputText value="#{thema.anteil}"/></td>
-                                            <td><h:outputText value="#{thema.beschreibung}"/></td>
-                                            <td></td>
-                                        </ui:repeat>                                           
-                                    </tr>
+                                            <td><h:outputText value="#{thema.bezeichnung}"/></td>
+                                            <td><h:outputText value="#{thema.schwerpunkt}"/></td>
+                                        </tr>
+                                    </ui:repeat>
+                                </tbody>
+                                <tfoot>
                                     <tr>
                                         <td></td>
                                         <td>Bewertung:</td>
@@ -44,7 +47,7 @@
                                         <td>Hinweise:</td>
                                         <td><h:outputText value="#{kursNB.kurs.hinweis}"/></td>
                                     </tr>
-                                </tbody>
+                                </tfoot>
                             </table>
                             <h:link outcome="schuelerlisteKurs">Hier einsehen welche Schüler eingewählt wurden.</h:link>
                         </fieldset>

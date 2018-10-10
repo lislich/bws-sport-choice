@@ -16,38 +16,34 @@
             <ui:define name="content">
                 <div class="row">
                     <h:form>
-                            <div class="small-12 columns small-centered">
-                                <fieldset>
-                                    <legend>Wahlzeitraum</legend>
-                                    <div class="row collapse">
-                                        <div class="small-4 columns">
-                                            <span class="prefix">Beginndatum</span>
-                                        </div>
-                                        <div class="small-8 columns mobile-input">
-                                            <h:inputText id="beginn" class="input-group-field" value="#{wahlNB.beginn}" converter="DateConverter" required="true"  />
-                                            <!--<input type="date" id="beginn" class="input-group-field" value="#{wahlNB.beginn}" converter="DateConverter"/>-->
-                                        </div>
+                        <div class="small-12 columns small-centered">
+                            <fieldset>
+                                <legend>Wahlzeitraum</legend>
+                                <div class="row collapse">
+                                    <div class="small-4 columns">
+                                        <span class="prefix">Beginndatum</span>
                                     </div>
-                                    <div class="row collapse">
-                                        <div class="small-4 columns">
-                                            <span class="prefix">Enddatum</span>
-                                        </div>
-                                        <div class="small-8 columns mobile-input">
-                                            <h:inputText id="ende" class="input-group-field" value="#{wahlNB.ende}" converter="DateConverter" required="true"/>
-                                            <!--<input type="date" id="ende" class="input-group-field" value="#{wahlNB.ende}"/>-->
-                                        </div>
-                                    </div>                              
-                                    <div>
-                                        <h:commandButton class="small button" id="saveDatum" value="Speichern" action="#{wahlNB.saveDatum()}" type="submit"/>
+                                    <div class="small-8 columns mobile-input">
+                                        <h:inputText id="beginn" class="input-group-field" value="#{wahlNB.beginn}" converter="DateConverter" required="true"  />
                                     </div>
-                                </fieldset>
-                            </div>
-                        </h:form>
-
-                    </div>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="small-4 columns">
+                                        <span class="prefix">Enddatum</span>
+                                    </div>
+                                    <div class="small-8 columns mobile-input">
+                                        <h:inputText id="ende" class="input-group-field" value="#{wahlNB.ende}" converter="DateConverter" required="true"/>
+                                    </div>
+                                </div>                              
+                                <div>
+                                    <h:commandButton class="small button" id="saveDatum" value="Speichern" action="#{wahlNB.saveDatum()}" type="submit"/>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </h:form>
+                </div>
             </ui:define>
-
+            
         </ui:composition>
-
     </body>
 </html>

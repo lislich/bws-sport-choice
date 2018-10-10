@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">  
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">  
 
     <body>
 
@@ -25,17 +26,17 @@
                     </div>
                 </div>
                 <div id="wahlAbgeben" class="row">
-                    <h:form>
-                        <div class="small-12 columns small-centered">
-                            <fieldset>
-                                <legend>Kurswahl</legend>
+                    <div class="small-12 columns small-centered">
+                        <fieldset>
+                            <legend>Kurswahl</legend>
+                            <h:form>
                                 <table>
                                     <thead>
                                         <tr>
                                             <th width="100">Kurs</th>
-                                            <th width="50">1. Wahl</th>
-                                            <th width="50">2. Wahl</th>
-                                            <th width="50">3. Wahl</th>
+                                            <th width="50">1. Wahl<button type="button" id="resetEins"><i style="color: black" class="fi-loop"></i></button></th>
+                                            <th width="50">2. Wahl<button type="button" id="resetZwei"><i style="color: black" class="fi-loop"></i></button></th>
+                                            <th width="50">3. Wahl<button type="button" id="resetDrei"><i style="color: black" class="fi-loop"></i></button></th>
                                             <th width="50">max. Teilnehmer</th>
                                             <th width="50">Auslastung in %</th>
                                         </tr>
@@ -46,13 +47,14 @@
                                             <tr>
                                                 <td><h:outputText value="#{kurs.titel} - #{kurs.kuerzel}"/></td>
                                                 <td>
-                                                    <input type="radio" class="eins" name="wahl#{kurs.titel}" id="#{kurs.titel}Eins" ></input>
+                                                    <h:
+                                                    <input type="radio" class="eins"  value="#{kurs.kuerzel}" name="wahl#{kurs.titel}" id="#{kurs.kuerzel}Eins" ></input>
                                                 </td>
                                                 <td>
-                                                    <input type="radio" class="zwei" name="wahl#{kurs.titel}" id="#{kurs.titel}Zwei" ></input>
+                                                    <input type="radio" class="zwei" value="#{kurs.kuerzel}" name="wahl#{kurs.titel}" id="#{kurs.kuerzel}Zwei" ></input>
                                                 </td>
                                                 <td>
-                                                    <input type="radio" class="drei" name="wahl#{kurs.titel}" id="#{kurs.titel}Drei" ></input>
+                                                    <input type="radio" class="drei" value="#{kurs.kuerzel}" name="wahl#{kurs.titel}" id="#{kurs.kuerzel}Drei" ></input>
                                                 </td>
                                                 <td><h:outputText value="#{kurs.teilnehmerzahl}" /></td>
                                                 <td>X</td>
@@ -61,12 +63,13 @@
                                         </ui:repeat>
                                     </tbody>
                                 </table>
-                                <h:commandButton class="small button" id="wahlSpeichern" type="submit" value="Wahl speichern" action="1" />
-                            </fieldset>
-                        </div>
-                        </h:form>
+                                <h:commandButton class="small button" id="wahlSpeichern" value="Wahl speichern" action="#{wahlNB.saveWahl()}" type="submit"/>
+                            </h:form>
+
+                        </fieldset>
+                    </div>
                 </div>
-                
+
 
             </ui:define>
 

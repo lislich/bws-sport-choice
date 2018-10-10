@@ -2,6 +2,16 @@
     margin-bottom: 15px !important;
 }
 
+#resetEins, #resetZwei, #resetDrei{
+    padding-bottom: 1px !important;
+    padding-left: 1px !important;
+    padding-right: 1px !important;
+    padding-top: 1px !important;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+}
+
 .hide{
     visibility: hidden;
 }

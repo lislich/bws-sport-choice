@@ -45,6 +45,7 @@ public class KursJpaController {
         tmp.setThema(p_kurs.getThema());
         tmp.setThemengleich(p_kurs.getThemengleich());
         tmp.setTitel(p_kurs.getTitel());
+        tmp.setBeschreibung(p_kurs.getBeschreibung());
     }
     
     public Kurs find(long p_id){

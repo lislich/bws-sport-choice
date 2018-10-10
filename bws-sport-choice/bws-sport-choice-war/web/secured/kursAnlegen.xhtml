@@ -3,7 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:jsf="http://xmlns.jcp.org/jsf">
 
     <body>
 
@@ -14,12 +16,13 @@
             </ui:define>
 
             <ui:define name="content">
-                <div class="row">
-                    <div class="small-12 columns small-centered">
-                        
+                <h:form>
+                    <div class="row">
+                        <div class="small-12 columns small-centered">
+
                             <fieldset>
                                 <legend>Kurs anlegen</legend>
-                                <h:form>
+
                                 <div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Titel</span>
@@ -48,6 +51,14 @@
                                 </div>
                                 <div class="row collapse area">
                                     <div class="small-4 columns">
+                                        <span class="prefix">Beschreibung</span>
+                                    </div>
+                                    <div class="small-8 columns mobile-input">
+                                        <h:inputTextarea id="beschreibung" class="input-group-field" value="#{kursNB.beschreibung}"/>
+                                    </div>
+                                </div>
+                                <div class="row collapse area">
+                                    <div class="small-4 columns">
                                         <span class="prefix">Bewertung</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
@@ -62,25 +73,27 @@
                                         <h:inputTextarea id="hinweis" class="input-group-field" value="#{kursNB.hinweis}"/>
                                     </div>
                                 </div>
-                                <!--<div class="row collapse">
+                                <!--    <div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Teilnehmerzahl</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <input type="number" min="1" max="50" value="#{kursNB.teilnehmerzahl}" step="1" id="kuerzel" class="input-group-field" />
+                                        <p:spinner min="1" max="100" id="teilnehmerzahl" binding="" class="input-group-field" />
+                                        <input type="number" min="1" max="50" jsf:value="#{kursNB.teilnehmerzahl}" step="1" id="kuerzel" class="input-group-field" />
                                     </div>
-                                </div>-->
+                                </div>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Themengleich mit</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
                                         <h:selectOneMenu id="themengleich" class="input-group-field" value="#{kursNB.themengleich}">
+                                            <f:selectItem value="Keine Angabe" itemValue="Kein Themengleicher Kurs" itemLabel="Kein Themengleicher Kurs" />
                                             <f:selectItems value="#{kurslisteBean.alleKurse}" var="kurs" itemValue="#{kurs.id}" itemLabel="#{kurs.titel}"/>
                                         </h:selectOneMenu>
                                     </div>
-                                </div>
-                                <!--<div class="row collapse">
+                                </div>-->
+                                <div class="row collapse">
                                     <table id="unterrichtsthemen">
                                         <thead>
                                             <th width="100">Anteil in %</th>
@@ -90,24 +103,23 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td><input type="number" min="1" max="100" name="anteil" class="input-group-field"/></td>
-                                                <td><h:inputText id="thema" class="input-group-field"/></td>
-                                                <td><h:inputText id="schwerpunkt" class="input-group-field" /></td>
+                                                <td><h:inputText id="anteil" value="#{kursNB.anteil}" class="input-group-field"/></td>
+                                                <td><h:inputText id="bezeichnung" value="#{kursNB.bezeichnung}" class="input-group-field"/></td>
+                                                <td><h:inputText id="schwerpunkt" value="#{kursNB.schwerpunkt}" class="input-group-field" /></td>
                                                 <td><input type="checkbox" name="loeschen"/></td>
                                             </tr>                                           
                                         </tbody>                                       
                                     </table>                                    
                                 </div>
-                                <form>
                                     <input type="button" class="add-row" value="Zeile hinzufügen" />
-                                    <input type="button" class="delete-row" value="Auswahl löschen" />
-                                </form>   -->                                    
-                                <h:commandButton class="small button" id="kursAnlegen" value="Anlegen" action="#{kursNB.anlegen()}" type="submit"></h:commandButton>
-                                </h:form>
+                                    <input type="button" class="delete-row" value="Auswahl löschen" />                                   
+                                <h:commandButton class="small button" id="kursAnlegen" value="Anlegen"  action="#{kursNB.anlegen()}" type="submit"></h:commandButton>
+
                             </fieldset>
-                        
-                    </div>  
-                </div>
+
+                        </div>  
+                    </div>
+                </h:form>
             </ui:define>
 
         </ui:composition>

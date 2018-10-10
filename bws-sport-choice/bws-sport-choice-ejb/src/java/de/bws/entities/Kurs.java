@@ -60,6 +60,9 @@ public class Kurs implements Serializable {
     @Column(name = "HINWEIS")
     private String hinweis;
     
+    @Column(name = "BESCHREIBUNG")
+    private String beschreibung;
+    
     @OneToMany(orphanRemoval = true)
     @JoinColumn(referencedColumnName = "KURS_ID", name = "KURS_ID")
 //    @JoinTable(name = "SCHUELER_KURS",
@@ -268,6 +271,35 @@ public class Kurs implements Serializable {
         this.teilnehmer = p_teilnehmer;
     }
     
+
+    /**
+     * @return the stufe
+     */
+    public Stufe getStufe() {
+        return stufe;
+    }
+
+    /**
+     * @param p_stufe the stufe to set
+     */
+    public void setStufe(Stufe p_stufe) {
+        this.stufe = p_stufe;
+    }
+
+    /**
+     * @return the beschreibung
+     */
+    public String getBeschreibung() {
+        return beschreibung;
+    }
+
+    /**
+     * @param beschreibung the beschreibung to set
+     */
+    public void setBeschreibung(String beschreibung) {
+        this.beschreibung = beschreibung;
+    }
+    
     /**
      * @param p_teilnehmer der Teilnehmer, der hinzugefügt werden soll
      * @return Diese Methode gibt true zurück, wenn der Teilnehmer hinzugefügt wurde, und
@@ -292,19 +324,30 @@ public class Kurs implements Serializable {
     public boolean removeTeilnehmer(Schueler p_teilnehmer){
         return this.teilnehmer.remove(p_teilnehmer);
     }
-
+    
     /**
-     * @return the stufe
+     * @param p_teilnehmer der Teilnehmer, der hinzugefügt werden soll
+     * @return Diese Methode gibt true zurück, wenn der Teilnehmer hinzugefügt wurde, und
+     * false, falls der Teilnehmer bereits in der Liste vorhanden ist
      */
-    public Stufe getStufe() {
-        return stufe;
+    public boolean addThema(Thema p_thema){
+        for(Thema t:this.thema){
+            if(t.equals(p_thema)){
+                return false;
+            }
+        }
+        
+        this.thema.add(p_thema);
+        return true;
     }
-
+    
     /**
-     * @param p_stufe the stufe to set
+     * @param p_teilnehmer der Teilnehner, der aus dem Kurs entfernt werden soll
+     * @return Diese Methode gibt true zurück, wenn der Teilnehmer entfernt wurde, 
+     * und false, falls der Teilnehmer nicht in der Liste ist.
      */
-    public void setStufe(Stufe p_stufe) {
-        this.stufe = p_stufe;
+    public boolean removeThema(Thema p_thema){
+        return this.thema.remove(p_thema);
     }
     
 }

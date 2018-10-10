@@ -5,6 +5,8 @@
  */
 package de.bws.namedBeans;
 
+import de.bws.entities.Kurs;
+import de.bws.entities.Wahl;
 import de.bws.entities.Wahlzeitraum;
 import de.bws.sessionbeans.WahlFacadeLocal;
 import de.bws.sessionbeans.WahlzeitraumFacadeLocal;
@@ -32,6 +34,10 @@ public class WahlNB implements Serializable{
     
     private Date beginn;
     private Date ende;
+    
+    private Kurs ersteWahl;
+    private Kurs zweiteWahl;
+    private Kurs dritteWahl;
     
     @PostConstruct
     public void init(){
@@ -66,13 +72,17 @@ public class WahlNB implements Serializable{
         }
     }
     
-    /**
-     * Creates a new instance of WahlNB
-     */
-    public WahlNB() {
-    }
     
-   
+    public String saveWahl(){
+        System.out.println("de.bws.namedBeans.WahlNB.saveWahl()");
+        Wahl wahl = new Wahl();
+        wahl.setErstwahl(ersteWahl);
+        wahl.setZweitwahl(zweiteWahl);
+        wahl.setDrittwahl(dritteWahl);
+        this.wahlBean.create(wahl);
+        return "gewaehlt";
+    }
+
 
     /**
      * @return the beginn
@@ -100,6 +110,48 @@ public class WahlNB implements Serializable{
      */
     public void setEnde(Date ende) {
         this.ende = ende;
+    }
+
+    /**
+     * @return the ersteWahl
+     */
+    public Kurs getErsteWahl() {
+        return ersteWahl;
+    }
+
+    /**
+     * @param ersteWahl the ersteWahl to set
+     */
+    public void setErsteWahl(Kurs ersteWahl) {
+        this.ersteWahl = ersteWahl;
+    }
+
+    /**
+     * @return the zweiteWahl
+     */
+    public Kurs getZweiteWahl() {
+        return zweiteWahl;
+    }
+
+    /**
+     * @param zweiteWahl the zweiteWahl to set
+     */
+    public void setZweiteWahl(Kurs zweiteWahl) {
+        this.zweiteWahl = zweiteWahl;
+    }
+
+    /**
+     * @return the dritteWahl
+     */
+    public Kurs getDritteWahl() {
+        return dritteWahl;
+    }
+
+    /**
+     * @param dritteWahl the dritteWahl to set
+     */
+    public void setDritteWahl(Kurs dritteWahl) {
+        this.dritteWahl = dritteWahl;
     }
     
     

@@ -24,7 +24,11 @@ $(document).ready(function () {
     $(".eins").change(function () {
         if ($(".eins").is(" :checked")) {
             $(".eins").attr("disabled", true);
+        }
+        if (!$(".zwei").is(" :checked")) {
             $(".zwei").attr("disabled", false);
+        }
+        if (!$(".drei").is(" :checked")) {
             $(".drei").attr("disabled", false);
         }
     });
@@ -32,17 +36,41 @@ $(document).ready(function () {
     $(".zwei").change(function () {
         if ($(".zwei").is(" :checked")) {
             $(".zwei").attr("disabled", true);
-            $(".drei").attr("disabled", false);
+        }
+        if (!$(".eins").is(" :checked")) {
             $(".eins").attr("disabled", false);
+        }
+        if (!$(".drei").is(" :checked")) {
+            $(".drei").attr("disabled", false);
         }
     });
 
     $(".drei").change(function () {
         if ($(".drei").is(" :checked")) {
             $(".drei").attr("disabled", true);
+        }
+        if (!$(".eins").is(" :checked")) {
             $(".eins").attr("disabled", false);
+        }
+        if (!$(".zwei").is(" :checked")) {
             $(".zwei").attr("disabled", false);
         }
+    });
+    
+    /**
+     * Setzt die 1., 2. oder 3.Wahl eines Kurses zuück
+     */
+    $("#resetEins").click(function(){
+        $(".eins").attr("disabled", false);
+        $(".eins").prop('checked', false);
+    });
+    $("#resetZwei").click(function(){
+        $(".zwei").attr("disabled", false);
+        $(".zwei").prop('checked', false);
+    });
+    $("#resetDrei").click(function(){
+        $(".drei").attr("disabled", false);
+        $(".drei").prop('checked', false);
     });
 
 
@@ -52,9 +80,9 @@ $(document).ready(function () {
      */
     $(".add-row").click(function () {
         var markup = "<tr>";
-        markup += "<td><input type='number' min='1' max='100' name='anteil' class='input-group-field'/></td>"
-        markup += "<td><input type='text' class='input-group-field'/></td>";
-        markup += "<td><input type='text' class='input-group-field' /></td>";
+        markup += "<td><h:inputText value='#{kursNB.anteil}' class='input-group-field'/></td>"
+        markup += "<td><h:inputText value='#{kursNB.bezeichnung}' class='input-group-field'/></td>";
+        markup += "<td><h:inputText value='#{kursNB.schwerpunkt}' class='input-group-field'/></td>";
         markup += "<td><input type='checkbox' name='loeschen'/></td></tr>";
         $("table tbody").append(markup);
     });

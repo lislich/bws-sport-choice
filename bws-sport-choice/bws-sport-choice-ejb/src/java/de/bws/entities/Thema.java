@@ -28,8 +28,11 @@ public class Thema implements Serializable {
     @Column(name = "ANTEIL")
     private int anteil;
     
-    @Column(name = "BESCHREIBUNG")
-    private String beschreibung;
+    @Column(name = "BEZEICHNUNG")
+    private String bezeichnung;
+    
+    @Column(name = "SCHWERPUNKT")
+    private String schwerpunkt;
 
 //****************************** Methoden **************************************
 
@@ -82,18 +85,34 @@ public class Thema implements Serializable {
         this.anteil = p_anteil;
     }
 
+
+
     /**
-     * @return the beschreibung
+     * @return the schwerpunkt
      */
-    public String getBeschreibung() {
-        return beschreibung;
+    public String getSchwerpunkt() {
+        return schwerpunkt;
     }
 
     /**
-     * @param p_beschreibung the beschreibung to set
+     * @param schwerpunkt the schwerpunkt to set
      */
-    public void setBeschreibung(String p_beschreibung) {
-        this.beschreibung = p_beschreibung;
+    public void setSchwerpunkt(String schwerpunkt) {
+        this.schwerpunkt = schwerpunkt;
+    }
+
+    /**
+     * @return the bezeichnung
+     */
+    public String getBezeichnung() {
+        return bezeichnung;
+    }
+
+    /**
+     * @param bezeichnung the bezeichnung to set
+     */
+    public void setBezeichnung(String bezeichnung) {
+        this.bezeichnung = bezeichnung;
     }
     
 }
