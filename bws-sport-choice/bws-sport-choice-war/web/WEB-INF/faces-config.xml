@@ -71,6 +71,10 @@
         <from-outcome>kontakt</from-outcome>
         <to-view-id>kontakt.xhtml</to-view-id>
       </navigation-case>
+      <navigation-case>
+        <from-outcome>gewaehlt</from-outcome>
+        <to-view-id>/secured/wahl.xhtml</to-view-id>
+      </navigation-case>
     </navigation-rule>
     
     
