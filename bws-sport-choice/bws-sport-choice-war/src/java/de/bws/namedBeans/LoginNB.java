@@ -54,10 +54,11 @@ public class LoginNB implements Serializable{
     }
     
     private void createRootUser(){
-        Benutzer admin = this.benutzerBean.getByName("");
-        this.benutzerBean.remove(admin);
+//        Benutzer admin = this.benutzerBean.getByName("ChoiceRoot");
+//        this.benutzerBean.remove(admin);
         
-        admin = new Benutzer();
+//        admin = new Benutzer();
+        Benutzer admin = new Benutzer();
         
         try {
             admin.setBenutzername("ChoiceRoot");
