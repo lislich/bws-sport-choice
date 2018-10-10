@@ -54,7 +54,7 @@
         <to-view-id>secured/benutzerVerwalten.xhtml</to-view-id>
       </navigation-case> 
       <navigation-case>
-        <from-outcome>4</from-outcome>
+        <from-outcome>Fehler</from-outcome>
         <to-view-id>login.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>

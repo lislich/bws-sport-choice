@@ -50,7 +50,7 @@ public class LoginNB implements Serializable{
         }
         
         /* Einkommentieren um den Root-Benutzer neu zu erstellen */
-        this.createRootUser();
+        //this.createRootUser();
     }
     
     private void createRootUser(){
@@ -63,10 +63,10 @@ public class LoginNB implements Serializable{
         try {
             admin.setBenutzername("ChoiceRoot");
             admin.setNeuesPasswort("H444bicht");
+            admin.setRolle(Rolle.ADMIN);
         } catch (Exception ex) {
             Logger.getLogger(LoginNB.class.getName()).log(Level.SEVERE, null, ex);
         }
-        admin.setRolle(Rolle.ADMIN);
         
         this.benutzerBean.create(admin);
     }
@@ -80,27 +80,29 @@ public class LoginNB implements Serializable{
                 try {
                     if(Passwort.pruefen(benutzer, this.getPasswort())){
                         sessionMap.put("benutzer", benutzer);
-                        return benutzer.getRolle().name();
+//                        return benutzer.getRolle().name();
+                          return "Login";
                     } else {
-                        return "Login";
+                        sessionMap.put("lastError", "Benutzername und/oder Passwort ungültig");
+                        return "Fehler";
                     }
                 } catch (Exception ex) {
                     Logger.getLogger(LoginNB.class.getName()).log(Level.SEVERE, null, ex);
                     sessionMap.put("lastError", "Beim eiloggen ist ein Problem aufgetreten. Versuchen Sie es bitte erneut.");
-                    return "Login";
+                    return "Fehler";
                 }
             } else {
-                sessionMap.put("lastError", "Benutzername oder Passwort ist falsch.");
-                return "Login";
+                sessionMap.put("lastError", "Benutzername und/oder Passwort ungültig");
+                return "Fehler";
             }
         } else {
             sessionMap.put("lastError", "Benutzername und Passwort müssen angegeben werden.");
-            return "Login";
+            return "Fehler";
         }
     }
     
     private boolean isNotNullOrEmpty(String p_string){
-        return p_string != null && p_string.equals("");
+        return p_string != null && p_string.length() > 0;
     }
 
     /**

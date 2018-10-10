@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -23,15 +24,17 @@
                                         <span class="prefix">Rolle</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <select id="rolle" class="input-group-field" />
+                                        <h:selectOneMenu id="rolle" class="input-group-field" value="#{benutzerAnlegenNB.rolle}">
+                                            <f:selectItems value="#{benutzerAnlegenNB.rollen}" />
+                                        </h:selectOneMenu>
                                     </div>
                                 </div>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
-                                        <span class="prefix">Name</span>
+                                        <span class="prefix">Nachname</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="name" class="input-group-field" />
+                                        <h:inputText id="name" class="input-group-field" value="#{benutzerAnlegenNB.nachname}"/>
                                     </div>
                                 </div>                                
                                 <div class="row collapse">
@@ -39,7 +42,7 @@
                                         <span class="prefix">Vorname</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="vorname" class="input-group-field" />
+                                        <h:inputText id="vorname" class="input-group-field" value="#{benutzerAnlegenNB.nachname}" />
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -47,7 +50,7 @@
                                         <span class="prefix">Tutor</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="tutor" class="input-group-field" />
+                                        <h:inputText id="tutor" class="input-group-field" value="#{benutzerAnlegenNB.tutor}" />
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -55,7 +58,9 @@
                                         <span class="prefix">Stufe</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <select id="stufe" class="input-group-field"/>
+                                        <h:selectOneMenu id="stufe" class="input-group-field" value="#{benutzerAnlegenNB.stufe}" >
+                                            <f:selectItems value="#{benutzerAnlegenNB.stufen}" />
+                                        </h:selectOneMenu>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -63,7 +68,7 @@
                                         <span class="prefix">Benutzername</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="benutzername" class="input-group-field" />
+                                        <h:inputText id="benutzername" class="input-group-field" value="#{benutzerAnlegenNB.benutzername}"/>
                                     </div>
                                 </div>
                                 <div>

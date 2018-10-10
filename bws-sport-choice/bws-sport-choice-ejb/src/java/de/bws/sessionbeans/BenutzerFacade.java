@@ -63,7 +63,7 @@ public class BenutzerFacade implements BenutzerFacadeLocal {
 
     @Override
     public Benutzer getByName(String name) {
-        List<Benutzer> benutzer = this.ctrl.get("SELECT b FROM Benutzer b WHERE b.benutzername = '" + name + "';");
+        List<Benutzer> benutzer = this.ctrl.get("SELECT b FROM Benutzer b WHERE b.benutzername = '" + name + "'");
         if(benutzer != null && !benutzer.isEmpty()){
             return benutzer.get(0);
         }
