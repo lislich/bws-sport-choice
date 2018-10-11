@@ -14,10 +14,8 @@ import de.bws.sessionbeans.BenutzerFacadeLocal;
 import de.bws.sessionbeans.PersonFacadeLocal;
 import de.bws.sessionbeans.StufeFacadeLocal;
 import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -177,8 +175,14 @@ public class BenutzerAnlegenNB implements Serializable{
      * 
      * @return 
      */
-    public List<Stufe> getStufen(){
-        return this.stufeBean.findAll();
+    public List<String> getStufen(){
+        List<Stufe> stufen = this.stufeBean.findAll();
+        List<String> stufenStrings = new ArrayList<>();
+        
+        for(Stufe s:stufen){
+            stufenStrings.add(s.getBezeichnung());
+        }
+        return stufenStrings;
     }
 
     /**
