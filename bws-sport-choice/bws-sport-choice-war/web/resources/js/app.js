@@ -31,6 +31,7 @@ $(document).ready(function () {
         if (!$(".drei").is(" :checked")) {
             $(".drei").attr("disabled", false);
         }
+
     });
 
     $(".zwei").change(function () {
@@ -56,6 +57,7 @@ $(document).ready(function () {
             $(".zwei").attr("disabled", false);
         }
     });
+    
     
     /**
      * Setzt die 1., 2. oder 3.Wahl eines Kurses zuück
@@ -102,7 +104,7 @@ $(document).ready(function () {
 
     // # Benutzer verwalten ####################################################################################
     
-    $("#auswahl").click(function(){
+   /** $("#auswahl").click(function(){
         if ($("#auswahl").is(":checked")){
             $(".loeschen").prop("checked", true);
         } else{
@@ -134,7 +136,7 @@ $(document).ready(function () {
 
     $("#anlegen").button().on("click", function () {
         dialog.dialog("open");
-    });
+    });*/
 
 
 });

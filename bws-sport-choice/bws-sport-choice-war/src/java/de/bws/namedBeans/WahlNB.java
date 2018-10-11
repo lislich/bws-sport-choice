@@ -8,6 +8,7 @@ package de.bws.namedBeans;
 import de.bws.entities.Kurs;
 import de.bws.entities.Wahl;
 import de.bws.entities.Wahlzeitraum;
+import de.bws.sessionbeans.KursFacadeLocal;
 import de.bws.sessionbeans.WahlFacadeLocal;
 import de.bws.sessionbeans.WahlzeitraumFacadeLocal;
 import java.io.Serializable;
@@ -32,12 +33,15 @@ public class WahlNB implements Serializable{
     @EJB
     private WahlzeitraumFacadeLocal wahlzeitraumBean;
     
+    @EJB
+    private KursFacadeLocal kursBean;
+    
     private Date beginn;
     private Date ende;
     
-    private Kurs ersteWahl;
-    private Kurs zweiteWahl;
-    private Kurs dritteWahl;
+    private String ersteWahl;
+    private String zweiteWahl;
+    private String dritteWahl;
     
     @PostConstruct
     public void init(){
@@ -74,11 +78,15 @@ public class WahlNB implements Serializable{
     
     
     public String saveWahl(){
+        Kurs p_eins = this.kursBean.find(Long.parseLong(getErsteWahl()));
+        Kurs p_zwei = this.kursBean.find(Long.parseLong(getZweiteWahl()));
+        Kurs p_drei = this.kursBean.find(Long.parseLong(getDritteWahl()));
+        
         System.out.println("de.bws.namedBeans.WahlNB.saveWahl()");
         Wahl wahl = new Wahl();
-        wahl.setErstwahl(ersteWahl);
-        wahl.setZweitwahl(zweiteWahl);
-        wahl.setDrittwahl(dritteWahl);
+        wahl.setErstwahl(p_eins);
+        wahl.setZweitwahl(p_zwei);
+        wahl.setDrittwahl(p_drei);
         this.wahlBean.create(wahl);
         return "gewaehlt";
     }
@@ -115,45 +123,44 @@ public class WahlNB implements Serializable{
     /**
      * @return the ersteWahl
      */
-    public Kurs getErsteWahl() {
+    public String getErsteWahl() {
         return ersteWahl;
     }
 
     /**
      * @param ersteWahl the ersteWahl to set
      */
-    public void setErsteWahl(Kurs ersteWahl) {
+    public void setErsteWahl(String ersteWahl) {
         this.ersteWahl = ersteWahl;
     }
 
     /**
      * @return the zweiteWahl
      */
-    public Kurs getZweiteWahl() {
+    public String getZweiteWahl() {
         return zweiteWahl;
     }
 
     /**
      * @param zweiteWahl the zweiteWahl to set
      */
-    public void setZweiteWahl(Kurs zweiteWahl) {
+    public void setZweiteWahl(String zweiteWahl) {
         this.zweiteWahl = zweiteWahl;
     }
 
     /**
      * @return the dritteWahl
      */
-    public Kurs getDritteWahl() {
+    public String getDritteWahl() {
         return dritteWahl;
     }
 
     /**
      * @param dritteWahl the dritteWahl to set
      */
-    public void setDritteWahl(Kurs dritteWahl) {
+    public void setDritteWahl(String dritteWahl) {
         this.dritteWahl = dritteWahl;
     }
-    
-    
+
     
 }

@@ -64,42 +64,42 @@
                         </a>
                     </li>
                     <li>
-                        <h:link outcome="kursAnlegen">
+                        <h:link outcome="kursAnlegen" rendered="#{menueNB.lehrer()}">
                             <i class="fi-clipboard-notes"></i><span>Kurs anlegen</span>
                         </h:link>                      
                     </li>
                     <li>
-                        <h:link outcome="kurslisteLehrer">
+                        <h:link outcome="kurslisteLehrer" rendered="#{menueNB.lehrer()}">
                             <i class="fi-list-bullet"></i><span>Ihre Kurse</span>
                         </h:link>                      
                     </li>
                     <li>
-                        <h:link outcome="kursWechseln">
+                        <h:link outcome="kursWechseln" rendered="#{menueNB.lehrerOrAdmin()}">
                             <i class="fi-loop"></i><span>Kurs wechseln</span>
                         </h:link>                      
                     </li>
                     <li>
-                        <h:link outcome="kurseAlle">
+                        <h:link outcome="kurseAlle" rendered="#{menueNB.lehrerOrAdmin()}">
                             <i class="fi-list-bullet"></i><span>Alle Kurse</span>
                         </h:link>                      
                     </li>
                     <li>
-                        <h:link outcome="wahlzeitraum">
+                        <h:link outcome="wahlzeitraum" rendered="#{menueNB.admin()}">
                             <i class="fi-calendar"></i><span>Wahlzeitraum</span>
                         </h:link>                      
                     </li>
                     <li>
-                        <h:link outcome="kursZuweisen">
+                        <h:link outcome="kursZuweisen" rendered="#{menueNB.admin()}">
                             <i class="fi-clipboard-pencil"></i><span>Kurs zuweisen</span>
                         </h:link>                      
                     </li>
                     <li>
-                        <h:link outcome="benutzerAnlegen">
+                        <h:link outcome="benutzerAnlegen" rendered="#{menueNB.admin()}">
                             <i class="fi-torso"></i><span>Benutzer anlegen</span>
                         </h:link>                      
                     </li>
                     <li>
-                        <h:link outcome="benutzerVerwalten">
+                        <h:link outcome="benutzerVerwalten" rendered="#{menueNB.admin()}">
                             <i class="fi-wrench"></i><span>Benutzer verwalten</span>
                         </h:link>                      
                     </li>

@@ -30,6 +30,38 @@
                         <fieldset>
                             <legend>Kurswahl</legend>
                             <h:form>
+                                <!--<h:dataTable value="#{kurslisteBean.alleKurse}" var="kurs">
+                                    <h:column>
+                                        <f:facet name="header">Kurs</f:facet>
+                                        #{kurs.titel} - #{kurs.kuerzel}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">1. Wahl<button type="button" id="resetEins"><i style="color: black" class="fi-loop"></i></button></f:facet>
+                                        <h:selectOneRadio class="eins" value="#{wahlNB.ersteWahl}" onchange="dopplungLoeschenEins()">
+                                            <f:selectItem itemValue="#{kurs.id}" />
+                                        </h:selectOneRadio>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">2. Wahl<button type="button" id="resetZwei"><i style="color: black" class="fi-loop"></i></button></f:facet>
+                                        <h:selectOneRadio class="zwei" value="#{wahlNB.zweiteWahl}" onchange="dopplungLoeschenZwei()">
+                                            <f:selectItem itemValue="#{kurs.id}" />
+                                        </h:selectOneRadio>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">3. Wahl<button type="button" id="resetDrei"><i style="color: black" class="fi-loop"></i></button></f:facet>
+                                        <h:selectOneRadio class="drei" value="#{wahlNB.dritteWahl}" onchange="dopplungLoeschenDrei()">
+                                            <f:selectItem itemValue="#{kurs.id}" />
+                                        </h:selectOneRadio>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">max. Teilnehmer</f:facet>
+                                        #{kurs.teilnehmerzahl}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Auslastung in %</f:facet>
+                                        X
+                                    </h:column>
+                                </h:dataTable>-->
                                 <table>
                                     <thead>
                                         <tr>
@@ -45,16 +77,15 @@
                                         <ui:repeat var="kurs" value="#{kurslisteBean.alleKurse}">
 
                                             <tr>
-                                                <td><h:outputText value="#{kurs.titel} - #{kurs.kuerzel}"/></td>
+                                                <td><h:commandLink action="#{kurslisteBean.setGewaehlterKurs(kurs)}"><h:outputText value="#{kurs.titel} - #{kurs.kuerzel}"/></h:commandLink></td>
                                                 <td>
-                                                    <h:
-                                                    <input type="radio" class="eins"  value="#{kurs.kuerzel}" name="wahl#{kurs.titel}" id="#{kurs.kuerzel}Eins" ></input>
+                                                    <input type="radio" class="eins" value="#{kurs.id}" name="wahl#{kurs.titel}" id="#{kurs.kuerzel}Eins" ></input>                                               
                                                 </td>
                                                 <td>
-                                                    <input type="radio" class="zwei" value="#{kurs.kuerzel}" name="wahl#{kurs.titel}" id="#{kurs.kuerzel}Zwei" ></input>
+                                                    <input type="radio" class="zwei" value="#{kurs.id}" name="wahl#{kurs.titel}" id="#{kurs.kuerzel}Zwei" ></input>
                                                 </td>
                                                 <td>
-                                                    <input type="radio" class="drei" value="#{kurs.kuerzel}" name="wahl#{kurs.titel}" id="#{kurs.kuerzel}Drei" ></input>
+                                                    <input type="radio" class="drei" value="#{kurs.id}" name="wahl#{kurs.titel}" id="#{kurs.kuerzel}Drei" ></input>
                                                 </td>
                                                 <td><h:outputText value="#{kurs.teilnehmerzahl}" /></td>
                                                 <td>X</td>

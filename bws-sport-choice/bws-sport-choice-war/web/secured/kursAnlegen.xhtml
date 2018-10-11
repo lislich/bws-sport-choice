@@ -3,9 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:jsf="http://xmlns.jcp.org/jsf">
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -73,13 +71,12 @@
                                         <h:inputTextarea id="hinweis" class="input-group-field" value="#{kursNB.hinweis}"/>
                                     </div>
                                 </div>
-                                <!--    <div class="row collapse">
+                                <div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Teilnehmerzahl</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <p:spinner min="1" max="100" id="teilnehmerzahl" binding="" class="input-group-field" />
-                                        <input type="number" min="1" max="50" jsf:value="#{kursNB.teilnehmerzahl}" step="1" id="kuerzel" class="input-group-field" />
+                                        <h:inputText id="teilnehmerzahl" class="input-group-field" value="#{kursNB.teilnehmerzahl}" converterMessage="Bitte geben Sie nur Zahlen ein."/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -88,11 +85,11 @@
                                     </div>
                                     <div class="small-8 columns mobile-input">
                                         <h:selectOneMenu id="themengleich" class="input-group-field" value="#{kursNB.themengleich}">
-                                            <f:selectItem value="Keine Angabe" itemValue="Kein Themengleicher Kurs" itemLabel="Kein Themengleicher Kurs" />
+                                            <f:selectItem itemValue="-1" itemLabel="Kein Themengleicher Kurs" />
                                             <f:selectItems value="#{kurslisteBean.alleKurse}" var="kurs" itemValue="#{kurs.id}" itemLabel="#{kurs.titel}"/>
                                         </h:selectOneMenu>
                                     </div>
-                                </div>-->
+                                </div>
                                 <div class="row collapse">
                                     <table id="unterrichtsthemen">
                                         <thead>
@@ -112,7 +109,7 @@
                                     </table>                                    
                                 </div>
                                     <input type="button" class="add-row" value="Zeile hinzufügen" />
-                                    <input type="button" class="delete-row" value="Auswahl löschen" />                                   
+                                    <input type="button" class="delete-row" value="Auswahl löschen" />
                                 <h:commandButton class="small button" id="kursAnlegen" value="Anlegen"  action="#{kursNB.anlegen()}" type="submit"></h:commandButton>
 
                             </fieldset>

@@ -9,8 +9,11 @@ import de.bws.entities.Kurs;
 import de.bws.entities.Stufe;
 import de.bws.entities.Thema;
 import de.bws.sessionbeans.KursFacadeLocal;
+import de.bws.sessionbeans.StufeFacadeLocal;
 import de.bws.sessionbeans.ThemaFacadeLocal;
 import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
@@ -31,16 +34,19 @@ public class KursNB implements Serializable{
      
      @EJB
      private ThemaFacadeLocal themaBean;
+     
+     @EJB
+     private StufeFacadeLocal stufeBean;
     
     private Kurs kurs;
      
     private String titel;
     private String kuerzel;
-    private Stufe stufe;
+    private String stufe;
     private String bewertung;
     private String hinweis;
     private int teilnehmerzahl;
-    private Kurs themengleich;
+    private String themengleich;
     private String beschreibung;
     
     private String bezeichnung;
@@ -60,22 +66,40 @@ public class KursNB implements Serializable{
     }
     
     public void anlegen(){
-        Thema thema = new Thema();
-        thema.setAnteil(anteil);
-        thema.setBezeichnung(beschreibung);
-        thema.setSchwerpunkt(schwerpunkt);
-        this.themaBean.create(thema);
-        
         System.out.println("de.bws.namedBeans.KursNB.anlegen()");
+        
+        Stufe p_stufe = this.findStufe(stufe);
+        
+        Kurs p_kurs = this.findKurs(themengleich);
+       
+        Thema thema =  new Thema();
+        if (bezeichnung != null) {
+            thema.setAnteil(anteil);
+            thema.setBezeichnung(bezeichnung);
+            thema.setSchwerpunkt(schwerpunkt);
+            this.themaBean.create(thema);
+        }
+      
         Kurs kursT = new Kurs();
+        kursT.setJahr(new Timestamp(System.currentTimeMillis()));
         kursT.setBewertung(this.getBewertung());
         kursT.setHinweis(this.getHinweis());
         kursT.setKuerzel(this.getKuerzel());
         kursT.setTeilnehmerzahl(this.getTeilnehmerzahl());
-        kursT.setTitel(this.getTitel());
+        kursT.setTitel(this.getTitel());       
         kursT.setBeschreibung(beschreibung);
-        kursT.addThema(thema);
         
+        if(p_kurs != null){
+            kursT.setThemengleich(p_kurs);
+        }
+        
+        if(p_stufe != null){
+            kursT.setStufe(p_stufe);
+        }
+        
+        if(thema.getBezeichnung() != null){
+            kursT.addThema(thema);
+        }
         this.kursBean.create(kursT);      
     } 
     
@@ -85,7 +109,18 @@ public class KursNB implements Serializable{
     }
 
     
+    private Stufe findStufe(String p_stufe){
+        return this.stufeBean.find(Long.parseLong(p_stufe));
+    }
     
+    private Kurs findKurs(String p_themengleich){
+        int tmp = Integer.parseInt(p_themengleich);
+        if(tmp >= 0){
+            return this.kursBean.find(Long.parseLong(p_themengleich));
+        }else{
+            return null;
+        }
+    }
     
     /**
      * @return the titel
@@ -118,14 +153,14 @@ public class KursNB implements Serializable{
     /**
      * @return the stufe
      */
-    public Stufe getStufe() {
+    public String getStufe() {
         return stufe;
     }
 
     /**
      * @param stufe the stufe to set
      */
-    public void setStufe(Stufe stufe) {
+    public void setStufe(String stufe) {
         this.stufe = stufe;
     }
 
@@ -174,14 +209,14 @@ public class KursNB implements Serializable{
     /**
      * @return the themengleich
      */
-    public Kurs getThemengleich() {
+    public String getThemengleich() {
         return themengleich;
     }
 
     /**
      * @param themengleich the themengleich to set
      */
-    public void setThemengleich(Kurs themengleich) {
+    public void setThemengleich(String themengleich) {
         this.themengleich = themengleich;
     }
 
