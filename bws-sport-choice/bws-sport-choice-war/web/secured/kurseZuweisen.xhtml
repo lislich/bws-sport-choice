@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -29,14 +30,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <ui:repeat var="schueler" value="">
+                                        <ui:repeat var="schueler" value="#{kursZuweisenNB.schueler}">
 
                                             <tr>
-                                                <td>Max</td>
-                                                <td>Mustermann</td>
-                                                <td>Gg</td>
-                                                <td>
-                                                    <select name="kursZuweisen" id="" />
+                                                <td width="80"><h:outputText value="#{schueler.vorname}"/></td>
+                                                <td width="100"><h:outputText value="#{schueler.nachname}"/></td>
+                                                <td width="20"><h:outputText value="#{schueler.tutor.kuerzel}"/></td>
+                                                <td width="200">
+                                                    <h:selectOneMenu class="input-group-field" value="#{kursZuweisenNB.kursId}">
+                                                        <f:selectItems value="#{kursZuweisenNB.kurs}" var="kurs" itemValue="#{kurs.id}" itemLabel="#{kurs.titel} - #{kurs.kuerzel}" />
+                                                    </h:selectOneMenu>
                                                 </td>
                                             </tr>
 
@@ -44,6 +47,7 @@
                                     </tbody>
                                 </table>
                                 <h:commandButton class="small button" id="zuweisungSpeichern" type="submit" value="Speichern" action="1" />
+                                <h:outputText id="errorWechsel" value="#{kursZuweisenNB.error}"/>
                             </fieldset>
                         </div>
                     </h:form>

@@ -28,6 +28,10 @@ public class Schueler extends Person implements Serializable{
     @OneToOne
     @JoinColumn(name = "WAHL", referencedColumnName = "ID")
     private Wahl wahl;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "TUTOR_ID")
+    private Lehrer tutor;
 
     @Override
     public int hashCode() {
@@ -84,6 +88,20 @@ public class Schueler extends Person implements Serializable{
      */
     public void setWahl(Wahl wahl) {
         this.wahl = wahl;
+    }
+
+    /**
+     * @return the tutor
+     */
+    public Lehrer getTutor() {
+        return tutor;
+    }
+
+    /**
+     * @param tutor the tutor to set
+     */
+    public void setTutor(Lehrer tutor) {
+        this.tutor = tutor;
     }
     
 }
