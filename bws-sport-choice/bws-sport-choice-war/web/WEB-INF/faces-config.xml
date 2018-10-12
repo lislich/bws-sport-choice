@@ -43,7 +43,10 @@
         <from-outcome>gewaehlt</from-outcome>
         <to-view-id>/secured/wahl.xhtml</to-view-id>
       </navigation-case>
-      
+      <navigation-case>
+        <from-outcome>wahlAbgeben</from-outcome>
+        <to-view-id>secured/start.xhtml</to-view-id>
+      </navigation-case>
       <navigation-case>
         <from-outcome>kursAnlegen</from-outcome>
         <to-view-id>secured/kursAnlegen.xhtml</to-view-id>
@@ -148,6 +151,7 @@
         <from-outcome>kursAnschauen</from-outcome>
         <to-view-id>/secured/kursAnschauen.xhtml</to-view-id>
       </navigation-case>
+      
     </navigation-rule>
     
     
@@ -161,6 +165,10 @@
       <navigation-case>
         <from-outcome>kontakt</from-outcome>
         <to-view-id>kontakt.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>kurslisteLehrer</from-outcome>
+        <to-view-id>/secured/kurseLehrer.xhtml</to-view-id>
       </navigation-case>
      <navigation-case>
         <from-outcome>kursWechseln</from-outcome>
@@ -190,6 +198,14 @@
         <from-outcome>schuelerlisteKurs</from-outcome>
         <to-view-id>/secured/schuelerlisteKurs.xhtml</to-view-id>
       </navigation-case>
+      <navigation-case>
+        <from-outcome>schuelerEinsehen</from-outcome>
+        <to-view-id>/secured/schuelerlisteKurs.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>wahlAbgeben</from-outcome>
+        <to-view-id>secured/start.xhtml</to-view-id>
+      </navigation-case>
     </navigation-rule>
     
     
@@ -207,6 +223,10 @@
       <navigation-case>
         <from-outcome>wechselFehlgeschlagen</from-outcome>
         <to-view-id>secured/kursWechsel.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>kurslisteLehrer</from-outcome>
+        <to-view-id>/secured/kurseLehrer.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursWechseln</from-outcome>
@@ -245,6 +265,10 @@
       <navigation-case>
         <from-outcome>kontakt</from-outcome>
         <to-view-id>kontakt.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>kurslisteLehrer</from-outcome>
+        <to-view-id>/secured/kurseLehrer.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursWechseln</from-outcome>

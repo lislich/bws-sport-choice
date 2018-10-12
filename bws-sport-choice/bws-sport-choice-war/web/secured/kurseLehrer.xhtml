@@ -13,34 +13,36 @@
             </ui:define>
 
             <ui:define name="content">
-                <div id="kurseLehrer" class="row">
-                    <div class="small-12 columns small-centered">
-                        <fieldset>
-                            <legend>Ihre Kurse</legend>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th width="100">Kurs</th>
-                                        <th width="250">Beschreibung</th>
-                                        <th width="50">Stufe</th>
-                                        <th width="50"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <ui:repeat var="kurs" value="#{kurslisteBean.lehrerKurse}">
-
+                <h:form>
+                    <div id="kurseLehrer" class="row">
+                        <div class="small-12 columns small-centered">
+                            <fieldset>
+                                <legend>Ihre Kurse</legend>
+                                <table>
+                                    <thead>
                                         <tr>
-                                            <td><h:commandLink action="#{kurslisteBean.setGewaehlterKurs(kurs)}"><h:outputText value="#{kurs.titel} - #{kurs.kuerzel}"/></h:commandLink></td>
-                                            <td><h:outputText value="#{kurs.beschreibung}" /></td>
-                                            <td><h:outputText value="#{kurs.stufe.bezeichnung}" /></td>
-                                            <td><h:commandLink action="#{kurslisteBean.setGewaehlterKurs(kurs)}"><i class="fi-clipboard-pencil"></i></h:commandLink></td>
+                                            <th width="100">Kurs</th>
+                                            <th width="250">Beschreibung</th>
+                                            <th width="50">Stufe</th>
+                                            <th width="50"></th>
                                         </tr>
-                                    </ui:repeat>
-                                </tbody>
-                            </table>
-                        </fieldset>
-                    </div>                    
-                </div>
+                                    </thead>
+                                    <tbody>
+                                        <ui:repeat var="kurs" value="#{kurslisteBean.lehrerKurse}">
+
+                                            <tr>
+                                                <td><h:commandLink action="#{kurslisteBean.setGewaehlterKurs(kurs)}"><h:outputText value="#{kurs.titel} - #{kurs.kuerzel}"/></h:commandLink></td>
+                                                <td><h:outputText value="#{kurs.beschreibung}" /></td>
+                                                <td><h:outputText value="#{kurs.stufe.bezeichnung}" /></td>
+                                                <td><h:commandLink action="#{kurslisteBean.setGewaehlterKursBearbeiten(kurs)}"><i class="fi-clipboard-pencil"></i></h:commandLink></td>
+                                            </tr>
+                                        </ui:repeat>
+                                    </tbody>
+                                </table>
+                            </fieldset>
+                        </div>                    
+                    </div>
+                </h:form>
             </ui:define>
 
         </ui:composition>

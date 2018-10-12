@@ -6,6 +6,7 @@
 package de.bws.namedBeans;
 
 import de.bws.entities.Kurs;
+import de.bws.entities.Lehrer;
 import de.bws.entities.Stufe;
 import de.bws.entities.Thema;
 import de.bws.sessionbeans.KursFacadeLocal;
@@ -19,6 +20,7 @@ import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 /**
  *
@@ -37,6 +39,10 @@ public class KursNB implements Serializable{
      
      @EJB
      private StufeFacadeLocal stufeBean;
+     
+     @Inject
+     private MenueNB menueNB;
+     
     
     private Kurs kurs;
      
@@ -63,6 +69,19 @@ public class KursNB implements Serializable{
         }catch(NullPointerException e){
 
         }
+    }
+    
+    public void bearbeiten(){
+        System.out.println("de.bws.namedBeans.KursNB.bearbeiten()");
+        kurs.setJahr(new Timestamp(System.currentTimeMillis()));
+        kurs.setBewertung(kurs.getBewertung());
+        kurs.setHinweis(kurs.getHinweis());
+        kurs.setKuerzel(kurs.getKuerzel());
+        kurs.setTeilnehmerzahl(kurs.getTeilnehmerzahl());
+        kurs.setTitel(kurs.getTitel());       
+        kurs.setBeschreibung(kurs.getBeschreibung());
+        //kurs.setLehrer((Lehrer)this.menueNB.getB().getPerson());
+        this.kursBean.edit(kurs);
     }
     
     public void anlegen(){

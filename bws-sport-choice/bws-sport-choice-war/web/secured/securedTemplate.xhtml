@@ -103,6 +103,11 @@
                             <i class="fi-wrench"></i><span>Benutzer verwalten</span>
                         </h:link>                      
                     </li>
+                    <li>
+                        <h:link outcome="wahlAbgeben" rendered="#{menueNB.schueler()}">
+                            <i class="fi-checkbox"></i><span>Wahl abgeben</span>
+                        </h:link>                      
+                    </li>
                 </ul>
                 <i id="menu" class="fi-eye ul-nav-toggle" onclick="document.getElementById('togglebar').style.visibility = 'visible'">Menu</i>
             </div>

@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <body>
 
@@ -23,7 +24,7 @@
                                         <span class="prefix">Titel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="titel" class="input-group-field" value="xx"/>
+                                        <h:inputText id="titelBearbeiten" class="input-group-field" value="#{kursNB.kurs.titel}"/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -31,7 +32,7 @@
                                         <span class="prefix">Kürzel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="kuerzel" class="input-group-field" value="xx"/>
+                                        <h:inputText id="kuerzelBearbeiten" class="input-group-field" value="#{kursNB.kurs.kuerzel}"/>
                                     </div>
                                 </div>                                
                                 <div class="row collapse">
@@ -39,7 +40,17 @@
                                         <span class="prefix">Stufe</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <select id="stufe" class="input-group-field" value=""/>
+                                        <h:selectOneMenu id="stufeBearbeiten" class="input-group-field" value="#{kursNB.kurs.stufe}">
+                                            <f:selectItems value="#{stufeNB.alleStufen}" var="stufe" itemValue="#{stufe.id}" itemLabel="#{stufe.bezeichnung}"/>
+                                        </h:selectOneMenu>
+                                    </div>
+                                </div>
+                                <div class="row collapse area">
+                                    <div class="small-4 columns">
+                                        <span class="prefix">Beschreibung</span>
+                                    </div>
+                                    <div class="small-8 columns mobile-input">
+                                        <h:inputTextarea id="beschreibungBearbeiten" class="input-group-field" value="#{kursNB.kurs.beschreibung}"/>
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -47,7 +58,7 @@
                                         <span class="prefix">Bewertung</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <textarea id="bewertung" class="input-group-field" />
+                                        <h:inputTextarea id="bewertungBearbeiten" class="input-group-field" value="#{kursNB.kurs.bewertung}"/>
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -55,7 +66,7 @@
                                         <span class="prefix">Hinweis</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <textarea id="hinweis" class="input-group-field"/>
+                                        <h:inputTextarea id="hinweisBearbeiten" class="input-group-field" value="#{kursNB.kurs.hinweis}"/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -63,7 +74,7 @@
                                         <span class="prefix">Teilnehmerzahl</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <input type="number" min="1" max="50" value="" step="1" id="kuerzel" class="input-group-field" />
+                                        <h:inputText id="teilnehmerzahlBearbeiten" class="input-group-field" value="#{kursNB.kurs.teilnehmerzahl}" converterMessage="Bitte geben Sie nur Zahlen ein."/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -71,11 +82,14 @@
                                         <span class="prefix">Themengleich mit</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <select id="themengleich" class="input-group-field" value=""/>
+                                        <h:selectOneMenu id="themengleichBearbeiten" class="input-group-field" value="#{kursNB.kurs.themengleich}">
+                                            <f:selectItem itemValue="-1" itemLabel="Kein Themengleicher Kurs" />
+                                            <f:selectItems value="#{kurslisteBean.alleKurse}" var="kurs" itemValue="#{kurs.id}" itemLabel="#{kurs.titel}"/>
+                                        </h:selectOneMenu>
                                     </div>
                                 </div>
-                                <div class="row collapse">
-                                    <table id="unterrichtsthemen">
+                               <!-- <div class="row collapse">
+                                    <table id="unterrichtsthemenBearbeiten">
                                         <thead>
                                             <th width="100">Anteil in %</th>
                                             <th width="100">Unterrichtsthema</th>
@@ -83,24 +97,20 @@
                                             <th width="50"></th>
                                         </thead>
                                         <tbody>
-                                            <ui:repeat var="kurs" value="">
+                                            <ui:repeat value="#{kursNB.kurs.thema}" var="thema">
                                                 <tr>
-                                                    <td><input type="number" min="1" max="100" name="anteil" class="input-group-field" value=""/></td>
-                                                    <td><h:inputText id="thema" class="input-group-field" value=""/></td>
-                                                    <td><h:inputText id="schwerpunkt" class="input-group-field" value=""/></td>
+                                                    <td><h:inputText value="#{thema.anteil}" class="input-group-field" /></td>
+                                                    <td><h:inputText value="#{thema.bezeichnung}" class="input-group-field" /></td>
+                                                    <td><h:inputText value="#{thema.schwerpunkt}" class="input-group-field" /></td>
                                                     <td><input type="checkbox" name="loeschen"/></td>
                                                 </tr>
-                                            </ui:repeat>                                              
+                                            </ui:repeat>                                           
                                         </tbody>                                       
                                     </table>                                    
                                 </div>
-                                <form>
-                                    <input type="button" class="add-row" value="Zeile hinzufügen" />
-                                    <input type="button" class="delete-row" value="Auswahl löschen" />
-                                </form>       
-                                <div>
-                                    <h:commandButton class="small button" id="kursBearbeiten" value="Speichern" action="speichern" type="submit"/>
-                                </div>
+                                <input type="button" class="add-row" value="Zeile hinzufügen" />
+                                <input type="button" class="delete-row" value="Auswahl löschen" />-->
+                                <h:commandButton class="small button" id="kursBearbeiten" value="Speichern" action="#{kursNB.bearbeiten()}" type="submit"/>
                             </fieldset>
                         </h:form>
                     </div>

@@ -32,8 +32,8 @@ public class MenueNB implements Serializable {
     
     public boolean lehrer() {
         boolean tmp = false;
-        if (b != null) {
-            if (b.getRolle().equals(Rolle.LEHRER)) {
+        if (getB() != null) {
+            if (getB().getRolle().equals(Rolle.LEHRER)) {
                 tmp = true;
             }
         }       
@@ -42,8 +42,8 @@ public class MenueNB implements Serializable {
     
     public boolean schueler(){
         boolean tmp = false;
-        if (b != null) {
-            if (b.getRolle().equals(Rolle.SCHUELER)) {
+        if (getB() != null) {
+            if (getB().getRolle().equals(Rolle.SCHUELER)) {
                 tmp = true;
             }
         }       
@@ -52,8 +52,8 @@ public class MenueNB implements Serializable {
     
     public boolean admin(){
         boolean tmp = false;
-        if (b != null) {
-            if (b.getRolle().equals(Rolle.ADMIN)) {
+        if (getB() != null) {
+            if (getB().getRolle().equals(Rolle.ADMIN)) {
                 tmp = true;
             }
         }       
@@ -62,15 +62,31 @@ public class MenueNB implements Serializable {
     
     public boolean lehrerOrAdmin(){
         boolean tmp = false;
-        if (b != null) {
-            if (b.getRolle().equals(Rolle.ADMIN)) {
+        if (getB() != null) {
+            if (getB().getRolle().equals(Rolle.ADMIN)) {
                 tmp = true;
             }
-            if (b.getRolle().equals(Rolle.LEHRER)) {
+            if (getB().getRolle().equals(Rolle.LEHRER)) {
                 tmp = true;
             }
         }       
         return tmp;
     }
+
+    /**
+     * @return the b
+     */
+    public Benutzer getB() {
+        return b;
+    }
+
+    /**
+     * @param b the b to set
+     */
+    public void setB(Benutzer b) {
+        this.b = b;
+    }
+    
+    
     
 }

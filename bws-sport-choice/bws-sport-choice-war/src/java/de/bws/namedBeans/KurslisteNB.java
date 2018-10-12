@@ -9,6 +9,7 @@ import de.bws.data.Rolle;
 import de.bws.entities.Benutzer;
 import de.bws.entities.Kurs;
 import de.bws.entities.Lehrer;
+import de.bws.entities.Schueler;
 import de.bws.sessionbeans.BenutzerFacadeLocal;
 import de.bws.sessionbeans.KursFacadeLocal;
 import de.bws.sessionbeans.PersonFacadeLocal;
@@ -42,16 +43,17 @@ public class KurslisteNB implements Serializable {
     
     private List<Kurs> lehrerKurse;
     
-//    
+    private List<Schueler> schuelerKurse;
+    
 //    @PostConstruct
 //    public void init(){
 //        Benutzer lehrer = new Benutzer();
 //        
 //        try {
-//            lehrer.setBenutzername("PetGruen");
-//            lehrer.setNeuesPasswort("Sp000rts");
-//            lehrer.setRolle(Rolle.LEHRER);
-//            lehrer.setPerson(this.personBean.find(4));
+//            lehrer.setBenutzername("lislich");
+//            lehrer.setNeuesPasswort("lislich");
+//            lehrer.setRolle(Rolle.SCHUELER);
+//            lehrer.setPerson(this.personBean.find(3959));
 //        } catch (Exception ex) {
 //            Logger.getLogger(LoginNB.class.getName()).log(Level.SEVERE, null, ex);
 //        }
@@ -70,6 +72,19 @@ public class KurslisteNB implements Serializable {
      */
     public void setAlleKurse(List<Kurs> alleKurse) {
         this.alleKurse = alleKurse;
+    }
+    
+    
+    public String setGewaehlterKursSchueler(Kurs kurs){
+        System.out.println("de.bws.namedBeans.KurslisteNB.setGewaehlterKurs()" + kurs.getTitel());
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("gewaehlterKurs", kurs);
+        return "schuelerEinsehen";
+    }
+    
+    public String setGewaehlterKursBearbeiten(Kurs kurs){
+        System.out.println("de.bws.namedBeans.KurslisteNB.setGewaehlterKurs()" + kurs.getTitel());
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("gewaehlterKurs", kurs);
+        return "kursBearbeiten";
     }
     
     public String setGewaehlterKurs(Kurs kurs){
@@ -93,5 +108,21 @@ public class KurslisteNB implements Serializable {
      */
     public void setLehrerKurse(List<Kurs> lehrerKurse) {
         this.lehrerKurse = lehrerKurse;
+    }
+
+    /**
+     * @return the schuelerKurse
+     */
+    public List<Schueler> getSchuelerKurse() {
+        Kurs k = ((Kurs) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("gewaehlterKurs"));
+        schuelerKurse = k.getTeilnehmer();
+        return schuelerKurse;
+    }
+
+    /**
+     * @param schuelerKurse the schuelerKurse to set
+     */
+    public void setSchuelerKurse(List<Schueler> schuelerKurse) {
+        this.schuelerKurse = schuelerKurse;
     }
 }
