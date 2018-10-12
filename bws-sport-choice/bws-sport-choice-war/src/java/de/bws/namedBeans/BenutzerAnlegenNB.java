@@ -7,6 +7,7 @@ package de.bws.namedBeans;
 
 import de.bws.data.Rolle;
 import de.bws.entities.Benutzer;
+import de.bws.entities.Lehrer;
 import de.bws.entities.Person;
 import de.bws.entities.Stufe;
 import de.bws.security.Passwort;
@@ -47,6 +48,7 @@ public class BenutzerAnlegenNB implements Serializable{
     private String passwort;
     private Stufe stufe;
     private String tutor;
+    private String kuerzel;
     
     /**
      * Creates a new instance of BenutzerAnlegenNB
@@ -59,9 +61,23 @@ public class BenutzerAnlegenNB implements Serializable{
      * @return 
      */
     public String anlegen(){
+        if(null == rolle){
+            
+        } else switch (rolle) {
+            case LEHRER:
+                break;
+            case SCHUELER:
+                break;
+            case ADMIN:
+                break;
+            default:
+                break;
+        }
+        
         Person neuePerson = new Person();
         neuePerson.setNachname(this.nachname);
         neuePerson.setVorname(this.vorname);
+        
         this.personBean.create(neuePerson);
         
         Benutzer neuerBenutzer = new Benutzer();
@@ -77,6 +93,11 @@ public class BenutzerAnlegenNB implements Serializable{
         }
        
         return "Angelegt";
+    }
+    
+    private Lehrer lehrerAnlegen(){
+        Lehrer lehrer = new Lehrer();
+        return lehrer;
     }
     
     /**
@@ -197,6 +218,20 @@ public class BenutzerAnlegenNB implements Serializable{
      */
     public void setTutor(String tutor) {
         this.tutor = tutor;
+    }
+
+    /**
+     * @return the kuerzel
+     */
+    public String getKuerzel() {
+        return kuerzel;
+    }
+
+    /**
+     * @param kuerzel the kuerzel to set
+     */
+    public void setKuerzel(String kuerzel) {
+        this.kuerzel = kuerzel;
     }
     
 }

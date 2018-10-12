@@ -24,7 +24,7 @@
                                         <span class="prefix">Rolle</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="rolle" class="input-group-field" value="#{benutzerAnlegenNB.rolle}">
+                                        <h:selectOneMenu id="rolle" class="input-group-field" value="#{benutzerAnlegenNB.rolle}" onchange="onchange()">
                                             <f:selectItems value="#{benutzerAnlegenNB.rollen}" />
                                         </h:selectOneMenu>
                                     </div>
@@ -51,6 +51,14 @@
                                     </div>
                                     <div class="small-8 columns mobile-input">
                                         <h:inputText id="tutor" class="input-group-field" value="#{benutzerAnlegenNB.tutor}" />
+                                    </div>
+                                </div>
+                                <div class="row collapse area">
+                                    <div class="small-4 columns">
+                                        <span class="prefix">Kürzel</span>
+                                    </div>
+                                    <div class="small-8 columns mobile-input">
+                                        <h:inputText id="kuerzel" class="input-group-field" value="#{benutzerAnlegenNB.kuerzel}" />
                                     </div>
                                 </div>
                                 <div class="row collapse area">
