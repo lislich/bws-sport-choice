@@ -11,7 +11,7 @@
       <from-view-id>login.xhtml</from-view-id>
       <navigation-case>
         <from-outcome>Login</from-outcome>
-        <to-view-id>/secured/start.xhtml</to-view-id>
+        <to-view-id>start.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>faq</from-outcome>
@@ -30,7 +30,7 @@
     
      <!-- ######################### Kurswahl #################################################### -->
     <navigation-rule>
-      <from-view-id>/secured/start.xhtml</from-view-id>
+      <from-view-id>start.xhtml</from-view-id>
       <navigation-case>
           <from-outcome>faq</from-outcome>
           <to-view-id>faq.xhtml</to-view-id>
@@ -41,50 +41,50 @@
       </navigation-case>
       <navigation-case>
         <from-outcome>gewaehlt</from-outcome>
-        <to-view-id>/secured/wahl.xhtml</to-view-id>
+        <to-view-id>wahl.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>wahlAbgeben</from-outcome>
-        <to-view-id>secured/start.xhtml</to-view-id>
+        <to-view-id>start.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursAnlegen</from-outcome>
-        <to-view-id>secured/kursAnlegen.xhtml</to-view-id>
+        <to-view-id>kursAnlegen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurslisteLehrer</from-outcome>
-        <to-view-id>secured/kurseLehrer.xhtml</to-view-id>
+        <to-view-id>kurseLehrer.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursWechseln</from-outcome>
-        <to-view-id>secured/kursWechsel.xhtml</to-view-id>
+        <to-view-id>kursWechsel.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurseAlle</from-outcome>
-        <to-view-id>secured/kurseAlle.xhtml</to-view-id>
+        <to-view-id>kurseAlle.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>wahlzeitraum</from-outcome>
-        <to-view-id>secured/wahlzeitraum.xhtml</to-view-id>
+        <to-view-id>wahlzeitraum.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursZuweisen</from-outcome>
-        <to-view-id>secured/kurseZuweisen.xhtml</to-view-id>
+        <to-view-id>kurseZuweisen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerAnlegen</from-outcome>
-        <to-view-id>secured/benutzerAnlegen.xhtml</to-view-id>
+        <to-view-id>benutzerAnlegen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerVerwalten</from-outcome>
-        <to-view-id>secured/benutzerVerwalten.xhtml</to-view-id>
+        <to-view-id>benutzerVerwalten.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
     
     
      <!-- ######################### Kurs anlegen #################################################### -->
     <navigation-rule>
-      <from-view-id>/secured/kursAnlegen.xhtml</from-view-id>
+      <from-view-id>kursAnlegen.xhtml</from-view-id>
       <navigation-case>
           <from-outcome>faq</from-outcome>
           <to-view-id>faq.xhtml</to-view-id>
@@ -95,30 +95,30 @@
       </navigation-case>
       <navigation-case>
         <from-outcome>kursAnlegen</from-outcome>
-        <to-view-id>/secured/kursAnlegen.xhtml</to-view-id>
+        <to-view-id>kursAnlegen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurslisteLehrer</from-outcome>
-        <to-view-id>/secured/kurseLehrer.xhtml</to-view-id>
+        <to-view-id>kurseLehrer.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursWechseln</from-outcome>
-        <to-view-id>/secured/kursWechsel.xhtml</to-view-id>
+        <to-view-id>kursWechsel.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurseAlle</from-outcome>
-        <to-view-id>/secured/kurseAlle.xhtml</to-view-id>
+        <to-view-id>kurseAlle.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
           <from-outcome>kursAngelegt</from-outcome>
-          <to-view-id>/secured/kursAnlegen.xhtml</to-view-id>
+          <to-view-id>kursAnlegen.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
     
     
      <!-- ######################### Kursliste Lehrer #################################################### -->
     <navigation-rule>
-      <from-view-id>/secured/kurseLehrer.xhtml</from-view-id>
+      <from-view-id>kurseLehrer.xhtml</from-view-id>
       <navigation-case>
           <from-outcome>faq</from-outcome>
           <to-view-id>faq.xhtml</to-view-id>
@@ -129,27 +129,27 @@
       </navigation-case>
       <navigation-case>
         <from-outcome>kursAnlegen</from-outcome>
-        <to-view-id>/secured/kursAnlegen.xhtml</to-view-id>
+        <to-view-id>kursAnlegen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurslisteLehrer</from-outcome>
-        <to-view-id>/secured/kurseLehrer.xhtml</to-view-id>
+        <to-view-id>kurseLehrer.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursWechseln</from-outcome>
-        <to-view-id>/secured/kursWechsel.xhtml</to-view-id>
+        <to-view-id>kursWechsel.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurseAlle</from-outcome>
-        <to-view-id>/secured/kurseAlle.xhtml</to-view-id>
+        <to-view-id>kurseAlle.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursBearbeiten</from-outcome>
-        <to-view-id>/secured/kursBearbeiten.xhtml</to-view-id>
+        <to-view-id>kursBearbeiten.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursAnschauen</from-outcome>
-        <to-view-id>/secured/kursAnschauen.xhtml</to-view-id>
+        <to-view-id>kursAnschauen.xhtml</to-view-id>
       </navigation-case>
       
     </navigation-rule>
@@ -157,7 +157,7 @@
     
      <!-- ######################### Einzelner Kurs #################################################### -->
     <navigation-rule>
-      <from-view-id>/secured/kursAnschauen.xhtml</from-view-id>
+      <from-view-id>kursAnschauen.xhtml</from-view-id>
       <navigation-case>
           <from-outcome>faq</from-outcome>
           <to-view-id>faq.xhtml</to-view-id>
@@ -168,50 +168,50 @@
       </navigation-case>
       <navigation-case>
         <from-outcome>kurslisteLehrer</from-outcome>
-        <to-view-id>/secured/kurseLehrer.xhtml</to-view-id>
+        <to-view-id>kurseLehrer.xhtml</to-view-id>
       </navigation-case>
      <navigation-case>
         <from-outcome>kursWechseln</from-outcome>
-        <to-view-id>secured/kursWechsel.xhtml</to-view-id>
+        <to-view-id>kursWechsel.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurseAlle</from-outcome>
-        <to-view-id>secured/kurseAlle.xhtml</to-view-id>
+        <to-view-id>kurseAlle.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>wahlzeitraum</from-outcome>
-        <to-view-id>secured/wahlzeitraum.xhtml</to-view-id>
+        <to-view-id>wahlzeitraum.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursZuweisen</from-outcome>
-        <to-view-id>secured/kurseZuweisen.xhtml</to-view-id>
+        <to-view-id>kurseZuweisen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerAnlegen</from-outcome>
-        <to-view-id>secured/benutzerAnlegen.xhtml</to-view-id>
+        <to-view-id>benutzerAnlegen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerVerwalten</from-outcome>
-        <to-view-id>secured/benutzerVerwalten.xhtml</to-view-id>
+        <to-view-id>benutzerVerwalten.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>schuelerlisteKurs</from-outcome>
-        <to-view-id>/secured/schuelerlisteKurs.xhtml</to-view-id>
+        <to-view-id>schuelerlisteKurs.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>schuelerEinsehen</from-outcome>
-        <to-view-id>/secured/schuelerlisteKurs.xhtml</to-view-id>
+        <to-view-id>schuelerlisteKurs.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>wahlAbgeben</from-outcome>
-        <to-view-id>secured/start.xhtml</to-view-id>
+        <to-view-id>start.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
     
     
      <!-- ######################### Kurs wechseln #################################################### -->
     <navigation-rule>
-      <from-view-id>/secured/kursWechsel.xhtml</from-view-id>
+      <from-view-id>kursWechsel.xhtml</from-view-id>
       <navigation-case>
           <from-outcome>faq</from-outcome>
           <to-view-id>faq.xhtml</to-view-id>
@@ -222,42 +222,42 @@
       </navigation-case>
       <navigation-case>
         <from-outcome>wechselFehlgeschlagen</from-outcome>
-        <to-view-id>secured/kursWechsel.xhtml</to-view-id>
+        <to-view-id>kursWechsel.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurslisteLehrer</from-outcome>
-        <to-view-id>/secured/kurseLehrer.xhtml</to-view-id>
+        <to-view-id>kurseLehrer.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursWechseln</from-outcome>
-        <to-view-id>secured/kursWechsel.xhtml</to-view-id>
+        <to-view-id>kursWechsel.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurseAlle</from-outcome>
-        <to-view-id>secured/kurseAlle.xhtml</to-view-id>
+        <to-view-id>kurseAlle.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>wahlzeitraum</from-outcome>
-        <to-view-id>secured/wahlzeitraum.xhtml</to-view-id>
+        <to-view-id>wahlzeitraum.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursZuweisen</from-outcome>
-        <to-view-id>secured/kurseZuweisen.xhtml</to-view-id>
+        <to-view-id>kurseZuweisen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerAnlegen</from-outcome>
-        <to-view-id>secured/benutzerAnlegen.xhtml</to-view-id>
+        <to-view-id>benutzerAnlegen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerVerwalten</from-outcome>
-        <to-view-id>secured/benutzerVerwalten.xhtml</to-view-id>
+        <to-view-id>benutzerVerwalten.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
     
     
     <!-- ######################### Alle Kurse #################################################### -->
     <navigation-rule>
-      <from-view-id>/secured/kurseAlle.xhtml</from-view-id>
+      <from-view-id>kurseAlle.xhtml</from-view-id>
       <navigation-case>
           <from-outcome>faq</from-outcome>
           <to-view-id>faq.xhtml</to-view-id>
@@ -268,37 +268,37 @@
       </navigation-case>
       <navigation-case>
         <from-outcome>kurslisteLehrer</from-outcome>
-        <to-view-id>/secured/kurseLehrer.xhtml</to-view-id>
+        <to-view-id>kurseLehrer.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursWechseln</from-outcome>
-        <to-view-id>secured/kursWechsel.xhtml</to-view-id>
+        <to-view-id>kursWechsel.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurseAlle</from-outcome>
-        <to-view-id>secured/kurseAlle.xhtml</to-view-id>
+        <to-view-id>kurseAlle.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>wahlzeitraum</from-outcome>
-        <to-view-id>secured/wahlzeitraum.xhtml</to-view-id>
+        <to-view-id>wahlzeitraum.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursZuweisen</from-outcome>
-        <to-view-id>secured/kurseZuweisen.xhtml</to-view-id>
+        <to-view-id>kurseZuweisen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerAnlegen</from-outcome>
-        <to-view-id>secured/benutzerAnlegen.xhtml</to-view-id>
+        <to-view-id>benutzerAnlegen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerVerwalten</from-outcome>
-        <to-view-id>secured/benutzerVerwalten.xhtml</to-view-id>
+        <to-view-id>benutzerVerwalten.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
     
     <!-- ######################### Schülerliste Kurs #################################################### -->
     <navigation-rule>
-      <from-view-id>/secured/schuelerlisteKurs.xhtml</from-view-id>
+      <from-view-id>schuelerlisteKurs.xhtml</from-view-id>
       <navigation-case>
           <from-outcome>faq</from-outcome>
           <to-view-id>faq.xhtml</to-view-id>
@@ -309,30 +309,30 @@
       </navigation-case>
       <navigation-case>
         <from-outcome>kursAnlegen</from-outcome>
-        <to-view-id>secured/kursAnlegen.xhtml</to-view-id>
+        <to-view-id>kursAnlegen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurslisteLehrer</from-outcome>
-        <to-view-id>secured/kurseLehrer.xhtml</to-view-id>
+        <to-view-id>kurseLehrer.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursWechseln</from-outcome>
-        <to-view-id>secured/kursWechsel.xhtml</to-view-id>
+        <to-view-id>kursWechsel.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurseAlle</from-outcome>
-        <to-view-id>secured/kurseAlle.xhtml</to-view-id>
+        <to-view-id>kurseAlle.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>schuelerlisteKurs</from-outcome>
-        <to-view-id>secured/schuelerlisteKurs.xhtml</to-view-id>
+        <to-view-id>schuelerlisteKurs.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
     
     <!-- ######################### Wahlzeitraum #################################################### -->
         
     <navigation-rule>
-      <from-view-id>/secured/wahlzeitraum.xhtml</from-view-id>
+      <from-view-id>wahlzeitraum.xhtml</from-view-id>
       <navigation-case>
           <from-outcome>faq</from-outcome>
           <to-view-id>faq.xhtml</to-view-id>
@@ -343,34 +343,34 @@
       </navigation-case>
       <navigation-case>
         <from-outcome>kursWechseln</from-outcome>
-        <to-view-id>secured/kursWechsel.xhtml</to-view-id>
+        <to-view-id>kursWechsel.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurseAlle</from-outcome>
-        <to-view-id>secured/kurseAlle.xhtml</to-view-id>
+        <to-view-id>kurseAlle.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>wahlzeitraum</from-outcome>
-        <to-view-id>secured/wahlzeitraum.xhtml</to-view-id>
+        <to-view-id>wahlzeitraum.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursZuweisen</from-outcome>
-        <to-view-id>secured/kurseZuweisen.xhtml</to-view-id>
+        <to-view-id>kurseZuweisen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerAnlegen</from-outcome>
-        <to-view-id>secured/benutzerAnlegen.xhtml</to-view-id>
+        <to-view-id>benutzerAnlegen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerVerwalten</from-outcome>
-        <to-view-id>secured/benutzerVerwalten.xhtml</to-view-id>
+        <to-view-id>benutzerVerwalten.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
     
     <!-- ######################### Kurs zuweisen #################################################### -->
     
     <navigation-rule>
-      <from-view-id>/secured/kurseZuweisen.xhtml</from-view-id>
+      <from-view-id>kurseZuweisen.xhtml</from-view-id>
       <navigation-case>
           <from-outcome>faq</from-outcome>
           <to-view-id>faq.xhtml</to-view-id>
@@ -381,34 +381,34 @@
       </navigation-case>
       <navigation-case>
         <from-outcome>kursWechseln</from-outcome>
-        <to-view-id>secured/kursWechsel.xhtml</to-view-id>
+        <to-view-id>kursWechsel.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurseAlle</from-outcome>
-        <to-view-id>secured/kurseAlle.xhtml</to-view-id>
+        <to-view-id>kurseAlle.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>wahlzeitraum</from-outcome>
-        <to-view-id>secured/wahlzeitraum.xhtml</to-view-id>
+        <to-view-id>wahlzeitraum.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursZuweisen</from-outcome>
-        <to-view-id>secured/kurseZuweisen.xhtml</to-view-id>
+        <to-view-id>kurseZuweisen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerAnlegen</from-outcome>
-        <to-view-id>secured/benutzerAnlegen.xhtml</to-view-id>
+        <to-view-id>benutzerAnlegen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerVerwalten</from-outcome>
-        <to-view-id>secured/benutzerVerwalten.xhtml</to-view-id>
+        <to-view-id>benutzerVerwalten.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
     
         <!-- ######################### Benutzer anlegen #################################################### -->
 
     <navigation-rule>
-      <from-view-id>/secured/benutzerAnlegen.xhtml</from-view-id>
+      <from-view-id>benutzerAnlegen.xhtml</from-view-id>
       <navigation-case>
           <from-outcome>faq</from-outcome>
           <to-view-id>faq.xhtml</to-view-id>
@@ -419,34 +419,34 @@
       </navigation-case>
       <navigation-case>
         <from-outcome>kursWechseln</from-outcome>
-        <to-view-id>secured/kursWechsel.xhtml</to-view-id>
+        <to-view-id>kursWechsel.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurseAlle</from-outcome>
-        <to-view-id>secured/kurseAlle.xhtml</to-view-id>
+        <to-view-id>kurseAlle.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>wahlzeitraum</from-outcome>
-        <to-view-id>secured/wahlzeitraum.xhtml</to-view-id>
+        <to-view-id>wahlzeitraum.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursZuweisen</from-outcome>
-        <to-view-id>secured/kurseZuweisen.xhtml</to-view-id>
+        <to-view-id>kurseZuweisen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerAnlegen</from-outcome>
-        <to-view-id>secured/benutzerAnlegen.xhtml</to-view-id>
+        <to-view-id>benutzerAnlegen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerVerwalten</from-outcome>
-        <to-view-id>secured/benutzerVerwalten.xhtml</to-view-id>
+        <to-view-id>benutzerVerwalten.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
     
     
     <!-- ######################### Benutzer verwalten #################################################### -->
     <navigation-rule>
-      <from-view-id>/secured/benutzerVerwalten.xhtml</from-view-id>
+      <from-view-id>benutzerVerwalten.xhtml</from-view-id>
       <navigation-case>
         <from-outcome>faq</from-outcome>
         <to-view-id>faq.xhtml</to-view-id>
@@ -457,33 +457,33 @@
       </navigation-case>
       <navigation-case>
         <from-outcome>kursWechseln</from-outcome>
-        <to-view-id>secured/kursWechsel.xhtml</to-view-id>
+        <to-view-id>kursWechsel.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurseAlle</from-outcome>
-        <to-view-id>secured/kurseAlle.xhtml</to-view-id>
+        <to-view-id>kurseAlle.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>wahlzeitraum</from-outcome>
-        <to-view-id>secured/wahlzeitraum.xhtml</to-view-id>
+        <to-view-id>wahlzeitraum.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursZuweisen</from-outcome>
-        <to-view-id>secured/kurseZuweisen.xhtml</to-view-id>
+        <to-view-id>kurseZuweisen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerAnlegen</from-outcome>
-        <to-view-id>secured/benutzerAnlegen.xhtml</to-view-id>
+        <to-view-id>benutzerAnlegen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerVerwalten</from-outcome>
-        <to-view-id>secured/benutzerVerwalten.xhtml</to-view-id>
+        <to-view-id>benutzerVerwalten.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
           
      <!-- ######################### Kurs bearbeiten #################################################### -->      
     <navigation-rule>
-      <from-view-id>/secured/kursBearbeiten.xhtml</from-view-id>
+      <from-view-id>kursBearbeiten.xhtml</from-view-id>
       <navigation-case>
           <from-outcome>faq</from-outcome>
           <to-view-id>faq.xhtml</to-view-id>
@@ -494,31 +494,31 @@
       </navigation-case>
       <navigation-case>
         <from-outcome>kursAnlegen</from-outcome>
-        <to-view-id>secured/kursAnlegen.xhtml</to-view-id>
+        <to-view-id>kursAnlegen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurslisteLehrer</from-outcome>
-        <to-view-id>secured/kurseLehrer.xhtml</to-view-id>
+        <to-view-id>kurseLehrer.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursWechseln</from-outcome>
-        <to-view-id>secured/kursWechsel.xhtml</to-view-id>
+        <to-view-id>kursWechsel.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kurseAlle</from-outcome>
-        <to-view-id>secured/kurseAlle.xhtml</to-view-id>
+        <to-view-id>kurseAlle.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>schuelerlisteKurs</from-outcome>
-        <to-view-id>secured/schuelerlisteKurs.xhtml</to-view-id>
+        <to-view-id>schuelerlisteKurs.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>wahlzeitraum</from-outcome>
-        <to-view-id>secured/wahlzeitraum.xhtml</to-view-id>
+        <to-view-id>wahlzeitraum.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>kursZuweisen</from-outcome>
-        <to-view-id>secured/kurseZuweisen.xhtml</to-view-id>
+        <to-view-id>kurseZuweisen.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
     

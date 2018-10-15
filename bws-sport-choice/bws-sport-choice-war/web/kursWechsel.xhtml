@@ -7,7 +7,7 @@
 
     <body>
 
-        <ui:composition template="./securedTemplate.xhtml">
+        <ui:composition template="./template.xhtml">
 
             <ui:define name="title">
                 Kurswechsel
@@ -19,6 +19,9 @@
                         <div class="small-12 columns small-centered">
                             <fieldset>
                                 <legend>Kurs wechseln</legend>
+                                <div>
+                                    <h:outputText id="errorWechsel" value="#{loginNB.error}"/>
+                                </div>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Schüler 1</span>

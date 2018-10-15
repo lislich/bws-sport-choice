@@ -7,7 +7,7 @@
 
     <body>
 
-        <ui:composition template="./securedTemplate.xhtml">
+        <ui:composition template="./template.xhtml">
 
             <ui:define name="title">
                 Kurs anlegen
@@ -26,7 +26,8 @@
                                         <span class="prefix">Titel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="titel" class="input-group-field" value="#{kursNB.titel}"/>
+                                        <h:inputText id="titel" class="input-group-field" value="#{kursNB.titel}" required="true" requiredMessage="Geben Sie ein Titel an."/>
+                                        <h:message id="m1" for="titel" style="color:red"/><p></p>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -34,7 +35,8 @@
                                         <span class="prefix">Kürzel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="kuerzel" class="input-group-field" value="#{kursNB.kuerzel}"/>
+                                        <h:inputText id="kuerzel" class="input-group-field" value="#{kursNB.kuerzel}" required="true" requiredMessage="Geben Sie ein Kürzel an."/>
+                                        <h:message id="m2" for="kuerzel" style="color:red"/><p></p>
                                     </div>
                                 </div>                                
                                 <div class="row collapse">
@@ -52,7 +54,8 @@
                                         <span class="prefix">Beschreibung</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputTextarea id="beschreibung" class="input-group-field" value="#{kursNB.beschreibung}"/>
+                                        <h:inputTextarea id="beschreibung" class="input-group-field" value="#{kursNB.beschreibung}" required="true" requiredMessage="Geben Sie eine Beschreibung an."/>
+                                        <h:message id="m3" for="beschreibung" style="color:red"/><p></p>
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -60,7 +63,8 @@
                                         <span class="prefix">Bewertung</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputTextarea id="bewertung" class="input-group-field" value="#{kursNB.bewertung}"/>
+                                        <h:inputTextarea id="bewertung" class="input-group-field" value="#{kursNB.bewertung}" required="true" requiredMessage="Geben Sie eine Bewertung an."/>
+                                        <h:message id="m4" for="bewertung" style="color:red"/><p></p>
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -68,7 +72,8 @@
                                         <span class="prefix">Hinweis</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputTextarea id="hinweis" class="input-group-field" value="#{kursNB.hinweis}"/>
+                                        <h:inputTextarea id="hinweis" class="input-group-field" value="#{kursNB.hinweis}" required="true" requiredMessage="Geben Sie einen Hinweis an."/>
+                                        <h:message id="m5" for="hinweis" style="color:red"/><p></p>
                                     </div>
                                 </div>
                                 <div class="row collapse">

@@ -6,11 +6,11 @@
 package de.bws.namedBeans;
 
 import de.bws.entities.Kurs;
-import de.bws.entities.Person;
 import de.bws.entities.Schueler;
 import de.bws.sessionbeans.KursFacadeLocal;
 import de.bws.sessionbeans.SchuelerFacadeLocal;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -49,15 +49,6 @@ public class KursZuweisenNB implements Serializable{
     public KursZuweisenNB() {
     }
     
-    @PostConstruct
-    public void init(){
-        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        if(sessionMap.get("lastError") != null){
-            this.setError(sessionMap.get("lastError").toString());
-            sessionMap.remove("lastError");
-        }
-    }
-    
     public String wechsel(){
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         String rueckgabe = "kursWechseln";
@@ -73,16 +64,16 @@ public class KursZuweisenNB implements Serializable{
         
         
         
-        if(kEins != null){
+        if((kEins != null && !(kEins.isEmpty())) ){
             kE = kEins.get(0);
         }else{
-            sessionMap.put("lastError", "Schüler: " + eins + " ist noch keinem Kurs zugewiesen.");
+            sessionMap.put("lastError", "Schüler/in: " + eins.getNachname() +", " + eins.getVorname() + " ist noch keinem Kurs zugewiesen. Ein Kurswechsel ist nicht möglich");
             rueckgabe = "wechselFehlgeschlagen";
         }
-        if(kZwei != null){
+        if((kZwei != null && !(kZwei.isEmpty())) ){
             kZ = kZwei.get(0);
         }else{
-            sessionMap.put("lastError", "Schüler: " + zwei + " ist noch keinem Kurs zugewiesen.");
+            sessionMap.put("lastError", "Schüler/in: " + zwei.getNachname() +", " + zwei.getVorname() + " ist noch keinem Kurs zugewiesen. Ein Kurswechsel ist nicht möglich.");
             rueckgabe = "wechselFehlgeschlagen";
         }
         
@@ -108,8 +99,13 @@ public class KursZuweisenNB implements Serializable{
     /**
      * @return the schueler
      */
-    public List<Schueler> getSchueler() {        
-        return this.schuelerBean.findAll();
+    public List<Schueler> getSchueler() {
+        List<Schueler> tmp = this.schuelerBean.findAll();
+        if(tmp == null){
+            tmp = new ArrayList<>();
+        }
+        this.schueler = tmp;
+        return this.schueler;
     }
 
     /**
@@ -151,7 +147,12 @@ public class KursZuweisenNB implements Serializable{
      * @return the kurs
      */
     public List<Kurs> getKurs() {
-        return this.kursBean.findAll();
+        List<Kurs> tmp = this.kursBean.findAll();
+        if(tmp == null){
+            tmp = new ArrayList<>();
+        }
+        this.kurs = tmp;
+        return this.kurs;
     }
 
     /**
@@ -188,21 +189,6 @@ public class KursZuweisenNB implements Serializable{
     public void setSchuelerZwei(int schuelerZwei) {
         this.schuelerZwei = schuelerZwei;
     }
-
-    /**
-     * @return the error
-     */
-    public String getError() {
-        return error;
-    }
-
-    /**
-     * @param error the error to set
-     */
-    public void setError(String error) {
-        this.error = error;
-    }
-    
     
     
 }

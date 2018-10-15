@@ -14,6 +14,7 @@ import de.bws.sessionbeans.BenutzerFacadeLocal;
 import de.bws.sessionbeans.KursFacadeLocal;
 import de.bws.sessionbeans.PersonFacadeLocal;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,25 +46,28 @@ public class KurslisteNB implements Serializable {
     
     private List<Schueler> schuelerKurse;
     
+    
 //    @PostConstruct
 //    public void init(){
-//        Benutzer lehrer = new Benutzer();
+//                Benutzer admin = new Benutzer();
 //        
 //        try {
-//            lehrer.setBenutzername("lislich");
-//            lehrer.setNeuesPasswort("lislich");
-//            lehrer.setRolle(Rolle.SCHUELER);
-//            lehrer.setPerson(this.personBean.find(3959));
+//            admin.setBenutzername("MarSax");
+//            admin.setNeuesPasswort("marsax");
+//            admin.setRolle(Rolle.LEHRER);
 //        } catch (Exception ex) {
 //            Logger.getLogger(LoginNB.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //        
-//        this.benutzerBean.create(lehrer);
+//        this.benutzerBean.create(admin);
 //    }
     
-    
     public List<Kurs> getAlleKurse(){
-        this.alleKurse = this.kursBean.findAll();
+        List<Kurs> tmp = this.kursBean.findAll();
+        if(tmp == null){
+            tmp = new ArrayList<>();
+        }
+        this.alleKurse = tmp;
         return this.alleKurse;
     }
 
@@ -99,7 +103,11 @@ public class KurslisteNB implements Serializable {
     public List<Kurs> getLehrerKurse() {
         Benutzer b = (Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
         Lehrer l = (Lehrer) b.getPerson();
-        this.lehrerKurse = this.kursBean.get("SELECT k FROM Kurs k WHERE k.lehrer.id =" + l.getId());
+        List<Kurs> tmp = this.kursBean.get("SELECT k FROM Kurs k WHERE k.lehrer.id =" + l.getId());
+        if(tmp == null){
+            tmp = new ArrayList<>();
+        }
+        this.lehrerKurse = tmp;
         return lehrerKurse;
     }
 
@@ -115,8 +123,12 @@ public class KurslisteNB implements Serializable {
      */
     public List<Schueler> getSchuelerKurse() {
         Kurs k = ((Kurs) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("gewaehlterKurs"));
-        schuelerKurse = k.getTeilnehmer();
-        return schuelerKurse;
+        List<Schueler> tmp = k.getTeilnehmer();
+        if(tmp == null){
+            tmp = new ArrayList<>();
+        }
+        this.schuelerKurse = tmp;
+        return this.schuelerKurse;
     }
 
     /**
