@@ -6,7 +6,6 @@
 package de.bws.namedBeans;
 
 import de.bws.entities.Kurs;
-import de.bws.entities.Lehrer;
 import de.bws.entities.Stufe;
 import de.bws.entities.Thema;
 import de.bws.sessionbeans.KursFacadeLocal;
@@ -14,7 +13,6 @@ import de.bws.sessionbeans.StufeFacadeLocal;
 import de.bws.sessionbeans.ThemaFacadeLocal;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;

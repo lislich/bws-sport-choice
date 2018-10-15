@@ -32,7 +32,6 @@ public class LoginNB implements Serializable{
     
     private String passwort;
     private String benutzerName;
-    private String error;
     
     /**
      * Creates a new instance of LoginNB
@@ -43,11 +42,7 @@ public class LoginNB implements Serializable{
     
     @PostConstruct
     private void init(){
-        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        if(sessionMap.get("lastError") != null){
-            this.error = sessionMap.get("lastError").toString();
-            sessionMap.remove("lastError");
-        }
+        
         
         /* Einkommentieren um den Root-Benutzer neu zu erstellen */
         //this.createRootUser();
@@ -137,14 +132,16 @@ public class LoginNB implements Serializable{
      * @return the error
      */
     public String getError() {
+        String error;
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        if(sessionMap.get("lastError") != null){
+            error = sessionMap.get("lastError").toString();
+            sessionMap.remove("lastError");
+        } else {
+            error = "";
+        }
+        
         return error;
-    }
-
-    /**
-     * @param error the error to set
-     */
-    public void setError(String error) {
-        this.error = error;
     }
     
 }

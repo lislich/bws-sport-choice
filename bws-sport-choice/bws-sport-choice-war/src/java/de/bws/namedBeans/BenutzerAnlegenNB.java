@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -55,14 +56,23 @@ public class BenutzerAnlegenNB implements Serializable{
     private String nachname;
     private String vorname;
     private String passwort;
-    private Stufe stufe;
-    private Lehrer tutor;
+    private String stufe;
+    private String tutor;
     private String kuerzel;
     
     /**
      * Creates a new instance of BenutzerAnlegenNB
      */
     public BenutzerAnlegenNB() {
+    }
+    
+    @PostConstruct
+    private void init(){
+//        Lehrer lehrer = new Lehrer();
+//        lehrer.setKuerzel("GG");
+//        lehrer.setNachname("Grüning");
+//        lehrer.setVorname("Peter");
+//        this.lehrerBean.create(lehrer);
     }
     
     /**
@@ -76,6 +86,7 @@ public class BenutzerAnlegenNB implements Serializable{
                 this.lehrerBean.create(this.lehrerErstellen());
                 break;
             case SCHUELER:
+                this.schuelerBean.create(this.schuelerErstellen());
                 break;
             case ADMIN:
                 this.personBean.create(this.personErstellen(null));
@@ -102,7 +113,8 @@ public class BenutzerAnlegenNB implements Serializable{
     
     private Schueler schuelerErstellen(){
         Schueler schueler = new Schueler();
-        schueler.setTutor(this.tutor);
+        schueler.setTutor(this.lehrerBean.find(this.tutor));
+        schueler.setStufe(this.stufeBean.find(this.stufe));
         return (Schueler) this.personErstellen(schueler);
     }
     
@@ -121,6 +133,7 @@ public class BenutzerAnlegenNB implements Serializable{
         }
         person.setVorname(this.vorname);
         person.setNachname(this.nachname);
+        this.personBean.create(person);
         return person;
     }
     
@@ -197,14 +210,14 @@ public class BenutzerAnlegenNB implements Serializable{
     /**
      * @return the stufe
      */
-    public Stufe getStufe() {
+    public String getStufe() {
         return stufe;
     }
 
     /**
      * @param stufe the stufe to set
      */
-    public void setStufe(Stufe stufe) {
+    public void setStufe(String stufe) {
         this.stufe = stufe;
     }
 
@@ -233,25 +246,18 @@ public class BenutzerAnlegenNB implements Serializable{
     /**
      * @return the tutor
      */
-    public Lehrer getTutor() {
+    public String getTutor() {
         return tutor;
     }
     
-    public List<String> getTutoren(){
-        List<Lehrer> tutoren = this.lehrerBean.findAll();
-        List<String> tutorenString = new ArrayList<>();
-        
-        for(Lehrer t:tutoren){
-            tutorenString.add("" + t.getNachname() + ", " + t.getVorname() + " (" + t.getKuerzel() + ")");
-        }
-        
-        return tutorenString;
+    public List<Lehrer> getTutoren(){
+        return this.lehrerBean.findAll();
     }
 
     /**
      * @param tutor the tutor to set
      */
-    public void setTutor(Lehrer tutor) {
+    public void setTutor(String tutor) {
         this.tutor = tutor;
     }
 
@@ -268,5 +274,7 @@ public class BenutzerAnlegenNB implements Serializable{
     public void setKuerzel(String kuerzel) {
         this.kuerzel = kuerzel;
     }
+
+   
     
 }

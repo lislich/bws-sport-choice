@@ -18,6 +18,9 @@
                     <div class="small-12 columns small-centered">
                         <h:form>
                             <fieldset>
+                                <div>
+                                    <h:outputText id="error" value="#{loginNB.error}"/>
+                                </div>
                                 <legend>Benutzer anlegen</legend>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
@@ -51,7 +54,7 @@
                                     </div>
                                     <div class="small-8 columns mobile-input">
                                         <h:selectOneMenu id="tutor" class="input-group-field" value="#{benutzerAnlegenNB.tutor}"  >
-                                            <f:selectItems value="#{benutzerAnlegenNB.tutoren}" />
+                                            <f:selectItems value="#{benutzerAnlegenNB.tutoren}" var="tutor" itemValue="#{tutor.id}" itemLabel="#{tutor.kuerzel}"/>
                                         </h:selectOneMenu>
                                     </div>
                                 </div>
@@ -68,8 +71,8 @@
                                         <span class="prefix">Stufe</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="stufe" class="input-group-field" value="#{benutzerAnlegenNB.stufe}"  >
-                                            <f:selectItems value="#{benutzerAnlegenNB.stufen}" />
+                                        <h:selectOneMenu id="stufe" class="input-group-field" value="#{benutzerAnlegenNB.stufe}">
+                                            <f:selectItems value="#{stufeNB.alleStufen}" var="stufe" itemValue="#{stufe.id}" itemLabel="#{stufe.bezeichnung}"/>
                                         </h:selectOneMenu>
                                     </div>
                                 </div>
