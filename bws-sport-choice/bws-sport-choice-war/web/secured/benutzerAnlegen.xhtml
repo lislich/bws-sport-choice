@@ -50,7 +50,9 @@
                                         <span class="prefix">Tutor</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="tutor" class="input-group-field" value="#{benutzerAnlegenNB.tutor}" />
+                                        <h:selectOneMenu id="tutor" class="input-group-field" value="#{benutzerAnlegenNB.tutor}"  >
+                                            <f:selectItems value="#{benutzerAnlegenNB.tutoren}" />
+                                        </h:selectOneMenu>
                                     </div>
                                 </div>
                                 <div class="row collapse area">
