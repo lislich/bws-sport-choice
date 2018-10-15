@@ -101,6 +101,18 @@ $(document).ready(function () {
             }
         });
     });
+    
+   /**
+     * 
+     */    
+    $("#teilnehmerzahlRequired").click(function(){
+        $("#teilnehmerzahl").toggle(function () {
+            $("#teilnehmerzahl").addClass("hide");
+        }, function () {
+            $("#teilnehmerzahl").removeClass("hide");
+        });
+    });
+    
 
     // # Benutzer verwalten ####################################################################################
     

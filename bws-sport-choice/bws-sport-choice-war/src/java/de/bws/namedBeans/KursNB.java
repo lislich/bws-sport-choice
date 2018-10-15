@@ -5,7 +5,9 @@
  */
 package de.bws.namedBeans;
 
+import de.bws.entities.Benutzer;
 import de.bws.entities.Kurs;
+import de.bws.entities.Lehrer;
 import de.bws.entities.Stufe;
 import de.bws.entities.Thema;
 import de.bws.sessionbeans.KursFacadeLocal;
@@ -82,8 +84,11 @@ public class KursNB implements Serializable{
         this.kursBean.edit(kurs);
     }
     
-    public void anlegen(){
+    public String anlegen(){
         System.out.println("de.bws.namedBeans.KursNB.anlegen()");
+        
+        Benutzer p_benutzer = (Benutzer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
+        Lehrer p_lehrer = (Lehrer) p_benutzer.getPerson();
         
         Stufe p_stufe = this.findStufe(stufe);
         
@@ -105,6 +110,7 @@ public class KursNB implements Serializable{
         kursT.setTeilnehmerzahl(this.getTeilnehmerzahl());
         kursT.setTitel(this.getTitel());       
         kursT.setBeschreibung(beschreibung);
+        kursT.setLehrer(p_lehrer);
         
         if(p_kurs != null){
             kursT.setThemengleich(p_kurs);
@@ -117,7 +123,9 @@ public class KursNB implements Serializable{
         if(thema.getBezeichnung() != null){
             kursT.addThema(thema);
         }
-        this.kursBean.create(kursT);      
+        this.kursBean.create(kursT);     
+        
+        return "kursAngelegt";
     } 
     
     public void getGewaehlterKurs(){
