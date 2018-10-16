@@ -45,7 +45,7 @@
                                         <span class="prefix">Vorname</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="vorname" class="input-group-field" value="#{benutzerAnlegenNB.nachname}" />
+                                        <h:inputText id="vorname" class="input-group-field" value="#{benutzerAnlegenNB.vorname}" />
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -85,7 +85,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <h:commandButton class="small button" id="benutzerAnlegen" value="Anlegen" action="anlegen" type="submit"/>
+                                    <h:commandButton class="small button" id="benutzerAnlegen" value="Anlegen" action="#{benutzerAnlegenNB.anlegen()}" type="submit"/>
                                 </div>
                             </fieldset>
                         </h:form>

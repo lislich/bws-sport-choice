@@ -10,7 +10,6 @@ import de.bws.entities.Benutzer;
 import de.bws.entities.Lehrer;
 import de.bws.entities.Person;
 import de.bws.entities.Schueler;
-import de.bws.entities.Stufe;
 import de.bws.security.Passwort;
 import de.bws.sessionbeans.BenutzerFacadeLocal;
 import de.bws.sessionbeans.LehrerFacadeLocal;
@@ -18,7 +17,6 @@ import de.bws.sessionbeans.PersonFacadeLocal;
 import de.bws.sessionbeans.SchuelerFacadeLocal;
 import de.bws.sessionbeans.StufeFacadeLocal;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,6 +58,9 @@ public class BenutzerAnlegenNB implements Serializable{
     private String tutor;
     private String kuerzel;
     
+//*************************** Methoden *****************************************
+//******************************************************************************
+    
     /**
      * Creates a new instance of BenutzerAnlegenNB
      */
@@ -72,7 +73,7 @@ public class BenutzerAnlegenNB implements Serializable{
 //        lehrer.setKuerzel("GG");
 //        lehrer.setNachname("Grüning");
 //        lehrer.setVorname("Peter");
-//        this.lehrerBean.create(lehrer);
+//        this.personBean.create(lehrer);
     }
     
     /**
@@ -80,6 +81,7 @@ public class BenutzerAnlegenNB implements Serializable{
      * @return 
      */
     public String anlegen(){
+        System.out.println("Benutzer anlegen");
         Person neuePerson = null;
         switch (rolle) {
             case LEHRER:
@@ -108,7 +110,7 @@ public class BenutzerAnlegenNB implements Serializable{
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Fehler beim Anlegen des Benutzers.");
         }
        
-        return "Angelegt";
+        return "benutzerAnlegen";
     }
     
     private Schueler schuelerErstellen(){
@@ -133,10 +135,11 @@ public class BenutzerAnlegenNB implements Serializable{
         }
         person.setVorname(this.vorname);
         person.setNachname(this.nachname);
-        this.personBean.create(person);
         return person;
     }
     
+ //**************************** Setter und Getter ******************************
+ //*****************************************************************************   
     /**
      * @return the rolle
      */
@@ -230,20 +233,6 @@ public class BenutzerAnlegenNB implements Serializable{
     }
     
     /**
-     * 
-     * @return 
-     */
-    public List<String> getStufen(){
-        List<Stufe> stufen = this.stufeBean.findAll();
-        List<String> stufenStrings = new ArrayList<>();
-        
-        for(Stufe s:stufen){
-            stufenStrings.add(s.getBezeichnung());
-        }
-        return stufenStrings;
-    }
-
-    /**
      * @return the tutor
      */
     public String getTutor() {
@@ -274,7 +263,5 @@ public class BenutzerAnlegenNB implements Serializable{
     public void setKuerzel(String kuerzel) {
         this.kuerzel = kuerzel;
     }
-
-   
     
 }

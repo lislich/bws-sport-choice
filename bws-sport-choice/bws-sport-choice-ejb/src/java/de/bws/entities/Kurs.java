@@ -70,11 +70,14 @@ public class Kurs implements Serializable {
 //            inverseJoinColumns = @JoinColumn(name = "THEMA_ID", referencedColumnName = "THEMA_ID"))
     private List<Thema> thema = new ArrayList<>();    
     
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "THEMENGLEICH_ID", nullable = true)
+    @OneToOne(fetch = FetchType.EAGER)
+//    @JoinColumn(name = "THEMENGLEICH_ID", nullable = true)
+    @JoinTable(name = "THEMENGLEICH",
+            joinColumns = @JoinColumn(name = "KURS_ID", referencedColumnName = "KURS_ID"),
+            inverseJoinColumns = @JoinColumn(name = "GLEICHESTHEMA_ID", referencedColumnName = "KURS_ID"))
     private Kurs themengleich;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "LEHRER_ID")
     private Lehrer lehrer;
     
