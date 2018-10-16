@@ -10,11 +10,15 @@ import de.bws.security.Passwort;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 /**
  *
@@ -40,7 +44,7 @@ public class Benutzer implements Serializable {
     @Column(name = "ROLLE")
     private Rolle rolle;
     
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "PERSON_ID", referencedColumnName = "ID", nullable = true)
     private Person person;
     
@@ -147,6 +151,12 @@ public class Benutzer implements Serializable {
      * @return the person
      */
     public Person getPerson() {
+//        if(this.person == null){
+//            EntityManager em = Persistence.createEntityManagerFactory("bws-sport-choice-ejbPU").createEntityManager();
+//            Query q = em.createQuery("SELECT b.person FROM Benutzer b WHERE b.id = :id");
+//            q.setParameter("id", this.id);
+//            this.person = (Person) q.getSingleResult();
+//        }
         return person;
     }
 

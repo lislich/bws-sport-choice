@@ -2,9 +2,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <body>
+    <h:body>
 
         <ui:composition template="./template.xhtml">
 
@@ -23,7 +24,9 @@
                                         <span class="prefix">Rolle</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <select id="rolle" class="input-group-field" />
+                                        <h:selectOneMenu id="rolle" class="input-group-field" value="#{benutzerVerwaltenNB.rolle}" >
+                                            <f:selectItems value="#{benutzerVerwaltenNB.alleRollen}" />
+                                        </h:selectOneMenu>
                                     </div> 
                                 </div>
                                 <div class="row collapse">
@@ -31,37 +34,41 @@
                                         <span class="prefix">Stufe</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <select id="stufe" class="input-group-field" />
+                                        <h:selectOneMenu id="rolle" class="input-group-field" value="#{benutzerVerwaltenNB.stufe}" >
+                                            <f:selectItems value="#{stufeNB.alleStufen}" var="stufe" itemValue="#{stufe.id}" itemLabel="#{stufe.bezeichnung}"/>
+                                        </h:selectOneMenu>
                                     </div> 
                                 </div>
-                                
+                            
                                 <table>
                                     <thead>
                                         <tr>
                                             <th width="100">Vorname</th>
-                                            <th width="100">Name</th>
+                                            <th width="100">Nachname</th>
                                             <th width="100">Benutzername</th>
-                                            <th width="50">Kurs</th>
-                                            <th width="50">Tutor</th>
-                                            <th width="25">Stufe</th>
+                                            <th width="100">Rolle</th>
+                                            <th class="lehrer" width="50">Kuerzel</th>
+                                            <th class="schueler" width="50">Tutor</th>
+                                            <th class="schueler" width="25">Stufe</th>
                                             <th><input type="checkbox" id="auswahl" /></th>
                                         </tr>
                                     </thead>    
                                     <tbody>
-                                        <ui:repeat var="person" value="">
-
+                                        <ui:repeat var="benutzer" value="#{benutzerVerwaltenNB.alleBenutzer}">
                                             <tr>
-                                                <td>Max</td>
-                                                <td>Mustermann</td>
-                                                <td>maxmust</td>
-                                                <td>UWF</td>
-                                                <td>Gg</td>
-                                                <td>12</td>
-                                                <td><input type="checkbox" class="loeschen" id="" /></td>
+                                                <td><h:outputText value="#{benutzer.person.vorname}" /></td>
+                                                <td><h:outputText value="#{benutzer.person.nachname}" /></td>
+                                                <td><h:outputText value="#{benutzer.benutzername}" /></td>
+                                                <td><h:outputText value="#{benutzer.rolle}"/></td>
+                                                <td class="lehrer"><h:outputText value="#{benutzer.person.kuerzel}" /></td>
+                                                <td class="schueler"><h:outputText value="#{benutzer.person.tutor.kuerzel}" /></td>
+                                                <td class="schueler"><h:outputText value="#{benutzer.person.stufe.bezeichnung}" /></td>
+                                                <td><input type="checkbox" class="loeschen" value="#{benutzer.id}" /></td>
                                             </tr>
                                         </ui:repeat>
                                     </tbody>
                                 </table>
+                            
                                 <h:commandButton class="small button" id="anlegen" value="Anlegen.." action="1" />
                                 <h:commandButton class="small button" value="Ändern.." action="2" />
                                 <h:commandButton class="small button" value="Löschen" action="3" />
@@ -69,30 +76,11 @@
                                 <h:commandButton class="small button" value="Abstufen" action="5" />
                             </fieldset>
                         </h:form>
-                        <div id="dialog-form" title="Create new user">
-                            <p class="validateTips">All form fields are required.</p>
-
-                            <form>
-                                <fieldset>
-                                    <label for="name">Name</label>
-                                    <input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all" />
-                                    <label for="email">Email</label>
-                                    <input type="text" name="email" id="email" value="jane@smith.com" class="text ui-widget-content ui-corner-all"/>
-                                    <label for="password">Password</label>
-                                    <input type="password" name="password" id="password" value="xxxxxxx" class="text ui-widget-content ui-corner-all"/>
-
-                                    <!-- Allow form submission with keyboard without duplicating the dialog button -->
-                                    <input type="submit" tabindex="-1" style="position:absolute; top:-1000px"/>
-                                </fieldset>
-                            </form>
-                        </div>
-
-
                     </div>
                 </div>
             </ui:define>
 
         </ui:composition>
 
-    </body>
+    </h:body>
 </html>

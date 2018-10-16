@@ -32,6 +32,7 @@ public class Person implements Serializable {
     
     @Column(name = "VORNAME")
     private String vorname;
+    
 
 //****************************** Methoden *****************************
     
@@ -49,10 +50,7 @@ public class Person implements Serializable {
             return false;
         }
         Person other = (Person) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+        return !((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id)));
     }
 
     @Override
@@ -96,5 +94,43 @@ public class Person implements Serializable {
      */
     public void setVorname(String p_vorname) {
         this.vorname = p_vorname;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public Stufe getStufe(){
+        if(this instanceof Schueler){
+            return ((Schueler)this).getStufe();
+        }
+        Stufe stufe = new Stufe();
+        stufe.setBezeichnung("");
+        return stufe;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public Lehrer getTutor(){
+        if(this instanceof Schueler){
+            return ((Schueler)this).getTutor();
+        }
+        Lehrer tutor = new Lehrer();
+        tutor.setKuerzel("");
+        return tutor;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public String getKuerzel(){
+        if(this instanceof Lehrer){
+            return ((Schueler)this).getKuerzel();
+        }
+
+        return "";
     }
 }

@@ -82,16 +82,19 @@ public class BenutzerAnlegenNB implements Serializable{
      */
     public String anlegen(){
         System.out.println("Benutzer anlegen");
-        Person neuePerson = null;
+        Person neuePerson;
         switch (rolle) {
             case LEHRER:
-                this.lehrerBean.create(this.lehrerErstellen());
+                neuePerson = this.lehrerErstellen();
+                this.lehrerBean.create((Lehrer)neuePerson);
                 break;
             case SCHUELER:
-                this.schuelerBean.create(this.schuelerErstellen());
+                neuePerson = this.schuelerErstellen();
+                this.schuelerBean.create((Schueler)neuePerson);
                 break;
             case ADMIN:
-                this.personBean.create(this.personErstellen(null));
+                neuePerson = this.personErstellen(null);
+                this.personBean.create(neuePerson);
                 break;
             default:
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lasterror", "Fehler beim zuweisen der Rolle.");
@@ -115,8 +118,8 @@ public class BenutzerAnlegenNB implements Serializable{
     
     private Schueler schuelerErstellen(){
         Schueler schueler = new Schueler();
-        schueler.setTutor(this.lehrerBean.find(this.tutor));
-        schueler.setStufe(this.stufeBean.find(this.stufe));
+        schueler.setTutor(this.lehrerBean.find(Long.parseLong(this.tutor)));
+        schueler.setStufe(this.stufeBean.find(Long.parseLong(this.stufe)));
         return (Schueler) this.personErstellen(schueler);
     }
     
