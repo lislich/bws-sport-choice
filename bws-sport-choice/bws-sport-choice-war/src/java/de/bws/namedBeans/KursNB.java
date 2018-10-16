@@ -15,6 +15,7 @@ import de.bws.sessionbeans.StufeFacadeLocal;
 import de.bws.sessionbeans.ThemaFacadeLocal;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
@@ -28,24 +29,22 @@ import javax.inject.Inject;
  */
 @Named(value = "kursNB")
 @ViewScoped
-public class KursNB implements Serializable{
+public class KursNB implements Serializable {
 
-    
-     @EJB
+    @EJB
     private KursFacadeLocal kursBean;
-     
-     @EJB
-     private ThemaFacadeLocal themaBean;
-     
-     @EJB
-     private StufeFacadeLocal stufeBean;
-     
-     @Inject
-     private MenueNB menueNB;
-     
-    
+
+    @EJB
+    private ThemaFacadeLocal themaBean;
+
+    @EJB
+    private StufeFacadeLocal stufeBean;
+
+    @Inject
+    private MenueNB menueNB;
+
     private Kurs kurs;
-     
+
     private String titel;
     private String kuerzel;
     private String stufe;
@@ -54,99 +53,93 @@ public class KursNB implements Serializable{
     private int teilnehmerzahl;
     private String themengleich;
     private String beschreibung;
-    
+
+    private ArrayList<Thema> themen;
+
     private String bezeichnung;
     private String schwerpunkt;
     private int anteil;
-    
-    
+
 //    private List<Thema> thema;
-    
     @PostConstruct
-    public void init(){
-        try{
+    public void init() {
+        try {
             this.getGewaehlterKurs();
-        }catch(NullPointerException e){
+        } catch (NullPointerException e) {
 
         }
     }
-    
-    public void bearbeiten(){
+
+    public void bearbeiten() {
         System.out.println("de.bws.namedBeans.KursNB.bearbeiten()");
         kurs.setJahr(new Timestamp(System.currentTimeMillis()));
         kurs.setBewertung(kurs.getBewertung());
         kurs.setHinweis(kurs.getHinweis());
         kurs.setKuerzel(kurs.getKuerzel());
         kurs.setTeilnehmerzahl(kurs.getTeilnehmerzahl());
-        kurs.setTitel(kurs.getTitel());       
+        kurs.setTitel(kurs.getTitel());
         kurs.setBeschreibung(kurs.getBeschreibung());
         //kurs.setLehrer((Lehrer)this.menueNB.getB().getPerson());
         this.kursBean.edit(kurs);
     }
-    
-    public String anlegen(){
-        System.out.println("de.bws.namedBeans.KursNB.anlegen()");
-        
+
+    public String anlegen() {
+        String rueckgabe = "Fehler";
+
         Benutzer p_benutzer = (Benutzer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
         Lehrer p_lehrer = (Lehrer) p_benutzer.getPerson();
-        
+
         Stufe p_stufe = this.findStufe(stufe);
-        
+
         Kurs p_kurs = this.findKurs(themengleich);
-       
-        Thema thema =  new Thema();
-        if (bezeichnung != null) {
-            thema.setAnteil(anteil);
-            thema.setBezeichnung(bezeichnung);
-            thema.setSchwerpunkt(schwerpunkt);
-            this.themaBean.create(thema);
-        }
-      
+
         Kurs kursT = new Kurs();
         kursT.setJahr(new Timestamp(System.currentTimeMillis()));
         kursT.setBewertung(this.getBewertung());
         kursT.setHinweis(this.getHinweis());
         kursT.setKuerzel(this.getKuerzel());
         kursT.setTeilnehmerzahl(this.getTeilnehmerzahl());
-        kursT.setTitel(this.getTitel());       
+        kursT.setTitel(this.getTitel());
         kursT.setBeschreibung(beschreibung);
         kursT.setLehrer(p_lehrer);
-        
-        if(p_kurs != null){
+
+        for (Thema t : themen) {
+            this.themaBean.create(t);
+            kursT.addThema(t);
+        }
+
+        if (p_kurs != null) {
             kursT.setThemengleich(p_kurs);
         }
-        
-        if(p_stufe != null){
+
+        if (p_stufe != null) {
             kursT.setStufe(p_stufe);
         }
-        
-        if(thema.getBezeichnung() != null){
-            kursT.addThema(thema);
-        }
-        this.kursBean.create(kursT);     
-        
-        return "kursAngelegt";
-    } 
-    
-    public void getGewaehlterKurs(){
+
+        this.kursBean.create(kursT);
+        rueckgabe = "kursAngelegt";
+
+        return rueckgabe;
+    }
+
+    public void getGewaehlterKurs() {
         this.kurs = ((Kurs) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("gewaehlterKurs"));
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("gewaehlterKurs");
     }
 
-    
-    private Stufe findStufe(String p_stufe){
+    private Stufe findStufe(String p_stufe) {
         return this.stufeBean.find(Long.parseLong(p_stufe));
     }
-    
-    private Kurs findKurs(String p_themengleich){
+
+    private Kurs findKurs(String p_themengleich) {
         int tmp = Integer.parseInt(p_themengleich);
-        if(tmp >= 0){
+        if (tmp >= 0) {
             return this.kursBean.find(Long.parseLong(p_themengleich));
-        }else{
+        } else {
             return null;
         }
     }
-    
+
     /**
      * @return the titel
      */
@@ -314,7 +307,55 @@ public class KursNB implements Serializable{
     public void setAnteil(int anteil) {
         this.anteil = anteil;
     }
-    
-    
-    
+
+    /**
+     * @return the themen
+     */
+    public ArrayList<Thema> getThemen() {
+        if (themen == null) {
+            themen = new ArrayList<>();
+        }
+        return themen;
+    }
+
+    /**
+     * @param themen the themen to set
+     */
+    public void setThemen(ArrayList<Thema> themen) {
+        this.themen = themen;
+    }
+
+    public void addThema() {
+        if(bezeichnung.equals("") || schwerpunkt.equals("")){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Bitte geben Sie eine Bezeichnung und einen Schwerpunkt an.");
+            return;
+        }
+        if(anteil <= 0){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Der Anteil muss größer 0 sein.");
+            return;
+        }
+        
+        int gesamtAnteil = 0;
+        if (!this.getThemen().isEmpty()) {
+            for (Thema t : this.getThemen()) {
+                gesamtAnteil += t.getAnteil();
+            }
+        }
+        if ((gesamtAnteil + anteil) <= 100) {
+            Thema tmp = new Thema();
+            tmp.setAnteil(anteil);
+            tmp.setBezeichnung(bezeichnung);
+            tmp.setSchwerpunkt(schwerpunkt);
+            this.themen.add(tmp);
+        } else {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Die Summe der Themen-Anteile darf maximal 100 betragen!");
+        }
+
+    }
+
+    public void removeThema(Thema p_thema) {
+        int index = this.themen.indexOf(p_thema);
+        this.themen.remove(index);
+    }
+
 }
