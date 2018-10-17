@@ -5,6 +5,7 @@
  */
 package de.bws.namedBeans;
 
+import com.sun.media.jfxmedia.logging.Logger;
 import de.bws.data.Rolle;
 import de.bws.entities.Benutzer;
 import de.bws.entities.Stufe;
@@ -12,6 +13,7 @@ import de.bws.sessionbeans.BenutzerFacadeLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
@@ -72,20 +74,16 @@ public class BenutzerNB implements Serializable{
         this.alleBenutzer = alleBenutzer;
     }
     
-    public void auswaehlen(Rolle p_rolle, Stufe p_stufe){
-        if(p_rolle == null){
-            this.auswahl = this.alleBenutzer;
-        } else {
-            this.setAuswahl(new ArrayList<>());
-
-            for(Benutzer b:this.alleBenutzer){
-                if(b.getRolle().equals(p_rolle)){
-                    if(b.getPerson().getStufe() == p_stufe || p_stufe == null){
-                        this.auswahl.add(b);
-                    }
+    public void auswaehlen(String p_rolle, Stufe p_stufe){
+        List<Benutzer> vorauswahl = this.getByRolle(p_rolle);
+        if(p_rolle.equals(Rolle.SCHUELER.name()) && p_stufe != null){
+            for(Benutzer b:vorauswahl){
+                if(b.getPerson().getStufe() != p_stufe ){
+                    vorauswahl.remove(b);
                 }
             }
         }
+        this.auswahl = vorauswahl;
     }
 
     /**

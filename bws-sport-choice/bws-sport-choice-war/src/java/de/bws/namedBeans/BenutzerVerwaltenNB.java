@@ -5,6 +5,7 @@
  */
 package de.bws.namedBeans;
 
+
 import de.bws.data.Rolle;
 import de.bws.entities.Benutzer;
 import de.bws.entities.Stufe;
@@ -12,9 +13,12 @@ import de.bws.sessionbeans.BenutzerFacadeLocal;
 import de.bws.sessionbeans.LehrerFacadeLocal;
 import de.bws.sessionbeans.PersonFacadeLocal;
 import de.bws.sessionbeans.SchuelerFacadeLocal;
+import de.bws.sessionbeans.StufeFacadeLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -40,7 +44,7 @@ public class BenutzerVerwaltenNB implements Serializable{
     
     @EJB
     private BenutzerFacadeLocal benutzerBean;
-    
+        
     @Inject
     private BenutzerNB benutzerNB;
     
@@ -106,6 +110,6 @@ public class BenutzerVerwaltenNB implements Serializable{
     }
     
     public void auswaehlen(){
-        this.benutzerNB.auswaehlen( Rolle.valueOf(this.rolle), this.stufe);
+        this.benutzerNB.auswaehlen(this.rolle, this.stufe);
     }
 }

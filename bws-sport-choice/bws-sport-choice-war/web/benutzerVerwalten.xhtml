@@ -24,7 +24,7 @@
                                         <span class="prefix">Rolle</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="filterRolle" class="input-group-field" value="#{benutzerVerwaltenNB.rolle}" >
+                                        <h:selectOneMenu id="filterRolle" class="filter input-group-field" value="#{benutzerVerwaltenNB.rolle}" >
                                             <f:selectItems value="#{benutzerVerwaltenNB.alleRollen}" />
                                         </h:selectOneMenu>
                                     </div> 
@@ -34,8 +34,8 @@
                                         <span class="prefix">Stufe</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="filterStufe" class="input-group-field" value="#{benutzerVerwaltenNB.stufe}" >
-                                            <f:selectItems value="#{stufeNB.alleStufen}" var="stufe" itemValue="#{stufe.id}" itemLabel="#{stufe.bezeichnung}"/>
+                                        <h:selectOneMenu id="filterStufe" class="filter input-group-field" value="#{benutzerVerwaltenNB.stufe}" >
+                                            <f:selectItems value="#{stufeNB.alleStufen}" var="stufe" itemValue="#{stufe}" itemLabel="#{stufe.bezeichnung}"/>
                                         </h:selectOneMenu>
                                     </div> 
                                 </div>
@@ -47,10 +47,10 @@
                                             <th width="100">Nachname</th>
                                             <th width="100">Benutzername</th>
                                             <th width="100">Rolle</th>
-                                            <th class="lehrer" width="50">Kuerzel</th>
+                                            <th class="lehrer" width="50">Kürzel</th>
                                             <th class="schueler" width="50">Tutor</th>
                                             <th class="schueler" width="25">Stufe</th>
-                                            <th><input type="checkbox" id="alleWaehlen" /> </th>
+                                            <th><input type="checkbox" id="alleWaehlen" /></th>
                                         </tr>
                                     </thead>    
                                     <tbody>
@@ -69,19 +69,17 @@
                                     </tbody>
                                 </table>
                             
-                                <h:commandButton class="small button" id="anlegen" value="Anlegen.." action="1" />
+                                <input type="button" class="small button" id="anlegen" value="Anlegen.." action="benutzerAnlegen" />
                                 <h:commandButton class="small button" value="Ändern.." action="2" />
                                 <h:commandButton class="small button" value="Löschen" action="3" />
                                 <h:commandButton class="small button" value="Hochstufen" action="4" />
                                 <h:commandButton class="small button" value="Abstufen" action="5" />
-                                <h:commandButton id="refreshAuswahl" action="#{benutzerVerwaltenNB.auswaehlen}" style="display: none" />
+                                <h:button id="refreshFilter" onclick="#{benutzerVerwaltenNB.auswaehlen()}" style="display: none" />
                             </fieldset>
                         </h:form>
                     </div>
                 </div>
             </ui:define>
-
         </ui:composition>
-
     </h:body>
 </html>

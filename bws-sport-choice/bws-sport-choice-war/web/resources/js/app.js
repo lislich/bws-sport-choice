@@ -60,7 +60,7 @@ $(document).ready(function () {
     
     
     /**
-     * Setzt die 1., 2. oder 3.Wahl eines Kurses zuück
+     * Setzt die 1., 2. oder 3.Wahl eines Kurses zurück
      */
     $("#resetEins").click(function(){
         $(".eins").attr("disabled", false);
@@ -93,26 +93,22 @@ $(document).ready(function () {
 
     // # Benutzer verwalten ####################################################################################
     
-    $("#filterRolle").change(function(){
-        $("#refreshAuswahl").click();
-        $("#tableBenutzer").load("#tableBenutzer");
-    });
-    
-    $("#filterStufe").change(function(){
-        $("#refreshAuswahl").click();
-        $("#tableBenutzer").load("#tableBenutzer");
+    $(".filter").change(function(){
+        $("#refreshFilter").click();
+        $("#tableBenutzer").load();
     });
 
-    $("#alleWaehlen").change(function(){
+    $("#alleWaehlen").click(function(){
         if($("#alleWaehlen").is(":checked")){
             $(".cbWaehlen").attr('checked', true);
+        } else {
+            $(".cbWaehlen").attr('checked', false);
         }
     });
-    /*
-    $("#uncheck").clicked(function(){
-         $(".cbWaehlen").attr('checked', false);
+    
+    $(".cbWaehlen").change(function(){
+        $("#alleWaehlen").attr('checked', false);
     });
-    */
    
    
     // # Kurs bearbeiten ####################################################################################
