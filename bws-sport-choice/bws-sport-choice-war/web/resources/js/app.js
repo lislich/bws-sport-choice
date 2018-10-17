@@ -113,5 +113,20 @@ $(document).ready(function () {
          $(".cbWaehlen").attr('checked', false);
     });
     */
+   
+   
+    // # Kurs bearbeiten ####################################################################################
+
+    $(".disableSelectStufe").attr("disabled", true);
+    $("#stufeNeu").click(function () {
+        $(".disableStufe").empty();
+        $(".disableSelectStufe").attr("disabled", false);
+    });
+    
+    $(".disableSelectThemengleich").attr("disabled", true);
+    $("#themengleichNeu").click(function () {
+        $(".disableThemengleich").empty();
+        $(".disableSelectThemengleich").attr("disabled", false);
+    });
 });
 
