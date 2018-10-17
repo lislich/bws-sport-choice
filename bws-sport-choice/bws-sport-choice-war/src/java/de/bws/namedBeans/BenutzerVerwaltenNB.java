@@ -19,6 +19,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 /**
  *
@@ -39,6 +40,9 @@ public class BenutzerVerwaltenNB implements Serializable{
     
     @EJB
     private BenutzerFacadeLocal benutzerBean;
+    
+    @Inject
+    private BenutzerNB benutzerNB;
     
     private Stufe stufe;
     private String rolle;
@@ -101,4 +105,7 @@ public class BenutzerVerwaltenNB implements Serializable{
         return this.benutzerBean.findAll();
     }
     
+    public void auswaehlen(){
+        this.benutzerNB.auswaehlen( Rolle.valueOf(this.rolle), this.stufe);
+    }
 }

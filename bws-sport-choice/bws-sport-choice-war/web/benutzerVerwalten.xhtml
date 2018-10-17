@@ -24,7 +24,7 @@
                                         <span class="prefix">Rolle</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="rolle" class="input-group-field" value="#{benutzerVerwaltenNB.rolle}" >
+                                        <h:selectOneMenu id="filterRolle" class="input-group-field" value="#{benutzerVerwaltenNB.rolle}" >
                                             <f:selectItems value="#{benutzerVerwaltenNB.alleRollen}" />
                                         </h:selectOneMenu>
                                     </div> 
@@ -34,13 +34,13 @@
                                         <span class="prefix">Stufe</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="rolle" class="input-group-field" value="#{benutzerVerwaltenNB.stufe}" >
+                                        <h:selectOneMenu id="filterStufe" class="input-group-field" value="#{benutzerVerwaltenNB.stufe}" >
                                             <f:selectItems value="#{stufeNB.alleStufen}" var="stufe" itemValue="#{stufe.id}" itemLabel="#{stufe.bezeichnung}"/>
                                         </h:selectOneMenu>
                                     </div> 
                                 </div>
                             
-                                <table>
+                                <table id="tableBenutzer">
                                     <thead>
                                         <tr>
                                             <th width="100">Vorname</th>
@@ -50,11 +50,11 @@
                                             <th class="lehrer" width="50">Kuerzel</th>
                                             <th class="schueler" width="50">Tutor</th>
                                             <th class="schueler" width="25">Stufe</th>
-                                            <th><input type="checkbox" id="auswahl" /></th>
+                                            <th><input type="checkbox" id="alleWaehlen" /> </th>
                                         </tr>
                                     </thead>    
                                     <tbody>
-                                        <ui:repeat var="benutzer" value="#{benutzerVerwaltenNB.alleBenutzer}">
+                                        <ui:repeat var="benutzer" value="#{benutzerNB.auswahl}">
                                             <tr>
                                                 <td><h:outputText value="#{benutzer.person.vorname}" /></td>
                                                 <td><h:outputText value="#{benutzer.person.nachname}" /></td>
@@ -63,7 +63,7 @@
                                                 <td class="lehrer"><h:outputText value="#{benutzer.person.kuerzel}" /></td>
                                                 <td class="schueler"><h:outputText value="#{benutzer.person.tutor.kuerzel}" /></td>
                                                 <td class="schueler"><h:outputText value="#{benutzer.person.stufe.bezeichnung}" /></td>
-                                                <td><input type="checkbox" class="loeschen" value="#{benutzer.id}" /></td>
+                                                <td><input type="checkbox" class="cbWaehlen" value="#{benutzer.id}" /></td>
                                             </tr>
                                         </ui:repeat>
                                     </tbody>
@@ -74,6 +74,7 @@
                                 <h:commandButton class="small button" value="Löschen" action="3" />
                                 <h:commandButton class="small button" value="Hochstufen" action="4" />
                                 <h:commandButton class="small button" value="Abstufen" action="5" />
+                                <h:commandButton id="refreshAuswahl" action="#{benutzerVerwaltenNB.auswaehlen}" style="display: none" />
                             </fieldset>
                         </h:form>
                     </div>

@@ -93,8 +93,25 @@ $(document).ready(function () {
 
     // # Benutzer verwalten ####################################################################################
     
+    $("#filterRolle").change(function(){
+        $("#refreshAuswahl").click();
+        $("#tableBenutzer").load("#tableBenutzer");
+    });
+    
+    $("#filterStufe").change(function(){
+        $("#refreshAuswahl").click();
+        $("#tableBenutzer").load("#tableBenutzer");
+    });
 
-
-
+    $("#alleWaehlen").change(function(){
+        if($("#alleWaehlen").is(":checked")){
+            $(".cbWaehlen").attr('checked', true);
+        }
+    });
+    /*
+    $("#uncheck").clicked(function(){
+         $(".cbWaehlen").attr('checked', false);
+    });
+    */
 });
 
