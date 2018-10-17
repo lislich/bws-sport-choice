@@ -16,6 +16,7 @@ import de.bws.sessionbeans.ThemaFacadeLocal;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
@@ -44,6 +45,8 @@ public class KursNB implements Serializable {
     private MenueNB menueNB;
 
     private Kurs kurs;
+    private String stufeNeu;
+    private String themengleichNeu;
 
     private String titel;
     private String kuerzel;
@@ -54,7 +57,7 @@ public class KursNB implements Serializable {
     private String themengleich;
     private String beschreibung;
 
-    private ArrayList<Thema> themen;
+    private List<Thema> themen;
 
     private String bezeichnung;
     private String schwerpunkt;
@@ -65,22 +68,52 @@ public class KursNB implements Serializable {
     public void init() {
         try {
             this.getGewaehlterKurs();
+            if(this.kurs != null){
+//                    this.setThemen(kurs.getThema());
+//                    for(Thema t :themen){
+//                        System.out.println("# THEMEN # : " + t.getBezeichnung());
+//                    }
+            }
         } catch (NullPointerException e) {
 
         }
     }
+    
+//    public void bearbeitenAddThema(){
+//        Thema t = this.addThema();
+//        if(t != null){
+//            this.themaBean.create(t);
+//            kurs.addThema(t);
+//        }      
+//    }
+//    
+//    public void bearbeitenRemoveThema(Thema t){
+//        this.removeThema(t);
+//    }
 
-    public void bearbeiten() {
-        System.out.println("de.bws.namedBeans.KursNB.bearbeiten()");
+    public String bearbeiten() {
+        System.out.println(stufeNeu);
         kurs.setJahr(new Timestamp(System.currentTimeMillis()));
-        kurs.setBewertung(kurs.getBewertung());
-        kurs.setHinweis(kurs.getHinweis());
-        kurs.setKuerzel(kurs.getKuerzel());
-        kurs.setTeilnehmerzahl(kurs.getTeilnehmerzahl());
-        kurs.setTitel(kurs.getTitel());
-        kurs.setBeschreibung(kurs.getBeschreibung());
-        //kurs.setLehrer((Lehrer)this.menueNB.getB().getPerson());
+        if (stufeNeu != null) {
+            kurs.setStufe(this.findStufe(stufeNeu));
+        }
+        if (themengleichNeu != null) {
+            System.out.println("Kurs-ID" + themengleichNeu);
+            Kurs k = this.findKurs(themengleichNeu);
+            System.out.println("####" + k.getTitel());
+            kurs.setThemengleich(k);
+        }
+        
+//        for(Thema t : themen){
+//            System.out.println("Bearbeitet: " + t.getBezeichnung());
+//        }
+//        kurs.setThema(this.getThemen());
+//        
+//        for(Thema p : kurs.getThema()){
+//            System.out.println("Kursthemen: " + p.getBezeichnung());
+//        }
         this.kursBean.edit(kurs);
+        return "kursBearbeitet";
     }
 
     public String anlegen() {
@@ -321,7 +354,7 @@ public class KursNB implements Serializable {
     /**
      * @return the themen
      */
-    public ArrayList<Thema> getThemen() {
+    public List<Thema> getThemen() {
         if (themen == null) {
             themen = new ArrayList<>();
         }
@@ -331,18 +364,18 @@ public class KursNB implements Serializable {
     /**
      * @param themen the themen to set
      */
-    public void setThemen(ArrayList<Thema> themen) {
+    public void setThemen(List<Thema> themen) {
         this.themen = themen;
     }
 
-    public void addThema() {
+    public Thema addThema() {
         if(bezeichnung.equals("") || schwerpunkt.equals("")){
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Bitte geben Sie eine Bezeichnung und einen Schwerpunkt an.");
-            return;
+            return null;
         }
         if(anteil <= 0){
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Der Anteil muss größer 0 sein.");
-            return;
+            return null;
         }
         
         int gesamtAnteil = 0;
@@ -357,15 +390,45 @@ public class KursNB implements Serializable {
             tmp.setBezeichnung(bezeichnung);
             tmp.setSchwerpunkt(schwerpunkt);
             this.themen.add(tmp);
+            return tmp;
         } else {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Die Summe der Themen-Anteile darf maximal 100 betragen!");
         }
-
+        return null;
     }
 
     public void removeThema(Thema p_thema) {
         int index = this.themen.indexOf(p_thema);
         this.themen.remove(index);
     }
+
+    /**
+     * @return the stufeNeu
+     */
+    public String getStufeNeu() {
+        return stufeNeu;
+    }
+
+    /**
+     * @param stufeNeu the stufeNeu to set
+     */
+    public void setStufeNeu(String stufeNeu) {
+        this.stufeNeu = stufeNeu;
+    }
+
+    /**
+     * @return the themengleichNeu
+     */
+    public String getThemengleichNeu() {
+        return themengleichNeu;
+    }
+
+    /**
+     * @param themengleichNeu the themengleichNeu to set
+     */
+    public void setThemengleichNeu(String themengleichNeu) {
+        this.themengleichNeu = themengleichNeu;
+    }
+
 
 }

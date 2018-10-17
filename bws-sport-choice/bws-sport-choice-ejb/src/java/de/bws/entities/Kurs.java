@@ -350,7 +350,9 @@ public class Kurs implements Serializable {
      * und false, falls der Teilnehmer nicht in der Liste ist.
      */
     public boolean removeThema(Thema p_thema){
-        return this.thema.remove(p_thema);
+        int index = this.thema.indexOf(p_thema);
+        this.thema.remove(index);
+        return true;
     }
     
 }
