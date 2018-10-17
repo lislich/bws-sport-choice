@@ -92,17 +92,27 @@ public class KursNB implements Serializable {
         Stufe p_stufe = this.findStufe(stufe);
 
         Kurs p_kurs = this.findKurs(themengleich);
+        
+        int zahlTmp = this.getTeilnehmerzahl();
 
         Kurs kursT = new Kurs();
         kursT.setJahr(new Timestamp(System.currentTimeMillis()));
         kursT.setBewertung(this.getBewertung());
         kursT.setHinweis(this.getHinweis());
         kursT.setKuerzel(this.getKuerzel());
-        kursT.setTeilnehmerzahl(this.getTeilnehmerzahl());
+
         kursT.setTitel(this.getTitel());
         kursT.setBeschreibung(beschreibung);
         kursT.setLehrer(p_lehrer);
 
+        if(zahlTmp < 0){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Die Teilnehmerzahl muss größer als 0 sein.");
+        }else{
+            if(!(zahlTmp == 0)){
+                kursT.setTeilnehmerzahl(this.getTeilnehmerzahl());
+            }           
+        }
+        
         for (Thema t : themen) {
             this.themaBean.create(t);
             kursT.addThema(t);

@@ -20,7 +20,7 @@
 
                             <fieldset>
                                 <legend>Kurs anlegen</legend>
-
+                                <h:outputText id="errorAnlegen" value="#{loginNB.error}" style="color: red"/>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Titel</span>
@@ -78,11 +78,16 @@
                                 </div>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
-                                        <span class="prefix"><input id="teilnehmerzahlRequired" type="checkbox" checked="checked" />Teilnehmerzahl</span>
+                                        <input id="teilnehmerzahlRequired" type="checkbox" checked="checked" value="Teilnehmerzahl unbegrenzt"/>
+                                        <label for="teilnehmerzahlRequired">Teilnehmerzahl unbegrenzt</label>
+                                    </div>
+                                </div>
+                                <div class="row collapse">                                   
+                                    <div class="small-4 columns">                                        
+                                        <span class="prefix">Teilnehmerzahl</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="teilnehmerzahl" class="input-group-field disable" value="#{kursNB.teilnehmerzahl}" />
-                                        
+                                        <h:inputText id="teilnehmerzahl" class="input-group-field disable" value="#{kursNB.teilnehmerzahl}" disabled="true"/>                                        
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -97,8 +102,7 @@
                                     </div>
                                 </div>
                                 <fieldset>
-                                    <legend>Thema hinzufügen</legend>
-                                    <h:outputText id="errorWechsel" value="#{loginNB.error}" style="color: red"/> 
+                                    <legend>Thema hinzufügen</legend>                                    
                                     <h:dataTable value="#{kursNB.themen}" var="thema">
                                         <h:column>
                                             <f:facet name="header">Anteil in %</f:facet>

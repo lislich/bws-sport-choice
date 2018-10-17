@@ -75,42 +75,17 @@ $(document).ready(function () {
         $(".drei").prop('checked', false);
     });
 
-
-
-//    /**
-//     * Fügt eine Zeile zur Tabelle der Unterrichtsthemen hinzu für das Anlegen von Kursen.
-//     */
-//    $(".add-row").click(function () {
-//        var markup = "<tr>";
-//        markup += "<td><h:inputText value='#{kursNB.anteil}' class='input-group-field'/></td>"
-//        markup += "<td><h:inputText value='#{kursNB.bezeichnung}' class='input-group-field'/></td>";
-//        markup += "<td><h:inputText value='#{kursNB.schwerpunkt}' class='input-group-field'/></td>";
-//        markup += "<td><input type='checkbox' name='loeschen'/></td></tr>";
-//        $("table tbody").append(markup);
-//    });
-//
-//
-//
-//   /**
-//     * Löscht ausgewählte Zeilen der Tabelle der Unterrichtsthemen für das Anlegen von Kursen.
-//     */
-//    $(".delete-row").click(function () {
-//        $("table tbody").find('input[name="loeschen"]').each(function () {
-//            if ($(this).is(":checked")) {
-//                $(this).parents("tr").remove();
-//            }
-//        });
-//    });
     
    /**
      * 
      */
-    $(".disable").val("15");
+    $(".disable").val("999");
     $("#teilnehmerzahlRequired").change(function(){
         if (this.checked){
-            $(".disable").attr('disabled', false);
-        }else{
             $(".disable").attr('disabled', true);
+            $(".disable").val("999");
+        }else{
+            $(".disable").attr('disabled', false);
             $(".disable").val("0");
         }
     });
@@ -118,39 +93,7 @@ $(document).ready(function () {
 
     // # Benutzer verwalten ####################################################################################
     
-   /** $("#auswahl").click(function(){
-        if ($("#auswahl").is(":checked")){
-            $(".loeschen").prop("checked", true);
-        } else{
-            $(".loeschen").prop("checked", false);
-        }
-    });
-    var dialog;
-    dialog = $("#dialog-form").dialog({
-        autoOpen: false,
-        height: 400,
-        width: 350,
-        modal: true,
-        buttons: {
-            "Create an account": addUser,
-            Cancel: function () {
-                dialog.dialog("close");
-            }
-        },
-        close: function () {
-            form[ 0 ].reset();
-            allFields.removeClass("ui-state-error");
-        }
-    });
 
-    form = dialog.find("form").on("submit", function (event) {
-        event.preventDefault();
-        addUser();
-    });
-
-    $("#anlegen").button().on("click", function () {
-        dialog.dialog("open");
-    });*/
 
 
 });

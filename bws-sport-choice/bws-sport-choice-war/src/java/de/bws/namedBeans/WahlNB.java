@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
@@ -48,7 +49,6 @@ public class WahlNB implements Serializable{
         Wahlzeitraum tmp;
         try{
             tmp = wahlzeitraumBean.get("SELECT wz FROM Wahlzeitraum wz").get(0);
-            System.out.println(tmp.getBeginn().toString());
             if (tmp.getBeginn() != null) {
                 this.setBeginn(tmp.getBeginn());
             }
@@ -61,19 +61,26 @@ public class WahlNB implements Serializable{
         
     }
     
-    public void saveDatum(){
-        List<Wahlzeitraum> tmpList;
-        tmpList = wahlzeitraumBean.get("SELECT wz FROM Wahlzeitraum wz");
-        if(tmpList.isEmpty()){
-            Wahlzeitraum tmp = new Wahlzeitraum();
-            tmp.setBeginn(getBeginn());
-            tmp.setEnde(getEnde());
-            this.wahlzeitraumBean.create(tmp);
-        }else{
-            System.out.println("edit");
-            Wahlzeitraum tmp = tmpList.get(0);
-            this.wahlzeitraumBean.edit(tmp);
+    public void saveDatum() {
+        if (beginn.after(ende)) {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Das Beginndatum muss kleiner als das Enddatum sein.");
+        } else {
+            List<Wahlzeitraum> tmpList;
+            tmpList = wahlzeitraumBean.get("SELECT wz FROM Wahlzeitraum wz");
+            if (tmpList.isEmpty()) {
+                Wahlzeitraum tmp = new Wahlzeitraum();
+                tmp.setBeginn(getBeginn());
+                tmp.setEnde(getEnde());
+                this.wahlzeitraumBean.create(tmp);
+            } else {
+                System.out.println("edit");
+                Wahlzeitraum tmp = tmpList.get(0);
+                tmp.setBeginn(beginn);
+                tmp.setEnde(ende);
+                this.wahlzeitraumBean.edit(tmp);
+            }
         }
+
     }
     
     

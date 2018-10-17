@@ -38,7 +38,6 @@ public class WahlzeitraumJpaController {
         Wahlzeitraum tmp = this.em.find(Wahlzeitraum.class, p_wahlzeitraum.getId());
         tmp.setBeginn(p_wahlzeitraum.getBeginn());
         tmp.setEnde(p_wahlzeitraum.getEnde());
-        this.em.persist(tmp);
     }
     
     public Wahlzeitraum find(long p_id){
