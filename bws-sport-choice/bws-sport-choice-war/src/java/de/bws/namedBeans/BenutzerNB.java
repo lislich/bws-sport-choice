@@ -45,13 +45,13 @@ public class BenutzerNB implements Serializable{
     }
     
     public List<Benutzer> getByRolle(String p_rolle){
-        if(p_rolle.equals("Alle")){
+        if( p_rolle == null || p_rolle.equals("Alle")){
             return this.getAlleBenutzer();
         }
         
         List<Benutzer> nutzer = new ArrayList<>();
         for(Benutzer b:this.getAlleBenutzer()){
-            if(b.getRolle().name().equals(p_rolle)){
+            if( b != null && b.getRolle().name().equals(p_rolle)){
                 nutzer.add(b);
             }
         }
