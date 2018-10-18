@@ -5,7 +5,6 @@
  */
 package de.bws.namedBeans;
 
-import com.sun.media.jfxmedia.logging.Logger;
 import de.bws.data.Rolle;
 import de.bws.entities.Benutzer;
 import de.bws.entities.Stufe;
@@ -13,7 +12,6 @@ import de.bws.sessionbeans.BenutzerFacadeLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;

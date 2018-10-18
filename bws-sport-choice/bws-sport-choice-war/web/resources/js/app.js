@@ -98,26 +98,18 @@ $(document).ready(function () {
         $("#tableBenutzer").load();
     });
 
- $('#alleWaehlen').click(function(event) {   
-    if(this.checked) {
-        // Iterate each checkbox
-        $(".cbWaehlen").each(function() {
-            this.checked = true;                        
-        });
-    } else {
-        $(".cbWaehlen").each(function() {
-            this.checked = false;                       
-        });
-    }
-});
-
-//    $("#alleWaehlen").click(function(){
-//        if($("#alleWaehlen").is(":checked")){
-//            $(".cbWaehlen").attr('checked', true);
-//        } else {
-//            $(".cbWaehlen").attr('checked', false);
-//        }
-//    });
+    $('#alleWaehlen').click(function(event) {   
+       if(this.checked) {
+           // Iterate each checkbox
+           $(".cbWaehlen").each(function() {
+               this.checked = true;                        
+           });
+       } else {
+           $(".cbWaehlen").each(function() {
+               this.checked = false;                       
+           });
+       }
+   });
     
     $(".cbWaehlen").change(function(){
         $("#alleWaehlen").attr('checked', false);
