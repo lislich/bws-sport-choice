@@ -98,13 +98,26 @@ $(document).ready(function () {
         $("#tableBenutzer").load();
     });
 
-    $("#alleWaehlen").click(function(){
-        if($("#alleWaehlen").is(":checked")){
-            $(".cbWaehlen").attr('checked', true);
-        } else {
-            $(".cbWaehlen").attr('checked', false);
-        }
-    });
+ $('#alleWaehlen').click(function(event) {   
+    if(this.checked) {
+        // Iterate each checkbox
+        $(".cbWaehlen").each(function() {
+            this.checked = true;                        
+        });
+    } else {
+        $(".cbWaehlen").each(function() {
+            this.checked = false;                       
+        });
+    }
+});
+
+//    $("#alleWaehlen").click(function(){
+//        if($("#alleWaehlen").is(":checked")){
+//            $(".cbWaehlen").attr('checked', true);
+//        } else {
+//            $(".cbWaehlen").attr('checked', false);
+//        }
+//    });
     
     $(".cbWaehlen").change(function(){
         $("#alleWaehlen").attr('checked', false);
@@ -113,16 +126,22 @@ $(document).ready(function () {
    
     // # Kurs bearbeiten ####################################################################################
 
+    $(".disableSelectStufe").addClass("hide");
     $(".disableSelectStufe").attr("disabled", true);
     $("#stufeNeu").click(function () {
-        $(".disableStufe").empty();
-        $(".disableSelectStufe").attr("disabled", false);
+       $(".disableStufe").val("");
+       $(".disableSelectStufe").removeClass("hide");       
+       $(".disableSelectStufe").attr("disabled", false);
+       $(".disableStufe").replaceWith($(".disableSelectStufe"));
     });
     
+    $(".disableSelectThemengleich").addClass("hide");
     $(".disableSelectThemengleich").attr("disabled", true);
     $("#themengleichNeu").click(function () {
-        $(".disableThemengleich").empty();
+        $(".disableThemengleich").val("");
+        $(".disableSelectThemengleich").removeClass("hide");       
         $(".disableSelectThemengleich").attr("disabled", false);
+        $(".disableThemengleich").replaceWith($(".disableSelectThemengleich"));
     });
 });
 
