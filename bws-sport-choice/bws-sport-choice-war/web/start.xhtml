@@ -64,6 +64,31 @@
                             <fieldset>
                                 <legend>Kurswahl</legend>
                                 <h:form>
+                                    <div class="row collapse">
+                                        <div class="small-4 columns">
+                                            <span class="prefix">1. Wahl</span>
+                                        </div>
+                                        <div class="small-8 columns mobile-input">
+                                            <h:outputText id="gewaehltEins" class="input-group-field" value="#{wahlNB.ersteWahl}"/>
+                                        </div>
+                                    </div>
+                                    <div class="row collapse">
+                                        <div class="small-4 columns">
+                                            <span class="prefix">2. Wahl</span>
+                                        </div>
+                                        <div class="small-8 columns mobile-input">
+                                            <h:outputText id="gewaehltZwei" class="input-group-field" value="#{wahlNB.zweiteWahl}"/>
+                                        </div>
+                                    </div>
+                                    <div class="row collapse">
+                                        <div class="small-4 columns">
+                                            <span class="prefix">3. Wahl</span>
+                                        </div>
+                                        <div class="small-8 columns mobile-input">
+                                            <h:outputText id="gewaehltDrei" class="input-group-field" value="#{wahlNB.dritteWahl}"/>
+                                        </div>
+                                    </div>
+                                    
                                     <table>
                                         <thead>
                                             <tr>
@@ -81,7 +106,7 @@
                                                 <tr>
                                                     <td><h:commandLink action="#{kurslisteBean.setGewaehlterKurs(kurs)}"><h:outputText value="#{kurs.titel} - #{kurs.kuerzel}"/></h:commandLink></td>
                                                     <td>
-                                                        <input type="radio" class="eins" value="#{kurs.id}" name="wahl#{kurs.titel}" id="#{kurs.kuerzel}Eins" ></input>                                               
+                                                        <input type="radio" class="eins" value="#{kurs.id}" name="wahl#{kurs.titel}" id="#{kurs.kuerzel}Eins" accesskey="BUTTON" ></input>                                               
                                                     </td>
                                                     <td>
                                                         <input type="radio" class="zwei" value="#{kurs.id}" name="wahl#{kurs.titel}" id="#{kurs.kuerzel}Zwei" ></input>

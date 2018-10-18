@@ -15,7 +15,7 @@ $(document).ready(function () {
     });
 
 
-    // # Kurs anlegen ####################################################################################
+    // # Wahl abgeben ####################################################################################
 
     /**
     * Funktion um Doppel-Wahl eines Kurses nicht zuzulassen.
@@ -75,6 +75,36 @@ $(document).ready(function () {
         $(".drei").prop('checked', false);
     });
 
+
+    /**
+     * 
+     */    
+    
+    $(".eins").on("click",function () {
+        if($(this).prop("checked")){
+            $("#gewaehltEins").val("Test");
+        }
+    });
+    
+    
+    $(".zwei").click(function () {
+        $(".zwei").each(function () {
+            if (this.checked) {
+                $("#gewaehltZwei").val(this.value);
+            }
+        });
+
+    });
+    $(".drei").click(function () {
+        $(".drei").each(function () {
+            if (this.checked) {
+                $("#gewaehltDrei").val(this.value);
+            }
+        });
+
+    });
+
+     // # Kurs anlegen ####################################################################################
     
    /**
      * 
@@ -89,6 +119,7 @@ $(document).ready(function () {
             $(".disable").val("0");
         }
     });
+    
     
 
     // # Benutzer verwalten ####################################################################################

@@ -103,7 +103,7 @@
                                 </div>
                                 <fieldset>
                                     <legend>Thema hinzufügen</legend>                                    
-                                    <h:dataTable value="#{kursNB.themen}" var="thema">
+                                    <h:dataTable id="themenTabelle" value="#{kursNB.themen}" var="thema">
                                         <h:column>
                                             <f:facet name="header">Anteil in %</f:facet>
                                             #{thema.anteil}
@@ -145,28 +145,14 @@
                                             <h:inputText id="schwerpunkt" class="input-group-field" value="#{kursNB.schwerpunkt}"/>
                                         </div>
                                     </div>
-                                    <h:commandButton id="addThema" class="small button" value="Hinzufügen" action="#{kursNB.addThema()}" />
+                                    <h:commandButton id="addThema" class="small button" value="Hinzufügen" >
+                                        <f:ajax event="click" 
+                                                render="themenTabelle" 
+                                                execute="@form"
+                                                listener="#{kursNB.addThema()}" />
+                                    </h:commandButton>
                                 </fieldset>
-                                <!--<div class="row collapse">
-                                    <table id="unterrichtsthemen">
-                                        <thead>
-                                            <th width="100">Anteil in %</th>
-                                            <th width="100">Unterrichtsthema</th>
-                                            <th width="200">Schwerpunkte</th>
-                                            <th width="50"></th>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><h:inputText id="anteil" value="#{kursNB.anteil}" class="input-group-field"/></td>
-                                                <td><h:inputText id="bezeichnung" value="#{kursNB.bezeichnung}" class="input-group-field"/></td>
-                                                <td><h:inputText id="schwerpunkt" value="#{kursNB.schwerpunkt}" class="input-group-field" /></td>
-                                                <td><input type="checkbox" name="loeschen"/></td>
-                                            </tr>                                           
-                                        </tbody>                                       
-                                    </table>                                    
-                                </div>
-                                    <input type="button" class="add-row" value="Zeile hinzufügen" />
-                                    <input type="button" class="delete-row" value="Auswahl löschen" />-->
+                                
                                 <h:commandButton class="small button" id="kursAnlegen" value="Anlegen"  action="#{kursNB.anlegen()}" type="submit"></h:commandButton>
 
                             </fieldset>

@@ -92,16 +92,21 @@ public class WahlNB implements Serializable{
 
     
     public String saveWahl(){
-        Kurs p_eins = this.kursBean.find(Long.parseLong(getErsteWahl()));
-        Kurs p_zwei = this.kursBean.find(Long.parseLong(getZweiteWahl()));
-        Kurs p_drei = this.kursBean.find(Long.parseLong(getDritteWahl()));
+        System.out.println(ersteWahl);
+        System.out.println(zweiteWahl);
+        System.out.println(dritteWahl);
         
-        System.out.println("de.bws.namedBeans.WahlNB.saveWahl()");
-        Wahl wahl = new Wahl();
-        wahl.setErstwahl(p_eins);
-        wahl.setZweitwahl(p_zwei);
-        wahl.setDrittwahl(p_drei);
-        this.wahlBean.create(wahl);
+//        
+//        Kurs p_eins = this.kursBean.find(Long.parseLong(getErsteWahl()));
+//        Kurs p_zwei = this.kursBean.find(Long.parseLong(getZweiteWahl()));
+//        Kurs p_drei = this.kursBean.find(Long.parseLong(getDritteWahl()));
+//        
+//        System.out.println("de.bws.namedBeans.WahlNB.saveWahl()");
+//        Wahl wahl = new Wahl();
+//        wahl.setErstwahl(p_eins);
+//        wahl.setZweitwahl(p_zwei);
+//        wahl.setDrittwahl(p_drei);
+//        this.wahlBean.create(wahl);
         return "gewaehlt";
     }
 

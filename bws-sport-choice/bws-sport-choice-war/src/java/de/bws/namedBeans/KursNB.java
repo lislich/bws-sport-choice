@@ -63,33 +63,35 @@ public class KursNB implements Serializable {
     private String schwerpunkt;
     private int anteil;
 
+    private List<Kurs> alleAnderenKurse;
+    
 //    private List<Thema> thema;
     @PostConstruct
     public void init() {
         try {
             this.getGewaehlterKurs();
             if(this.kurs != null){
-//                    this.setThemen(kurs.getThema());
-//                    for(Thema t :themen){
-//                        System.out.println("# THEMEN # : " + t.getBezeichnung());
-//                    }
+                    this.setThemen(kurs.getThema());
+                    for(Thema t :themen){
+                        System.out.println("# THEMEN # : " + t.getBezeichnung());
+                    }
             }
         } catch (NullPointerException e) {
 
         }
     }
     
-//    public void bearbeitenAddThema(){
-//        Thema t = this.addThema();
-//        if(t != null){
-//            this.themaBean.create(t);
-//            kurs.addThema(t);
-//        }      
-//    }
-//    
-//    public void bearbeitenRemoveThema(Thema t){
-//        this.removeThema(t);
-//    }
+    public void bearbeitenAddThema(){
+        Thema t = this.addThema();
+        if(t != null){
+            this.themaBean.create(t);
+            kurs.addThema(t);
+        }      
+    }
+    
+    public void bearbeitenRemoveThema(Thema t){
+        this.removeThema(t);
+    }
 
     public String bearbeiten() {
         System.out.println(stufeNeu);
@@ -104,14 +106,14 @@ public class KursNB implements Serializable {
             kurs.setThemengleich(k);
         }
         
-//        for(Thema t : themen){
-//            System.out.println("Bearbeitet: " + t.getBezeichnung());
-//        }
-//        kurs.setThema(this.getThemen());
-//        
-//        for(Thema p : kurs.getThema()){
-//            System.out.println("Kursthemen: " + p.getBezeichnung());
-//        }
+        for(Thema t : themen){
+            System.out.println("Bearbeitet: " + t.getBezeichnung());
+        }
+        kurs.setThema(this.getThemen());
+        
+        for(Thema p : kurs.getThema()){
+            System.out.println("Kursthemen: " + p.getBezeichnung());
+        }
         this.kursBean.edit(kurs);
         return "kursBearbeitet";
     }
@@ -176,11 +178,11 @@ public class KursNB implements Serializable {
 
     private Kurs findKurs(String p_themengleich) {
         int tmp = Integer.parseInt(p_themengleich);
+        Kurs k = null;
         if (tmp >= 0) {
-            return this.kursBean.find(Long.parseLong(p_themengleich));
-        } else {
-            return null;
+            k = this.kursBean.find(Long.parseLong(p_themengleich));
         }
+        return k;
     }
 
     /**
@@ -398,8 +400,7 @@ public class KursNB implements Serializable {
     }
 
     public void removeThema(Thema p_thema) {
-        int index = this.themen.indexOf(p_thema);
-        this.themen.remove(index);
+        this.themen.remove(p_thema);
     }
 
     /**
@@ -428,6 +429,25 @@ public class KursNB implements Serializable {
      */
     public void setThemengleichNeu(String themengleichNeu) {
         this.themengleichNeu = themengleichNeu;
+    }
+
+    /**
+     * @return the alleAnderenKurse
+     */
+    public List<Kurs> getAlleAnderenKurse() {
+        List<Kurs> tmpList = this.kursBean.findAll();
+        int index = tmpList.indexOf(this.getKurs());
+        System.out.println(index);
+        tmpList.remove(index);
+        this.alleAnderenKurse = tmpList;
+        return alleAnderenKurse;
+    }
+
+    /**
+     * @param alleAnderenKurse the alleAnderenKurse to set
+     */
+    public void setAlleAnderenKurse(List<Kurs> alleAnderenKurse) {
+        this.alleAnderenKurse = alleAnderenKurse;
     }
 
 
