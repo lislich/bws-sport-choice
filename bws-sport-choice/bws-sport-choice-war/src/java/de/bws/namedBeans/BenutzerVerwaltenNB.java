@@ -15,13 +15,10 @@ import de.bws.sessionbeans.PersonFacadeLocal;
 import de.bws.sessionbeans.SchuelerFacadeLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.component.UIComponent;
-import javax.faces.component.UIViewRoot;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -65,17 +62,14 @@ public class BenutzerVerwaltenNB implements Serializable{
     }
     
     public String loeschen(){
-        List<Benutzer> zumLoeschen = new ArrayList<>();
-        UIViewRoot viewRoot = FacesContext.getCurrentInstance().getViewRoot();
-        Iterator<UIComponent> children = viewRoot.getFacetsAndChildren();
-        UIComponent child;
-        while(children.hasNext()){
-            child = children.next();
-            if(child.getAttributes().get("name") == "wahl" && (boolean)child.getAttributes().get("checked")){
-                this.benutzerBean.remove(this.benutzerBean.find(child.getAttributes().get("value")));
+        System.out.println("loeschen");
+        for(Entry<Benutzer, Boolean> e:this.benutzerNB.getAuswahl()){
+            System.out.println(e.getValue());
+            if(e.getValue()){
+                System.out.println("wird gelöscht");
+                this.benutzerBean.remove(e.getKey());
             }
         }
-        
         return "benutzerVerwalten";
     }
     
@@ -93,8 +87,6 @@ public class BenutzerVerwaltenNB implements Serializable{
         
         return null;
     }
-    
-    
     
     /**
      * 
@@ -145,4 +137,5 @@ public class BenutzerVerwaltenNB implements Serializable{
     public void auswaehlen(){
         this.benutzerNB.auswaehlen(this.rolle, this.stufe);
     }
+
 }

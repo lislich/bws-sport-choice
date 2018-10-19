@@ -5,7 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-    <h:body>
+    <body>
 
         <ui:composition template="./template.xhtml">
 
@@ -53,17 +53,17 @@
                                             <th><input type="checkbox" id="alleWaehlen" /></th>
                                         </tr>
                                     </thead>    
-                                    <tbody>
-                                        <ui:repeat var="benutzer" value="#{benutzerNB.auswahl}">
+                                    <tbody id="tbodyBenutzer">
+                                        <ui:repeat var="entry" value="#{benutzerNB.auswahl}">
                                             <tr>
-                                                <td><h:outputText value="#{benutzer.person.vorname}" /></td>
-                                                <td><h:outputText value="#{benutzer.person.nachname}" /></td>
-                                                <td><h:outputText value="#{benutzer.benutzername}" /></td>
-                                                <td><h:outputText value="#{benutzer.rolle}"/></td>
-                                                <td class="lehrer"><h:outputText value="#{benutzer.person.kuerzel}" /></td>
-                                                <td class="schueler"><h:outputText value="#{benutzer.person.tutor.kuerzel}" /></td>
-                                                <td class="schueler"><h:outputText value="#{benutzer.person.stufe.bezeichnung}" /></td>
-                                                <td><input type="checkbox" name="wahl" class="cbWaehlen" value="#{benutzer.id}" /></td>
+                                                <td><h:outputText value="#{entry.key.person.vorname}" /></td>
+                                                <td><h:outputText value="#{entry.key.person.nachname}" /></td>
+                                                <td><h:outputText value="#{entry.key.benutzername}" /></td>
+                                                <td><h:outputText value="#{entry.key.rolle}"/></td>
+                                                <td class="lehrer"><h:outputText value="#{entry.key.person.kuerzel}" /></td>
+                                                <td class="schueler"><h:outputText value="#{entry.key.person.tutor.kuerzel}" /></td>
+                                                <td class="schueler"><h:outputText value="#{entry.key.person.stufe.bezeichnung}" /></td>
+                                                <td><h:selectBooleanCheckbox class="cbWaehlen" value="#{entry.value}" /></td>
                                             </tr>
                                         </ui:repeat>
                                     </tbody>
@@ -82,5 +82,5 @@
                 </div>
             </ui:define>
         </ui:composition>
-    </h:body>
+    </body>
 </html>
