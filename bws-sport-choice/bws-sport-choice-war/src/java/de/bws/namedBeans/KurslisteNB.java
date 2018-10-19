@@ -10,6 +10,7 @@ import de.bws.entities.Benutzer;
 import de.bws.entities.Kurs;
 import de.bws.entities.Lehrer;
 import de.bws.entities.Schueler;
+import de.bws.entities.Stufe;
 import de.bws.sessionbeans.BenutzerFacadeLocal;
 import de.bws.sessionbeans.KursFacadeLocal;
 import de.bws.sessionbeans.PersonFacadeLocal;
@@ -45,6 +46,8 @@ public class KurslisteNB implements Serializable {
     private List<Kurs> lehrerKurse;
     
     private List<Schueler> schuelerKurse;
+    
+    private List<Kurs> stufeKurse;
     
     
 //    @PostConstruct
@@ -136,5 +139,23 @@ public class KurslisteNB implements Serializable {
      */
     public void setSchuelerKurse(List<Schueler> schuelerKurse) {
         this.schuelerKurse = schuelerKurse;
+    }
+
+    /**
+     * @return the stufeKurse
+     */
+    public List<Kurs> getStufeKurse() {
+        Benutzer b = (Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
+        Stufe stufe = b.getPerson().getStufe();
+        List<Kurs> tmpList = this.kursBean.get("SELECT k FROM Kurs k WHERE k.stufe.id = " + stufe.getId());
+        stufeKurse = tmpList;
+        return stufeKurse;
+    }
+
+    /**
+     * @param stufeKurse the stufeKurse to set
+     */
+    public void setStufeKurse(List<Kurs> stufeKurse) {
+        this.stufeKurse = stufeKurse;
     }
 }

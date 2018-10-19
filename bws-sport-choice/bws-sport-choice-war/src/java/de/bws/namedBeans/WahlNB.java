@@ -5,10 +5,14 @@
  */
 package de.bws.namedBeans;
 
+import de.bws.entities.Benutzer;
 import de.bws.entities.Kurs;
+import de.bws.entities.Person;
+import de.bws.entities.Schueler;
 import de.bws.entities.Wahl;
 import de.bws.entities.Wahlzeitraum;
 import de.bws.sessionbeans.KursFacadeLocal;
+import de.bws.sessionbeans.SchuelerFacadeLocal;
 import de.bws.sessionbeans.WahlFacadeLocal;
 import de.bws.sessionbeans.WahlzeitraumFacadeLocal;
 import java.io.Serializable;
@@ -38,6 +42,9 @@ public class WahlNB implements Serializable{
     @EJB
     private KursFacadeLocal kursBean;
     
+    @EJB
+    private SchuelerFacadeLocal schuelerBean;
+    
     private Date beginn;
     private Date ende;
     
@@ -47,6 +54,7 @@ public class WahlNB implements Serializable{
     
     @PostConstruct
     public void init(){
+        Schueler sTmp = (Schueler)((Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer")).getPerson();
         Wahlzeitraum tmp;
         try{
             tmp = wahlzeitraumBean.get("SELECT wz FROM Wahlzeitraum wz").get(0);
@@ -55,6 +63,13 @@ public class WahlNB implements Serializable{
             }
             if (tmp.getEnde() != null) {
                 this.setEnde(tmp.getEnde());
+            }
+            
+            Wahl wTmp = sTmp.getWahl();
+            if(wTmp != null){
+                 this.setErsteWahl(wTmp.getErstwahl().getId().toString());
+                 this.setZweiteWahl(wTmp.getZweitwahl().getId().toString());
+                 this.setDritteWahl(wTmp.getDrittwahl().getId().toString());
             }
         }catch(Exception e){
             
@@ -92,22 +107,37 @@ public class WahlNB implements Serializable{
 
     
     public String saveWahl(){
-        System.out.println(ersteWahl);
-        System.out.println(zweiteWahl);
-        System.out.println(dritteWahl);
-        
-//        
-//        Kurs p_eins = this.kursBean.find(Long.parseLong(getErsteWahl()));
-//        Kurs p_zwei = this.kursBean.find(Long.parseLong(getZweiteWahl()));
-//        Kurs p_drei = this.kursBean.find(Long.parseLong(getDritteWahl()));
-//        
-//        System.out.println("de.bws.namedBeans.WahlNB.saveWahl()");
-//        Wahl wahl = new Wahl();
-//        wahl.setErstwahl(p_eins);
-//        wahl.setZweitwahl(p_zwei);
-//        wahl.setDrittwahl(p_drei);
-//        this.wahlBean.create(wahl);
-        return "gewaehlt";
+        String rueckgabe = "Fehler";
+        Benutzer b = (Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
+        Schueler s  = (Schueler)b.getPerson();
+        if (ersteWahl.equals(zweiteWahl) || ersteWahl.equals(dritteWahl) || zweiteWahl.equals(dritteWahl)) {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Bitte wählen Sie unterschiedliche Kurse.");
+        } else {
+            Kurs p_eins = this.kursBean.find(Long.parseLong(getErsteWahl()));
+            Kurs p_zwei = this.kursBean.find(Long.parseLong(getZweiteWahl()));
+            Kurs p_drei = this.kursBean.find(Long.parseLong(getDritteWahl()));
+
+            Wahl wahl = s.getWahl();
+            if (wahl == null) {
+                wahl = new Wahl();
+                wahl.setErstwahl(p_eins);
+                wahl.setZweitwahl(p_zwei);
+                wahl.setDrittwahl(p_drei);
+                this.wahlBean.create(wahl);
+            }else{
+                wahl.setErstwahl(p_eins);
+                wahl.setZweitwahl(p_zwei);
+                wahl.setDrittwahl(p_drei);
+                this.wahlBean.edit(wahl);
+            }
+
+            s.setWahl(wahl);
+            this.schuelerBean.edit(s);
+            
+            rueckgabe = "gewaehlt";
+        }
+
+        return rueckgabe;
     }
 
 

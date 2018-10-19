@@ -33,7 +33,7 @@ public class SchuelerJpaController {
     }
     
     public void updateSchueler(Schueler p_schueler){
-        Schueler tmp = this.em.find(Schueler.class, p_schueler);
+        Schueler tmp = this.em.find(Schueler.class, p_schueler.getId());
         tmp.setStufe(p_schueler.getStufe());
         tmp.setNachname(p_schueler.getNachname());
         tmp.setVorname(p_schueler.getVorname());

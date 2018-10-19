@@ -26,15 +26,15 @@ public class Wahl implements Serializable {
     private Long id;
     
     @ManyToOne
-    @JoinColumn(name = "ERSTWAHL", referencedColumnName = "ID")
+    @JoinColumn(name = "ERSTWAHL", referencedColumnName = "KURS_ID")
     private Kurs erstwahl;
     
     @ManyToOne
-    @JoinColumn(name = "ZWEITWAHL", referencedColumnName = "ID")
+    @JoinColumn(name = "ZWEITWAHL", referencedColumnName = "KURS_ID")
     private Kurs zweitwahl;
     
     @ManyToOne
-    @JoinColumn(name = "DRITTWAHL", referencedColumnName = "ID")
+    @JoinColumn(name = "DRITTWAHL", referencedColumnName = "KURS_ID")
     private Kurs drittwahl;
 
 //************************* Methoden **************************************

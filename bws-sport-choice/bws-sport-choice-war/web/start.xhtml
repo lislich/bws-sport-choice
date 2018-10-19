@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:jsf="http://xmlns.jcp.org/jsf">  
+      xmlns:jsf="http://xmlns.jcp.org/jsf"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">  
 
     <body>
 
@@ -27,49 +28,43 @@
                     </div>
                 </h:panelGroup>
                 
-                <h:panelGroup layout="block" rendered="#{menueNB.schueler()}">
-                    <div id="einteilung" class="row">
-                        <div class="small-12 columns small-centered">
-                            <div class="panel paper">
-                                <p> Du bist in folgendem Kurs: </p>
-                                <h:outputText value="" />
-                            </div>
-                        </div>
-                    </div>
-                </h:panelGroup>
+           
                 
-                <h:panelGroup layout="block" rendered="#{menueNB.schueler()}">               
+                <h:panelGroup layout="block" rendered="#{menueNB.schuelerDarfNichtWaehlen()}">               
                     <div id="keineWahl" class="row">
                         <div class="small-12 columns small-centered">
                             <div class="panel paper">
-                                <p> Du kannst zur Zeit keine Wahl abgeben.</p>                            
+                                <p> Du kannst zur Zeit keine Wahl abgeben.</p> 
+                                <h:panelGroup layout="block" rendered="#{menueNB.schueler()}">
+                                    <p> Die Einteilung hat noch nicht stattgefunden.</p>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" rendered="#{menueNB.schueler()}">
+                                    <p> Du bist in folgendem Kurs: </p>
+                                <h:outputText value="" />
+                                </h:panelGroup>
                             </div>
                         </div>
                     </div>
                 </h:panelGroup>
                 
-                <h:panelGroup layout="block" rendered="#{menueNB.schueler()}">               
-                    <div id="keineEinteilung" class="row">
-                        <div class="small-12 columns small-centered">
-                            <div class="panel paper">
-                                <p> Die Einteilung hat noch nicht stattgefunden.</p>
-                            </div>
-                        </div>
-                    </div>
-                </h:panelGroup>
+                               
+           
                 
-                <h:panelGroup layout="block" rendered="#{menueNB.schueler()}">               
+                <h:panelGroup layout="block" rendered="#{menueNB.schuelerDarfWaehlen()}">               
                     <div id="wahlAbgeben" class="row">
                         <div class="small-12 columns small-centered">
                             <fieldset>
                                 <legend>Kurswahl</legend>
                                 <h:form>
+                                    <h:outputText value="#{loginNB.error}" style="color: red"/>
                                     <div class="row collapse">
                                         <div class="small-4 columns">
                                             <span class="prefix">1. Wahl</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">
-                                            <h:outputText id="gewaehltEins" class="input-group-field" value="#{wahlNB.ersteWahl}"/>
+                                            <h:selectOneMenu id="ersteWahl" class="input-group-field" value="#{wahlNB.ersteWahl}">
+                                                <f:selectItems value="#{kurslisteBean.stufeKurse}" var="kurs" itemValue="#{kurs.id}" itemLabel="#{kurs.kuerzel} - #{kurs.titel}" />
+                                            </h:selectOneMenu>
                                         </div>
                                     </div>
                                     <div class="row collapse">
@@ -77,7 +72,9 @@
                                             <span class="prefix">2. Wahl</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">
-                                            <h:outputText id="gewaehltZwei" class="input-group-field" value="#{wahlNB.zweiteWahl}"/>
+                                            <h:selectOneMenu id="ersteZwei" class="input-group-field" value="#{wahlNB.zweiteWahl}">
+                                                <f:selectItems value="#{kurslisteBean.stufeKurse}" var="kurs" itemValue="#{kurs.id}" itemLabel="#{kurs.kuerzel} - #{kurs.titel}" />
+                                            </h:selectOneMenu>
                                         </div>
                                     </div>
                                     <div class="row collapse">
@@ -85,11 +82,15 @@
                                             <span class="prefix">3. Wahl</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">
-                                            <h:outputText id="gewaehltDrei" class="input-group-field" value="#{wahlNB.dritteWahl}"/>
+                                            <h:selectOneMenu id="ersteDrei" class="input-group-field" value="#{wahlNB.dritteWahl}">
+                                                <f:selectItems value="#{kurslisteBean.stufeKurse}" var="kurs" itemValue="#{kurs.id}" itemLabel="#{kurs.kuerzel} - #{kurs.titel}" />
+                                            </h:selectOneMenu>
                                         </div>
                                     </div>
                                     
-                                    <table>
+                                    
+                                    
+                                    <!--<table>
                                         <thead>
                                             <tr>
                                                 <th width="100">Kurs</th>
@@ -101,26 +102,27 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <ui:repeat var="kurs" value="#{kurslisteBean.alleKurse}">
+                                            <ui:repeat var="kurs" value="#/{kurslisteBean.alleKurse}">
 
                                                 <tr>
-                                                    <td><h:commandLink action="#{kurslisteBean.setGewaehlterKurs(kurs)}"><h:outputText value="#{kurs.titel} - #{kurs.kuerzel}"/></h:commandLink></td>
+                                                    <td><h:commandLink action="#/{kurslisteBean.setGewaehlterKurs(kurs)}"><h:outputText value="#/{kurs.titel} - #/{kurs.kuerzel}"/></h:commandLink></td>
                                                     <td>
-                                                        <input type="radio" class="eins" value="#{kurs.id}" name="wahl#{kurs.titel}" id="#{kurs.kuerzel}Eins" accesskey="BUTTON" ></input>                                               
+                                                        <input type="radio" class="eins" value="#/{kurs.id}"  name="wahl#/{kurs.titel}" id="/{kurs.kuerzel}Eins" onselect="$('.gewaehltEins').text($(this).val().toString());" ></input>                                               
                                                     </td>
                                                     <td>
-                                                        <input type="radio" class="zwei" value="#{kurs.id}" name="wahl#{kurs.titel}" id="#{kurs.kuerzel}Zwei" ></input>
+                                                        <input type="radio" class="zwei" value="#/{kurs.id}" name="wahl#/{kurs.titel}" id="#/{kurs.kuerzel}Zwei" ></input>
                                                     </td>
                                                     <td>
-                                                        <input type="radio" class="drei" value="#{kurs.id}" name="wahl#{kurs.titel}" id="#{kurs.kuerzel}Drei" ></input>
+                                                        <input type="radio" class="drei" value="#/{kurs.id}" name="wahl#/{kurs.titel}" id="#/{kurs.kuerzel}Drei" ></input>
                                                     </td>
-                                                    <td><h:outputText value="#{kurs.teilnehmerzahl}" /></td>
+                                                    <td><h:outputText value="#/{kurs.teilnehmerzahl}" /></td>
                                                     <td>X</td>
                                                 </tr>
 
                                             </ui:repeat>
                                         </tbody>
-                                    </table>
+                                    </table>-->
+                                    
                                     <h:commandButton class="small button" id="wahlSpeichern" value="Wahl speichern" action="#{wahlNB.saveWahl()}" type="submit"/>
                                 </h:form>
 
