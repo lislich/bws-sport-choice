@@ -81,7 +81,34 @@ public class BenutzerAnlegenNB implements Serializable{
      * @return 
      */
     public String anlegen(){
-        System.out.println("Benutzer anlegen");
+        Person neuePerson = this.getNeuePersonFromRolle();
+        
+        if(neuePerson == null){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lasterror", "Fehler beim zuweisen der Rolle.");
+            return "Anlegen";
+        }       
+                
+        Benutzer neuerBenutzer = new Benutzer();
+        neuerBenutzer.setPerson(neuePerson);
+        neuerBenutzer.setBenutzername(this.benutzername);
+        neuerBenutzer.setRolle(this.rolle);
+        try {
+            neuerBenutzer.setNeuesPasswort(Passwort.passwortGenerieren());
+            this.benutzerBean.create(neuerBenutzer);
+        } catch (Exception ex) {
+            Logger.getLogger(BenutzerAnlegenNB.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Fehler beim Anlegen des Benutzers.");
+        }
+/*        
+        if(this.benutzerBean.getByName(this.benutzername) != null){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("angelegterBenutzer", this.benutzername);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("geeriertesPasswort", this.passwort);
+        }
+ */       
+        return "benutzerAnlegen";
+    }
+    
+    private Person getNeuePersonFromRolle(){
         Person neuePerson;
         switch (rolle) {
             case LEHRER:
@@ -97,23 +124,9 @@ public class BenutzerAnlegenNB implements Serializable{
                 this.personBean.create(neuePerson);
                 break;
             default:
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lasterror", "Fehler beim zuweisen der Rolle.");
-                return "Anlegen";
+                neuePerson = null; 
         }
-        
-        Benutzer neuerBenutzer = new Benutzer();
-        neuerBenutzer.setPerson(neuePerson);
-        neuerBenutzer.setBenutzername(this.benutzername);
-        neuerBenutzer.setRolle(this.rolle);
-        try {
-            neuerBenutzer.setNeuesPasswort(Passwort.passwortGenerieren());
-            this.benutzerBean.create(neuerBenutzer);
-        } catch (Exception ex) {
-            Logger.getLogger(BenutzerAnlegenNB.class.getName()).log(Level.SEVERE, null, ex);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Fehler beim Anlegen des Benutzers.");
-        }
-       
-        return "benutzerAnlegen";
+        return neuePerson;
     }
     
     private Schueler schuelerErstellen(){

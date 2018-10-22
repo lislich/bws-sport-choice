@@ -19,26 +19,26 @@
                         <h:form>
                             <fieldset>
                                 <legend>Benutzerverwaltung</legend>
-                                <div class="row collapse">
+                                <!--<div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Rolle</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="filterRolle" class="filter input-group-field" value="#{benutzerVerwaltenNB.rolle}" >
-                                            <f:selectItems value="#{benutzerVerwaltenNB.alleRollen}" />
+                                        <h:selectOneMenu id="filterRolle" class="filter input-group-field" value="#!{benutzerVerwaltenNB.rolle}" >
+                                            <f:selectItems value="#!{benutzerVerwaltenNB.alleRollen}" />
                                         </h:selectOneMenu>
                                     </div> 
-                                </div>
-                                <div class="row collapse">
+                                </div>-->
+                                <!--<div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Stufe</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="filterStufe" class="filter input-group-field" value="#{benutzerVerwaltenNB.stufe}" >
-                                            <f:selectItems value="#{stufeNB.alleStufen}" var="stufe" itemValue="#{stufe}" itemLabel="#{stufe.bezeichnung}"/>
+                                        <h:selectOneMenu id="filterStufe" class="filter input-group-field" value="#/{benutzerVerwaltenNB.stufe}" >
+                                            <f:selectItems value="#/{stufeNB.alleStufen}" var="stufe" itemValue="#/{stufe}" itemLabel="#/{stufe.bezeichnung}"/>
                                         </h:selectOneMenu>
-                                    </div> 
-                                </div>
+                                    </div>
+                                </div>-->
                             
                                 <table id="tableBenutzer">
                                     <thead>
@@ -50,7 +50,7 @@
                                             <th class="lehrer" width="50">Kürzel</th>
                                             <th class="schueler" width="50">Tutor</th>
                                             <th class="schueler" width="25">Stufe</th>
-                                            <th><input type="checkbox" id="alleWaehlen" /></th>
+                                            <th><h:selectBooleanCheckbox id="alleWaehlen" value="false" /></th>
                                         </tr>
                                     </thead>    
                                     <tbody id="tbodyBenutzer">
@@ -63,15 +63,15 @@
                                                 <td class="lehrer"><h:outputText value="#{entry.key.person.kuerzel}" /></td>
                                                 <td class="schueler"><h:outputText value="#{entry.key.person.tutor.kuerzel}" /></td>
                                                 <td class="schueler"><h:outputText value="#{entry.key.person.stufe.bezeichnung}" /></td>
-                                                <td><h:selectBooleanCheckbox class="cbWaehlen" value="#{entry.value}" /></td>
+                                                <td><input type="checkbox" immediate="true" class="cbWaehlen" value="#{entry.value}" /></td>
                                             </tr>
                                         </ui:repeat>
                                     </tbody>
                                 </table>
                             
-                                <input type="button" class="small button" id="anlegen" value="Anlegen.." action="benutzerAnlegen" />
+                                <h:commandButton class="small button" id="anlegen" value="Anlegen.." action="benutzerAnlegen" />
                                 <h:commandButton class="small button" value="Ändern.." action="#{benutzerVerwaltenNB.aendern()}" />
-                                <h:commandButton class="small button" value="Löschen" action="#{benutzerVerwaltenNB.loeschen()}" />
+                                <h:commandButton class="small button" id="loeschen" value="Löschen" action="#{benutzerVerwaltenNB.loeschen()}" />
                                 <h:commandButton class="small button" value="Hochstufen" action="#{benutzerVerwaltenNB.hochstufen()}" />
                                 <h:commandButton class="small button" value="Abstufen" action="#{benutzerVerwaltenNB.abstufen()}" />
                                 

@@ -27,7 +27,7 @@ public class BenutzerJpaController {
     }
     
     public void removeBenutzer(Benutzer p_benutzer){
-        Benutzer tmp = this.em.find(Benutzer.class, p_benutzer.getId());
+        Benutzer tmp = this.em.find(Benutzer.class, p_benutzer.getId());    
         this.em.merge(tmp);
         this.em.remove(tmp);
     }

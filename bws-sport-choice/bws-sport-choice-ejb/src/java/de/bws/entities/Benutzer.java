@@ -8,6 +8,7 @@ package de.bws.entities;
 import de.bws.data.Rolle;
 import de.bws.security.Passwort;
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,7 +43,7 @@ public class Benutzer implements Serializable {
     @Column(name = "ROLLE")
     private Rolle rolle;
     
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "PERSON_ID", referencedColumnName = "ID", nullable = true)
     private Person person;
     

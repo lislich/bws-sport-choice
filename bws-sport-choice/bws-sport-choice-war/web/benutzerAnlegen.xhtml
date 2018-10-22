@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -85,12 +86,16 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <h:commandButton class="small button" id="benutzerAnlegen" value="Anlegen" action="#{benutzerAnlegenNB.anlegen()}" type="submit"/>
+                                    <p:commandButton type="submit" class="small button" id="benutzerAnlegen" value="Anlegen" action="#{benutzerAnlegenNB.anlegen()}" oncomplete="PF('dialogErstanmeldung').show()" />
                                 </div>
                             </fieldset>
                         </h:form>
                     </div>
                 </div>
+                <p:dialog id='dialogErstanmeldung'>
+                    <h:outputText value='Benutzer: #{benutzerAnlegenNB.benutzername}'/>
+                    <h:outputText value='Passwort: #{benutzerAnlegenNB.passwort}'/>
+                </p:dialog>
             </ui:define>
 
         </ui:composition>

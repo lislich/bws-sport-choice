@@ -6,6 +6,7 @@
 package de.bws.namedBeans;
 
 
+import de.bws.data.Eintrag;
 import de.bws.data.Rolle;
 import de.bws.entities.Benutzer;
 import de.bws.entities.Stufe;
@@ -17,6 +18,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
@@ -46,6 +49,8 @@ public class BenutzerVerwaltenNB implements Serializable{
     @Inject
     private BenutzerNB benutzerNB;
     
+    private final Logger log = Logger.getLogger("BenutzerVerwaltenNB");
+    
     private Stufe stufe;
     private String rolle;
     
@@ -62,11 +67,11 @@ public class BenutzerVerwaltenNB implements Serializable{
     }
     
     public String loeschen(){
-        System.out.println("loeschen");
-        for(Entry<Benutzer, Boolean> e:this.benutzerNB.getAuswahl()){
-            System.out.println(e.getValue());
+        System.out.println("start löschen");
+        for(Eintrag<Benutzer, Boolean> e:this.benutzerNB.getAuswahl()){
+            log.log(Level.WARNING, "Entry: {0} ({1})", new Object[]{e.getKey().getBenutzername(), e.getValue()});
             if(e.getValue()){
-                System.out.println("wird gelöscht");
+                log.warning("lösche " + e.getKey().getBenutzername());
                 this.benutzerBean.remove(e.getKey());
             }
         }

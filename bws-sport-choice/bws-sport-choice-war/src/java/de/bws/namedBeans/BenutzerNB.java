@@ -5,18 +5,14 @@
  */
 package de.bws.namedBeans;
 
+import de.bws.data.Eintrag;
 import de.bws.data.Rolle;
 import de.bws.entities.Benutzer;
 import de.bws.entities.Stufe;
 import de.bws.sessionbeans.BenutzerFacadeLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.Dependent;
@@ -35,7 +31,7 @@ public class BenutzerNB implements Serializable{
     
     private List<Benutzer> alleBenutzer;
     
-    private List<Map.Entry<Benutzer, Boolean>> auswahl;
+    private List<Eintrag<Benutzer, Boolean>> auswahl;
 
     /**
      * Creates a new instance of BenutzerNB
@@ -91,11 +87,21 @@ public class BenutzerNB implements Serializable{
         }
         this.setAuswahl(vorauswahl);
     }
+    
+    public void wahlInvertieren(long p_id){
+        System.out.println("invertiere" + p_id);
+        for(Eintrag<Benutzer, Boolean> e:this.auswahl){
+            if(e.getKey().getId() == p_id){
+                e.setValue(!e.getValue());
+                break;
+            }
+        }
+    }
 
     /**
      * @return the auswahl
      */
-    public List<Map.Entry<Benutzer, Boolean>> getAuswahl() {
+    public List<Eintrag<Benutzer, Boolean>> getAuswahl() {
         return auswahl;
     }
 
@@ -103,11 +109,10 @@ public class BenutzerNB implements Serializable{
      * @param p_auswahl
      */
     public void setAuswahl(List<Benutzer> p_auswahl) {
-        Map<Benutzer, Boolean> map  = new HashMap<>();
+        this.auswahl.clear();
         for(Benutzer b:p_auswahl){
-            map.put(b, Boolean.FALSE);
+            this.auswahl.add(new Eintrag(b, false));
         }
-        this.auswahl = new ArrayList<>(map.entrySet());
     }
     
     
