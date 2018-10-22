@@ -8,6 +8,7 @@ package de.bws.namedBeans;
 import de.bws.entities.Benutzer;
 import de.bws.entities.Kurs;
 import de.bws.entities.Lehrer;
+import de.bws.entities.Schueler;
 import de.bws.entities.Stufe;
 import de.bws.entities.Thema;
 import de.bws.sessionbeans.KursFacadeLocal;
@@ -41,12 +42,11 @@ public class KursNB implements Serializable {
     @EJB
     private StufeFacadeLocal stufeBean;
 
-    @Inject
-    private MenueNB menueNB;
 
     private Kurs kurs;
     private String stufeNeu;
     private String themengleichNeu;
+    private List<Schueler> schuelerInKurs;
 
     private String titel;
     private String kuerzel;
@@ -54,6 +54,7 @@ public class KursNB implements Serializable {
     private String bewertung;
     private String hinweis;
     private int teilnehmerzahl;
+    private boolean teilnehmerUnbegrenzt;
     private String themengleich;
     private String beschreibung;
 
@@ -65,16 +66,18 @@ public class KursNB implements Serializable {
 
     private List<Kurs> alleAnderenKurse;
     
-//    private List<Thema> thema;
     @PostConstruct
     public void init() {
         try {
             this.getGewaehlterKurs();
             if(this.kurs != null){
-                    this.setThemen(kurs.getThema());
-                    for(Thema t :themen){
-                        System.out.println("# THEMEN # : " + t.getBezeichnung());
-                    }
+                System.out.println("##KursSIze## "+ kurs.getThema().size());
+                for(Thema t : kurs.getThema()){
+                    this.themen.add(t);
+                }
+                for(Thema tmp : themen){
+                    System.out.println("##THEMEN## " + tmp.getBezeichnung());
+                }
             }
         } catch (NullPointerException e) {
 
@@ -82,11 +85,7 @@ public class KursNB implements Serializable {
     }
     
     public void bearbeitenAddThema(){
-        Thema t = this.addThema();
-        if(t != null){
-            this.themaBean.create(t);
-            kurs.addThema(t);
-        }      
+        Thema t = this.addThema();   
     }
     
     public void bearbeitenRemoveThema(Thema t){
@@ -94,22 +93,23 @@ public class KursNB implements Serializable {
     }
 
     public String bearbeiten() {
-        System.out.println(stufeNeu);
         kurs.setJahr(new Timestamp(System.currentTimeMillis()));
         if (stufeNeu != null) {
             kurs.setStufe(this.findStufe(stufeNeu));
         }
         if (themengleichNeu != null) {
-            System.out.println("Kurs-ID" + themengleichNeu);
             Kurs k = this.findKurs(themengleichNeu);
-            System.out.println("####" + k.getTitel());
             kurs.setThemengleich(k);
         }
-        
+       
         for(Thema t : themen){
             System.out.println("Bearbeitet: " + t.getBezeichnung());
+            if(t.getId() == null){
+                this.themaBean.create(t);
+            }else{
+                this.themaBean.find(t.getId());
+            }           
         }
-        kurs.setThema(this.getThemen());
         
         for(Thema p : kurs.getThema()){
             System.out.println("Kursthemen: " + p.getBezeichnung());
@@ -119,7 +119,7 @@ public class KursNB implements Serializable {
     }
 
     public String anlegen() {
-        String rueckgabe = "Fehler";
+        String rueckgabe = "kursAngelegt";
 
         Benutzer p_benutzer = (Benutzer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
         Lehrer p_lehrer = (Lehrer) p_benutzer.getPerson();
@@ -129,40 +129,45 @@ public class KursNB implements Serializable {
         Kurs p_kurs = this.findKurs(themengleich);
         
         int zahlTmp = this.getTeilnehmerzahl();
-
-        Kurs kursT = new Kurs();
-        kursT.setJahr(new Timestamp(System.currentTimeMillis()));
-        kursT.setBewertung(this.getBewertung());
-        kursT.setHinweis(this.getHinweis());
-        kursT.setKuerzel(this.getKuerzel());
-
-        kursT.setTitel(this.getTitel());
-        kursT.setBeschreibung(beschreibung);
-        kursT.setLehrer(p_lehrer);
-
-        if(zahlTmp < 0){
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Die Teilnehmerzahl muss größer als 0 sein.");
-        }else{
-            if(!(zahlTmp == 0)){
-                kursT.setTeilnehmerzahl(this.getTeilnehmerzahl());
-            }           
-        }
         
-        for (Thema t : themen) {
-            this.themaBean.create(t);
-            kursT.addThema(t);
+        if(this.isTeilnehmerUnbegrenzt()){
+            zahlTmp = 999999999;
+        }
+        if(zahlTmp == 0 || zahlTmp < 0){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Die Teilnehmerzahl muss größer als 0 sein.");
+            rueckgabe = "Fehler";
+        }       
+        
+        if (p_kurs == null) {
+            rueckgabe = "Fehler";
+            
         }
 
-        if (p_kurs != null) {
+        if (p_stufe == null) {
+            rueckgabe = "Fehler";
+            
+        }
+               
+        if (!(rueckgabe.equals("Fehler"))) {
+            Kurs kursT = new Kurs();
+            kursT.setJahr(new Timestamp(System.currentTimeMillis()));
+            kursT.setBewertung(this.getBewertung());
+            kursT.setHinweis(this.getHinweis());
+            kursT.setKuerzel(this.getKuerzel());
+
+            kursT.setTitel(this.getTitel());
+            kursT.setBeschreibung(beschreibung);
+            kursT.setLehrer(p_lehrer);
+            kursT.setTeilnehmerzahl(this.getTeilnehmerzahl());
             kursT.setThemengleich(p_kurs);
-        }
-
-        if (p_stufe != null) {
             kursT.setStufe(p_stufe);
-        }
 
-        this.kursBean.create(kursT);
-        rueckgabe = "kursAngelegt";
+            for (Thema t : themen) {
+                this.themaBean.create(t);
+            }
+            kursT.setThema(themen);
+            this.kursBean.create(kursT);           
+        }
 
         return rueckgabe;
     }
@@ -437,7 +442,6 @@ public class KursNB implements Serializable {
     public List<Kurs> getAlleAnderenKurse() {
         List<Kurs> tmpList = this.kursBean.findAll();
         int index = tmpList.indexOf(this.getKurs());
-        System.out.println(index);
         tmpList.remove(index);
         this.alleAnderenKurse = tmpList;
         return alleAnderenKurse;
@@ -448,6 +452,39 @@ public class KursNB implements Serializable {
      */
     public void setAlleAnderenKurse(List<Kurs> alleAnderenKurse) {
         this.alleAnderenKurse = alleAnderenKurse;
+    }
+
+    /**
+     * @return the schuelerInKurs
+     */
+    public List<Schueler> getSchuelerInKurs() {
+        List<Schueler> tmp = this.kurs.getTeilnehmer();
+        if(tmp == null){
+            tmp = new ArrayList<>();
+        }
+        this.schuelerInKurs = tmp;
+        return this.schuelerInKurs;
+    }
+
+    /**
+     * @param schuelerInKurs the schuelerInKurs to set
+     */
+    public void setSchuelerInKurs(List<Schueler> schuelerInKurs) {
+        this.schuelerInKurs = schuelerInKurs;
+    }
+
+    /**
+     * @return the teilnehmerUnbegrenzt
+     */
+    public boolean isTeilnehmerUnbegrenzt() {
+        return teilnehmerUnbegrenzt;
+    }
+
+    /**
+     * @param teilnehmerUnbegrenzt the teilnehmerUnbegrenzt to set
+     */
+    public void setTeilnehmerUnbegrenzt(boolean teilnehmerUnbegrenzt) {
+        this.teilnehmerUnbegrenzt = teilnehmerUnbegrenzt;
     }
 
 

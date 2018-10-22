@@ -35,10 +35,10 @@
                         <div class="small-12 columns small-centered">
                             <div class="panel paper">
                                 <p> Du kannst zur Zeit keine Wahl abgeben.</p> 
-                                <h:panelGroup layout="block" rendered="#{menueNB.schueler()}">
+                                <h:panelGroup layout="block" rendered="#{menueNB.nichtEingeteilt()}">
                                     <p> Die Einteilung hat noch nicht stattgefunden.</p>
                                 </h:panelGroup>
-                                <h:panelGroup layout="block" rendered="#{menueNB.schueler()}">
+                                <h:panelGroup layout="block" rendered="#{menueNB.bereitsEingeteilt()}">
                                     <p> Du bist in folgendem Kurs: </p>
                                 <h:outputText value="" />
                                 </h:panelGroup>
@@ -89,39 +89,30 @@
                                     </div>
                                     
                                     
-                                    
-                                    <!--<table>
-                                        <thead>
-                                            <tr>
-                                                <th width="100">Kurs</th>
-                                                <th width="50">1. Wahl<button type="button" id="resetEins"><i style="color: black" class="fi-loop"></i></button></th>
-                                                <th width="50">2. Wahl<button type="button" id="resetZwei"><i style="color: black" class="fi-loop"></i></button></th>
-                                                <th width="50">3. Wahl<button type="button" id="resetDrei"><i style="color: black" class="fi-loop"></i></button></th>
-                                                <th width="50">max. Teilnehmer</th>
-                                                <th width="50">Auslastung in %</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <ui:repeat var="kurs" value="#/{kurslisteBean.alleKurse}">
-
+                                    <fieldset>
+                                        <legend>Kursliste</legend>
+                                        <table>
+                                            <thead>
                                                 <tr>
-                                                    <td><h:commandLink action="#/{kurslisteBean.setGewaehlterKurs(kurs)}"><h:outputText value="#/{kurs.titel} - #/{kurs.kuerzel}"/></h:commandLink></td>
-                                                    <td>
-                                                        <input type="radio" class="eins" value="#/{kurs.id}"  name="wahl#/{kurs.titel}" id="/{kurs.kuerzel}Eins" onselect="$('.gewaehltEins').text($(this).val().toString());" ></input>                                               
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" class="zwei" value="#/{kurs.id}" name="wahl#/{kurs.titel}" id="#/{kurs.kuerzel}Zwei" ></input>
-                                                    </td>
-                                                    <td>
-                                                        <input type="radio" class="drei" value="#/{kurs.id}" name="wahl#/{kurs.titel}" id="#/{kurs.kuerzel}Drei" ></input>
-                                                    </td>
-                                                    <td><h:outputText value="#/{kurs.teilnehmerzahl}" /></td>
-                                                    <td>X</td>
+                                                    <th width="100">Kurs</th>                                                 
+                                                    <th width="50">max. Teilnehmer</th>
+                                                    <th width="50">Auslastung in %</th>
                                                 </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ui:repeat var="kurs" value="#{kurslisteBean.stufeKurse}">
 
-                                            </ui:repeat>
-                                        </tbody>
-                                    </table>-->
+                                                    <tr>
+                                                        <td><h:commandLink action="#{kurslisteBean.setGewaehlterKurs(kurs)}"><h:outputText value="#{kurs.titel} - #{kurs.kuerzel}"/></h:commandLink></td>                                                       
+                                                        <td><h:outputText class="teilnehmerzahl" value="#{kurs.teilnehmerzahl}" /></td>
+                                                        <td>X</td>
+                                                    </tr>
+
+                                                </ui:repeat>
+                                            </tbody>
+                                        </table>
+                                    </fieldset>
+                                    
                                     
                                     <h:commandButton class="small button" id="wahlSpeichern" value="Wahl speichern" action="#{wahlNB.saveWahl()}" type="submit"/>
                                 </h:form>

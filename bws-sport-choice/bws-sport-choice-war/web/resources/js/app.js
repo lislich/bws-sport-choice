@@ -82,14 +82,12 @@ $(document).ready(function () {
    /**
      * 
      */
-    $(".disable").val("999");
-    $("#teilnehmerzahlRequired").change(function(){
+    $(".disable").val("25");
+    $(".teilnehmerzahlRequired").change(function(){
         if (this.checked){
             $(".disable").attr('disabled', true);
-            $(".disable").val("999");
         }else{
             $(".disable").attr('disabled', false);
-            $(".disable").val("0");
         }
     });
     

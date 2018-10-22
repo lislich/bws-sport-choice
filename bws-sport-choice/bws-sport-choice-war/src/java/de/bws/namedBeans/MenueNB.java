@@ -7,8 +7,10 @@ package de.bws.namedBeans;
 
 import de.bws.data.Rolle;
 import de.bws.entities.Benutzer;
+import de.bws.entities.Kurs;
 import de.bws.entities.Schueler;
 import de.bws.entities.Wahlzeitraum;
+import de.bws.sessionbeans.KursFacadeLocal;
 import de.bws.sessionbeans.WahlzeitraumFacadeLocal;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -29,6 +31,9 @@ public class MenueNB implements Serializable {
 
     @EJB
     private WahlzeitraumFacadeLocal wahlzeitraumBean;
+    
+    @EJB
+    private KursFacadeLocal kursBean;
     
     /**
      * Creates a new instance of MenueNB
@@ -103,9 +108,6 @@ public class MenueNB implements Serializable {
                 }
             }
         }
-        
-        System.out.println(timestamp.getTime());
-        System.out.println(zeitraum.getBeginn().getTime());
         return tmp;
     }
 
@@ -129,6 +131,48 @@ public class MenueNB implements Serializable {
                 }
             }
         }
+        return tmp;
+    }
+    
+    public boolean bereitsEingeteilt(){
+        boolean tmp = false;
+        
+        List<Kurs> schuelerList = this.kursBean.get("SELECT k FROM Kurs k");
+        Kurs k = null;
+        
+        for(Kurs kTmp : schuelerList){
+            for(Schueler sTmp : kTmp.getTeilnehmer()){
+                if(sTmp.getId().compareTo(this.b.getPerson().getId()) == 0){
+                    k = kTmp;
+                }
+            }
+        }
+
+        if(k != null){
+            tmp = true;
+        }
+        
+        return tmp;
+    }
+    
+    public boolean nichtEingeteilt(){
+         boolean tmp = false;
+        
+        List<Kurs> schuelerList = this.kursBean.get("SELECT k FROM Kurs k");
+        Kurs k = null;
+        
+        for(Kurs kTmp : schuelerList){
+            for(Schueler sTmp : kTmp.getTeilnehmer()){
+                if(sTmp.getId().compareTo(this.b.getPerson().getId()) == 0){
+                    k = kTmp;
+                }
+            }
+        }
+
+        if(k == null){
+            tmp = true;
+        }
+        
         return tmp;
     }
     

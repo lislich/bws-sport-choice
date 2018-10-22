@@ -141,6 +141,7 @@ public class WahlNB implements Serializable{
     }
 
 
+
     /**
      * @return the beginn
      */

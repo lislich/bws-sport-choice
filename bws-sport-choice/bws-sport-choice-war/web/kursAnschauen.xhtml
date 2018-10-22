@@ -52,7 +52,32 @@
                                         </tfoot>
                                     </table>
                                 </h:panelGroup>
-                                <h:commandLink rendered="#{menueNB.lehrer()}" action="schuelerlisteKurs">Hier einsehen welche Schüler eingewählt wurden.</h:commandLink>
+                                <h:panelGroup rendered="#{menueNB.lehrer()}">
+                                    <fieldset>
+                                        <legend>Schüler die in diesen Kurs eingeschrieben wurden:</legend>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th width="100">Vorname</th>
+                                                    <th width="100">Name</th>
+                                                    <th width="50">Tutor</th>
+                                                    <th width="50">Stufe</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <ui:repeat var="schueler" value="#{kursNB.schuelerInKurs}">
+
+                                                    <tr>
+                                                        <td><h:outputText value="#{schueler.vorname}"/></td>
+                                                        <td><h:outputText value="#{schueler.nachname}"/></td>
+                                                        <td><h:outputText value="#{schueler.tutor.kuerzel}"/></td>
+                                                        <td><h:outputText value="#{schueler.stufe.bezeichnung}"/></td>
+                                                    </tr>
+                                                </ui:repeat>
+                                            </tbody>
+                                        </table>
+                                    </fieldset>
+                                </h:panelGroup>
                             </fieldset>
                         </h:form>
                     </div>                    

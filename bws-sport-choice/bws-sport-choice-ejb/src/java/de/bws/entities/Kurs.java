@@ -226,7 +226,11 @@ public class Kurs implements Serializable {
      * @param p_thema the thema to set
      */
     public void setThema(List<Thema> p_thema) {
-        this.thema = p_thema;
+        this.thema= new ArrayList<>();
+        for(Thema t : p_thema){
+            this.thema.add(t);
+        }
+
     }
 
     /**

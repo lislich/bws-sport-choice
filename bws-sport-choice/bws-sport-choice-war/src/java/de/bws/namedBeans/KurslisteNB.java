@@ -13,7 +13,9 @@ import de.bws.entities.Schueler;
 import de.bws.entities.Stufe;
 import de.bws.sessionbeans.BenutzerFacadeLocal;
 import de.bws.sessionbeans.KursFacadeLocal;
+import de.bws.sessionbeans.LehrerFacadeLocal;
 import de.bws.sessionbeans.PersonFacadeLocal;
+import de.bws.sessionbeans.StufeFacadeLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,11 @@ public class KurslisteNB implements Serializable {
     @EJB
     private PersonFacadeLocal personBean;
     
+    @EJB
+    private LehrerFacadeLocal lehrerBean;
+    @EJB
+    private StufeFacadeLocal stufeBean;
+    
     private List<Kurs> alleKurse;
     
     private List<Kurs> lehrerKurse;
@@ -50,20 +57,33 @@ public class KurslisteNB implements Serializable {
     private List<Kurs> stufeKurse;
     
     
-//    @PostConstruct
-//    public void init(){
-//                Benutzer admin = new Benutzer();
+    @PostConstruct
+    public void init(){
+//          Stufe s = new Stufe();
+//          s.setBezeichnung("12");
+//          this.stufeBean.create(s);
+//          Stufe d = new Stufe();
+//          s.setBezeichnung("13");
+//          this.stufeBean.create(d);
+//        Lehrer l = new Lehrer();
+//        l.setKuerzel("sax");
+//        l.setNachname("Sax");
+//        l.setVorname("Martina");
+//        this.lehrerBean.create(l);
+//        
+//        Benutzer admin = new Benutzer();
 //        
 //        try {
 //            admin.setBenutzername("MarSax");
 //            admin.setNeuesPasswort("marsax");
 //            admin.setRolle(Rolle.LEHRER);
+//            admin.setPerson(l);
 //        } catch (Exception ex) {
 //            Logger.getLogger(LoginNB.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //        
 //        this.benutzerBean.create(admin);
-//    }
+    }
     
     public List<Kurs> getAlleKurse(){
         List<Kurs> tmp = this.kursBean.findAll();

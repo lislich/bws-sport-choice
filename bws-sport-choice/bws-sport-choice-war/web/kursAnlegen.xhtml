@@ -78,7 +78,8 @@
                                 </div>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
-                                        <input id="teilnehmerzahlRequired" type="checkbox" checked="checked" value="Teilnehmerzahl unbegrenzt"/>
+                                        <h:selectBooleanCheckbox class="teilnehmerzahlRequired" id="teilnehmerzahlRequired" value="#{kursNB.teilnehmerUnbegrenzt}" />
+                                        <!--<input id="teilnehmerzahlRequired" type="checkbox" checked="checked" value="Teilnehmerzahl unbegrenzt"/>-->
                                         <label for="teilnehmerzahlRequired">Teilnehmerzahl unbegrenzt</label>
                                     </div>
                                 </div>
@@ -87,7 +88,7 @@
                                         <span class="prefix">Teilnehmerzahl</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="teilnehmerzahl" class="input-group-field disable" value="#{kursNB.teilnehmerzahl}" disabled="true"/>                                        
+                                        <h:inputText id="teilnehmerzahl" class="input-group-field disable" value="#{kursNB.teilnehmerzahl}"/>                                        
                                     </div>
                                 </div>
                                 <div class="row collapse">
