@@ -6,7 +6,6 @@
 package de.bws.namedBeans;
 
 import de.bws.data.Rolle;
-import de.bws.entities.Benutzer;
 import de.bws.entities.Lehrer;
 import de.bws.entities.Person;
 import de.bws.entities.Schueler;
@@ -17,14 +16,16 @@ import de.bws.sessionbeans.PersonFacadeLocal;
 import de.bws.sessionbeans.SchuelerFacadeLocal;
 import de.bws.sessionbeans.StufeFacadeLocal;
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
+import static java.time.Clock.system;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -69,11 +70,8 @@ public class BenutzerAnlegenNB implements Serializable{
     
     @PostConstruct
     private void init(){
-//        Lehrer lehrer = new Lehrer();
-//        lehrer.setKuerzel("GG");
-//        lehrer.setNachname("Grüning");
-//        lehrer.setVorname("Peter");
-//        this.personBean.create(lehrer);
+        this.benutzername = "Hello";
+        this.passwort = "world";
     }
     
     /**
@@ -81,13 +79,14 @@ public class BenutzerAnlegenNB implements Serializable{
      * @return 
      */
     public String anlegen(){
+        /*
         Person neuePerson = this.getNeuePersonFromRolle();
-        
+            
         if(neuePerson == null){
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lasterror", "Fehler beim zuweisen der Rolle.");
-            return "Anlegen";
-        }       
-                
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lasterror", "Fehler beim zuweisen der Rolle.");
+        return "Anlegen";
+        }
+            
         Benutzer neuerBenutzer = new Benutzer();
         neuerBenutzer.setPerson(neuePerson);
         neuerBenutzer.setBenutzername(this.benutzername);
@@ -99,12 +98,22 @@ public class BenutzerAnlegenNB implements Serializable{
             Logger.getLogger(BenutzerAnlegenNB.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Fehler beim Anlegen des Benutzers.");
         }
-/*        
-        if(this.benutzerBean.getByName(this.benutzername) != null){
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("angelegterBenutzer", this.benutzername);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("geeriertesPasswort", this.passwort);
+            */
+        
+        try {           
+            this.passwort = Passwort.passwortGenerieren();
+        } catch (NoSuchAlgorithmException ex) {
+            Logger.getLogger(BenutzerAnlegenNB.class.getName()).log(Level.SEVERE, null, ex);
         }
- */       
+        System.out.println("Bean-Methode \"anmelden\" wird usgefürht. B: " + this.benutzername + ", P: " + this.passwort );
+        
+//        String msgText = "Benutzer: " + this.benutzername + "\nPasswort: " + this.passwort;
+//        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Anmededaten für die Erstanmeldung", msgText);
+//        RequestContext.getCurrentInstance().showMessageInDialog(message);
+//        RequestContext context = RequestContext.getCurrentInstance();
+//        context.update(":dialogErstanmeldung");
+//        context.execute("PF('dialogErstanmeldung').open();");
+       
         return "benutzerAnlegen";
     }
     
