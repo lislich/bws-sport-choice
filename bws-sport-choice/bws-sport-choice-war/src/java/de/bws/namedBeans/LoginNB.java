@@ -96,6 +96,11 @@ public class LoginNB implements Serializable{
         }
     }
     
+    public String logout(){
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+        return "Logout";
+    }
+    
     private boolean isNotNullOrEmpty(String p_string){
         return p_string != null && p_string.length() > 0;
     }

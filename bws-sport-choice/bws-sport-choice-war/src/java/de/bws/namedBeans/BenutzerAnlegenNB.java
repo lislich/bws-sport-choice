@@ -17,7 +17,6 @@ import de.bws.sessionbeans.SchuelerFacadeLocal;
 import de.bws.sessionbeans.StufeFacadeLocal;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
-import static java.time.Clock.system;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +24,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import org.primefaces.context.RequestContext;
 
 /**
  *

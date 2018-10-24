@@ -109,6 +109,13 @@
                             <i class="fi-checkbox"></i><span>Wahl abgeben</span>
                         </h:link>                      
                     </li>
+                    <li>
+                        <h:form>
+                            <h:commandLink action="#{loginNB.logout()}" rendered="#{menueNB.angemeldet}">
+                                <i class="fi-wrench"></i><span>Logout</span>
+                            </h:commandLink>
+                        </h:form>
+                    </li>
                 </ul>
                 <i id="menu" class="fi-eye ul-nav-toggle" >Menu</i>
             </div>

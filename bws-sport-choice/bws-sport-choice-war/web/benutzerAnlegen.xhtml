@@ -16,12 +16,12 @@
 
             <ui:define name="content">
                 
-            <!--    <p:dialog id="dialogErstanmeldung" widgetVar="dialogErstanmeldung" header="Anmeldedaten Erstanmeldung" modal="false" dynamic="true">
+                <p:dialog id="dlgErstanmeldung" widgetVar="dialogErstanmeldung" header="Anmeldedaten Erstanmeldung" modal="false" dynamic="true">
                    <h:outputText value="Der Benutzer wurde erfolgreich angelegt. Bitte notieren Sie sich das Passwort! Das Passwort kann nach dem Schließen dieses Fensters nicht mehr angezeigt werden."/><br/><br/>                           
-                    <h:outputText value="Benutzer: #/{benutzerAnlegenNB.benutzername}"/><br/>
-                    <h:outputText value="Passwort: #/{benutzerAnlegenNB.passwort}"/><br/>
+                <!--    <h:outputText value="Benutzer: #/{benutzerAnlegenNB.benutzername}"/><br/>
+                    <h:outputText value="Passwort: #/{benutzerAnlegenNB.passwort}"/><br/> -->
                     <p:commandButton id="closeDialog" value="Ok" action="benutzerAnlegen"/>
-                </p:dialog> -->
+                </p:dialog>
                 <div class="row">
                     <div class="small-12 columns small-centered">
                         <h:form>
@@ -92,13 +92,9 @@
                                         <h:inputText id="benutzername" class="input-group-field" value="#/{benutzerAnlegenNB.benutzername}"/>
                                     </div>
                                 </div> -->
-                            <!--    <div>
-                                    <p:commandButton type="button" class="small button" id="benutzerAnlegen" value="Anlegen" onclick="PF('dialogErstanmeldung').show();" />
-                                </div> -->
-                                <p:dialog header="Dialog" widgetVar="dlg" dynamic="true">
-                                    <h:outputText value="This content is loaded lazy." />
-                                </p:dialog>
-                                <p:commandButton value="Show Dialog" onclick="PF('dlg').show();" type="button" />
+                                <div>
+                                    <p:commandButton type="button" class="small button" id="benutzerAnlegen" value="Anlegen" onclick="dialogErstanmeldung.show()" />
+                                </div> 
                             </fieldset>
                         </h:form>
                     </div>

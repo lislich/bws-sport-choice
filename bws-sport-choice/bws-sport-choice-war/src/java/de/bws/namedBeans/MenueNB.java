@@ -13,10 +13,10 @@ import de.bws.entities.Wahlzeitraum;
 import de.bws.sessionbeans.KursFacadeLocal;
 import de.bws.sessionbeans.WahlzeitraumFacadeLocal;
 import javax.inject.Named;
-import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -35,13 +35,18 @@ public class MenueNB implements Serializable {
     @EJB
     private KursFacadeLocal kursBean;
     
+    private Benutzer b;
+    
     /**
      * Creates a new instance of MenueNB
      */
     public MenueNB() {
     }
     
-    private Benutzer b = (Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
+    @PostConstruct
+    private void init(){
+        this.b = (Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
+    }
     
     
     public boolean lehrer() {
@@ -174,6 +179,14 @@ public class MenueNB implements Serializable {
         }
         
         return tmp;
+    }
+    
+    /**
+     * 
+     * @return 
+     */
+    public boolean isAngemeldet(){
+        return this.b != null;
     }
     
     /**
