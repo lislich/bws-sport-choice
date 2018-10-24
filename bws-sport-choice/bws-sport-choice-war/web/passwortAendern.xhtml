@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:body>
+
+        <ui:composition template="./template.xhtml">
+
+            <ui:define name="title">
+                Passwort ändern
+            </ui:define>
+
+            <ui:define name="content">
+                <div class="row">
+                    <div class="small-12 columns small-centered">
+                        <h:form>
+                            <fieldset>
+                               <div>
+                                    <h:outputText id="error" value="#{passwortAendernNB.error}"/>
+                                </div>
+                                <legend>Passwort ändern</legend>
+                                <div class="row collapse">
+                                    <div class="small-4 columns">
+                                        <span class="prefix">Altes Passwort</span>
+                                    </div>
+                                    <div class="small-8 columns mobile-input">
+                                        <h:inputSecret id="altesPasswort" class="input-group-field" value="#{passwortAendernNB.passwortAlt}"/>
+                                    </div>
+                                </div>                                
+                                <div class="row collapse">
+                                    <div class="small-4 columns">
+                                        <span class="prefix">Neues Passwort</span>
+                                    </div>
+                                    <div class="small-8 columns mobile-input">
+                                        <h:inputSecret id="neuesPasswort" class="input-group-field" value="#{passwortAendernNB.passwortNeu}" />
+                                    </div>
+                                </div>
+                                <div class="row collapse area">
+                                    <div class="small-4 columns">
+                                        <span class="prefix">Neues Passwort wiederholen</span>
+                                    </div>
+                                    <div class="small-8 columns mobile-input">
+                                        <h:inputSecret id="wiederholtesPasswort" class="input-group-field" value="#{passwortAendernNB.passwortWiederholung}" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <h:commandButton type="submit" class="small button" id="benutzerAnlegen" value="ändern" action="#{passwortAendernNB.passwortAendern()}" />
+                                </div> 
+                            </fieldset>
+                        </h:form>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>

@@ -124,12 +124,12 @@ public class Benutzer implements Serializable {
      * @throws java.lang.Exception
      */
     public void setPasswort(String p_passwort) throws Exception {
-        this.setSalt(Passwort.saltGenerieren());
+        this.passwort = p_passwort;
     }
     
     public void setNeuesPasswort(String p_passwort) throws Exception {
         this.setSalt(Passwort.saltGenerieren());
-        this.passwort = Passwort.hashen(p_passwort, salt);
+        this.passwort = Passwort.hashen(p_passwort, this.salt);
     }
 
     /**

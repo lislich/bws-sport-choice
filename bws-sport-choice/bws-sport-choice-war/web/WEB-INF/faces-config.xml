@@ -29,6 +29,10 @@
         <from-outcome>Fehler</from-outcome>
         <to-view-id>/login.xhtml</to-view-id>
       </navigation-case>
+      <navigation-case>
+        <from-outcome>passwortAendern</from-outcome>
+        <to-view-id>/passwortAendern.xhtml</to-view-id>
+      </navigation-case>
     </navigation-rule>
     
     
@@ -91,6 +95,10 @@
         <from-outcome>benutzerVerwalten</from-outcome>
         <to-view-id>/benutzerVerwalten.xhtml</to-view-id>
       </navigation-case>
+      <navigation-case>
+        <from-outcome>passwortAendern</from-outcome>
+        <to-view-id>/passwortAendern.xhtml</to-view-id>
+      </navigation-case>
     </navigation-rule>
     
     
@@ -132,6 +140,10 @@
       <navigation-case>
           <from-outcome>Fehler</from-outcome>
           <to-view-id>/kursAnlegen.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>passwortAendern</from-outcome>
+        <to-view-id>/passwortAendern.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
     
@@ -175,7 +187,10 @@
         <from-outcome>kursAnschauen</from-outcome>
         <to-view-id>/kursAnschauen.xhtml</to-view-id>
       </navigation-case>
-      
+      <navigation-case>
+        <from-outcome>passwortAendern</from-outcome>
+        <to-view-id>/passwortAendern.xhtml</to-view-id>
+      </navigation-case>
     </navigation-rule>
     
     
@@ -234,6 +249,10 @@
         <from-outcome>wahlAbgeben</from-outcome>
         <to-view-id>/start.xhtml</to-view-id>
       </navigation-case>
+      <navigation-case>
+        <from-outcome>passwortAendern</from-outcome>
+        <to-view-id>/passwortAendern.xhtml</to-view-id>
+      </navigation-case>
     </navigation-rule>
     
     
@@ -284,6 +303,10 @@
         <from-outcome>benutzerVerwalten</from-outcome>
         <to-view-id>/benutzerVerwalten.xhtml</to-view-id>
       </navigation-case>
+      <navigation-case>
+        <from-outcome>passwortAendern</from-outcome>
+        <to-view-id>/passwortAendern.xhtml</to-view-id>
+      </navigation-case>
     </navigation-rule>
     
     
@@ -330,6 +353,10 @@
         <from-outcome>benutzerVerwalten</from-outcome>
         <to-view-id>/benutzerVerwalten.xhtml</to-view-id>
       </navigation-case>
+      <navigation-case>
+        <from-outcome>passwortAendern</from-outcome>
+        <to-view-id>/passwortAendern.xhtml</to-view-id>
+      </navigation-case>
     </navigation-rule>
     
     <!-- ######################### Schülerliste Kurs #################################################### -->
@@ -366,6 +393,10 @@
       <navigation-case>
         <from-outcome>schuelerlisteKurs</from-outcome>
         <to-view-id>/schuelerlisteKurs.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>passwortAendern</from-outcome>
+        <to-view-id>/passwortAendern.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
     
@@ -409,6 +440,10 @@
         <from-outcome>benutzerVerwalten</from-outcome>
         <to-view-id>/benutzerVerwalten.xhtml</to-view-id>
       </navigation-case>
+      <navigation-case>
+        <from-outcome>passwortAendern</from-outcome>
+        <to-view-id>/passwortAendern.xhtml</to-view-id>
+      </navigation-case>
     </navigation-rule>
     
     <!-- ######################### Kurs zuweisen #################################################### -->
@@ -450,6 +485,10 @@
       <navigation-case>
         <from-outcome>benutzerVerwalten</from-outcome>
         <to-view-id>/benutzerVerwalten.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>passwortAendern</from-outcome>
+        <to-view-id>/passwortAendern.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
     
@@ -493,6 +532,10 @@
         <from-outcome>benutzerVerwalten</from-outcome>
         <to-view-id>/benutzerVerwalten.xhtml</to-view-id>
       </navigation-case>
+      <navigation-case>
+        <from-outcome>passwortAendern</from-outcome>
+        <to-view-id>/passwortAendern.xhtml</to-view-id>
+      </navigation-case>
     </navigation-rule>
     
     
@@ -534,6 +577,10 @@
       <navigation-case>
         <from-outcome>benutzerVerwalten</from-outcome>
         <to-view-id>/benutzerVerwalten.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>passwortAendern</from-outcome>
+        <to-view-id>/passwortAendern.xhtml</to-view-id>
       </navigation-case>
     </navigation-rule>
           
@@ -584,7 +631,63 @@
         <from-outcome>kursZuweisen</from-outcome>
         <to-view-id>kurseZuweisen.xhtml</to-view-id>
       </navigation-case>
+      <navigation-case>
+        <from-outcome>passwortAendern</from-outcome>
+        <to-view-id>/passwortAendern.xhtml</to-view-id>
+      </navigation-case>
     </navigation-rule>
     
+ <!-- ######################### Passwort Ändern #################################################### -->      
+    <navigation-rule>
+      <from-view-id>/passwortAendern.xhtml</from-view-id>
+      <navigation-case>
+        <from-outcome>Logout</from-outcome>
+        <to-view-id>/login.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+          <from-outcome>faq</from-outcome>
+          <to-view-id>/faq.xhtml</to-view-id>
+      </navigation-case>   
+      <navigation-case>
+        <from-outcome>kontakt</from-outcome>
+        <to-view-id>/kontakt.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>kursBearbeitet</from-outcome>
+        <to-view-id>/kurseLehrer.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>kursAnlegen</from-outcome>
+        <to-view-id>/kursAnlegen.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>kurslisteLehrer</from-outcome>
+        <to-view-id>/kurseLehrer.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>kursWechseln</from-outcome>
+        <to-view-id>/kursWechsel.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>kurseAlle</from-outcome>
+        <to-view-id>/kurseAlle.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>schuelerlisteKurs</from-outcome>
+        <to-view-id>/schuelerlisteKurs.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>wahlzeitraum</from-outcome>
+        <to-view-id>/wahlzeitraum.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>kursZuweisen</from-outcome>
+        <to-view-id>/kurseZuweisen.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>passwortAendern</from-outcome>
+        <to-view-id>/passwortAendern.xhtml</to-view-id>
+      </navigation-case>
+    </navigation-rule>
     
 </faces-config>

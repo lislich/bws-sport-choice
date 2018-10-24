@@ -43,7 +43,6 @@ public class LoginNB implements Serializable{
     @PostConstruct
     private void init(){
         
-        
         /* Einkommentieren um den Root-Benutzer neu zu erstellen */
         //this.createRootUser();
     }

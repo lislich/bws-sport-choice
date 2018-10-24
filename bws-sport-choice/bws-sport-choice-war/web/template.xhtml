@@ -112,9 +112,14 @@
                     <li>
                         <h:form>
                             <h:commandLink action="#{loginNB.logout()}" rendered="#{menueNB.angemeldet}">
-                                <i class="fi-wrench"></i><span>Logout</span>
+                                <i class="fi-power"></i><span>Logout</span>
                             </h:commandLink>
                         </h:form>
+                    </li>
+                    <li>
+                        <h:link outcome="passwortAendern" rendered="#{menueNB.angemeldet}">
+                            <i class="fi-key"></i><span>Passwort ändern</span>
+                        </h:link>                      
                     </li>
                 </ul>
                 <i id="menu" class="fi-eye ul-nav-toggle" >Menu</i>
