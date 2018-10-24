@@ -105,7 +105,7 @@
                                                     <tr>
                                                         <td><h:commandLink action="#{kurslisteBean.setGewaehlterKurs(kurs)}"><h:outputText value="#{kurs.titel} - #{kurs.kuerzel}"/></h:commandLink></td>                                                       
                                                         <td><h:outputText class="teilnehmerzahl" value="#{kurs.teilnehmerzahl}" /></td>
-                                                        <td>X</td>
+                                                        <td><h:outputText class="teilnehmerzahl" value="#{wahlNB.getAuslastung(kurs)}" /></td>
                                                     </tr>
 
                                                 </ui:repeat>

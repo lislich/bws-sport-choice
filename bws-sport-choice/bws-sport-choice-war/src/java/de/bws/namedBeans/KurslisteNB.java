@@ -15,6 +15,7 @@ import de.bws.sessionbeans.BenutzerFacadeLocal;
 import de.bws.sessionbeans.KursFacadeLocal;
 import de.bws.sessionbeans.LehrerFacadeLocal;
 import de.bws.sessionbeans.PersonFacadeLocal;
+import de.bws.sessionbeans.SchuelerFacadeLocal;
 import de.bws.sessionbeans.StufeFacadeLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -44,6 +45,9 @@ public class KurslisteNB implements Serializable {
     private PersonFacadeLocal personBean;
     
     @EJB
+    private SchuelerFacadeLocal schuelerBean;
+    
+    @EJB
     private LehrerFacadeLocal lehrerBean;
     @EJB
     private StufeFacadeLocal stufeBean;
@@ -57,33 +61,27 @@ public class KurslisteNB implements Serializable {
     private List<Kurs> stufeKurse;
     
     
-    @PostConstruct
-    public void init(){
-//          Stufe s = new Stufe();
-//          s.setBezeichnung("12");
-//          this.stufeBean.create(s);
-//          Stufe d = new Stufe();
-//          s.setBezeichnung("13");
-//          this.stufeBean.create(d);
-//        Lehrer l = new Lehrer();
-//        l.setKuerzel("sax");
-//        l.setNachname("Sax");
-//        l.setVorname("Martina");
-//        this.lehrerBean.create(l);
-//        
+//    @PostConstruct
+//    public void init(){       
+//        Schueler l = new Schueler();
+//        l.setNachname("Lichtenfels");
+//        l.setVorname("Lisa");
+//        l.setStufe(this.stufeBean.find(103L));
+//        l.setTutor(this.lehrerBean.find(2L));
+//        this.schuelerBean.create(l);
 //        Benutzer admin = new Benutzer();
 //        
 //        try {
-//            admin.setBenutzername("MarSax");
-//            admin.setNeuesPasswort("marsax");
-//            admin.setRolle(Rolle.LEHRER);
+//            admin.setBenutzername("lislich");
+//            admin.setNeuesPasswort("lislich");
+//            admin.setRolle(Rolle.SCHUELER);
 //            admin.setPerson(l);
 //        } catch (Exception ex) {
 //            Logger.getLogger(LoginNB.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //        
 //        this.benutzerBean.create(admin);
-    }
+//    }
     
     public List<Kurs> getAlleKurse(){
         List<Kurs> tmp = this.kursBean.findAll();

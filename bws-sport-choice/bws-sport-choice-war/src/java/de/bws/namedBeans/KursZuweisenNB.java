@@ -5,17 +5,23 @@
  */
 package de.bws.namedBeans;
 
+import de.bws.data.Eintrag;
 import de.bws.entities.Kurs;
 import de.bws.entities.Schueler;
+import de.bws.entities.Stufe;
 import de.bws.sessionbeans.KursFacadeLocal;
 import de.bws.sessionbeans.SchuelerFacadeLocal;
+import de.bws.sessionbeans.StufeFacadeLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.component.UIData;
+import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
+import javax.faces.model.DataModel;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
@@ -33,20 +39,81 @@ public class KursZuweisenNB implements Serializable{
     @EJB
     private SchuelerFacadeLocal schuelerBean;
     
+    @EJB
+    private StufeFacadeLocal stufeBean;
+    
     private String error;
     
     private List<Schueler> schueler;
-    private List<Kurs> kurs;
-    private int schuelerId;
-    private int kursId;
+    private List<Kurs> stufekurs;
+    private String schuelerId;
+    private String kursId;
     
     private int schuelerEins;
     private int schuelerZwei;
+    
+    private List<Eintrag<Schueler, Kurs>> zuordnung;
     
     /**
      * Creates a new instance of KursZuweisenNB
      */
     public KursZuweisenNB() {
+    }
+    
+    @PostConstruct
+    public void init(){
+        this.zuordnung = new ArrayList<>();
+        this.setZuordnung(this.getSchueler());
+    }
+    
+    public void zuweisen(){       
+        for(Eintrag e : this.zuordnung){
+            Schueler p_schueler = (Schueler) e.getKey();                        
+            String kursId = (e.getValue().toString().split("="))[1].replace("]", "").trim();
+
+            Kurs kursNeu = this.kursBean.find(Long.parseLong(kursId));
+            if(kursNeu != null){
+                Kurs kursAlt = this.getAktuellerKurs(p_schueler.getId());
+
+                if(kursAlt != null){
+                    Kurs tmp = this.kursBean.find(kursAlt.getId());
+                    tmp.removeTeilnehmer(p_schueler);
+                    this.kursBean.edit(tmp);
+                }
+                kursNeu.addTeilnehmer(p_schueler);
+                this.kursBean.edit(kursNeu);
+                
+            }           
+        }
+        
+        
+        
+    }
+    
+    public void einzelZuweisen(){
+//        Schueler p_schueler = this.schuelerBean.find(Long.parseLong(schuelerId));
+//        
+//        System.out.println(kursId);
+//        System.out.println(p_schueler.getNachname());
+//        Kurs tmpKurs;
+//        Schueler tmpSchueler;
+//        tmpKurs = this.kursBean.find(Long.parseLong(kursId));
+//        tmpSchueler = this.schuelerBean.find(p_schueler.getId());
+//        
+//        if(tmpKurs != null && tmpSchueler != null){
+//            tmpKurs.addTeilnehmer(p_schueler);
+//            this.kursBean.edit(tmpKurs);
+//        }
+//        
+//        Kurs aktKurs = this.getAktuellerKurs(p_schueler);
+//        System.out.println("aktueller kurs: " + aktKurs.getTitel());
+//        if(!(aktKurs.getTitel().equals("-"))){
+//            tmpKurs = this.kursBean.find(aktKurs.getId());
+//            tmpKurs.removeTeilnehmer(p_schueler);
+//            this.kursBean.edit(tmpKurs);
+//        }
+        
+
     }
     
     public String wechsel(){
@@ -96,6 +163,24 @@ public class KursZuweisenNB implements Serializable{
         
     }
    
+    public Kurs getAktuellerKurs(long p_schuelerId){
+        Kurs gesucht = null;
+        List<Kurs> tmp = this.kursBean.get("SELECT k FROM Kurs k");
+        for(Kurs k : tmp){
+            for(Schueler s : k.getTeilnehmer()){
+                if(s.getId().compareTo(p_schuelerId) == 0){
+                    gesucht = k;
+                }
+            }
+        }
+        if(gesucht == null){
+            gesucht = new Kurs();
+            gesucht.setTitel("-");
+        }
+        
+        return gesucht;
+    }
+    
     /**
      * @return the schueler
      */
@@ -118,48 +203,52 @@ public class KursZuweisenNB implements Serializable{
     /**
      * @return the schuelerId
      */
-    public int getSchuelerId() {
+    public String getSchuelerId() {
         return schuelerId;
     }
 
     /**
      * @param schuelerId the schuelerId to set
      */
-    public void setSchuelerId(int schuelerId) {
+    public void setSchuelerId(String schuelerId) {
         this.schuelerId = schuelerId;
     }
 
     /**
      * @return the kursId
      */
-    public int getKursId() {
+    public String getKursId() {
         return kursId;
     }
 
     /**
      * @param kursId the kursId to set
      */
-    public void setKursId(int kursId) {
+    public void setKursId(String kursId) {
         this.kursId = kursId;
     }
 
     /**
+     * @param p_schueler
      * @return the kurs
      */
-    public List<Kurs> getKurs() {
-        List<Kurs> tmp = this.kursBean.findAll();
+    public List<Kurs> getStufeKurs(long p_schuelerId) {
+        Schueler p_schueler = this.schuelerBean.find(p_schuelerId);
+        
+        Stufe stufe = this.stufeBean.find(p_schueler.getStufe().getId());
+        List<Kurs> tmp = this.kursBean.get("SELECT k FROM Kurs k WHERE k.stufe.id = " + stufe.getId() );
         if(tmp == null){
             tmp = new ArrayList<>();
         }
-        this.kurs = tmp;
-        return this.kurs;
+        this.stufekurs = tmp;
+        return this.stufekurs;
     }
 
     /**
      * @param kurs the kurs to set
      */
-    public void setKurs(List<Kurs> kurs) {
-        this.kurs = kurs;
+    public void setStufeKurs(List<Kurs> kurs) {
+        this.stufekurs = kurs;
     }
 
     /**
@@ -189,6 +278,23 @@ public class KursZuweisenNB implements Serializable{
     public void setSchuelerZwei(int schuelerZwei) {
         this.schuelerZwei = schuelerZwei;
     }
-    
+
+    /**
+     * @return the zuordnung
+     */
+    public List<Eintrag<Schueler, Kurs>> getZuordnung() {
+        return zuordnung;
+    }
+
+    /**
+     * @param p_schueler the zuordnung to set
+     */
+    public void setZuordnung(List<Schueler> p_schueler) {
+        this.zuordnung.clear();
+        for(Schueler s : p_schueler){
+            this.zuordnung.add(new Eintrag(s, getAktuellerKurs(s.getId())));
+        }
+    }
+
     
 }

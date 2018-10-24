@@ -52,6 +52,8 @@ public class WahlNB implements Serializable{
     private String zweiteWahl;
     private String dritteWahl;
     
+    private double auslastung;
+    
     @PostConstruct
     public void init(){
         Schueler sTmp = (Schueler)((Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer")).getPerson();
@@ -210,6 +212,35 @@ public class WahlNB implements Serializable{
      */
     public void setDritteWahl(String dritteWahl) {
         this.dritteWahl = dritteWahl;
+    }
+
+    /**
+     * @return the auslastung
+     */
+    public double getAuslastung(Kurs p_kurs) {
+        Kurs tmp = this.kursBean.find(p_kurs.getId());
+        double anzahlTeilnehmer = (double)tmp.getTeilnehmerzahl();
+        double anzahlGewaehlt = 0.0;
+        List<Wahl> gewaehlt = this.wahlBean.get("SELECT w FROM Wahl w WHERE w.erstwahl.id = " + tmp.getId());
+        if(gewaehlt != null){
+            System.out.println("#Size# " + gewaehlt.size());
+            anzahlGewaehlt = gewaehlt.size();
+        }
+        if(anzahlGewaehlt != 0){
+            System.out.println("#Rechnung#");
+            auslastung = (anzahlGewaehlt/anzahlTeilnehmer)*100;
+        }else{
+            auslastung = anzahlGewaehlt;
+        }
+        
+        return auslastung;
+    }
+
+    /**
+     * @param auslastung the auslastung to set
+     */
+    public void setAuslastung(double auslastung) {
+        this.auslastung = auslastung;
     }
 
     

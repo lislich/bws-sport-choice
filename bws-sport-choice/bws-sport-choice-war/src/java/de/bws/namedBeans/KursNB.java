@@ -71,10 +71,7 @@ public class KursNB implements Serializable {
         try {
             this.getGewaehlterKurs();
             if(this.kurs != null){
-                System.out.println("##KursSIze## "+ kurs.getThema().size());
-                for(Thema t : kurs.getThema()){
-                    this.themen.add(t);
-                }
+                this.setThemen(kurs.getThema());
                 for(Thema tmp : themen){
                     System.out.println("##THEMEN## " + tmp.getBezeichnung());
                 }
@@ -118,7 +115,7 @@ public class KursNB implements Serializable {
         return "kursBearbeitet";
     }
 
-    public String anlegen() {
+    public String anlegen() {       
         String rueckgabe = "kursAngelegt";
 
         Benutzer p_benutzer = (Benutzer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
@@ -127,18 +124,18 @@ public class KursNB implements Serializable {
         Stufe p_stufe = this.findStufe(stufe);
 
         Kurs p_kurs = this.findKurs(themengleich);
-        
         int zahlTmp = this.getTeilnehmerzahl();
         
-        if(this.isTeilnehmerUnbegrenzt()){
-            zahlTmp = 999999999;
+        if(this.teilnehmerUnbegrenzt == true){
+            this.setTeilnehmerzahl(999);
         }
-        if(zahlTmp == 0 || zahlTmp < 0){
+
+        if(zahlTmp < 0){
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Die Teilnehmerzahl muss größer als 0 sein.");
             rueckgabe = "Fehler";
         }       
-        
-        if (p_kurs == null) {
+
+        if (Integer.parseInt(themengleich) > 0 && p_kurs == null) {
             rueckgabe = "Fehler";
             
         }
@@ -147,7 +144,7 @@ public class KursNB implements Serializable {
             rueckgabe = "Fehler";
             
         }
-               
+
         if (!(rueckgabe.equals("Fehler"))) {
             Kurs kursT = new Kurs();
             kursT.setJahr(new Timestamp(System.currentTimeMillis()));

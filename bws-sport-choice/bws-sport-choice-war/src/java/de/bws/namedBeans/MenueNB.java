@@ -96,23 +96,29 @@ public class MenueNB implements Serializable {
         boolean tmp = false;
         List<Wahlzeitraum> zeitraumListe = this.wahlzeitraumBean.findAll();
         Wahlzeitraum zeitraum = null;
-        
+
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-        
-        
-        
-        if(zeitraumListe != null && !(zeitraumListe.isEmpty())){
+
+        if (zeitraumListe != null && !(zeitraumListe.isEmpty())) {
             zeitraum = zeitraumListe.get(0);
         }
-        
-        if(getB() != null){
-            if(getB().getRolle().equals(Rolle.SCHUELER)){
-                Schueler s = (Schueler) getB().getPerson();
-                if(zeitraum.getBeginn().getTime() > timestamp.getTime() || zeitraum.getEnde().getTime() < timestamp.getTime()){
-                        tmp = true;                   
+        if (zeitraum != null) {
+            if (getB() != null) {
+                if (getB().getRolle().equals(Rolle.SCHUELER)) {
+                    Schueler s = (Schueler) getB().getPerson();
+                    if (zeitraum.getBeginn() != null && zeitraum.getEnde() != null) {
+                        if (zeitraum.getBeginn().getTime() > timestamp.getTime() || zeitraum.getEnde().getTime() < timestamp.getTime()) {
+
+                        }
+                    }
+                    tmp = true;
+
                 }
             }
+        }else{
+            tmp = true;
         }
+
         return tmp;
     }
 
@@ -127,15 +133,18 @@ public class MenueNB implements Serializable {
         if(zeitraumListe != null && !(zeitraumListe.isEmpty())){
             zeitraum = zeitraumListe.get(0);
         }
-        
-        if(getB() != null){
-            if(getB().getRolle().equals(Rolle.SCHUELER)){
-                Schueler s = (Schueler) getB().getPerson();
-                if(zeitraum.getBeginn().getTime() <= timestamp.getTime() && zeitraum.getEnde().getTime() >= timestamp.getTime()){
-                        tmp = true;                   
+       
+        if (zeitraum != null) {
+            if (getB() != null) {
+                if (getB().getRolle().equals(Rolle.SCHUELER)) {
+                    Schueler s = (Schueler) getB().getPerson();
+                    if (zeitraum.getBeginn().getTime() <= timestamp.getTime() && zeitraum.getEnde().getTime() >= timestamp.getTime()) {
+                        tmp = true;
+                    }
                 }
             }
         }
+
         return tmp;
     }
     
@@ -147,9 +156,9 @@ public class MenueNB implements Serializable {
         
         for(Kurs kTmp : schuelerList){
             for(Schueler sTmp : kTmp.getTeilnehmer()){
-                if(sTmp.getId().compareTo(this.b.getPerson().getId()) == 0){
-                    k = kTmp;
-                }
+//                if(sTmp.getId().compareTo(this.b.getPerson().getId()) == 0){
+//                    k = kTmp;
+//                }
             }
         }
 
@@ -165,14 +174,22 @@ public class MenueNB implements Serializable {
         
         List<Kurs> schuelerList = this.kursBean.get("SELECT k FROM Kurs k");
         Kurs k = null;
-        
-        for(Kurs kTmp : schuelerList){
-            for(Schueler sTmp : kTmp.getTeilnehmer()){
-                if(sTmp.getId().compareTo(this.b.getPerson().getId()) == 0){
-                    k = kTmp;
+        if (schuelerList != null && !(schuelerList.isEmpty())) {
+            for (Kurs kTmp : schuelerList) {
+                if (kTmp.getTeilnehmer() != null && !(kTmp.getTeilnehmer().isEmpty())) {
+                    for (Schueler sTmp : kTmp.getTeilnehmer()) {
+                        if (sTmp != null) {
+//                            if (sTmp.getId().compareTo(this.b.getPerson().getId()) == 0) {
+//                                k = kTmp;
+//                            }
+                        }
+
+                    }
                 }
+
             }
         }
+
 
         if(k == null){
             tmp = true;

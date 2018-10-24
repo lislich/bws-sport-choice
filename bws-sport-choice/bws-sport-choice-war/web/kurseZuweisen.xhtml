@@ -20,33 +20,65 @@
                         <div class="small-12 columns small-centered">
                             <fieldset>
                                 <legend>Kurszuweisung</legend>
-                                <table>
+                                <h:dataTable id="kursZuweisenTable" var="eintrag" value="#{kursZuweisenNB.zuordnung}">
+                                    <h:column>
+                                        <f:facet name="header">Name</f:facet>
+                                        #{eintrag.key.nachname}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Vorname</f:facet>
+                                        #{eintrag.key.vorname}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Stufe</f:facet>
+                                        #{eintrag.key.stufe.bezeichnung}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Tutor</f:facet>
+                                        #{eintrag.key.tutor.kuerzel}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Aktueller Kurs</f:facet>
+                                        #{kursZuweisenNB.getAktuellerKurs(eintrag.key.id).titel}
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Kurs</f:facet>
+                                        <h:selectOneMenu class="input-group-field" value="#{eintrag.value}">
+                                            <f:selectItems value="#{kursZuweisenNB.getStufeKurs(eintrag.key.id)}" var="kurs" itemValue="#{kurs}" itemLabel="#{kurs.titel} - #{kurs.kuerzel}" />
+                                        </h:selectOneMenu>
+                                    </h:column>
+                                </h:dataTable>
+                                <!--<table>
                                     <thead>
                                         <tr>
                                             <th width="100">Vorname</th>
                                             <th width="50">Name</th>
-                                            <th width="50">Tutor</th>
-                                            <th width="50">Kurs</th>
+                                            <th width="25">Stufe</th>
+                                            <th width="25">Tutor</th>
+                                            <th width="100">Aktueller Kurs</th>
+                                            <th width="150">Kurs</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <ui:repeat var="schueler" value="#{kursZuweisenNB.schueler}">
+                                        <ui:repeat var="schueler" value="#/{kursZuweisenNB.zuordnung}">
 
                                             <tr>
-                                                <td width="80"><h:outputText value="#{schueler.vorname}"/></td>
-                                                <td width="100"><h:outputText value="#{schueler.nachname}"/></td>
-                                                <td width="20"><h:outputText value="#{schueler.tutor.kuerzel}"/></td>
-                                                <td width="200">
-                                                    <h:selectOneMenu class="input-group-field" value="#{kursZuweisenNB.kursId}">
-                                                        <f:selectItems value="#{kursZuweisenNB.kurs}" var="kurs" itemValue="#{kurs.id}" itemLabel="#{kurs.titel} - #{kurs.kuerzel}" />
-                                                    </h:selectOneMenu>
+                                                <td><h:outputText value="#/{eintrag.key.vorname}"/></td>
+                                                <td><h:outputText value="#/{eintrag.key.nachname}"/></td>
+                                                <td><h:outputText value="#/{eintrag.key.stufe.bezeichnung}"/></td>
+                                                <td><h:outputText value="#/{eintrag.key.tutor.kuerzel}"/></td>
+                                                <td><h:outputText value="#/{kursZuweisenNB.getAktuellerKurs(eintrag.key.id).titel}"/></td>
+                                                <td>
+                                                    <h:selectOneMenu class="input-group-field" value="#/{eintrag.value}">
+                                            <f:selectItems value="#/{kursZuweisenNB.getStufeKurs(eintrag.key.id)}" var="kurs" itemValue="#/{kurs}" itemLabel="#/{kurs.titel} - #/{kurs.kuerzel}" />
+                                        </h:selectOneMenu>
                                                 </td>
                                             </tr>
 
                                         </ui:repeat>
                                     </tbody>
-                                </table>
-                                <h:commandButton class="small button" id="zuweisungSpeichern" type="submit" value="Speichern" action="1" />
+                                </table>-->
+                                <h:commandButton class="small button" id="zuweisungSpeichern" type="submit" value="Speichern" action="#{kursZuweisenNB.zuweisen()}" />
                                 <h:outputText id="errorZuweisen" value="#{loginNB.error}"/>
                             </fieldset>
                         </div>
