@@ -58,69 +58,92 @@
             </nav>
             <div class="sticky sticky-nav hide-for-small hide-on-print">
                 <ul id="togglebar" class="hide medium-block-grid-6 large-block-grid-8 text-center ul-nav" data-topbar="">                    
-                    <li>
-                        <a onClick="event.preventDefault();
-                        window.print();" href="#">
-                            <i class="fi-print"></i><span>Drucken</span>
-                        </a>
-                    </li>
-                    <li>
-                        <h:link outcome="kursAnlegen" rendered="#{menueNB.lehrer()}">
-                            <i class="fi-clipboard-notes"></i><span>Kurs anlegen</span>
-                        </h:link>                      
-                    </li>
-                    <li>
-                        <h:link outcome="kurslisteLehrer" rendered="#{menueNB.lehrer()}">
-                            <i class="fi-list-bullet"></i><span>Ihre Kurse</span>
-                        </h:link>                      
-                    </li>
-                    <li>
-                        <h:link outcome="kursWechseln" rendered="#{menueNB.lehrerOrAdmin()}">
-                            <i class="fi-loop"></i><span>Kurs wechseln</span>
-                        </h:link>                      
-                    </li>
-                    <li>
-                        <h:link outcome="kurseAlle" rendered="#{menueNB.lehrerOrAdmin()}">
-                            <i class="fi-list-bullet"></i><span>Alle Kurse</span>
-                        </h:link>                      
-                    </li>
-                    <li>
-                        <h:link outcome="wahlzeitraum" rendered="#{menueNB.admin()}">
-                            <i class="fi-calendar"></i><span>Wahlzeitraum</span>
-                        </h:link>                      
-                    </li>
-                    <li>
-                        <h:link outcome="kursZuweisen" rendered="#{menueNB.admin()}">
-                            <i class="fi-clipboard-pencil"></i><span>Kurs zuweisen</span>
-                        </h:link>                      
-                    </li>
-                    <li>
-                        <h:link outcome="benutzerAnlegen" rendered="#{menueNB.admin()}">
-                            <i class="fi-torso"></i><span>Benutzer anlegen</span>
-                        </h:link>                      
-                    </li>
-                    <li>
-                        <h:link outcome="benutzerVerwalten" rendered="#{menueNB.admin()}">
-                            <i class="fi-wrench"></i><span>Benutzer verwalten</span>
-                        </h:link>                      
-                    </li>
-                    <li>
-                        <h:link outcome="wahlAbgeben" rendered="#{menueNB.schueler()}">
-                            <i class="fi-checkbox"></i><span>Wahl abgeben</span>
-                        </h:link>                      
-                    </li>
-                    <li>
-                        <h:form>
-                            <h:commandLink action="#{loginNB.logout()}" rendered="#{menueNB.angemeldet}">
-                                <i class="fi-power"></i><span>Logout</span>
-                            </h:commandLink>
-                        </h:form>
-                    </li>
-                    <li>
-                        <h:link outcome="passwortAendern" rendered="#{menueNB.angemeldet}">
-                            <i class="fi-key"></i><span>Passwort ändern</span>
-                        </h:link>                      
-                    </li>
+                    <h:panelGroup>
+                        <li>
+                            <a onClick="event.preventDefault(); window.print();" href="#">
+                                <i class="fi-print"></i><span>Drucken</span>
+                            </a>                      
+                        </li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{menueNB.lehrer()}">
+                        <li>
+                            <h:link outcome="kursAnlegen">
+                                <i class="fi-clipboard-notes"></i><span>Kurs anlegen</span>
+                            </h:link>
+                        </li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{menueNB.lehrer()}" >
+                        <li>
+                            <h:link outcome="kurslisteLehrer">
+                                <i class="fi-list-bullet"></i><span>Ihre Kurse</span>
+                            </h:link>                      
+                        </li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{menueNB.lehrerOrAdmin()}">
+                        <li>
+                            <h:link outcome="kursWechseln">
+                                <i class="fi-loop"></i><span>Kurs wechseln</span>
+                            </h:link>                      
+                        </li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{menueNB.lehrerOrAdmin()}">
+                        <li>
+                            <h:link outcome="kurseAlle">
+                                <i class="fi-list-bullet"></i><span>Alle Kurse</span>
+                            </h:link>                      
+                        </li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{menueNB.admin()}">
+                        <li>
+                            <h:link outcome="wahlzeitraum">
+                                <i class="fi-calendar"></i><span>Wahlzeitraum</span>
+                            </h:link>                      
+                        </li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{menueNB.admin()}">
+                        <li>
+                            <h:link outcome="kursZuweisen">
+                                <i class="fi-clipboard-pencil"></i><span>Kurs zuweisen</span>
+                            </h:link>                      
+                        </li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{menueNB.admin()}">
+                        <li>
+                            <h:link outcome="benutzerAnlegen">
+                                <i class="fi-torso"></i><span>Benutzer anlegen</span>
+                            </h:link>                      
+                        </li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{menueNB.admin()}">
+                        <li>
+                            <h:link outcome="benutzerVerwalten">
+                                <i class="fi-wrench"></i><span>Benutzer verwalten</span>
+                            </h:link>                      
+                        </li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{menueNB.schueler()}">
+                        <li>
+                            <h:link outcome="wahlAbgeben">
+                                <i class="fi-checkbox"></i><span>Wahl abgeben</span>
+                            </h:link>                      
+                        </li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{menueNB.angemeldet}">
+                        <li>
+                            <h:link outcome="passwortAendern">
+                                <i class="fi-key"></i><span>Passwort ändern</span>
+                            </h:link>                      
+                        </li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{menueNB.angemeldet}">
+                        <li>
+                            <h:form>
+                                <h:commandLink action="#{loginNB.logout()}">
+                                    <i class="fi-power"></i><span>Logout</span>
+                                </h:commandLink>
+                            </h:form>
+                        </li>
+                    </h:panelGroup>
                 </ul>
                 <i id="menu" class="fi-eye ul-nav-toggle" >Menu</i>
             </div>

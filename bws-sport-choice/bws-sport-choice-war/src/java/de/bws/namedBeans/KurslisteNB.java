@@ -1,88 +1,79 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.namedBeans;
 
-import de.bws.data.Rolle;
 import de.bws.entities.Benutzer;
 import de.bws.entities.Kurs;
 import de.bws.entities.Lehrer;
 import de.bws.entities.Schueler;
 import de.bws.entities.Stufe;
-import de.bws.sessionbeans.BenutzerFacadeLocal;
 import de.bws.sessionbeans.KursFacadeLocal;
-import de.bws.sessionbeans.LehrerFacadeLocal;
-import de.bws.sessionbeans.PersonFacadeLocal;
-import de.bws.sessionbeans.SchuelerFacadeLocal;
-import de.bws.sessionbeans.StufeFacadeLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 /**
- *
  * @author Lisa
+ * 
+ * Diese ManagedBean ermittelt verschiedene Kurslisten.
  */
 @Named("kurslisteBean")
 @ViewScoped
 public class KurslisteNB implements Serializable {
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Kurs
     @EJB
     private KursFacadeLocal kursBean;
-    
-    @EJB
-    private BenutzerFacadeLocal benutzerBean;
-    
-    @EJB
-    private PersonFacadeLocal personBean;
-    
-    @EJB
-    private SchuelerFacadeLocal schuelerBean;
-    
-    @EJB
-    private LehrerFacadeLocal lehrerBean;
-    @EJB
-    private StufeFacadeLocal stufeBean;
-    
+
+    // Liste von allen Kursen
     private List<Kurs> alleKurse;
     
+    // Liste von Kursen eines Lehrers
     private List<Kurs> lehrerKurse;
     
+    // Liste von Schülern eines Kurses
     private List<Schueler> schuelerKurse;
     
+    // Liste von Kursen einer Stufe
     private List<Kurs> stufeKurse;
+
+    /**
+     * @author Lisa
+     * @param p_kurs
+     * @return String zur Navigation zur nächsten Seite
+     * 
+     * Diese Methode setzt den übergebenen Kurs als 'gewaehlterKurs' in der SessionMap, damit man diesen über den
+     * Schlüssel auch in anderen ManagedBeans ermitteln kann und zum Bearbeiten des Kurses verwenden kann.
+     */
+    public String setGewaehlterKursBearbeiten(Kurs p_kurs){
+        System.out.println("de.bws.namedBeans.KurslisteNB.setGewaehlterKurs()" + p_kurs.getTitel());
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("gewaehlterKurs", p_kurs);
+        return "kursBearbeiten";
+    }
     
+    /**
+     * @author Lisa
+     * @param p_kurs
+     * @return String zur Navigation zur nächsten Seite
+     * 
+     * Diese Methode setzt den übergebenen Kurs als 'gewaehlterKurs' in der SessionMap, damit man diesen über den
+     * Schlüssel auch in anderen ManagedBeans ermitteln kann und zum Anschauen des Kurses verwenden kann.
+     */
+    public String setGewaehlterKurs(Kurs p_kurs){
+        System.out.println("de.bws.namedBeans.KurslisteNB.setGewaehlterKurs()" + p_kurs.getTitel());
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("gewaehlterKurs", p_kurs);
+        return "kursAnschauen";
+    }
     
-//    @PostConstruct
-//    public void init(){       
-//        Schueler l = new Schueler();
-//        l.setNachname("Lichtenfels");
-//        l.setVorname("Lisa");
-//        l.setStufe(this.stufeBean.find(103L));
-//        l.setTutor(this.lehrerBean.find(2L));
-//        this.schuelerBean.create(l);
-//        Benutzer admin = new Benutzer();
-//        
-//        try {
-//            admin.setBenutzername("lislich");
-//            admin.setNeuesPasswort("lislich");
-//            admin.setRolle(Rolle.SCHUELER);
-//            admin.setPerson(l);
-//        } catch (Exception ex) {
-//            Logger.getLogger(LoginNB.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
-//        this.benutzerBean.create(admin);
-//    }
+    // ##### Getter- und Setter-Methoden #################################################################
     
+    /**
+     * @author Lisa
+     * @return the alleKurse
+     * 
+     * Diese Methode sucht alle Kurse aus der Datenbank.
+     */
     public List<Kurs> getAlleKurse(){
         List<Kurs> tmp = this.kursBean.findAll();
         if(tmp == null){
@@ -93,33 +84,20 @@ public class KurslisteNB implements Serializable {
     }
 
     /**
-     * @param alleKurse the alleKurse to set
+     * @param p_alleKurse the alleKurse to set
      */
-    public void setAlleKurse(List<Kurs> alleKurse) {
-        this.alleKurse = alleKurse;
+    public void setAlleKurse(List<Kurs> p_alleKurse) {
+        this.alleKurse = p_alleKurse;
     }
     
     
-    public String setGewaehlterKursSchueler(Kurs kurs){
-        System.out.println("de.bws.namedBeans.KurslisteNB.setGewaehlterKurs()" + kurs.getTitel());
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("gewaehlterKurs", kurs);
-        return "schuelerEinsehen";
-    }
-    
-    public String setGewaehlterKursBearbeiten(Kurs kurs){
-        System.out.println("de.bws.namedBeans.KurslisteNB.setGewaehlterKurs()" + kurs.getTitel());
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("gewaehlterKurs", kurs);
-        return "kursBearbeiten";
-    }
-    
-    public String setGewaehlterKurs(Kurs kurs){
-        System.out.println("de.bws.namedBeans.KurslisteNB.setGewaehlterKurs()" + kurs.getTitel());
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("gewaehlterKurs", kurs);
-        return "kursAnschauen";
-    }
 
     /**
+     * @author Lisa
      * @return the lehrerKurse
+     * 
+     * Diese Methode ermittelt den aktuellen Benutzer und seine Person dazu, hier Lehrer, und sucht
+     * die zum Lehrer gehörigen Kurse aus der Datenbank.
      */
     public List<Kurs> getLehrerKurse() {
         Benutzer b = (Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
@@ -133,14 +111,17 @@ public class KurslisteNB implements Serializable {
     }
 
     /**
-     * @param lehrerKurse the lehrerKurse to set
+     * @param p_lehrerKurse the lehrerKurse to set
      */
-    public void setLehrerKurse(List<Kurs> lehrerKurse) {
-        this.lehrerKurse = lehrerKurse;
+    public void setLehrerKurse(List<Kurs> p_lehrerKurse) {
+        this.lehrerKurse = p_lehrerKurse;
     }
 
     /**
+     * @author Lisa
      * @return the schuelerKurse
+     * 
+     * Diese Methode ermittelt den gewaehlten Kurs und gibt die Teilnehmer zurück.
      */
     public List<Schueler> getSchuelerKurse() {
         Kurs k = ((Kurs) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("gewaehlterKurs"));
@@ -153,14 +134,18 @@ public class KurslisteNB implements Serializable {
     }
 
     /**
-     * @param schuelerKurse the schuelerKurse to set
+     * @param p_schuelerKurse the schuelerKurse to set
      */
-    public void setSchuelerKurse(List<Schueler> schuelerKurse) {
-        this.schuelerKurse = schuelerKurse;
+    public void setSchuelerKurse(List<Schueler> p_schuelerKurse) {
+        this.schuelerKurse = p_schuelerKurse;
     }
 
     /**
+     * @author Lisa
      * @return the stufeKurse
+     * 
+     * Diese Methode ermittelt den aktuellen Benutzer, hier Schüler. Gesucht werden dann die Kurse,
+     * die für die Stufe des Schülers angelegt wurden.
      */
     public List<Kurs> getStufeKurse() {
         Benutzer b = (Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
@@ -171,9 +156,9 @@ public class KurslisteNB implements Serializable {
     }
 
     /**
-     * @param stufeKurse the stufeKurse to set
+     * @param p_stufeKurse the stufeKurse to set
      */
-    public void setStufeKurse(List<Kurs> stufeKurse) {
-        this.stufeKurse = stufeKurse;
+    public void setStufeKurse(List<Kurs> p_stufeKurse) {
+        this.stufeKurse = p_stufeKurse;
     }
 }

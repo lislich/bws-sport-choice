@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.namedBeans;
 
 import de.bws.data.Eintrag;
@@ -18,154 +13,173 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.component.UIData;
-import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
-import javax.faces.model.DataModel;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
 /**
- *
  * @author Lisa
+ * 
+ * Diese ManagedBean dient zum manuellen Zuweisen der Schüler in Kurse, sowie zum Wechseln zweier Schüler in ihren Kursen.
  */
 @Named(value = "kursZuweisenNB")
 @ViewScoped
 public class KursZuweisenNB implements Serializable{
 
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Kurs
     @EJB
     private KursFacadeLocal kursBean;
     
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Schüler
     @EJB
     private SchuelerFacadeLocal schuelerBean;
     
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Stufe
     @EJB
     private StufeFacadeLocal stufeBean;
     
-    private String error;
-    
+    // Liste aller Schüler
     private List<Schueler> schueler;
+    
+    // Liste von Kursen nach Stufe gefiltert
     private List<Kurs> stufekurs;
+    
+    // Schüler-ID als String
     private String schuelerId;
+    
+    // Kurs-ID als String
     private String kursId;
     
+    // Schüler-ID vom ersten Schüler
     private int schuelerEins;
+    
+    // Schüler-ID vom zweiten Schüler
     private int schuelerZwei;
     
+    // Liste von Einträgen, die die Zuordnung von Schüler und Kurs enthalten
     private List<Eintrag<Schueler, Kurs>> zuordnung;
     
     /**
-     * Creates a new instance of KursZuweisenNB
+     * @author Lisa
+     * 
+     * Diese Methode wird beim Erzeugen der ManagedBean aufgerufen und initialisiert die Liste der Einträge.
+     * Von den bereits vorhandenen Schülern werden die Zuordnungen gesetzt.
      */
-    public KursZuweisenNB() {
-    }
-    
     @PostConstruct
     public void init(){
         this.zuordnung = new ArrayList<>();
         this.setZuordnung(this.getSchueler());
     }
     
+    /**
+     * @author Lisa
+     * 
+     * Diese Methode geht die Liste der Einträge durch und weist jedem Schüler den zugehörigen Kurs zu.
+     * Die Zuordnung wird in die Datenbank geschrieben.
+     */
     public void zuweisen(){       
+        // Iteration durch Liste der Einträge
         for(Eintrag e : this.zuordnung){
-            Schueler p_schueler = (Schueler) e.getKey();                        
-            String kursId = (e.getValue().toString().split("="))[1].replace("]", "").trim();
-
-            Kurs kursNeu = this.kursBean.find(Long.parseLong(kursId));
+            // Ermittelt den Schüler
+            Schueler p_schueler = (Schueler) e.getKey();  
+            
+            // Ermittelt die Kurs-ID des Kurses der dem Schüler zugewiesen ist, Kurs wird aus Datenbank gesucht
+            String p_kursId = (e.getValue().toString().split("="))[1].replace("]", "").trim();
+            Kurs kursNeu = this.kursBean.find(Long.parseLong(p_kursId));
+            
+            // Wenn ein Kurs gefunden wurde wird ermittelt ob der Schüler bereits eine Zuweisung zu einem anderen Kurs hat
             if(kursNeu != null){
                 Kurs kursAlt = this.getAktuellerKurs(p_schueler.getId());
 
+                // Wenn der Schüler bereits einem anderen Kurs zugewiesen war wird er dort als Teilnehmer gelöscht und der Eintrag wird in der Datenbank aktualisiert
                 if(kursAlt != null){
                     Kurs tmp = this.kursBean.find(kursAlt.getId());
                     tmp.removeTeilnehmer(p_schueler);
                     this.kursBean.edit(tmp);
                 }
+                // Der Schüler wird dem neuen Kurs hinzugefügt und der Eintrag wird in der Datenbank aktualisiert.
                 kursNeu.addTeilnehmer(p_schueler);
-                this.kursBean.edit(kursNeu);
-                
+                this.kursBean.edit(kursNeu);                
             }           
-        }
-        
-        
-        
+        }                       
     }
-    
-    public void einzelZuweisen(){
-//        Schueler p_schueler = this.schuelerBean.find(Long.parseLong(schuelerId));
-//        
-//        System.out.println(kursId);
-//        System.out.println(p_schueler.getNachname());
-//        Kurs tmpKurs;
-//        Schueler tmpSchueler;
-//        tmpKurs = this.kursBean.find(Long.parseLong(kursId));
-//        tmpSchueler = this.schuelerBean.find(p_schueler.getId());
-//        
-//        if(tmpKurs != null && tmpSchueler != null){
-//            tmpKurs.addTeilnehmer(p_schueler);
-//            this.kursBean.edit(tmpKurs);
-//        }
-//        
-//        Kurs aktKurs = this.getAktuellerKurs(p_schueler);
-//        System.out.println("aktueller kurs: " + aktKurs.getTitel());
-//        if(!(aktKurs.getTitel().equals("-"))){
-//            tmpKurs = this.kursBean.find(aktKurs.getId());
-//            tmpKurs.removeTeilnehmer(p_schueler);
-//            this.kursBean.edit(tmpKurs);
-//        }
-        
 
-    }
-    
+    /**
+     * @author Lisa
+     * @return String zur Navigation zur nächsten Seite
+     * 
+     * Diese Methode ermittelt die beiden ausgewählen Schüler und tauscht sie in ihren Kursen, wenn möglich.
+     */
     public String wechsel(){
+        // Aktuelle Session
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         String rueckgabe = "kursWechseln";
         
+        // Suchen der gewählten Schüler aus der Datenbank über deren ID
         Schueler eins = this.schuelerBean.find((long)schuelerEins);
         Schueler zwei = this.schuelerBean.find((long)schuelerZwei);
         
-        Kurs kE = null;
-        Kurs kZ = null;
+        // Deklarieren und Initialisieren der Kurse der Schüler
+        Kurs kursSchuelerEins = null;
+        Kurs kursSchuelerZwei = null;
         
-        List<Kurs> kEins = this.kursBean.get("SELECT k FROM Kurs k INNER JOIN k.teilnehmer t WHERE t.id = " + schuelerEins);
-        List<Kurs> kZwei = this.kursBean.get("SELECT k FROM Kurs k INNER JOIN k.teilnehmer t WHERE t.id = " + schuelerZwei);
+        // Suchen der Kurse der Schüler aus Datenbank, als Rückgabe bekommt man Kurslisten
+        List<Kurs> listeEins = this.kursBean.get("SELECT k FROM Kurs k INNER JOIN k.teilnehmer t WHERE t.id = " + schuelerEins);
+        List<Kurs> listeZwei = this.kursBean.get("SELECT k FROM Kurs k INNER JOIN k.teilnehmer t WHERE t.id = " + schuelerZwei);
         
         
-        
-        if((kEins != null && !(kEins.isEmpty())) ){
-            kE = kEins.get(0);
+        /**
+         * Wenn die Listen nicht 'null' oder leer sind wird der erste Eintrag den Kursen zugewiesen.
+         * Ansonsten gibt es einen Fehler und der Wechsel wird nicht durchgeführt.
+         */
+        if((listeEins != null && !(listeEins.isEmpty())) ){
+            kursSchuelerEins = listeEins.get(0);
         }else{
             sessionMap.put("lastError", "Schüler/in: " + eins.getNachname() +", " + eins.getVorname() + " ist noch keinem Kurs zugewiesen. Ein Kurswechsel ist nicht möglich");
             rueckgabe = "wechselFehlgeschlagen";
         }
-        if((kZwei != null && !(kZwei.isEmpty())) ){
-            kZ = kZwei.get(0);
+        if((listeZwei != null && !(listeZwei.isEmpty())) ){
+            kursSchuelerZwei = listeZwei.get(0);
         }else{
             sessionMap.put("lastError", "Schüler/in: " + zwei.getNachname() +", " + zwei.getVorname() + " ist noch keinem Kurs zugewiesen. Ein Kurswechsel ist nicht möglich.");
             rueckgabe = "wechselFehlgeschlagen";
         }
         
-        
+        // Überprüfung ob derselbe Schüler zweimal angegeben wurde, wenn ja kann kein Tausch stattfinden, ansonsten wird getauscht
         if(eins.getId().compareTo(zwei.getId()) == 0){
             sessionMap.put("lastError", "Bitten geben Sie zwei verschiedene Schüler an");
             rueckgabe = "wechselFehlgeschlagen";
         }else{
-            if(kE != null && kZ != null){
-                kE.removeTeilnehmer(eins);
-                kZ.addTeilnehmer(eins);
-                kZ.removeTeilnehmer(zwei);
-                kE.addTeilnehmer(zwei);
-                this.kursBean.edit(kE);
-                this.kursBean.edit(kZ);
+            if(kursSchuelerEins != null && kursSchuelerZwei != null){
+                kursSchuelerEins.removeTeilnehmer(eins);
+                kursSchuelerZwei.addTeilnehmer(eins);
+                kursSchuelerZwei.removeTeilnehmer(zwei);
+                kursSchuelerEins.addTeilnehmer(zwei);
+                this.kursBean.edit(kursSchuelerEins);
+                this.kursBean.edit(kursSchuelerZwei);
             } 
         }
         
         return rueckgabe;
         
     }
-   
+ 
+    /**
+     * @author Lisa
+     * @param p_schuelerId
+     * @return 
+     * 
+     * Diese Methode ermittelt den Kurs dem der Schüler zugewiesen ist. Der 
+     * Schüler kann anhand der übergebenen Schüler-ID ermittelt werden.
+     */
     public Kurs getAktuellerKurs(long p_schuelerId){
         Kurs gesucht = null;
+        // Ermitteln aller Kurse aus der Datenbank
         List<Kurs> tmp = this.kursBean.get("SELECT k FROM Kurs k");
+        
+        /** Iteration über alle Kurse und deren Teilnehmer, wenn ein Teilnehmer der Schüler-ID entspricht
+         * ist der aktuelle Kurs gefunden.
+         */
         for(Kurs k : tmp){
             for(Schueler s : k.getTeilnehmer()){
                 if(s.getId().compareTo(p_schuelerId) == 0){
@@ -173,6 +187,8 @@ public class KursZuweisenNB implements Serializable{
                 }
             }
         }
+        
+        // Wenn kein Kurs gefunden wurde, dann wird ein neuer Kurs erstellt zwecks Anzeige auf der Webseite
         if(gesucht == null){
             gesucht = new Kurs();
             gesucht.setTitel("-");
@@ -181,8 +197,13 @@ public class KursZuweisenNB implements Serializable{
         return gesucht;
     }
     
+    // #### Getter- und Setter-Methoden ###########################################################
+    
     /**
+     * @author Lisa
      * @return the schueler
+     * 
+     * Alle Schüler werden aus der Datenbank gesucht.
      */
     public List<Schueler> getSchueler() {
         List<Schueler> tmp = this.schuelerBean.findAll();
@@ -194,10 +215,10 @@ public class KursZuweisenNB implements Serializable{
     }
 
     /**
-     * @param schueler the schueler to set
+     * @param p_schueler the schueler to set
      */
-    public void setSchueler(List<Schueler> schueler) {
-        this.schueler = schueler;
+    public void setSchueler(List<Schueler> p_schueler) {
+        this.schueler = p_schueler;
     }
 
     /**
@@ -208,10 +229,10 @@ public class KursZuweisenNB implements Serializable{
     }
 
     /**
-     * @param schuelerId the schuelerId to set
+     * @param p_schuelerId the schuelerId to set
      */
-    public void setSchuelerId(String schuelerId) {
-        this.schuelerId = schuelerId;
+    public void setSchuelerId(String p_schuelerId) {
+        this.schuelerId = p_schuelerId;
     }
 
     /**
@@ -222,19 +243,25 @@ public class KursZuweisenNB implements Serializable{
     }
 
     /**
-     * @param kursId the kursId to set
+     * @param p_kursId the kursId to set
      */
-    public void setKursId(String kursId) {
-        this.kursId = kursId;
+    public void setKursId(String p_kursId) {
+        this.kursId = p_kursId;
     }
 
     /**
-     * @param p_schueler
-     * @return the kurs
+     * author Lisa
+     * @param p_schuelerId
+     * @return the stufekurs
+     * 
+     * Es wird eine Liste von Kursen ermittelt, die der Stufe des Schülern entsprechen, dessen
+     * ID übergeben wird.
      */
     public List<Kurs> getStufeKurs(long p_schuelerId) {
+        // Suchen des Schülers aus Datenbank
         Schueler p_schueler = this.schuelerBean.find(p_schuelerId);
         
+        // Ermitteln der Stufe des Schülers und Suchen der entsprechenden Kurse
         Stufe stufe = this.stufeBean.find(p_schueler.getStufe().getId());
         List<Kurs> tmp = this.kursBean.get("SELECT k FROM Kurs k WHERE k.stufe.id = " + stufe.getId() );
         if(tmp == null){
@@ -245,10 +272,10 @@ public class KursZuweisenNB implements Serializable{
     }
 
     /**
-     * @param kurs the kurs to set
+     * @param p_kurs the kurs to set
      */
-    public void setStufeKurs(List<Kurs> kurs) {
-        this.stufekurs = kurs;
+    public void setStufeKurs(List<Kurs> p_kurs) {
+        this.stufekurs = p_kurs;
     }
 
     /**
@@ -259,10 +286,10 @@ public class KursZuweisenNB implements Serializable{
     }
 
     /**
-     * @param schuelerEins the schuelerEins to set
+     * @param p_schuelerEins the schuelerEins to set
      */
-    public void setSchuelerEins(int schuelerEins) {
-        this.schuelerEins = schuelerEins;
+    public void setSchuelerEins(int p_schuelerEins) {
+        this.schuelerEins = p_schuelerEins;
     }
 
     /**
@@ -273,10 +300,10 @@ public class KursZuweisenNB implements Serializable{
     }
 
     /**
-     * @param schuelerZwei the schuelerZwei to set
+     * @param p_schuelerZwei the schuelerZwei to set
      */
-    public void setSchuelerZwei(int schuelerZwei) {
-        this.schuelerZwei = schuelerZwei;
+    public void setSchuelerZwei(int p_schuelerZwei) {
+        this.schuelerZwei = p_schuelerZwei;
     }
 
     /**
@@ -287,7 +314,10 @@ public class KursZuweisenNB implements Serializable{
     }
 
     /**
+     * @author Lisa
      * @param p_schueler the zuordnung to set
+     * 
+     * Hier wird die Liste der Einträge mit den bereits vorhandenen Zuordnungen gefüllt.
      */
     public void setZuordnung(List<Schueler> p_schueler) {
         this.zuordnung.clear();

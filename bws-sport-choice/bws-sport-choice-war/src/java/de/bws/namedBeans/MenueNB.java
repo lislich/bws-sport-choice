@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.namedBeans;
 
 import de.bws.data.Rolle;
@@ -22,146 +17,206 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 
 /**
- *
  * @author Lisa
+ * 
+ * Diese ManagedBean enthält Methoden, die das Menü des BWS-Sport-Choice für die Benutzer rendered und 
+ * weitere Inhalte, die auf den Webseiten angezeigt werden.
  */
 @Named(value = "menueNB")
 @ViewScoped
 public class MenueNB implements Serializable {
 
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Wahlzeitraum
     @EJB
     private WahlzeitraumFacadeLocal wahlzeitraumBean;
     
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Kurs
     @EJB
     private KursFacadeLocal kursBean;
     
-    private Benutzer b;
-    
+    // Benutzer
+    private Benutzer benutzer;
+
     /**
-     * Creates a new instance of MenueNB
+     * @author Lisa
+     * 
+     * Diese Methode wird beim Erzeugen der ManagedBean aufgerufen und holt den aktuellen Benutzer aus der SessionMap, dieser
+     * wird in der Variable 'benutzer' gspeichert.
      */
-    public MenueNB() {
-    }
-    
     @PostConstruct
     private void init(){
-        this.b = (Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
+        this.benutzer = (Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
     }
     
-    
+    /**
+     * @author Lisa
+     * @return true or false
+     * 
+     * Diese Methode ermittelt, ob der aktuelle Benutzer ein Lehrer ist.
+     */
     public boolean lehrer() {
         boolean tmp = false;
-        if (getB() != null) {
-            if (getB().getRolle().equals(Rolle.LEHRER)) {
+        if (getBenutzer() != null) {
+            if (getBenutzer().getRolle().equals(Rolle.LEHRER)) {
                 tmp = true;
             }
         }       
         return tmp;
     }
     
+    /**
+     * @author Lisa
+     * @return true or false
+     * 
+     * Diese Methode ermittelt ob der aktuelle Benutzer ein Schüler ist.
+     */
     public boolean schueler(){
         boolean tmp = false;
-        if (getB() != null) {
-            if (getB().getRolle().equals(Rolle.SCHUELER)) {
+        if (getBenutzer() != null) {
+            if (getBenutzer().getRolle().equals(Rolle.SCHUELER)) {
                 tmp = true;
             }
         }       
         return tmp;
     }
     
+    /**
+     * @author Lisa
+     * @return true or false
+     * 
+     * Diese Methode ermittelt ob er aktuelle Benutzer ein Admin ist.
+     */
     public boolean admin(){
         boolean tmp = false;
-        if (getB() != null) {
-            if (getB().getRolle().equals(Rolle.ADMIN)) {
+        if (getBenutzer() != null) {
+            if (getBenutzer().getRolle().equals(Rolle.ADMIN)) {
                 tmp = true;
             }
         }       
         return tmp;
     }
     
+    /**
+     * @author Lisa
+     * @return true or false
+     * 
+     * Diese Methode ermittelt ob der aktuelle Benutzer ein Lehrer oder Admin ist.
+     */
     public boolean lehrerOrAdmin(){
         boolean tmp = false;
-        if (getB() != null) {
-            if (getB().getRolle().equals(Rolle.ADMIN)) {
+        if (getBenutzer() != null) {
+            if (getBenutzer().getRolle().equals(Rolle.ADMIN)) {
                 tmp = true;
             }
-            if (getB().getRolle().equals(Rolle.LEHRER)) {
+            if (getBenutzer().getRolle().equals(Rolle.LEHRER)) {
                 tmp = true;
             }
         }       
         return tmp;
     }
     
+    /**
+     * @author Lisa
+     * @return true or false
+     * 
+     * Diese Methode ermittelt ob der aktuelle Tag nicht im Wahlzeitraum liegt, und somit nicht gewählt werden darf.
+     */
     public boolean schuelerDarfNichtWaehlen(){
         boolean tmp = false;
+        // Sucht Wahlzeitraum aus Datenbank, Rückgabe als Liste von Wahlzeiträumen
         List<Wahlzeitraum> zeitraumListe = this.wahlzeitraumBean.findAll();
         Wahlzeitraum zeitraum = null;
-
+        
+        // Setzt den aktuellen Zeitstempel
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
+        // Wenn die Liste nicht leer ist und nicht 'null' ist dann wird der erste Wert der Variable zeitraum zugewiesen
         if (zeitraumListe != null && !(zeitraumListe.isEmpty())) {
             zeitraum = zeitraumListe.get(0);
         }
+        
+        /**
+         * Wenn der Zeitraum nicht 'null' ist und der Benutzer ermittelt werden kann, wird die Rolle
+         * auf Schüler geprüft. Ist der Benutzer ein Schüler wird geprüft ob der Zeitstempel außerhalb des Wahlzeitraumes liegt.
+         */
         if (zeitraum != null) {
-            if (getB() != null) {
-                if (getB().getRolle().equals(Rolle.SCHUELER)) {
-                    Schueler s = (Schueler) getB().getPerson();
+            if (getBenutzer() != null) {
+                if (getBenutzer().getRolle().equals(Rolle.SCHUELER)) {
+                    Schueler s = (Schueler) getBenutzer().getPerson();
                     if (zeitraum.getBeginn() != null && zeitraum.getEnde() != null) {
                         if (zeitraum.getBeginn().getTime() > timestamp.getTime() || zeitraum.getEnde().getTime() < timestamp.getTime()) {
-
                         }
                     }
                     tmp = true;
-
                 }
             }
         }else{
             tmp = true;
         }
-
         return tmp;
     }
 
+    /**
+     * @author Lisa
+     * @return true or false
+     * 
+     * Diese Methode überprüft ob der aktuelle Tag im Zeitraum liegt und somit gewählt werden darf.
+     */
     public boolean schuelerDarfWaehlen(){
         boolean tmp = false;
+        // Sucht Wahlzeitraum aus Datenbank, Rückgabe als Liste von Wahlzeiträumen
         List<Wahlzeitraum> zeitraumListe = this.wahlzeitraumBean.findAll();
         Wahlzeitraum zeitraum = null;
         
+        // Setzt den aktuellen Zeitstempel
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         
-        
+        // Wenn die Liste nicht leer ist und nicht 'null' ist dann wird der erste Wert der Variable zeitraum zugewiesen
         if(zeitraumListe != null && !(zeitraumListe.isEmpty())){
             zeitraum = zeitraumListe.get(0);
         }
        
+        /**
+         * Wenn der Zeitraum nicht 'null' ist und der Benutzer ermittelt werden kann, wird die Rolle
+         * auf Schüler geprüft. Ist der Benutzer ein Schüler wird geprüft ob der Zeitstempel im Wahlzeitraum liegt.
+         */
         if (zeitraum != null) {
-            if (getB() != null) {
-                if (getB().getRolle().equals(Rolle.SCHUELER)) {
-                    Schueler s = (Schueler) getB().getPerson();
+            if (getBenutzer() != null) {
+                if (getBenutzer().getRolle().equals(Rolle.SCHUELER)) {
+                    Schueler s = (Schueler) getBenutzer().getPerson();
                     if (zeitraum.getBeginn().getTime() <= timestamp.getTime() && zeitraum.getEnde().getTime() >= timestamp.getTime()) {
                         tmp = true;
                     }
                 }
             }
         }
-
         return tmp;
     }
     
+    /**
+     * @author Lisa
+     * @return true or false
+     * 
+     * Diese Methode ermittelt ob ein Schüler bereits einem Kurs zugeordnet wurde.
+     */
     public boolean bereitsEingeteilt() {
         boolean tmp = false;
 
-        List<Kurs> schuelerList = this.kursBean.get("SELECT k FROM Kurs k");
+        // Ermittelt alles Kurse aus der Datenbank
+        List<Kurs> kursList = this.kursBean.get("SELECT k FROM Kurs k");
         Kurs k = null;
-        if (this.b.getPerson().getClass().equals(Schueler.class)) {
-            for (Kurs kTmp : schuelerList) {
-                if (kTmp.getTeilnehmer().contains((Schueler) this.b.getPerson())) {
+        
+        // Iteration über die Liste der Kurse und Überprüfung ob aktueller Benutzer, hier Schüler, Teilnehmer ist
+        if (this.benutzer.getPerson().getClass().equals(Schueler.class)) {
+            for (Kurs kTmp : kursList) {
+                if (kTmp.getTeilnehmer().contains((Schueler) this.benutzer.getPerson())) {
                     k = kTmp;
                 }
 
             }
         }
 
+        // Wenn ein Kurs gefunden wurde dem der Schüler zugeordnet ist, ist das Ergebnis 'true'
         if(k != null){
             tmp = true;
         }
@@ -169,20 +224,30 @@ public class MenueNB implements Serializable {
         return tmp;
     }
     
+    /**
+     * @author Lisa
+     * @return true or false
+     * 
+     * Diese Methode überprüft ob ein Schüler keinem Kurs zugeordnet ist.
+     */
     public boolean nichtEingeteilt(){
          boolean tmp = false;
         
-        List<Kurs> schuelerList = this.kursBean.get("SELECT k FROM Kurs k");
+         // Ermittelt Liste von Kursen aus Datenbank
+        List<Kurs> kursList = this.kursBean.get("SELECT k FROM Kurs k");
         Kurs k = null;
-        if (this.b.getPerson().getClass().equals(Schueler.class)) {
-            for (Kurs kTmp : schuelerList) {
-                if (kTmp.getTeilnehmer().contains((Schueler) this.b.getPerson())) {
+        
+        // Iteration über Liste der Kurse und Überprüfung ob der aktuelle Benutzer, hier Schüler, Teilnehmer ist 
+        if (this.benutzer.getPerson().getClass().equals(Schueler.class)) {
+            for (Kurs kTmp : kursList) {
+                if (kTmp.getTeilnehmer().contains((Schueler) this.benutzer.getPerson())) {
                     k = kTmp;
                 }
 
             }
         }
 
+        // Wenn kein Kurs gefunden wurde ist das Ergebnis 'true'
         if(k == null){
             tmp = true;
         }
@@ -191,25 +256,29 @@ public class MenueNB implements Serializable {
     }
     
     /**
+     * @author Joshua
+     * @return true or false
      * 
-     * @return 
+     * Diese Methode ermittelt ob ein Benutzer angemeldet ist.
      */
     public boolean isAngemeldet(){
-        return this.b != null;
+        return this.benutzer != null;
     }
     
+    // ##### Getter- und Setter-Methoden #########################################################
+    
     /**
-     * @return the b
+     * @return the benutzer
      */
-    public Benutzer getB() {
-        return b;
+    public Benutzer getBenutzer() {
+        return benutzer;
     }
 
     /**
-     * @param b the b to set
+     * @param p_benutzer the benutzer to set
      */
-    public void setB(Benutzer b) {
-        this.b = b;
+    public void setBenutzer(Benutzer p_benutzer) {
+        this.benutzer = p_benutzer;
     }
     
     

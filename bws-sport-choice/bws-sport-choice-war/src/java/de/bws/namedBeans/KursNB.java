@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.namedBeans;
 
 import de.bws.entities.Benutzer;
@@ -23,49 +18,109 @@ import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 
 /**
- *
  * @author Lisa
+ * 
+ * Diese Managed Bean dient zum Anlegen und Bearbeiten eines Kurses. Außerdem gibt sie den vom Benutzer
+ * gewählten Kurs für die Detailansicht zurück.
+ * 
  */
 @Named(value = "kursNB")
 @ViewScoped
 public class KursNB implements Serializable {
 
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Kurs
     @EJB
     private KursFacadeLocal kursBean;
 
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Thema
     @EJB
     private ThemaFacadeLocal themaBean;
 
+    // Schnittstell zur Datenbank für Entitäten vom Typ Stufe
     @EJB
     private StufeFacadeLocal stufeBean;
 
-
+    /**
+     * Variablen die zur Detailansicht und Bearbeitung eines Kurses dienen.
+     */
+    
+    // Vom Benutzer gewählter Kurs für die Detailansicht oder Bearbeitung
     private Kurs kurs;
+    
+    // Stufen-ID als String - Stufe die beim Bearbeiten des Kurses neu gesetzt werden soll
     private String stufeNeu;
+    
+    // Kurs-ID als String - Themengleicher Kurs der beim Bearbeiten eines Kurses neu gesetzt werden soll
     private String themengleichNeu;
+    
+    // Liste von Schülern die einem Kurs zugewiesen sind
     private List<Schueler> schuelerInKurs;
 
+    /**
+     * Variablen die zum Anlegen eines Kurses dienen.
+     */
+    
+    // Titel eines Kurses
     private String titel;
+    
+    // Kürzel eines Kurses
     private String kuerzel;
+    
+    // Stufe der Schüler die den Kurs wählen dürfen
     private String stufe;
+    
+    // Bewertung eines Kurses
     private String bewertung;
+    
+    // Hinweis eines Kurses
     private String hinweis;
+    
+    // Maximale Teilnehmerzahl eines Kurses
     private int teilnehmerzahl;
+    
+    // Ist die Teilnehmerzahl begrenzt oder unbegrenzt
     private boolean teilnehmerUnbegrenzt;
+    
+    // Kurs-ID als String - Themengleicher Kurs zum Kurs der angelegt wird
     private String themengleich;
+    
+    // Beschreibung des Kurses
     private String beschreibung;
 
+     /**
+     * Variablen die zum Anlegen und Bearbeiten der Unterthemen eines Kurses dienen.
+     */
+    
+    
+    // Liste der Unterthemen in einem Kurs
     private List<Thema> themen;
 
+   
+    // Bezeichnung eines Themas
     private String bezeichnung;
+    
+    // Schwerpunkt eines Themas
     private String schwerpunkt;
+    
+    // Anteil des Themas in Prozent
     private int anteil;
 
+     /**
+     * Variablen die für das Anlegen und Bearbeiten eines Kurses genutzt werden.
+     */
+    
+    // Liste aller Kurse ausgeschlossen des gewählten Kurses
     private List<Kurs> alleAnderenKurse;
     
+    /**
+     * @author Lisa
+     * 
+     * Diese Methode wird bei Erzeugung der ManagedBean aufgerufen und Initialisiert die Liste der Unterthemen.
+     * Beim Anlegen eines Kurses ist der gewählte Kurs 'null' und es gibt noch keine Unterthemen.
+     * Beim Bearbeiten eines Kurses werden die Themen die dem Kurs bereits zugewiesen sind in die Variable geschrieben.
+     */
     @PostConstruct
     public void init() {
         try {
@@ -81,26 +136,52 @@ public class KursNB implements Serializable {
         }
     }
     
+    
+    /**
+     * @author Lisa
+     * 
+     * Diese Methode ruft eine andere Methode der Klasse auf und
+     * wird für das Bearbeiten eines Kurses genutzt.
+     */
     public void bearbeitenAddThema(){
         Thema t = this.addThema();   
     }
     
-    public void bearbeitenRemoveThema(Thema t){
-        this.removeThema(t);
+    /**
+     * @author Lisa
+     * @param p_thema Thema wird übergeben
+     * 
+     * Diese Methode ruft eine andere Methode der Klasse auf und
+     * wird für das Bearbeiten eines Kurses genutzt.
+     */
+    public void bearbeitenRemoveThema(Thema p_thema){
+        this.removeThema(p_thema);
     }
 
+    /**
+     * @author Lisa
+     * 
+     * Diese Methode speichert die Änderungen an einem Kurs in der Datenbank.
+     * 
+     * @return String zur Navigation auf nächste Seite
+     */
     public String bearbeiten() {
+        // Setzt neuen Zeitstempel
         kurs.setJahr(new Timestamp(System.currentTimeMillis()));
+        
+        // Wenn eine neue Stufe gesetzt wurde wird diese aus der Datenbank gesucht
         if (stufeNeu != null) {
             kurs.setStufe(this.findStufe(stufeNeu));
         }
+        
+        // Wenn ein neuer Themengleicher Kurs gesetzt wurde wird dieser aus der Datenbank gesucht
         if (themengleichNeu != null) {
             Kurs k = this.findKurs(themengleichNeu);
             kurs.setThemengleich(k);
         }
        
+        // Iteration über die Themen, die dem Kurs zugewiesen/entfernt werden sollen
         for(Thema t : themen){
-            System.out.println("Bearbeitet: " + t.getBezeichnung());
             if(t.getId() == null){
                 this.themaBean.create(t);
             }else{
@@ -108,50 +189,70 @@ public class KursNB implements Serializable {
             }           
         }
         
-        for(Thema p : kurs.getThema()){
-            System.out.println("Kursthemen: " + p.getBezeichnung());
-        }
         this.kursBean.edit(kurs);
         return "kursBearbeitet";
     }
 
+    /**
+     * @author Lisa
+     * 
+     * Diese Methode dient zum Anlegen eines Kurses. Die Variablen, die benötigt werden, werden überprüft.
+     * Bei fehlerfreien Angaben wird der Kurs in die Datenbank geschrieben.
+     * 
+     * @return String zur Navigation auf nächste Seite
+     */
     public String anlegen() {       
         String rueckgabe = "kursAngelegt";
 
+        // Aktueller Benutzer und zugehörige Person, hier Lehrer
         Benutzer p_benutzer = (Benutzer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
         Lehrer p_lehrer = (Lehrer) p_benutzer.getPerson();
 
+        /**
+         * Angegebene Stufe wird aus der Datenbank gesucht.
+         * Wenn die Variable p_stufe den Wert 'null' behält gibt es einen Fehler und der Kurs wird nicht angelegt.
+         */
         Stufe p_stufe = this.findStufe(stufe);
-
-        Kurs p_kurs = this.findKurs(themengleich);
-        int zahlTmp = this.getTeilnehmerzahl();
-        
-        if(this.teilnehmerUnbegrenzt == true){
-            this.setTeilnehmerzahl(999);
-        }
-
-        if(zahlTmp < 0){
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Die Teilnehmerzahl muss größer als 0 sein.");
-            rueckgabe = "Fehler";
-        }       
-
-        if (Integer.parseInt(themengleich) > 0 && p_kurs == null) {
-            rueckgabe = "Fehler";
-            
-        }
-
         if (p_stufe == null) {
             rueckgabe = "Fehler";
             
         }
+        
+        /**
+         * Angegebener Themengleicher Kurs wird aus der Datenbank gesucht.
+         * Wenn die Kurs-ID vom Themengleichen Kurs kleiner 0 ist gibt es keinen Themengleichen Kurs.
+         * Sollte die Variable p_kurs trotzdem 'null' sein, gibt es einen Fehler und der Kurs kann nicht angelegt werden.
+         */
+        Kurs p_kurs = this.findKurs(themengleich);
+        if (Integer.parseInt(themengleich) > 0 && p_kurs == null) {
+            rueckgabe = "Fehler";
+            
+        }
+                
+        // Maximale Teilnehmerzahl wird in neuer Variable gespeichert
+        int zahlTmp = this.getTeilnehmerzahl();
+        
+        // Wenn angegeben ist, dass die Teilnehmerzahl unbegrenzt ist wird 999 als Wert gespeichert
+        if(this.teilnehmerUnbegrenzt == true){
+            this.setTeilnehmerzahl(999);
+        }
 
+        // Teilnehmerzahl wird auf Werte kleiner als 0 geprüft, diese sind nicht zulässig. Der Kurs wird dann nicht angelegt.
+        if(zahlTmp < 0){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Die Teilnehmerzahl muss größer als 0 sein.");
+            rueckgabe = "Fehler";
+        }       
+     
+        /**
+         * Sollten während der vorherigen Überprüfungen keine Fehler aufgetreten sein, wird der Kurs in der Datenbank angelegt.
+         * Außerdem werden die Themen angelegt und dem Kurs hinzugefügt.
+         */        
         if (!(rueckgabe.equals("Fehler"))) {
             Kurs kursT = new Kurs();
             kursT.setJahr(new Timestamp(System.currentTimeMillis()));
             kursT.setBewertung(this.getBewertung());
             kursT.setHinweis(this.getHinweis());
             kursT.setKuerzel(this.getKuerzel());
-
             kursT.setTitel(this.getTitel());
             kursT.setBeschreibung(beschreibung);
             kursT.setLehrer(p_lehrer);
@@ -165,19 +266,39 @@ public class KursNB implements Serializable {
             kursT.setThema(themen);
             this.kursBean.create(kursT);           
         }
-
         return rueckgabe;
     }
 
+    /**
+     * @author Lisa
+     * 
+     * Diese Methode holt den ausgewählten Kurs, der angeschaut oder bearbeitet werden soll, aus dem akutellen
+     * Kontext.
+     */
     public void getGewaehlterKurs() {
         this.kurs = ((Kurs) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("gewaehlterKurs"));
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("gewaehlterKurs");
     }
 
+    /**
+     * @author Lisa
+ 
+     * @param p_stufe Stufe-ID als String
+     * @return Stufe
+     * 
+     * Diese Methode sucht anhand des übergebenen String eine Stufe aus der Datenbank.
+     */
     private Stufe findStufe(String p_stufe) {
         return this.stufeBean.find(Long.parseLong(p_stufe));
     }
 
+    /**
+     * @author Lisa
+     * @param p_themengleich Kurs-ID als String
+     * @return Kurs
+     * 
+     * Diese Methode sucht anhand des übergebenen String einen Kurs aus der Datenbank.
+     */
     private Kurs findKurs(String p_themengleich) {
         int tmp = Integer.parseInt(p_themengleich);
         Kurs k = null;
@@ -186,208 +307,37 @@ public class KursNB implements Serializable {
         }
         return k;
     }
-
+    
     /**
-     * @return the titel
+     * @author Lisa
+     * @return Thema
+     * 
+     * Diese Methode überprüft die Variablen die für ein Thema benötigt werden. Bei fehlerfreien Angaben
+     * wird ein neues Thema erstellt und der Liste der Themen hinzugefügt.
      */
-    public String getTitel() {
-        return titel;
-    }
-
-    /**
-     * @param titel the titel to set
-     */
-    public void setTitel(String titel) {
-        this.titel = titel;
-    }
-
-    /**
-     * @return the kuerzel
-     */
-    public String getKuerzel() {
-        return kuerzel;
-    }
-
-    /**
-     * @param kuerzel the kuerzel to set
-     */
-    public void setKuerzel(String kuerzel) {
-        this.kuerzel = kuerzel;
-    }
-
-    /**
-     * @return the stufe
-     */
-    public String getStufe() {
-        return stufe;
-    }
-
-    /**
-     * @param stufe the stufe to set
-     */
-    public void setStufe(String stufe) {
-        this.stufe = stufe;
-    }
-
-    /**
-     * @return the bewertung
-     */
-    public String getBewertung() {
-        return bewertung;
-    }
-
-    /**
-     * @param bewertung the bewertung to set
-     */
-    public void setBewertung(String bewertung) {
-        this.bewertung = bewertung;
-    }
-
-    /**
-     * @return the hinweis
-     */
-    public String getHinweis() {
-        return hinweis;
-    }
-
-    /**
-     * @param hinweis the hinweis to set
-     */
-    public void setHinweis(String hinweis) {
-        this.hinweis = hinweis;
-    }
-
-    /**
-     * @return the teilnehmerzahl
-     */
-    public int getTeilnehmerzahl() {
-        return teilnehmerzahl;
-    }
-
-    /**
-     * @param teilnehmerzahl the teilnehmerzahl to set
-     */
-    public void setTeilnehmerzahl(int teilnehmerzahl) {
-        this.teilnehmerzahl = teilnehmerzahl;
-    }
-
-    /**
-     * @return the themengleich
-     */
-    public String getThemengleich() {
-        return themengleich;
-    }
-
-    /**
-     * @param themengleich the themengleich to set
-     */
-    public void setThemengleich(String themengleich) {
-        this.themengleich = themengleich;
-    }
-
-    /**
-     * @return the kurs
-     */
-    public Kurs getKurs() {
-        return kurs;
-    }
-
-    /**
-     * @param kurs the kurs to set
-     */
-    public void setKurs(Kurs kurs) {
-        this.kurs = kurs;
-    }
-
-    /**
-     * @return the beschreibung
-     */
-    public String getBeschreibung() {
-        return beschreibung;
-    }
-
-    /**
-     * @param beschreibung the beschreibung to set
-     */
-    public void setBeschreibung(String beschreibung) {
-        this.beschreibung = beschreibung;
-    }
-
-    /**
-     * @return the bezeichnung
-     */
-    public String getBezeichnung() {
-        return bezeichnung;
-    }
-
-    /**
-     * @param bezeichnung the bezeichnung to set
-     */
-    public void setBezeichnung(String bezeichnung) {
-        this.bezeichnung = bezeichnung;
-    }
-
-    /**
-     * @return the schwerpunkt
-     */
-    public String getSchwerpunkt() {
-        return schwerpunkt;
-    }
-
-    /**
-     * @param schwerpunkt the schwerpunkt to set
-     */
-    public void setSchwerpunkt(String schwerpunkt) {
-        this.schwerpunkt = schwerpunkt;
-    }
-
-    /**
-     * @return the anteil
-     */
-    public int getAnteil() {
-        return anteil;
-    }
-
-    /**
-     * @param anteil the anteil to set
-     */
-    public void setAnteil(int anteil) {
-        this.anteil = anteil;
-    }
-
-    /**
-     * @return the themen
-     */
-    public List<Thema> getThemen() {
-        if (themen == null) {
-            themen = new ArrayList<>();
-        }
-        return themen;
-    }
-
-    /**
-     * @param themen the themen to set
-     */
-    public void setThemen(List<Thema> themen) {
-        this.themen = themen;
-    }
-
+    
     public Thema addThema() {
+        // Bezeichnung und Schwerpunkt werden auf leeren String überprüft, da dies nicht zulässig ist.
         if(bezeichnung.equals("") || schwerpunkt.equals("")){
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Bitte geben Sie eine Bezeichnung und einen Schwerpunkt an.");
             return null;
         }
+        
+        // Anteil wird auf Werte kleiner gleich 0 geprüft, diese sind nicht zulässig.
         if(anteil <= 0){
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Der Anteil muss größer 0 sein.");
             return null;
         }
         
+        // Die Anteile der bereits vorhandenen Themen werden summiert.
         int gesamtAnteil = 0;
         if (!this.getThemen().isEmpty()) {
             for (Thema t : this.getThemen()) {
                 gesamtAnteil += t.getAnteil();
             }
         }
+        
+        // Der summierte Anteil plus den neuen Anteil dürfen in der Summe nicht größer als 100 sein.
         if ((gesamtAnteil + anteil) <= 100) {
             Thema tmp = new Thema();
             tmp.setAnteil(anteil);
@@ -401,8 +351,201 @@ public class KursNB implements Serializable {
         return null;
     }
 
+    /**
+     * @author Lisa
+     * @param p_thema Thema
+     * 
+     * Das übergebene Thema wird aus der Liste der Themen entfernt
+     */   
     public void removeThema(Thema p_thema) {
         this.themen.remove(p_thema);
+    }    
+    
+    //  ################# Getter- und Setter-Methoden. ########################################
+     
+    /**
+     * @return the titel
+     */
+    public String getTitel() {
+        return titel;
+    }
+
+    /**
+     * @param p_titel the titel to set
+     */
+    public void setTitel(String p_titel) {
+        this.titel = p_titel;
+    }
+
+    /**
+     * @return the kuerzel
+     */
+    public String getKuerzel() {
+        return kuerzel;
+    }
+
+    /**
+     * @param p_kuerzel the kuerzel to set
+     */
+    public void setKuerzel(String p_kuerzel) {
+        this.kuerzel = p_kuerzel;
+    }
+
+    /**
+     * @return the stufe
+     */
+    public String getStufe() {
+        return stufe;
+    }
+
+    /**
+     * @param p_stufe the stufe to set
+     */
+    public void setStufe(String p_stufe) {
+        this.stufe = p_stufe;
+    }
+
+    /**
+     * @return the bewertung
+     */
+    public String getBewertung() {
+        return bewertung;
+    }
+
+    /**
+     * @param p_bewertung the bewertung to set
+     */
+    public void setBewertung(String p_bewertung) {
+        this.bewertung = p_bewertung;
+    }
+
+    /**
+     * @return the hinweis
+     */
+    public String getHinweis() {
+        return hinweis;
+    }
+
+    /**
+     * @param p_hinweis the hinweis to set
+     */
+    public void setHinweis(String p_hinweis) {
+        this.hinweis = p_hinweis;
+    }
+
+    /**
+     * @return the teilnehmerzahl
+     */
+    public int getTeilnehmerzahl() {
+        return teilnehmerzahl;
+    }
+
+    /**
+     * @param p_teilnehmerzahl the teilnehmerzahl to set
+     */
+    public void setTeilnehmerzahl(int p_teilnehmerzahl) {
+        this.teilnehmerzahl = p_teilnehmerzahl;
+    }
+
+    /**
+     * @return the themengleich
+     */
+    public String getThemengleich() {
+        return themengleich;
+    }
+
+    /**
+     * @param p_themengleich the themengleich to set
+     */
+    public void setThemengleich(String p_themengleich) {
+        this.themengleich = p_themengleich;
+    }
+
+    /**
+     * @return the kurs
+     */
+    public Kurs getKurs() {
+        return kurs;
+    }
+
+    /**
+     * @param p_kurs the kurs to set
+     */
+    public void setKurs(Kurs p_kurs) {
+        this.kurs = p_kurs;
+    }
+
+    /**
+     * @return the beschreibung
+     */
+    public String getBeschreibung() {
+        return beschreibung;
+    }
+
+    /**
+     * @param p_beschreibung the beschreibung to set
+     */
+    public void setBeschreibung(String p_beschreibung) {
+        this.beschreibung = p_beschreibung;
+    }
+
+    /**
+     * @return the bezeichnung
+     */
+    public String getBezeichnung() {
+        return bezeichnung;
+    }
+
+    /**
+     * @param p_bezeichnung the bezeichnung to set
+     */
+    public void setBezeichnung(String p_bezeichnung) {
+        this.bezeichnung = p_bezeichnung;
+    }
+
+    /**
+     * @return the schwerpunkt
+     */
+    public String getSchwerpunkt() {
+        return schwerpunkt;
+    }
+
+    /**
+     * @param p_schwerpunkt the schwerpunkt to set
+     */
+    public void setSchwerpunkt(String p_schwerpunkt) {
+        this.schwerpunkt = p_schwerpunkt;
+    }
+
+    /**
+     * @return the anteil
+     */
+    public int getAnteil() {
+        return anteil;
+    }
+
+    /**
+     * @param p_anteil the anteil to set
+     */
+    public void setAnteil(int p_anteil) {
+        this.anteil = p_anteil;
+    }
+
+    /**
+     * @return the themen
+     */
+    public List<Thema> getThemen() {
+        if (themen == null) {
+            themen = new ArrayList<>();
+        }
+        return themen;
+    }
+
+    /**
+     * @param p_themen the themen to set
+     */
+    public void setThemen(List<Thema> p_themen) {
+        this.themen = p_themen;
     }
 
     /**
@@ -413,10 +556,10 @@ public class KursNB implements Serializable {
     }
 
     /**
-     * @param stufeNeu the stufeNeu to set
+     * @param p_stufeNeu the stufeNeu to set
      */
-    public void setStufeNeu(String stufeNeu) {
-        this.stufeNeu = stufeNeu;
+    public void setStufeNeu(String p_stufeNeu) {
+        this.stufeNeu = p_stufeNeu;
     }
 
     /**
@@ -427,14 +570,16 @@ public class KursNB implements Serializable {
     }
 
     /**
-     * @param themengleichNeu the themengleichNeu to set
+     * @param p_themengleichNeu the themengleichNeu to set
      */
-    public void setThemengleichNeu(String themengleichNeu) {
-        this.themengleichNeu = themengleichNeu;
+    public void setThemengleichNeu(String p_themengleichNeu) {
+        this.themengleichNeu = p_themengleichNeu;
     }
 
     /**
+     * @author Lisa
      * @return the alleAnderenKurse
+     * Die Kurse werden aus der Datenbank gesucht und der gewählte Kurs wird herausgefiltert.
      */
     public List<Kurs> getAlleAnderenKurse() {
         List<Kurs> tmpList = this.kursBean.findAll();
@@ -445,14 +590,16 @@ public class KursNB implements Serializable {
     }
 
     /**
-     * @param alleAnderenKurse the alleAnderenKurse to set
+     * @param p_alleAnderenKurse the alleAnderenKurse to set
      */
-    public void setAlleAnderenKurse(List<Kurs> alleAnderenKurse) {
-        this.alleAnderenKurse = alleAnderenKurse;
+    public void setAlleAnderenKurse(List<Kurs> p_alleAnderenKurse) {
+        this.alleAnderenKurse = p_alleAnderenKurse;
     }
 
     /**
+     * @author Lisa
      * @return the schuelerInKurs
+     * Die Teilnehmer des gewählten Kurses werden gesetzt.
      */
     public List<Schueler> getSchuelerInKurs() {
         List<Schueler> tmp = this.kurs.getTeilnehmer();
@@ -464,10 +611,10 @@ public class KursNB implements Serializable {
     }
 
     /**
-     * @param schuelerInKurs the schuelerInKurs to set
+     * @param p_schuelerInKurs the schuelerInKurs to set
      */
-    public void setSchuelerInKurs(List<Schueler> schuelerInKurs) {
-        this.schuelerInKurs = schuelerInKurs;
+    public void setSchuelerInKurs(List<Schueler> p_schuelerInKurs) {
+        this.schuelerInKurs = p_schuelerInKurs;
     }
 
     /**
@@ -478,10 +625,10 @@ public class KursNB implements Serializable {
     }
 
     /**
-     * @param teilnehmerUnbegrenzt the teilnehmerUnbegrenzt to set
+     * @param p_teilnehmerUnbegrenzt the teilnehmerUnbegrenzt to set
      */
-    public void setTeilnehmerUnbegrenzt(boolean teilnehmerUnbegrenzt) {
-        this.teilnehmerUnbegrenzt = teilnehmerUnbegrenzt;
+    public void setTeilnehmerUnbegrenzt(boolean p_teilnehmerUnbegrenzt) {
+        this.teilnehmerUnbegrenzt = p_teilnehmerUnbegrenzt;
     }
 
 
