@@ -107,11 +107,10 @@ public class WahlNB implements Serializable{
 
     }
 
-    
-    public String saveWahl(){
+      public String saveWahl() {
         String rueckgabe = "Fehler";
-        Benutzer b = (Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
-        Schueler s  = (Schueler)b.getPerson();
+        Benutzer b = (Benutzer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
+        Schueler s = (Schueler) b.getPerson();
         if (ersteWahl.equals(zweiteWahl) || ersteWahl.equals(dritteWahl) || zweiteWahl.equals(dritteWahl)) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Bitte wählen Sie unterschiedliche Kurse.");
         } else {
@@ -119,30 +118,55 @@ public class WahlNB implements Serializable{
             Kurs p_zwei = this.kursBean.find(Long.parseLong(getZweiteWahl()));
             Kurs p_drei = this.kursBean.find(Long.parseLong(getDritteWahl()));
 
-            Wahl wahl = s.getWahl();
-            if (wahl == null) {
-                wahl = new Wahl();
-                wahl.setErstwahl(p_eins);
-                wahl.setZweitwahl(p_zwei);
-                wahl.setDrittwahl(p_drei);
-                this.wahlBean.create(wahl);
-            }else{
-                wahl.setErstwahl(p_eins);
-                wahl.setZweitwahl(p_zwei);
-                wahl.setDrittwahl(p_drei);
-                this.wahlBean.edit(wahl);
-            }
+//            Kurs p_einsThemengleich = p_eins.getThemengleich();
+//            Kurs p_zweiThemengleich = p_zwei.getThemengleich();
+//            Kurs p_dreiThemengleich = p_drei.getThemengleich();
 
-            s.setWahl(wahl);
-            this.schuelerBean.edit(s);
-            
-            rueckgabe = "gewaehlt";
+//            boolean fehler = false;
+//            fehler = this.pruefeThemengleich(p_dreiThemengleich, s);
+//            fehler = this.pruefeThemengleich(p_zweiThemengleich, s);
+//            fehler = this.pruefeThemengleich(p_einsThemengleich, s);
+
+//            if (!fehler) {
+                Wahl wahl = s.getWahl();
+                if (wahl == null) {
+                    wahl = new Wahl();
+                    wahl.setErstwahl(p_eins);
+                    wahl.setZweitwahl(p_zwei);
+                    wahl.setDrittwahl(p_drei);
+                    this.wahlBean.create(wahl);
+                } else {
+                    wahl.setErstwahl(p_eins);
+                    wahl.setZweitwahl(p_zwei);
+                    wahl.setDrittwahl(p_drei);
+                    this.wahlBean.edit(wahl);
+                }
+
+                s.setWahl(wahl);
+                this.schuelerBean.edit(s);
+
+                rueckgabe = "gewaehlt";
+//            }
+
         }
 
         return rueckgabe;
     }
 
-
+      private boolean pruefeThemengleich(Kurs p_themengleich, Schueler p_schueler){
+          List<Schueler> tmp;
+          boolean fehler = false;
+          if (p_themengleich != null) {
+                tmp = p_themengleich.getTeilnehmer();
+                if (tmp != null && !(tmp.isEmpty())) {
+                    if (tmp.contains(p_schueler)) {
+                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Ihre Drittwahl ist Themengleich zu Ihrem Kurs im Vorjahr. Bitte wählen Sie einen anderen Kurs.");
+                        fehler = true;
+                    }
+                }
+            }
+          return fehler;
+      }
 
     /**
      * @return the beginn

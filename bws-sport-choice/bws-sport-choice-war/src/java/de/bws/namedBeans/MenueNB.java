@@ -148,17 +148,17 @@ public class MenueNB implements Serializable {
         return tmp;
     }
     
-    public boolean bereitsEingeteilt(){
+    public boolean bereitsEingeteilt() {
         boolean tmp = false;
-        
+
         List<Kurs> schuelerList = this.kursBean.get("SELECT k FROM Kurs k");
         Kurs k = null;
-        
-        for(Kurs kTmp : schuelerList){
-            for(Schueler sTmp : kTmp.getTeilnehmer()){
-//                if(sTmp.getId().compareTo(this.b.getPerson().getId()) == 0){
-//                    k = kTmp;
-//                }
+        if (this.b.getPerson().getClass().equals(Schueler.class)) {
+            for (Kurs kTmp : schuelerList) {
+                if (kTmp.getTeilnehmer().contains((Schueler) this.b.getPerson())) {
+                    k = kTmp;
+                }
+
             }
         }
 
@@ -174,22 +174,14 @@ public class MenueNB implements Serializable {
         
         List<Kurs> schuelerList = this.kursBean.get("SELECT k FROM Kurs k");
         Kurs k = null;
-        if (schuelerList != null && !(schuelerList.isEmpty())) {
+        if (this.b.getPerson().getClass().equals(Schueler.class)) {
             for (Kurs kTmp : schuelerList) {
-                if (kTmp.getTeilnehmer() != null && !(kTmp.getTeilnehmer().isEmpty())) {
-                    for (Schueler sTmp : kTmp.getTeilnehmer()) {
-                        if (sTmp != null) {
-//                            if (sTmp.getId().compareTo(this.b.getPerson().getId()) == 0) {
-//                                k = kTmp;
-//                            }
-                        }
-
-                    }
+                if (kTmp.getTeilnehmer().contains((Schueler) this.b.getPerson())) {
+                    k = kTmp;
                 }
 
             }
         }
-
 
         if(k == null){
             tmp = true;
