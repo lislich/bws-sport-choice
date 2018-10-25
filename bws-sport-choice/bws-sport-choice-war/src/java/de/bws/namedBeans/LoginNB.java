@@ -20,7 +20,9 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
 /**
- *
+ * Die LoginNB ist die backing Bean für den Login. Sie enthält die Methoden zum 
+ * ein- und ausloggen.
+ * 
  * @author joshua
  */
 @Named(value = "loginNB")
@@ -34,19 +36,27 @@ public class LoginNB implements Serializable{
     private String benutzerName;
     
     /**
-     * Creates a new instance of LoginNB
+     * Erstellt eine neue Instanz von LoginNB
      */
     public LoginNB() {
         
     }
     
+    /**
+     * Diese Methode wird mithilfe der Annotation "@PostConstruct" aufgerufen.
+     * Ruft "createRootUser" auf. Wird zu Release entfernt.
+     */
+    @Deprecated
     @PostConstruct
     private void init(){
-        
-        /* Einkommentieren um den Root-Benutzer neu zu erstellen */
-        //this.createRootUser();
-    }
+        this.createRootUser();
+    } 
     
+    /**
+     * Methode, die für Testzwecke einen Adminbenutzer anlegt.
+     * Sei wird vor dem Release entfernt.
+     */
+    @Deprecated
     private void createRootUser(){
 //        Benutzer admin = this.benutzerBean.getByName("ChoiceRoot");
 //        this.benutzerBean.remove(admin);
@@ -65,32 +75,32 @@ public class LoginNB implements Serializable{
         this.benutzerBean.create(admin);
     }
     
+    /**
+     * 
+     * 
+     * @return String für die Navigation
+     */
     public String login(){
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         
-        if(this.isNotNullOrEmpty(this.getBenutzerName()) && this.isNotNullOrEmpty(this.getPasswort())){
-            Benutzer benutzer = this.benutzerBean.getByName(getBenutzerName());
-            if(benutzer != null){
-                try {
-                    if(Passwort.pruefen(benutzer, this.getPasswort())){
-                        sessionMap.put("benutzer", benutzer);
-//                        return benutzer.getRolle().name();
-                          return "Login";
-                    } else {
-                        sessionMap.put("lastError", "Benutzername und/oder Passwort ungültig");
-                        return "Fehler";
-                    }
-                } catch (Exception ex) {
-                    Logger.getLogger(LoginNB.class.getName()).log(Level.SEVERE, null, ex);
-                    sessionMap.put("lastError", "Beim eiloggen ist ein Problem aufgetreten. Versuchen Sie es bitte erneut.");
-                    return "Fehler";
+
+        Benutzer benutzer = this.benutzerBean.getByName(getBenutzerName());
+        if(benutzer != null){
+            try {
+                if(Passwort.pruefen(benutzer, this.getPasswort())){
+                    sessionMap.put("benutzer", benutzer);
+                    return "Login";
+                } else {
+                    sessionMap.put("lastError", "Benutzername und/oder Passwort ungültig");
+                      return "Fehler";
                 }
-            } else {
-                sessionMap.put("lastError", "Benutzername und/oder Passwort ungültig");
+            } catch (Exception ex) {
+                Logger.getLogger(LoginNB.class.getName()).log(Level.SEVERE, null, ex);
+                sessionMap.put("lastError", "Beim einloggen ist ein Problem aufgetreten. Versuchen Sie es bitte erneut.");
                 return "Fehler";
             }
         } else {
-            sessionMap.put("lastError", "Benutzername und Passwort müssen angegeben werden.");
+            sessionMap.put("lastError", "Benutzername und/oder Passwort ungültig");
             return "Fehler";
         }
     }
@@ -99,10 +109,7 @@ public class LoginNB implements Serializable{
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "Logout";
     }
-    
-    private boolean isNotNullOrEmpty(String p_string){
-        return p_string != null && p_string.length() > 0;
-    }
+
 
     /**
      * @return the passwort

@@ -21,6 +21,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -78,7 +79,22 @@ public class BenutzerVerwaltenNB implements Serializable{
     }
     
     public String aendern(){
-        
+        Benutzer benutzer = null;
+        for(Eintrag<Benutzer, Boolean> e:this.benutzerNB.getAuswahl()){
+            if(e.getValue()){
+                if(benutzer == null){
+                    benutzer = e.getKey();
+                } else {
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Sie können nur die Benutzerdaten einzelner Benutzer ändern.");
+                    return "benutzerVerwalten";
+                }
+            }
+        }
+        if(benutzer == null){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Bitte wählen Sie einen Beutzer.");
+            return "benutzerVerwalten";
+        }
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("gewaehlterBenutzer", benutzer);
         return "benutzerAendern";
     }
     

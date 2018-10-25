@@ -37,7 +37,8 @@
                                             <span class="prefix">Benutzername</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">
-                                            <h:inputText id="email" class="input-group-field" value="#{loginNB.benutzerName}" />
+                                            <h:inputText id="benutzername" class="input-group-field" value="#{loginNB.benutzerName}" required="true" requiredMessage="Bitte geben Sie Ihren Benutzernamen an."/>
+                                            <h:message id="mBenutzername" for="benutzername" style="color: red"/>
                                         </div>
                                     </div>
                                     <div class="row collapse">
@@ -45,7 +46,8 @@
                                             <span class="prefix">Passwort</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">
-                                            <h:inputSecret id="passwort" class="input-group-field" value="#{loginNB.passwort}" />
+                                            <h:inputSecret id="passwort" class="input-group-field" value="#{loginNB.passwort}" required="true" requiredMessage="Bitte geben Sie Ihr Passwort an."/>
+                                            <h:message id="mPasswort" for="passwort" style="color: red"/>
                                         </div>
                                     </div>                              
                                     <div>
