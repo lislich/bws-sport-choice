@@ -31,7 +31,7 @@ $(document).ready(function () {
     
 
     // # Benutzer verwalten ####################################################################################
-    
+/*    
     $(".filter").change(function(){
         $("#refreshFilter").click();
         $("#tableBenutzer").load();
@@ -54,7 +54,7 @@ $(document).ready(function () {
         $("#alleWaehlen").attr('checked', false);
     });
    
-   
+*/   
     // # Kurs bearbeiten ####################################################################################
 
     $(".disableSelectStufe").addClass("hide");

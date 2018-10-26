@@ -49,7 +49,7 @@ public class LoginNB implements Serializable{
     @Deprecated
     @PostConstruct
     private void init(){
-        this.createRootUser();
+       // this.createRootUser();
     } 
     
     /**

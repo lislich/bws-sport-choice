@@ -53,6 +53,7 @@ public class BenutzerVerwaltenNB implements Serializable{
     
     private Stufe stufe;
     private String rolle;
+    private Eintrag<Benutzer, Boolean> testEintrag;
     
     /**
      * Creates a new instance of BenutzerVerwaltenNB
@@ -63,18 +64,19 @@ public class BenutzerVerwaltenNB implements Serializable{
     
     @PostConstruct
     private void init(){
-        
+        this.testEintrag = new Eintrag<>(benutzerNB.getAlleBenutzer().get(0), false);
     }
     
     public String loeschen(){
         System.out.println("start löschen");
-        for(Eintrag<Benutzer, Boolean> e:this.benutzerNB.getAuswahl()){
-            log.log(Level.WARNING, "Entry: {0} ({1})", new Object[]{e.getKey().getBenutzername(), e.getValue()});
-            if(e.getValue()){
-                log.warning("lösche " + e.getKey().getBenutzername());
-                this.benutzerBean.remove(e.getKey());
-            }
-        }
+//        for(Eintrag<Benutzer, Boolean> e:this.benutzerNB.getAuswahl()){
+//            log.log(Level.WARNING, "Entry: {0} ({1})", new Object[]{e.getKey().getBenutzername(), e.getValue()});
+//            if(e.getValue()){
+//                log.warning("lösche " + e.getKey().getBenutzername());
+//                this.benutzerBean.remove(e.getKey());
+//            }
+//        }
+        System.out.println(this.testEintrag.getKey().getBenutzername() + " | " + this.testEintrag.getValue());
         return "benutzerVerwalten";
     }
     
@@ -156,6 +158,20 @@ public class BenutzerVerwaltenNB implements Serializable{
     
     public void auswaehlen(){
         this.benutzerNB.auswaehlen(this.rolle, this.stufe);
+    }
+
+    /**
+     * @return the testEintrag
+     */
+    public Eintrag<Benutzer, Boolean> getTestEintrag() {
+        return testEintrag;
+    }
+
+    /**
+     * @param testEintrag the testEintrag to set
+     */
+    public void setTestEintrag(Eintrag<Benutzer, Boolean> testEintrag) {
+        this.testEintrag = testEintrag;
     }
 
 }

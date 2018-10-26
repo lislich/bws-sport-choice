@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
 
@@ -63,12 +64,12 @@
                                             <th width="100">Rolle</th>
                                             <th class="lehrer" width="50">Kürzel</th>
                                             <th class="schueler" width="50">Tutor</th>
-                                            <th class="schueler" width="25">Stufe</th>
+                                            <th class="schueler" width="25">Stufe</th> 
                                             <th><h:selectBooleanCheckbox id="alleWaehlen" value="false" /></th>
                                         </tr>
                                     </thead>    
                                     <tbody id="tbodyBenutzer">
-                                        <ui:repeat var="entry" value="#{benutzerNB.auswahl}">
+                                        <c:forEach items="#{benutzerNB.auswahl}" var="entry" >
                                             <tr>
                                                 <td><h:outputText value="#{entry.key.person.vorname}" /></td>
                                                 <td><h:outputText value="#{entry.key.person.nachname}" /></td>
@@ -77,11 +78,12 @@
                                                 <td class="lehrer"><h:outputText value="#{entry.key.person.kuerzel}" /></td>
                                                 <td class="schueler"><h:outputText value="#{entry.key.person.tutor.kuerzel}" /></td>
                                                 <td class="schueler"><h:outputText value="#{entry.key.person.stufe.bezeichnung}" /></td>
-                                                <td><input type="checkbox" immediate="true" class="cbWaehlen" value="#{entry.value}" /></td>
+                                                <td><h:selectBooleanCheckbox class="cbWaehlen" value="#{entry.value}" /></td>
                                             </tr>
-                                        </ui:repeat>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
+                                <h:selectBooleanCheckbox class="cbWaehlen" value="#{benutzerVerwaltenNB.testEintrag.value}" />
                             
                                 <h:commandButton class="small button" id="anlegen" value="Anlegen.." action="benutzerAnlegen" />
                                 <h:commandButton class="small button" value="Ändern.." action="#{benutzerVerwaltenNB.aendern()}" />
