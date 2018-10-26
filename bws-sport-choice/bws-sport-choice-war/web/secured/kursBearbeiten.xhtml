@@ -129,11 +129,11 @@
                                         </h:column>
                                         <h:column>
                                             <f:facet name="header"></f:facet>
-                                            <h:commandButton class="small button" value="Löschen" action="#{kursNB.bearbeitenRemoveThema(thema)}">
+                                            <h:commandButton class="small button deleteRow" value="Löschen" action="#{kursNB.bearbeitenRemoveThema(thema)}">
                                                 <!--<f:ajax event="click" 
                                                         render="themenTabelle" 
-                                                        execute="anteil themaBezeichnung schwerpunkt"
-                                                        listener="" />-->
+                                                        execute="@form"
+                                                        listener=""/>-->
                                             </h:commandButton>
                                         </h:column>
                                     </h:dataTable>

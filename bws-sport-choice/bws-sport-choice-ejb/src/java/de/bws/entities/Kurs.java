@@ -63,7 +63,7 @@ public class Kurs implements Serializable {
     @Column(name = "BESCHREIBUNG")
     private String beschreibung;
     
-    @OneToMany(orphanRemoval = true)
+    @OneToMany
     @JoinColumn(referencedColumnName = "KURS_ID", name = "KURS_ID")
     private List<Thema> thema = new ArrayList<>();    
     

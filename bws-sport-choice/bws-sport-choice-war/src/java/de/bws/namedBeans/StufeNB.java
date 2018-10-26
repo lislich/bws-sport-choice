@@ -22,7 +22,7 @@ public class StufeNB implements Serializable{
     private StufeFacadeLocal stufeBean;
     
     // Liste aller Stufen
-    private List<Stufe> stufen;
+    private List<Stufe> alleStufen;
 
     /**
      * @author Lisa
@@ -30,16 +30,16 @@ public class StufeNB implements Serializable{
      * 
      * Diese Methode sucht alle Stufen aus der Datenbank.
      */
-    public List<Stufe> getStufen(){
-        this.stufen = this.stufeBean.findAll();
-        return this.stufen;
+    public List<Stufe> getAlleStufen(){
+        this.alleStufen = this.stufeBean.findAll();
+        return this.alleStufen;
     }
 
     /**
      * @param p_stufen the stufen to set
      */
-    public void setStufen(List<Stufe> p_stufen) {
-        this.stufen = p_stufen;
+    public void setAlleStufen(List<Stufe> p_stufen) {
+        this.alleStufen = p_stufen;
     }
     
     

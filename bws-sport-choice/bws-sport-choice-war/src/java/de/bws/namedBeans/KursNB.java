@@ -126,7 +126,14 @@ public class KursNB implements Serializable {
         try {
             this.getGewaehlterKurs();
             if(this.kurs != null){
-                this.setThemen(kurs.getThema());
+                Thema[] p_themen = new Thema[kurs.getThema().size()];
+                for(int i = 0; i < kurs.getThema().size(); i++){
+                    p_themen[i] = kurs.getThema().get(i);
+                }
+                this.setThemen(new ArrayList<>());
+                for(int j = 0; j < p_themen.length; j++){
+                    this.themen.add(p_themen[j]);
+                }
                 for(Thema tmp : themen){
                     System.out.println("##THEMEN## " + tmp.getBezeichnung());
                 }
@@ -181,15 +188,22 @@ public class KursNB implements Serializable {
         }
        
         // Iteration über die Themen, die dem Kurs zugewiesen/entfernt werden sollen
-        for(Thema t : themen){
+        for (Thema t : themen) {
             if(t.getId() == null){
                 this.themaBean.create(t);
-            }else{
-                this.themaBean.find(t.getId());
-            }           
+            }         
         }
-        
+        for(Thema t : kurs.getThema()){
+            if(!(this.themen.contains(t))){
+                this.themaBean.remove(t);
+            }
+        }
+        kurs.setThema(themen);
+
         this.kursBean.edit(kurs);
+        for (Thema t : kurs.getThema()){
+            System.out.println("##THEMEN## " + t.getBezeichnung());
+        }
         return "kursBearbeitet";
     }
 
