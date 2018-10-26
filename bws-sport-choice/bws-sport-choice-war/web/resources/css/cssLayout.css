@@ -1,3 +1,8 @@
+#bws-logo{
+    background-image: url('../imgs/logo.svg');
+    background-repeat: no-repeat;
+}
+
 #hinweis{
     margin-bottom: 15px !important;
 }

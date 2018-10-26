@@ -7,27 +7,38 @@
 
     <body>
 
-        <ui:composition template="./template.xhtml">
-
+        <ui:composition template="../template.xhtml">
+            <ui:define name="css">
+                <link href="../resources/css/default.css" rel="stylesheet" type="text/css" />
+                <link href="../resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
+                <link href="../resources/css/foundation.css" rel="stylesheet" type="text/css" />
+                <link href="../resources/css/foundation.min.css" rel="stylesheet" type="text/css" />
+                <link href="../resources/css/app.css" rel="stylesheet" type="text/css" />
+                <link href="../resources/css/foundation-icons.css" rel="stylesheet" type="text/css" />
+            </ui:define>
+            <ui:define name="js">
+                <script src="../resources/js/jquery-3.3.1.min.js" />      
+                <script src="../resources/js/vendor/foundation.js" />
+                <script src="../resources/js/vendor/foundation.min.js" />
+                <script src="../resources/js/vendor/what-input.js" />       
+                <script src="../resources/js/app.js" />
+            </ui:define>
             <ui:define name="title">
-                Kurs anlegen
+                Kurs bearbeiten
             </ui:define>
 
             <ui:define name="content">
-                <h:form>
-                    <div class="row">
-                        <div class="small-12 columns small-centered">
-
+                <div class="row">
+                    <div class="small-12 columns small-centered">
+                        <h:form>
                             <fieldset>
-                                <legend>Kurs anlegen</legend>
-                                <h:outputText id="errorAnlegen" value="#{loginNB.error}" style="color: red"/>
+                                <legend>Kurs bearbeiten</legend>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Titel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="titel" class="input-group-field" value="#{kursNB.titel}" required="true" requiredMessage="Geben Sie ein Titel an."/>
-                                        <h:message id="m1" for="titel" style="color:red"/><p></p>
+                                        <h:inputText id="titelBearbeiten" class="input-group-field" value="#{kursNB.kurs.titel}"/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -35,8 +46,7 @@
                                         <span class="prefix">Kürzel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="kuerzel" class="input-group-field" value="#{kursNB.kuerzel}" required="true" requiredMessage="Geben Sie ein Kürzel an."/>
-                                        <h:message id="m2" for="kuerzel" style="color:red"/><p></p>
+                                        <h:inputText id="kuerzelBearbeiten" class="input-group-field" value="#{kursNB.kurs.kuerzel}"/>
                                     </div>
                                 </div>                                
                                 <div class="row collapse">
@@ -44,8 +54,12 @@
                                         <span class="prefix">Stufe</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="stufe" class="input-group-field" value="#{kursNB.stufe}">
-                                            <f:selectItems value="#{stufeNB.stufen}" var="stufe" itemValue="#{stufe.id}" itemLabel="#{stufe.bezeichnung}"/>
+                                        <h:inputText id="stufeZurzeit" class="disableStufe" value="#{kursNB.kurs.stufe.bezeichnung}" disabled="true"/>                                       
+                                    </div>
+                                    <div class="small-8 columns mobile-input">
+                                    <input id="stufeNeu" type="button" class="small button" value="Stufe neu setzen"/>
+                                        <h:selectOneMenu id="stufeBearbeiten" class="input-group-field disableSelectStufe" value="#{kursNB.stufeNeu}">
+                                            <f:selectItems value="#{stufeNB.alleStufen}" var="stufe" itemValue="#{stufe.id}" itemLabel="#{stufe.bezeichnung}"/>
                                         </h:selectOneMenu>
                                     </div>
                                 </div>
@@ -54,8 +68,7 @@
                                         <span class="prefix">Beschreibung</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputTextarea id="beschreibung" class="input-group-field" value="#{kursNB.beschreibung}" required="true" requiredMessage="Geben Sie eine Beschreibung an."/>
-                                        <h:message id="m3" for="beschreibung" style="color:red"/><p></p>
+                                        <h:inputTextarea id="beschreibungBearbeiten" class="input-group-field" value="#{kursNB.kurs.beschreibung}"/>
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -63,8 +76,7 @@
                                         <span class="prefix">Bewertung</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputTextarea id="bewertung" class="input-group-field" value="#{kursNB.bewertung}" required="true" requiredMessage="Geben Sie eine Bewertung an."/>
-                                        <h:message id="m4" for="bewertung" style="color:red"/><p></p>
+                                        <h:inputTextarea id="bewertungBearbeiten" class="input-group-field" value="#{kursNB.kurs.bewertung}"/>
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -72,23 +84,15 @@
                                         <span class="prefix">Hinweis</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputTextarea id="hinweis" class="input-group-field" value="#{kursNB.hinweis}" required="true" requiredMessage="Geben Sie einen Hinweis an."/>
-                                        <h:message id="m5" for="hinweis" style="color:red"/><p></p>
+                                        <h:inputTextarea id="hinweisBearbeiten" class="input-group-field" value="#{kursNB.kurs.hinweis}"/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
-                                        <h:selectBooleanCheckbox class="teilnehmerzahlRequired" id="teilnehmerzahlRequired" value="#{kursNB.teilnehmerUnbegrenzt}" />
-                                        <!--<input id="teilnehmerzahlRequired" type="checkbox" checked="checked" value="Teilnehmerzahl unbegrenzt"/>-->
-                                        <label for="teilnehmerzahlRequired">Teilnehmerzahl unbegrenzt</label>
-                                    </div>
-                                </div>
-                                <div class="row collapse">                                   
-                                    <div class="small-4 columns">                                        
                                         <span class="prefix">Teilnehmerzahl</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="teilnehmerzahl" class="input-group-field disable" value="#{kursNB.teilnehmerzahl}"/>                                        
+                                        <h:inputText id="teilnehmerzahlBearbeiten" class="input-group-field" value="#{kursNB.kurs.teilnehmerzahl}" converterMessage="Bitte geben Sie nur Zahlen ein."/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -96,14 +100,20 @@
                                         <span class="prefix">Themengleich mit</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="themengleich" class="input-group-field" value="#{kursNB.themengleich}">
+                                        <h:inputText id="themengleichZurzeit" class="disableThemengleich" value="#{kursNB.kurs.themengleich.titel}" disabled="true"/>                                        
+                                    </div>
+                                    <div class="small-8 columns mobile-input">
+                                        <input id="themengleichNeu" type="button" class="small button" value="Neu setzen"/>
+                                        <h:selectOneMenu id="themengleichBearbeiten" class="input-group-field disableSelectThemengleich" value="#{kursNB.themengleichNeu}">
                                             <f:selectItem itemValue="-1" itemLabel="Kein Themengleicher Kurs" />
-                                            <f:selectItems value="#{kurslisteBean.alleKurse}" var="kurs" itemValue="#{kurs.id}" itemLabel="#{kurs.titel}"/>
+                                            <f:selectItems value="#{kursNB.alleAnderenKurse}" var="kurs" itemValue="#{kurs.id}" itemLabel="#{kurs.titel}"/>
                                         </h:selectOneMenu>
                                     </div>
+                                    
                                 </div>
-                                <fieldset>
-                                    <legend>Thema hinzufügen</legend>                                    
+                               <fieldset>
+                                    <legend>Thema bearbeiten</legend>   
+                                    <h:outputText value="#{loginNB.error}" style="color: red"/>
                                     <h:dataTable id="themenTabelle" value="#{kursNB.themen}" var="thema">
                                         <h:column>
                                             <f:facet name="header">Anteil in %</f:facet>
@@ -119,7 +129,12 @@
                                         </h:column>
                                         <h:column>
                                             <f:facet name="header"></f:facet>
-                                            <h:commandLink value="Löschen" action="#{kursNB.removeThema(thema)}" />
+                                            <h:commandButton class="small button" value="Löschen" action="#{kursNB.bearbeitenRemoveThema(thema)}">
+                                                <!--<f:ajax event="click" 
+                                                        render="themenTabelle" 
+                                                        execute="anteil themaBezeichnung schwerpunkt"
+                                                        listener="" />-->
+                                            </h:commandButton>
                                         </h:column>
                                     </h:dataTable>
                                     <div class="row collapse area">
@@ -150,17 +165,14 @@
                                         <f:ajax event="click" 
                                                 render="themenTabelle" 
                                                 execute="@form"
-                                                listener="#{kursNB.addThema()}" />
+                                                listener="#{kursNB.bearbeitenAddThema()}" />
                                     </h:commandButton>
                                 </fieldset>
-                                
-                                <h:commandButton class="small button" id="kursAnlegen" value="Anlegen"  action="#{kursNB.anlegen()}" type="submit"></h:commandButton>
-
+                                <h:commandButton class="small button" id="kursBearbeiten" value="Speichern" action="#{kursNB.bearbeiten()}" type="submit"/>
                             </fieldset>
-
-                        </div>  
+                        </h:form>
                     </div>
-                </h:form>
+                </div>
             </ui:define>
 
         </ui:composition>

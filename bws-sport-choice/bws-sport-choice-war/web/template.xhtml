@@ -6,9 +6,11 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
     <h:head>
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="viewport" content="width=device-width" />
         
+        <ui:insert name="css"></ui:insert>
         <link href="./resources/css/default.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/cssLayout.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/foundation.css" rel="stylesheet" type="text/css" />
@@ -16,12 +18,11 @@
         <link href="./resources/css/app.css" rel="stylesheet" type="text/css" />
         <link href="./resources/css/foundation-icons.css" rel="stylesheet" type="text/css" />
         
-        <script src="./resources/js/jquery-3.3.1.min.js" />
-        
+        <ui:insert name="js"></ui:insert>
+        <script src="./resources/js/jquery-3.3.1.min.js" />      
         <script src="./resources/js/vendor/foundation.js" />
         <script src="./resources/js/vendor/foundation.min.js" />
-        <script src="./resources/js/vendor/what-input.js" />
-        
+        <script src="./resources/js/vendor/what-input.js" />       
         <script src="./resources/js/app.js" />
         
         <title><ui:insert name="title">Facelets Template</ui:insert></title>
@@ -45,8 +46,8 @@
                             <h:link outcome="kontakt">Kontakt</h:link>
                         </li>
                         <li>
-                            <a href="http://bws-hofheim.de" target="_blank">
-                                <img src="./resources/imgs/logo.svg" />
+                            <a id="bws-logo" href="http://bws-hofheim.de" target="_blank">
+                                <img width="55" src="" />
                                 Brühlwiesenschule
                             </a>
                         </li>
