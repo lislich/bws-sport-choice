@@ -6,6 +6,7 @@
 package de.bws.namedBeans;
 
 import de.bws.data.Rolle;
+import de.bws.entities.Benutzer;
 import de.bws.entities.Lehrer;
 import de.bws.entities.Person;
 import de.bws.entities.Schueler;
@@ -17,11 +18,13 @@ import de.bws.sessionbeans.SchuelerFacadeLocal;
 import de.bws.sessionbeans.StufeFacadeLocal;
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
@@ -77,7 +80,7 @@ public class BenutzerAnlegenNB implements Serializable{
      * @return 
      */
     public String anlegen(){
-        /*
+        
         Person neuePerson = this.getNeuePersonFromRolle();
             
         if(neuePerson == null){
@@ -96,7 +99,7 @@ public class BenutzerAnlegenNB implements Serializable{
             Logger.getLogger(BenutzerAnlegenNB.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Fehler beim Anlegen des Benutzers.");
         }
-            */
+            
         
         try {           
             this.passwort = Passwort.passwortGenerieren();
@@ -251,8 +254,12 @@ public class BenutzerAnlegenNB implements Serializable{
      * 
      * @return 
      */
-    public Rolle[] getRollen(){
-        return Rolle.values();
+    public List<Rolle> getRollen(){
+        List<Rolle> rollen = new ArrayList<>();
+        for(int i = 0; i < Rolle.values().length; i++){
+            rollen.add(Rolle.values()[i]);
+        }
+       return rollen;
     }
     
     /**

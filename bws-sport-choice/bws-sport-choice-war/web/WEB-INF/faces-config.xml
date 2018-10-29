@@ -12,7 +12,7 @@
       <navigation-case>
         <from-outcome>Login</from-outcome>
         <to-view-id>/secured/start.xhtml</to-view-id>
-      </navigation-case>
+      </navigation-case>     
       <navigation-case>
         <from-outcome>Logout</from-outcome>
         <to-view-id>/secured/login.xhtml</to-view-id>
@@ -42,6 +42,10 @@
       <navigation-case>
         <from-outcome>Logout</from-outcome>
         <to-view-id>/nosecure/login.xhtml</to-view-id>
+      </navigation-case>
+      <navigation-case>
+        <from-outcome>testseite</from-outcome>
+        <to-view-id>test.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
           <from-outcome>faq</from-outcome>

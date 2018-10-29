@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         
@@ -19,7 +20,8 @@
         <link href="./resources/css/foundation-icons.css" rel="stylesheet" type="text/css" />
         
         <ui:insert name="js"></ui:insert>
-        <script src="./resources/js/jquery-3.3.1.min.js" />      
+        <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+<h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />    
         <script src="./resources/js/vendor/foundation.js" />
         <script src="./resources/js/vendor/foundation.min.js" />
         <script src="./resources/js/vendor/what-input.js" />       
@@ -133,6 +135,13 @@
                         <li>
                             <h:link outcome="passwortAendern">
                                 <i class="fi-key"></i><span>Passwort ändern</span>
+                            </h:link>                      
+                        </li>
+                    </h:panelGroup>
+                    <h:panelGroup rendered="#{menueNB.angemeldet}">
+                        <li>
+                            <h:link outcome="testseite">
+                                <i class="fi-arrow-down"></i><span>Testseite</span>
                             </h:link>                      
                         </li>
                     </h:panelGroup>

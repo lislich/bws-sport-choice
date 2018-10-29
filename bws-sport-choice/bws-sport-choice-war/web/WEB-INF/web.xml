@@ -25,4 +25,12 @@
     <welcome-file-list>
         <welcome-file>nosecure/login.xhtml</welcome-file>
     </welcome-file-list>
+    <!--<filter>
+        <filter-name>LoginFilter</filter-name>
+        <filter-class>de.bws.filter.LoginFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>LoginFilter</filter-name>
+        <url-pattern>/secured/*</url-pattern>
+    </filter-mapping>-->
 </web-app>

@@ -169,10 +169,12 @@ public class WahlNB implements Serializable{
 //            Kurs p_einsThemengleich = p_eins.getThemengleich();
 //            Kurs p_zweiThemengleich = p_zwei.getThemengleich();
 //            Kurs p_dreiThemengleich = p_drei.getThemengleich();
+//
 //            boolean fehler = false;
 //            fehler = this.pruefeThemengleich(p_dreiThemengleich, s);
 //            fehler = this.pruefeThemengleich(p_zweiThemengleich, s);
 //            fehler = this.pruefeThemengleich(p_einsThemengleich, s);
+//
 //            if (!fehler) {
 
             // Wenn noch keine Wahl eingetragen ist, wird eine neue angelegt, ansonsten die vorhandene aktualisiert.
@@ -195,9 +197,9 @@ public class WahlNB implements Serializable{
             this.schuelerBean.edit(s);
 
             rueckgabe = "gewaehlt";
-//            }
+            }
 
-        }
+//        }
 
         return rueckgabe;
     }

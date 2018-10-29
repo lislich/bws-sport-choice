@@ -134,8 +134,8 @@ public class KursNB implements Serializable {
                 for(int j = 0; j < p_themen.length; j++){
                     this.themen.add(p_themen[j]);
                 }
-                for(Thema tmp : themen){
-                    System.out.println("##THEMEN## " + tmp.getBezeichnung());
+                if(kurs.getTeilnehmerzahl() == 999){
+                    this.setTeilnehmerUnbegrenzt(true);
                 }
             }
         } catch (NullPointerException e) {
@@ -185,6 +185,11 @@ public class KursNB implements Serializable {
         if (themengleichNeu != null) {
             Kurs k = this.findKurs(themengleichNeu);
             kurs.setThemengleich(k);
+        }
+        
+        // Wenn das Häkchen in Teilnehmerzahl-Unbegrenzt gesetzt ist, wird 999 gespeichert
+        if(teilnehmerUnbegrenzt){
+            kurs.setTeilnehmerzahl(999);
         }
        
         // Iteration über die Themen, die dem Kurs zugewiesen/entfernt werden sollen

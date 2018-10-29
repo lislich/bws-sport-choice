@@ -19,7 +19,11 @@ $(document).ready(function () {
    /**
      * 
      */
-    $(".disable").val("25");
+    if($(".teilnehmerzahlRequired").is(" :checked")){
+        $(".disable").attr('disabled', true);
+    }else{
+        $(".disable").val("25");
+    }
     $(".teilnehmerzahlRequired").change(function(){
         if (this.checked){
             $(".disable").attr('disabled', true);
@@ -75,5 +79,9 @@ $(document).ready(function () {
         $(".disableThemengleich").replaceWith($(".disableSelectThemengleich"));
     });
 
+
+    $("#benutzerAnlegen").click(function(){
+        $("#dlgErstanmeldung").show();
+    });
 });
 

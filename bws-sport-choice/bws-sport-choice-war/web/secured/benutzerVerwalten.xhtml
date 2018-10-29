@@ -18,7 +18,8 @@
                 <link href="../resources/css/foundation-icons.css" rel="stylesheet" type="text/css" />
             </ui:define>
             <ui:define name="js">
-                <script src="../resources/js/jquery-3.3.1.min.js" />      
+                <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+                <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />      
                 <script src="../resources/js/vendor/foundation.js" />
                 <script src="../resources/js/vendor/foundation.min.js" />
                 <script src="../resources/js/vendor/what-input.js" />       
@@ -70,7 +71,7 @@
                                         </tr>
                                     </thead>    
                                     <tbody id="tbodyBenutzer">
-                                        <c:forEach items="#{benutzerNB.auswahl}" var="entry" >
+                                        <c:forEach items="#{benutzerVerwaltenNB.auswahl}" var="entry" >
                                             <tr>
                                                 <td><h:outputText value="#{entry.key.person.vorname}" /></td>
                                                 <td><h:outputText value="#{entry.key.person.nachname}" /></td>
@@ -91,7 +92,7 @@
                                 <h:commandButton class="small button" value="Hochstufen" action="#{benutzerVerwaltenNB.hochstufen()}" />
                                 <h:commandButton class="small button" value="Abstufen" action="#{benutzerVerwaltenNB.abstufen()}" />
                                 
-                                <h:button id="refreshFilter" onclick="#{benutzerVerwaltenNB.auswaehlen()}" style="display: none" />
+                                <!--<h:button id="refreshFilter" onclick="#/{benutzerVerwaltenNB.auswaehlen()}" style="display: none" />-->
                             </fieldset>
                         </h:form>
                     </div>

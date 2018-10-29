@@ -17,7 +17,8 @@
                 <link href="../resources/css/foundation-icons.css" rel="stylesheet" type="text/css" />
             </ui:define>
             <ui:define name="js">
-                <script src="../resources/js/jquery-3.3.1.min.js" />      
+                <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+                <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />      
                 <script src="../resources/js/vendor/foundation.js" />
                 <script src="../resources/js/vendor/foundation.min.js" />
                 <script src="../resources/js/vendor/what-input.js" />       
@@ -30,7 +31,7 @@
             <ui:define name="content">
                 <div class="row">
                     <div class="small-12 columns small-centered">
-                        <h:form>
+                        <h:form prependId="false">
                             <fieldset>
                                 <legend>Kurs bearbeiten</legend>
                                 <div class="row collapse">
@@ -38,7 +39,8 @@
                                         <span class="prefix">Titel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="titelBearbeiten" class="input-group-field" value="#{kursNB.kurs.titel}"/>
+                                        <h:inputText id="titelBearbeiten" class="input-group-field" value="#{kursNB.kurs.titel}" required="true" requiredMessage="Geben Sie ein Titel an."/>
+                                        <h:message id="m1" for="titelBearbeiten" style="color:red"/><p></p>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -46,7 +48,8 @@
                                         <span class="prefix">Kürzel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="kuerzelBearbeiten" class="input-group-field" value="#{kursNB.kurs.kuerzel}"/>
+                                        <h:inputText id="kuerzelBearbeiten" class="input-group-field" value="#{kursNB.kurs.kuerzel}" required="true" requiredMessage="Geben Sie ein Kürzel an." />
+                                        <h:message id="m2" for="kuerzelBearbeiten" style="color:red"/><p></p>
                                     </div>
                                 </div>                                
                                 <div class="row collapse">
@@ -68,7 +71,8 @@
                                         <span class="prefix">Beschreibung</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputTextarea id="beschreibungBearbeiten" class="input-group-field" value="#{kursNB.kurs.beschreibung}"/>
+                                        <h:inputTextarea id="beschreibungBearbeiten" class="input-group-field" value="#{kursNB.kurs.beschreibung}" required="true" requiredMessage="Geben Sie eine Beschreibung an." />
+                                        <h:message id="m3" for="beschreibungBearbeiten" style="color:red"/><p></p>
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -76,7 +80,8 @@
                                         <span class="prefix">Bewertung</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputTextarea id="bewertungBearbeiten" class="input-group-field" value="#{kursNB.kurs.bewertung}"/>
+                                        <h:inputTextarea id="bewertungBearbeiten" class="input-group-field" value="#{kursNB.kurs.bewertung}" required="true" requiredMessage="Geben Sie eine Bewertung an." />
+                                        <h:message id="m4" for="bewertungBearbeiten" style="color:red"/><p></p>
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -84,15 +89,23 @@
                                         <span class="prefix">Hinweis</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputTextarea id="hinweisBearbeiten" class="input-group-field" value="#{kursNB.kurs.hinweis}"/>
+                                        <h:inputTextarea id="hinweisBearbeiten" class="input-group-field" value="#{kursNB.kurs.hinweis}" required="true" requiredMessage="Geben Sie einen Hinweis an." />
+                                        <h:message id="m5" for="hinweisBearbeiten" style="color:red"/><p></p>
                                     </div>
                                 </div>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
+                                        <h:selectBooleanCheckbox class="teilnehmerzahlRequired" id="teilnehmerzahlRequired" value="#{kursNB.teilnehmerUnbegrenzt}" />
+                                        <!--<input id="teilnehmerzahlRequired" type="checkbox" checked="checked" value="Teilnehmerzahl unbegrenzt"/>-->
+                                        <label for="teilnehmerzahlRequired">Teilnehmerzahl unbegrenzt</label>
+                                    </div>
+                                </div>
+                                <div class="row collapse">                                   
+                                    <div class="small-4 columns">                                        
                                         <span class="prefix">Teilnehmerzahl</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="teilnehmerzahlBearbeiten" class="input-group-field" value="#{kursNB.kurs.teilnehmerzahl}" converterMessage="Bitte geben Sie nur Zahlen ein."/>
+                                        <h:inputText id="teilnehmerzahl" class="input-group-field disable" value="#{kursNB.kurs.teilnehmerzahl}"/>                                        
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -129,11 +142,8 @@
                                         </h:column>
                                         <h:column>
                                             <f:facet name="header"></f:facet>
-                                            <h:commandButton class="small button deleteRow" value="Löschen" action="#{kursNB.bearbeitenRemoveThema(thema)}">
-                                                <!--<f:ajax event="click" 
-                                                        render="themenTabelle" 
-                                                        execute="@form"
-                                                        listener=""/>-->
+                                            <h:commandButton class="small button deleteRow" value="Löschen"  action="#{kursNB.bearbeitenRemoveThema(thema)}">
+                                               <!-- <f:ajax render="themenTabelle"/>-->
                                             </h:commandButton>
                                         </h:column>
                                     </h:dataTable>

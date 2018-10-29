@@ -4,7 +4,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"  >
 
     <h:body>
 
@@ -18,7 +18,8 @@
                 <link href="../resources/css/foundation-icons.css" rel="stylesheet" type="text/css" />
             </ui:define>
             <ui:define name="js">
-                <script src="../resources/js/jquery-3.3.1.min.js" />      
+                <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
+                <h:outputScript library="primefaces" name="jquery/jquery-plugins.js" target="head" />      
                 <script src="../resources/js/vendor/foundation.js" />
                 <script src="../resources/js/vendor/foundation.min.js" />
                 <script src="../resources/js/vendor/what-input.js" />       
@@ -30,27 +31,28 @@
 
             <ui:define name="content">
 
-                <!--<p:dialog id="dlgErstanmeldung" class="dialog" widgetVar="dialogErstanmeldung" header="Anmeldedaten Erstanmeldung" modal="false" dynamic="true">
-                   <h:outputText value="Der Benutzer wurde erfolgreich angelegt. Bitte notieren Sie sich das Passwort! Das Passwort kann nach dem Schließen dieses Fensters nicht mehr angezeigt werden."/><br/><br/>                           
-                    <h:outputText value="Benutzer: #/{benutzerAnlegenNB.benutzername}"/><br/>
-                    <h:outputText value="Passwort: #/{benutzerAnlegenNB.passwort}"/><br/>
-                    <p:commandButton id="closeDialog" value="Ok" action="benutzerAnlegen"/>
-                </p:dialog>-->
+                
                 <div class="row">
                     <div class="small-12 columns small-centered">
-                        <h:form>
+                        <h:form prependId="false">
+                            <p:dialog id="dlgErstanmeldung" class="dialog" widgetVar="dialogErstanmeldung" header="Anmeldedaten Erstanmeldung" modal="true" draggable="false" closable="true">
+                                <h:outputText value="Der Benutzer wurde erfolgreich angelegt. Bitte notieren Sie sich das Passwort! Das Passwort kann nach dem Schließen dieses Fensters nicht mehr angezeigt werden."/><br/><br/>                           
+                                <h:outputText value="Benutzer: #{benutzerAnlegenNB.benutzername}"/><br/>
+                                <h:outputText value="Passwort: #{benutzerAnlegenNB.passwort}"/><br/>
+                                <p:commandButton id="closeDialog" value="Ok" action="benutzerAnlegen"/>
+                            </p:dialog>
                             <fieldset>
-                               <!-- <div>
-                                    <h:outputText id="error" value="#/{loginNB.error}"/>
-                                </div> -->
+                                <div>
+                                    <h:outputText id="error" value="#{loginNB.error}"/>
+                                </div>
                                 <legend>Benutzer anlegen</legend>
-                               <!-- <div class="row collapse">
+                               <div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Rolle</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="rolle" class="input-group-field" value="#/{benutzerAnlegenNB.rolle}" onchange="onchange()">
-                                            <f:selectItems value="#/{benutzerAnlegenNB.rollen}" />
+                                        <h:selectOneMenu id="rolle" class="input-group-field" value="#{benutzerAnlegenNB.rolle}" onchange="onchange()">
+                                            <f:selectItems value="#{benutzerAnlegenNB.rollen}" var="rolle" itemValue="#{rolle}" itemLabel="#{rolle}"/>
                                         </h:selectOneMenu>
                                     </div> 
                                 </div>
@@ -59,7 +61,7 @@
                                         <span class="prefix">Nachname</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="name" class="input-group-field" value="#/{benutzerAnlegenNB.nachname}"/>
+                                        <h:inputText id="name" class="input-group-field" value="#{benutzerAnlegenNB.nachname}"/>
                                     </div>
                                 </div>                                
                                 <div class="row collapse">
@@ -67,7 +69,7 @@
                                         <span class="prefix">Vorname</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="vorname" class="input-group-field" value="#/{benutzerAnlegenNB.vorname}" />
+                                        <h:inputText id="vorname" class="input-group-field" value="#{benutzerAnlegenNB.vorname}" />
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -75,8 +77,8 @@
                                         <span class="prefix">Tutor</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="tutor" class="input-group-field" value="#/{benutzerAnlegenNB.tutor}"  >
-                                            <f:selectItems value="#/{benutzerAnlegenNB.tutoren}" var="tutor" itemValue="#/{tutor.id}" itemLabel="#/{tutor.kuerzel}"/>
+                                        <h:selectOneMenu id="tutor" class="input-group-field" value="#{benutzerAnlegenNB.tutor}"  >
+                                            <f:selectItems value="#{benutzerAnlegenNB.tutoren}" var="tutor" itemValue="#{tutor.id}" itemLabel="#{tutor.kuerzel}"/>
                                         </h:selectOneMenu>
                                     </div>
                                 </div>
@@ -85,7 +87,7 @@
                                         <span class="prefix">Kürzel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="kuerzel" class="input-group-field" value="#/{benutzerAnlegenNB.kuerzel}" />
+                                        <h:inputText id="kuerzel" class="input-group-field" value="#{benutzerAnlegenNB.kuerzel}" />
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -93,8 +95,8 @@
                                         <span class="prefix">Stufe</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="stufe" class="input-group-field" value="#Z{benutzerAnlegenNB.stufe}">
-                                            <f:selectItems value="#/{stufeNB.alleStufen}" var="stufe" itemValue="#/{stufe.id}" itemLabel="#/{stufe.bezeichnung}"/>
+                                        <h:selectOneMenu id="stufe" class="input-group-field" value="#{benutzerAnlegenNB.stufe}">
+                                            <f:selectItems value="#{stufeNB.alleStufen}" var="stufe" itemValue="#{stufe.id}" itemLabel="#{stufe.bezeichnung}"/>
                                         </h:selectOneMenu>
                                     </div>
                                 </div>
@@ -103,16 +105,18 @@
                                         <span class="prefix">Benutzername</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="benutzername" class="input-group-field" value="#/{benutzerAnlegenNB.benutzername}"/>
+                                        <h:inputText id="benutzername" class="input-group-field" value="#{benutzerAnlegenNB.benutzername}"/>
                                     </div>
-                                </div> -->
+                                </div>
                                 <div>
-                                    <!--<p:commandButton type="button" class="small button" id="benutzerAnlegen" value="Anlegen" onclick="$('.dialog').show()" />-->
+                                    <!--<h:commandButton class="small button" id="benutzerAnlegen" value="Anlegen" action="#!{benutzerAnlegenNB.anlegen()}" />-->
+                                    <p:commandButton type="button" class="small button" id="benutzerAnlegen" value="Anlegen" actionListener="#{benutzerAnlegenNB.anlegen()}" onclick="PF('dialogErstanmeldung').show();"/>
                                 </div> 
                             </fieldset>
                         </h:form>
                     </div>
                 </div>
+                
                 
             </ui:define>
 

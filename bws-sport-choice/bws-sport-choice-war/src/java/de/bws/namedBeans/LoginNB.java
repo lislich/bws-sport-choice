@@ -34,6 +34,7 @@ public class LoginNB implements Serializable{
     
     private String passwort;
     private String benutzerName;
+    private boolean angemeldet;
     
     /**
      * Erstellt eine neue Instanz von LoginNB
@@ -82,25 +83,29 @@ public class LoginNB implements Serializable{
      */
     public String login(){
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        
+        angemeldet = false;
 
         Benutzer benutzer = this.benutzerBean.getByName(getBenutzerName());
         if(benutzer != null){
             try {
                 if(Passwort.pruefen(benutzer, this.getPasswort())){
                     sessionMap.put("benutzer", benutzer);
+                    angemeldet = true;
                     return "Login";
                 } else {
                     sessionMap.put("lastError", "Benutzername und/oder Passwort ungültig");
+                    angemeldet = false;
                       return "Fehler";
                 }
             } catch (Exception ex) {
                 Logger.getLogger(LoginNB.class.getName()).log(Level.SEVERE, null, ex);
                 sessionMap.put("lastError", "Beim einloggen ist ein Problem aufgetreten. Versuchen Sie es bitte erneut.");
+                angemeldet = false;
                 return "Fehler";
             }
         } else {
             sessionMap.put("lastError", "Benutzername und/oder Passwort ungültig");
+            angemeldet = false;
             return "Fehler";
         }
     }
@@ -153,6 +158,20 @@ public class LoginNB implements Serializable{
         }
         
         return error;
+    }
+
+    /**
+     * @return the angemeldet
+     */
+    public boolean isAngemeldet() {
+        return angemeldet;
+    }
+
+    /**
+     * @param angemeldet the angemeldet to set
+     */
+    public void setAngemeldet(boolean angemeldet) {
+        this.angemeldet = angemeldet;
     }
     
 }

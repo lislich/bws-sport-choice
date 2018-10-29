@@ -113,6 +113,7 @@ public class BenutzerNB implements Serializable{
      * @param p_auswahl Eine gefilterte Liste von Einträgen mit Benutzer/Boolean Paaren
      */
     public void setAuswahl(List<Benutzer> p_auswahl) {
+        System.out.println("de.bws.namedBeans.BenutzerNB.setAuswahl()");
         this.auswahl.clear();
         for(Benutzer b:p_auswahl){
             this.auswahl.add(new Eintrag(b, false));

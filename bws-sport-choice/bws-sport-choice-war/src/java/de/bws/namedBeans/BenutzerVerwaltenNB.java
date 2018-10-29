@@ -56,6 +56,8 @@ public class BenutzerVerwaltenNB implements Serializable{
     
     private String error;
     
+    private List<Eintrag<Benutzer, Boolean>> auswahl;
+    
     /** 
      * Creates a new instance of BenutzerVerwaltenNB
      */
@@ -68,14 +70,18 @@ public class BenutzerVerwaltenNB implements Serializable{
     private void init(){
         this.error = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("lastError");
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "");
+        
+        this.auswahl = new ArrayList<>();
+        this.setAuswahl(this.benutzerBean.findAll());
     }
     
     public String loeschen(){
         System.out.println("start löschen");
-        for(Eintrag<Benutzer, Boolean> e:this.benutzerNB.getAuswahl()){
-            log.log(Level.WARNING, "Entry: {0} ({1})", new Object[]{e.getKey().getBenutzername(), e.getValue()});
-            if(e.getValue()){
-                log.warning("lösche " + e.getKey().getBenutzername());
+        for(Eintrag e: this.getAuswahl()){
+            Benutzer b = (Benutzer)e.getKey();
+            log.log(Level.WARNING, "Entry: {0} ({1})", new Object[]{b.getBenutzername(), e.getValue()});
+            if((boolean)e.getValue()){
+                log.warning("lösche " + b.getBenutzername());
 //                this.benutzerBean.remove(e.getKey());
             }
         }
@@ -85,7 +91,7 @@ public class BenutzerVerwaltenNB implements Serializable{
     
     public String aendern(){
         Benutzer benutzer = null;
-        for(Eintrag<Benutzer, Boolean> e:this.benutzerNB.getAuswahl()){
+        for(Eintrag<Benutzer, Boolean> e: this.auswahl){
             if(e.getValue()){
                 if(benutzer == null){
                     benutzer = e.getKey();
@@ -175,5 +181,23 @@ public class BenutzerVerwaltenNB implements Serializable{
      */
     public void setError(String error) {
         this.error = error;
+    }
+
+    /**
+     * @return the auswahl
+     */
+    public List<Eintrag<Benutzer, Boolean>> getAuswahl() {
+        return auswahl;
+    }
+
+    /**
+     * @param p_benutzer
+     */
+    public void setAuswahl(List<Benutzer> p_benutzer) {
+        System.out.println("de.bws.namedBeans.BenutzerNB.setAuswahl()");
+        this.auswahl.clear();
+        for(Benutzer b: p_benutzer){
+            this.auswahl.add(new Eintrag(b, false));
+        }
     }
 }
