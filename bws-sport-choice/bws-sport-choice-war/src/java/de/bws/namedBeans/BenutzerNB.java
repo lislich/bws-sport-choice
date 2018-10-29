@@ -26,19 +26,28 @@ import javax.inject.Named;
 @Dependent
 public class BenutzerNB implements Serializable{
     
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Benutzer
     @EJB
     private BenutzerFacadeLocal benutzerBean;
     
+    // Liste aller Benutzer
     private List<Benutzer> alleBenutzer;
     
+    // gefilterte Liste von Benutzern mit zugehörigem Boolean für Checkboxen auf 
+    // der Oberfläche
     private List<Eintrag<Benutzer, Boolean>> auswahl;
 
     /**
-     * Creates a new instance of BenutzerNB
+     * Erstellt eine neue Instanz der BenutzerNB
      */
     public BenutzerNB() {
     }
     
+    /**
+     * List direkt nach dem Erzeugen einer Instanz dieser Klasse alle Benutzer 
+     * aus der Datenbank aus und speichert sie in "alleBenutzer" und "auswahl",
+     * da zu dieser Zeit noch kein Filter ausgewählt ist.
+     */
     @PostConstruct
     private void init(){
         this.auswahl = new ArrayList<>();
@@ -46,6 +55,11 @@ public class BenutzerNB implements Serializable{
         this.setAuswahl(this.alleBenutzer);
     }
     
+    /**
+     * Gibt alle Benutzer einer bestimmten Rolle zurück.
+     * @param p_rolle Die Rolle nach der gefiltert werden soll
+     * @return Liste von Benutzern mit derentsprechenden Rolle
+     */
     public List<Benutzer> getByRolle(String p_rolle){
         if( p_rolle == null || p_rolle.equals("Alle")){
             return this.getAlleBenutzer();
@@ -61,14 +75,14 @@ public class BenutzerNB implements Serializable{
     }
 
     /**
-     * @return the alleBenutzer
+     * @return Lste aller Benutzer
      */
     public List<Benutzer> getAlleBenutzer() {
         return alleBenutzer;
     }
 
     /**
-     * @param alleBenutzer the alleBenutzer to set
+     * @param alleBenutzer Liste aller Benutzer
      */
     public void setAlleBenutzer(List<Benutzer> alleBenutzer) {
         this.alleBenutzer = alleBenutzer;
@@ -87,26 +101,16 @@ public class BenutzerNB implements Serializable{
         }
         this.setAuswahl(vorauswahl);
     }
-    
-    public void wahlInvertieren(long p_id){
-        System.out.println("invertiere" + p_id);
-        for(Eintrag<Benutzer, Boolean> e:this.auswahl){
-            if(e.getKey().getId() == p_id){
-                e.setValue(!e.getValue());
-                break;
-            }
-        }
-    }
 
     /**
-     * @return the auswahl
+     * @return Die gefilterte Liste von Einträgen mit Benutzer/Boolean Paaren
      */
     public List<Eintrag<Benutzer, Boolean>> getAuswahl() {
         return auswahl;
     }
 
     /**
-     * @param p_auswahl
+     * @param p_auswahl Eine gefilterte Liste von Einträgen mit Benutzer/Boolean Paaren
      */
     public void setAuswahl(List<Benutzer> p_auswahl) {
         this.auswahl.clear();

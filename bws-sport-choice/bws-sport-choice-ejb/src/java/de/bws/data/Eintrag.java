@@ -5,45 +5,62 @@
  */
 package de.bws.data;
 
+import de.bws.entities.Benutzer;
+
 /**
+ * Weist einem Schlüssel einen Wert zu.
  *
  * @author joshua
+ * @param <K> Typ des Schlüssels (Key)
+ * @param <V> Typ des Wertes (Value)
  */
 public class Eintrag <K,V>{
+    
+    // Attribut für den Schlüssel
     private K key;
+    
+    // Attribut für den Wert
     private V value;
     
+    /**
+     * Erstellt eine neue Instanz von Eintrag. Der übergebenen Schlüssel und Wert
+     * werden den Attributen "key" und "value" zugewiesen;
+     * 
+     * @param p_key
+     * @param p_value 
+     */
     public Eintrag(K p_key, V p_value){
         this.key = p_key;
         this.value = p_value;
     }
 
     /**
-     * @return the key
+     * @return der Schlüssel
      */
     public K getKey() {
         return key;
     }
     
     /**
-     * 
-     * @param key 
+     * @param key der Schlüssel
      */
-    private void setKey(K key){
-        this.key = key;
+    private void setKey(K p_key){
+        this.key = p_key;
     }
 
     /**
-     * @return the value
+     * @return der Wert
      */
     public V getValue() {
         return value;
     }
 
     /**
-     * @param value the value to set
+     * @param p_value der Wert
      */
-    public void setValue(V value) {
-        this.value = value;
+    public void setValue(V p_value) {
+        this.value = p_value;
+        if(this.key instanceof Benutzer)
+        System.out.println(((Benutzer)this.key).getBenutzername() + " set value: " + this.value);
     }
 }

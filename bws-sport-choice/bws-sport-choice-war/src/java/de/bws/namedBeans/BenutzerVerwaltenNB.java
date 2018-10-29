@@ -53,30 +53,33 @@ public class BenutzerVerwaltenNB implements Serializable{
     
     private Stufe stufe;
     private String rolle;
-    private Eintrag<Benutzer, Boolean> testEintrag;
     
-    /**
+    private String error;
+    
+    /** 
      * Creates a new instance of BenutzerVerwaltenNB
      */
     public BenutzerVerwaltenNB() {
+        
     }
 
     
     @PostConstruct
     private void init(){
-        this.testEintrag = new Eintrag<>(benutzerNB.getAlleBenutzer().get(0), false);
+        this.error = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("lastError");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "");
     }
     
     public String loeschen(){
         System.out.println("start löschen");
-//        for(Eintrag<Benutzer, Boolean> e:this.benutzerNB.getAuswahl()){
-//            log.log(Level.WARNING, "Entry: {0} ({1})", new Object[]{e.getKey().getBenutzername(), e.getValue()});
-//            if(e.getValue()){
-//                log.warning("lösche " + e.getKey().getBenutzername());
+        for(Eintrag<Benutzer, Boolean> e:this.benutzerNB.getAuswahl()){
+            log.log(Level.WARNING, "Entry: {0} ({1})", new Object[]{e.getKey().getBenutzername(), e.getValue()});
+            if(e.getValue()){
+                log.warning("lösche " + e.getKey().getBenutzername());
 //                this.benutzerBean.remove(e.getKey());
-//            }
-//        }
-        System.out.println(this.testEintrag.getKey().getBenutzername() + " | " + this.testEintrag.getValue());
+            }
+        }
+       
         return "benutzerVerwalten";
     }
     
@@ -161,17 +164,16 @@ public class BenutzerVerwaltenNB implements Serializable{
     }
 
     /**
-     * @return the testEintrag
+     * @return the error
      */
-    public Eintrag<Benutzer, Boolean> getTestEintrag() {
-        return testEintrag;
+    public String getError() {
+        return error;
     }
 
     /**
-     * @param testEintrag the testEintrag to set
+     * @param error the error to set
      */
-    public void setTestEintrag(Eintrag<Benutzer, Boolean> testEintrag) {
-        this.testEintrag = testEintrag;
+    public void setError(String error) {
+        this.error = error;
     }
-
 }

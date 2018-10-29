@@ -34,6 +34,7 @@
                         <h:form>
                             <fieldset>
                                 <legend>Benutzerverwaltung</legend>
+                                <h:outputText id="error" value="#{benutzerVerwaltenNB.error}" style="color: red" />
                                 <!--<div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Rolle</span>
@@ -78,12 +79,11 @@
                                                 <td class="lehrer"><h:outputText value="#{entry.key.person.kuerzel}" /></td>
                                                 <td class="schueler"><h:outputText value="#{entry.key.person.tutor.kuerzel}" /></td>
                                                 <td class="schueler"><h:outputText value="#{entry.key.person.stufe.bezeichnung}" /></td>
-                                                <td><h:selectBooleanCheckbox class="cbWaehlen" value="#{entry.value}" /></td>
+                                                <td><h:selectBooleanCheckbox immediate="true" class="cbWaehlen" value="#{entry.value}" /></td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                                <h:selectBooleanCheckbox class="cbWaehlen" value="#{benutzerVerwaltenNB.testEintrag.value}" />
                             
                                 <h:commandButton class="small button" id="anlegen" value="Anlegen.." action="benutzerAnlegen" />
                                 <h:commandButton class="small button" value="Ändern.." action="#{benutzerVerwaltenNB.aendern()}" />
