@@ -120,7 +120,7 @@
                                 </div>
                                 <fieldset>
                                     <legend>Thema hinzufügen</legend>                                    
-                                    <p:dataTable id="themenTabelle" var="thema" value="#{kursNB.themen}" >
+                                    <p:dataTable id="themenTabelle" var="thema" value="#{kursNB.themen}">
                                         <p:column headerText="Anteil in %">
                                             <h:outputText value="#{thema.anteil}"/>
                                         </p:column>
@@ -131,7 +131,8 @@
                                             <h:outputText value="#{thema.schwerpunkt}"/>
                                         </p:column>
                                         <p:column>
-                                            <p:commandButton class="small button" value="Löschen" update="themenTabelle" action="#{kursNB.removeThema(thema)}" />
+                                            <p:commandButton id="#{thema.bezeichnung}Thema" class="small button" value="Löschen" update="themenTabelle" action="#{kursNB.removeThema(thema)}">
+                                            </p:commandButton>
                                         </p:column>
                                     </p:dataTable>
                                     <div class="row collapse area">
@@ -158,7 +159,7 @@
                                             <h:inputText id="schwerpunkt" class="input-group-field" value="#{kursNB.schwerpunkt}"/>
                                         </div>
                                     </div>
-                                    <p:commandButton id="addThema" class="small button" value="Hinzufügen" update="themenTabelle" action="#{kursNB.addThema()}" />
+                                    <p:commandButton id="addThema" class="small button" value="Hinzufügen" update="m1 m2 m3 m4 m5 themenTabelle" action="#{kursNB.addThema()}" />
                                 </fieldset>
                                 
                                 <h:commandButton class="small button" id="kursAnlegen" value="Anlegen"  action="#{kursNB.anlegen()}" type="submit"></h:commandButton>

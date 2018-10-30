@@ -112,7 +112,7 @@
                                 </div>
                                 <div>
                                     <!--<h:commandButton class="small button" id="benutzerAnlegen" value="Anlegen" action="#!{benutzerAnlegenNB.anlegen()}" />-->
-                                    <p:commandButton type="button" class="small button" id="benutzerAnlegen" value="Anlegen" action="#{benutzerAnlegenNB.anlegen()}" update=":dialog" oncomplete="PF('dialogErstanmeldung').show();"/>
+                                    <p:commandButton type="button" class="small button" id="benutzerAnlegen" value="Anlegen" action="#{benutzerAnlegenNB.anlegen()}" update="@form" onclick="PF('dialogErstanmeldung').show();"/>
                                 </div> 
                             </fieldset>
                         </h:form>

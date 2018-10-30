@@ -127,7 +127,7 @@
                                 </div>
                                <fieldset>
                                     <legend>Thema bearbeiten</legend>   
-                                    <h:outputText value="#{loginNB.error}" style="color: red"/>
+                                    <h:outputText id="error" value="#{loginNB.error}" style="color: red"/>
                                     <p:dataTable id="themenTabelle" var="thema" value="#{kursNB.themen}" >
                                         <p:column headerText="Anteil in %">
                                             <h:outputText value="#{thema.anteil}"/>
@@ -166,7 +166,7 @@
                                             <h:inputText id="schwerpunkt" class="input-group-field" value="#{kursNB.schwerpunkt}"/>
                                         </div>
                                     </div>
-                                    <p:commandButton id="addThema" class="small button" value="Hinzufügen" update="themenTabelle" action="#{kursNB.bearbeitenAddThema()}" />
+                                    <p:commandButton id="addThema" class="small button" value="Hinzufügen" update="m1 m2 m3 m4 m5 error themenTabelle" action="#{kursNB.bearbeitenAddThema()}" />
                                 </fieldset>
                                 <h:commandButton class="small button" id="kursBearbeiten" value="Speichern" action="#{kursNB.bearbeiten()}" type="submit"/>
                             </fieldset>
