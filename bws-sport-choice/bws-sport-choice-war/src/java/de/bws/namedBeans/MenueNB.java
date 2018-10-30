@@ -206,20 +206,20 @@ public class MenueNB implements Serializable {
         List<Kurs> kursList = this.kursBean.get("SELECT k FROM Kurs k");
         Kurs k = null;
         
-        // Iteration über die Liste der Kurse und Überprüfung ob aktueller Benutzer, hier Schüler, Teilnehmer ist
-        if (this.benutzer.getPerson().getClass().equals(Schueler.class)) {
-            for (Kurs kTmp : kursList) {
-                if (kTmp.getTeilnehmer().contains((Schueler) this.benutzer.getPerson())) {
-                    k = kTmp;
+            // Iteration über die Liste der Kurse und Überprüfung ob aktueller Benutzer, hier Schüler, Teilnehmer ist
+            if (this.benutzer.getPerson() instanceof Schueler) {
+                for (Kurs kTmp : kursList) {
+                    if (kTmp.getTeilnehmer().contains((Schueler) this.benutzer.getPerson())) {
+                        k = kTmp;
+                    }
+
                 }
-
             }
-        }
 
-        // Wenn ein Kurs gefunden wurde dem der Schüler zugeordnet ist, ist das Ergebnis 'true'
-        if(k != null){
-            tmp = true;
-        }
+            // Wenn ein Kurs gefunden wurde dem der Schüler zugeordnet ist, ist das Ergebnis 'true'
+            if(k != null){
+                tmp = true;
+            }
         
         return tmp;
     }
@@ -238,7 +238,7 @@ public class MenueNB implements Serializable {
         Kurs k = null;
         
         // Iteration über Liste der Kurse und Überprüfung ob der aktuelle Benutzer, hier Schüler, Teilnehmer ist 
-        if (this.benutzer.getPerson().getClass().equals(Schueler.class)) {
+        if (this.benutzer.getPerson() instanceof Schueler) {
             for (Kurs kTmp : kursList) {
                 if (kTmp.getTeilnehmer().contains((Schueler) this.benutzer.getPerson())) {
                     k = kTmp;
