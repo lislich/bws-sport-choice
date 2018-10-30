@@ -11,6 +11,7 @@ import de.bws.entities.Person;
 import de.bws.entities.Schueler;
 import de.bws.sessionbeans.BenutzerFacadeLocal;
 import de.bws.sessionbeans.LehrerFacadeLocal;
+import de.bws.sessionbeans.PersonFacadeLocal;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -26,13 +27,16 @@ import javax.inject.Named;
  */
 @Named("benutzerAendernNB")
 @ViewScoped
-public class benutzerAendernNB implements Serializable{
+public class BenutzerAendernNB implements Serializable{
     
     @EJB
     private BenutzerFacadeLocal benutzerBean;
     
     @EJB
     private LehrerFacadeLocal lehrerBean;
+    
+    @EJB
+    private PersonFacadeLocal personBean;
     
     private Benutzer benutzer;
     private String error;
@@ -60,14 +64,18 @@ public class benutzerAendernNB implements Serializable{
     }
 
     public String aenderungenSpeichern(){
+        System.out.println("Änderungen speichern");
         if(this.benutzer != null){
+            if(this.benutzer.getPerson() != null){
+                this.personBean.edit(this.benutzer.getPerson());
+            }
+            System.out.println("Ändern: " + benutzer.getBenutzername());
             this.benutzerBean.edit(benutzer);
         } else {
             Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-            sessionMap.put("lastError", "Beim Aktualisieren der BEnutzerdaten ist ein Fehler aufgetreten.");
+            sessionMap.put("lastError", "Beim Aktualisieren der Benutzerdaten ist ein Fehler aufgetreten.");
             return "benutzerVerwalten";
         }
-        
         return "benutzerVerwalten";
     }
     

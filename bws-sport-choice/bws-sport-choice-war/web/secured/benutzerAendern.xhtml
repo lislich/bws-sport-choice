@@ -35,7 +35,7 @@
                         <h:form>
                             <fieldset>
                                <div>
-                                   <h:outputText id="error" value="#{benutzerAendernNB.error}"/>
+                                   <h:outputText id="error" value="#{benutzerAendernNB.error}" style="color: red" />
                                 </div>
                                 <legend>Benutzer anlegen</legend>
                                <div class="row collapse">
@@ -62,40 +62,40 @@
                                         <h:inputText id="vorname" class="input-group-field" value="#{benutzerAendernNB.benutzer.person.vorname}" />
                                     </div>
                                 </div>
-                                <h:panelGroup rendered="#{benutzerAendernNB.schueler}">
+                            <!--    <h:panelGroup rendered="#/{benutzerAendernNB.schueler}">
                                     <div class="row collapse area">
                                         <div class="small-4 columns">
                                             <span class="prefix">Tutor</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">
-                                            <h:selectOneMenu id="tutor" class="input-group-field" value="#{benutzerAendernNB.benutzer.person.tutor}"  >
-                                                <f:selectItems value="#{benutzerAendernNB.tutoren}" var="tutor" itemValue="#{tutor.id}" itemLabel="#{tutor.kuerzel}"/>
+                                            <h:selectOneMenu id="tutor" class="input-group-field" value="#/{benutzerAendernNB.benutzer.person.tutor}"  >
+                                                <f:selectItems value="#/{benutzerAendernNB.tutoren}" var="tutor" itemValue="#/{tutor.id}" itemLabel="#/{tutor.kuerzel}"/>
                                             </h:selectOneMenu>
                                         </div>
                                     </div>
                                 </h:panelGroup>
-                                <h:panelGroup rendered="#{benutzerAendernNB.lehrer}">
+                                <h:panelGroup rendered="#/{benutzerAendernNB.lehrer}">
                                     <div class="row collapse area">
                                         <div class="small-4 columns">
                                             <span class="prefix">Kürzel</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">
-                                            <h:inputText id="kuerzel" class="input-group-field" value="#{benutzerAendernNB.benutzer.person.kuerzel}" />
+                                            <h:inputText id="kuerzel" class="input-group-field" value="#/{benutzerAendernNB.benutzer.person.kuerzel}" />
                                         </div>
                                     </div>
                                 </h:panelGroup>
-                                <h:panelGroup rendered="#{benutzerAendernNB.schueler}">
+                                <h:panelGroup rendered="#/{benutzerAendernNB.schueler}">
                                     <div class="row collapse area">
                                         <div class="small-4 columns">
                                             <span class="prefix">Stufe</span>
                                         </div>
-                                        <div class="small-8 columns mobile-input" >
-                                            <h:selectOneMenu id="stufe" class="input-group-field" value="#{benutzerAendernNB.benutzer.person.stufe}">
-                                                <f:selectItems value="#{stufeNB.alleStufen}" var="stufe" itemValue="#{stufe.id}" itemLabel="#{stufe.bezeichnung}"/>
+                                        <div class="small-8 columns mobile-input" > 
+                                            <h:selectOneMenu id="stufe" class="input-group-field" value="#/{benutzerAendernNB.benutzer.person.stufe}">
+                                                <f:selectItems value="#/{stufeNB.alleStufen}" var="stufe" itemValue="#/{stufe.id}" itemLabel="#/{stufe.bezeichnung}"/>
                                             </h:selectOneMenu>
                                         </div>
                                     </div>
-                                </h:panelGroup>
+                                </h:panelGroup> -->
                                 <div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Benutzername</span>
@@ -103,9 +103,9 @@
                                     <div class="small-8 columns mobile-input">
                                         <h:inputText id="benutzername" class="input-group-field" value="#{benutzerAendernNB.benutzer.benutzername}"/>
                                     </div>
-                                </div> -->
+                                </div>
                                 <div>
-                                    <h:commandButton type="submit" class="small button" id="speichern" value="Speichern" action="" />
+                                    <h:commandButton type="submit" class="small button" id="speichern" value="Speichern" action="#{benutzerAendernNB.aenderungenSpeichern()}" />
                                 </div> 
                             </fieldset>
                         </h:form>
