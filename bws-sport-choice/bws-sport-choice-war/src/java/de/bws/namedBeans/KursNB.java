@@ -336,6 +336,7 @@ public class KursNB implements Serializable {
      */
     
     public Thema addThema() {
+        System.out.println("de.bws.namedBeans.KursNB.addThema()");
         // Bezeichnung und Schwerpunkt werden auf leeren String überprüft, da dies nicht zulässig ist.
         if(bezeichnung.equals("") || schwerpunkt.equals("")){
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Bitte geben Sie eine Bezeichnung und einen Schwerpunkt an.");

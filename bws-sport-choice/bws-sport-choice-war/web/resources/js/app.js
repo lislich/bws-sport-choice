@@ -78,10 +78,5 @@ $(document).ready(function () {
         $(".disableSelectThemengleich").attr("disabled", false);
         $(".disableThemengleich").replaceWith($(".disableSelectThemengleich"));
     });
-
-
-    $("#benutzerAnlegen").click(function(){
-        $("#dlgErstanmeldung").show();
-    });
 });
 

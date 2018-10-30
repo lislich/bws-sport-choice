@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -127,26 +128,20 @@
                                <fieldset>
                                     <legend>Thema bearbeiten</legend>   
                                     <h:outputText value="#{loginNB.error}" style="color: red"/>
-                                    <h:dataTable id="themenTabelle" value="#{kursNB.themen}" var="thema">
-                                        <h:column>
-                                            <f:facet name="header">Anteil in %</f:facet>
-                                            #{thema.anteil}
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">Bezeichnung</f:facet>
-                                            #{thema.bezeichnung}
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header">Schwerpunkt</f:facet>
-                                            #{thema.schwerpunkt}
-                                        </h:column>
-                                        <h:column>
-                                            <f:facet name="header"></f:facet>
-                                            <h:commandButton class="small button deleteRow" value="Löschen"  action="#{kursNB.bearbeitenRemoveThema(thema)}">
-                                               <!-- <f:ajax render="themenTabelle"/>-->
-                                            </h:commandButton>
-                                        </h:column>
-                                    </h:dataTable>
+                                    <p:dataTable id="themenTabelle" var="thema" value="#{kursNB.themen}" >
+                                        <p:column headerText="Anteil in %">
+                                            <h:outputText value="#{thema.anteil}"/>
+                                        </p:column>
+                                        <p:column headerText="Bezeichnung">
+                                            <h:outputText value="#{thema.bezeichnung}"/>
+                                        </p:column>
+                                        <p:column headerText="Schwerpunkt">
+                                            <h:outputText value="#{thema.schwerpunkt}"/>
+                                        </p:column>
+                                        <p:column>
+                                            <p:commandButton class="small button" value="Löschen" update="themenTabelle" action="#{kursNB.bearbeitenRemoveThema(thema)}" />
+                                        </p:column>
+                                    </p:dataTable>
                                     <div class="row collapse area">
                                         <div class="small-4 columns">
                                             <span class="prefix">Anteil in %</span>
@@ -171,12 +166,7 @@
                                             <h:inputText id="schwerpunkt" class="input-group-field" value="#{kursNB.schwerpunkt}"/>
                                         </div>
                                     </div>
-                                    <h:commandButton id="addThema" class="small button" value="Hinzufügen" >
-                                        <f:ajax event="click" 
-                                                render="themenTabelle" 
-                                                execute="@form"
-                                                listener="#{kursNB.bearbeitenAddThema()}" />
-                                    </h:commandButton>
+                                    <p:commandButton id="addThema" class="small button" value="Hinzufügen" update="themenTabelle" action="#{kursNB.bearbeitenAddThema()}" />
                                 </fieldset>
                                 <h:commandButton class="small button" id="kursBearbeiten" value="Speichern" action="#{kursNB.bearbeiten()}" type="submit"/>
                             </fieldset>

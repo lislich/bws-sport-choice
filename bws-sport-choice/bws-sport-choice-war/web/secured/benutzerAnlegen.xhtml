@@ -35,11 +35,13 @@
                 <div class="row">
                     <div class="small-12 columns small-centered">
                         <h:form prependId="false">
-                            <p:dialog id="dlgErstanmeldung" class="dialog" widgetVar="dialogErstanmeldung" header="Anmeldedaten Erstanmeldung" modal="true" draggable="false" closable="true">
+                            <p:dialog id="dlgErstanmeldung" class="dialog" widgetVar="dialogErstanmeldung" header="Anmeldedaten Erstanmeldung"
+                                      modal="true" draggable="false" closable="true" fitViewport="true" resizable="false" >
                                 <h:outputText value="Der Benutzer wurde erfolgreich angelegt. Bitte notieren Sie sich das Passwort! Das Passwort kann nach dem Schließen dieses Fensters nicht mehr angezeigt werden."/><br/><br/>                           
                                 <h:outputText value="Benutzer: #{benutzerAnlegenNB.benutzername}"/><br/>
                                 <h:outputText value="Passwort: #{benutzerAnlegenNB.passwort}"/><br/>
-                                <p:commandButton id="closeDialog" value="Ok" action="benutzerAnlegen"/>
+                                <!--<p:commandButton value="Anlegen" action="#7{benutzerAnlegenNB.anlegen()}" update="dlgErstanmeldung"/>-->
+                                <p:commandButton id="closeDialog" value="Ok" action="benutzerAnlegen" onclick="PF('dialogErstanmeldung').hide()"/>
                             </p:dialog>
                             <fieldset>
                                 <div>
@@ -110,7 +112,7 @@
                                 </div>
                                 <div>
                                     <!--<h:commandButton class="small button" id="benutzerAnlegen" value="Anlegen" action="#!{benutzerAnlegenNB.anlegen()}" />-->
-                                    <p:commandButton type="button" class="small button" id="benutzerAnlegen" value="Anlegen" actionListener="#{benutzerAnlegenNB.anlegen()}" onclick="PF('dialogErstanmeldung').show();"/>
+                                    <p:commandButton type="button" class="small button" id="benutzerAnlegen" value="Anlegen" action="#{benutzerAnlegenNB.anlegen()}" update=":dialog" oncomplete="PF('dialogErstanmeldung').show();"/>
                                 </div> 
                             </fieldset>
                         </h:form>
