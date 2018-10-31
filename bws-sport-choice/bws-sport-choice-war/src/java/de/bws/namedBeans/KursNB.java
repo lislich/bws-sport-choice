@@ -1,5 +1,6 @@
 package de.bws.namedBeans;
 
+import de.bws.data.Eintrag;
 import de.bws.entities.Benutzer;
 import de.bws.entities.Kurs;
 import de.bws.entities.Lehrer;
@@ -95,7 +96,7 @@ public class KursNB implements Serializable {
     
     
     // Liste der Unterthemen in einem Kurs
-    private List<Thema> themen;
+    private List<Eintrag<Thema, Boolean>> themen;
 
    
     // Bezeichnung eines Themas
@@ -132,7 +133,7 @@ public class KursNB implements Serializable {
                 }
                 this.setThemen(new ArrayList<>());
                 for(int j = 0; j < p_themen.length; j++){
-                    this.themen.add(p_themen[j]);
+                    this.getThemen().add(new Eintrag(p_themen[j], false));
                 }
                 if(kurs.getTeilnehmerzahl() == 999){
                     this.setTeilnehmerUnbegrenzt(true);
@@ -161,8 +162,8 @@ public class KursNB implements Serializable {
      * Diese Methode ruft eine andere Methode der Klasse auf und
      * wird für das Bearbeiten eines Kurses genutzt.
      */
-    public void bearbeitenRemoveThema(Thema p_thema){
-        this.removeThema(p_thema);
+    public void bearbeitenRemoveThema(){
+        this.removeThema();
     }
 
     /**
@@ -173,9 +174,6 @@ public class KursNB implements Serializable {
      * @return String zur Navigation auf nächste Seite
      */
     public String bearbeiten() {
-        // Setzt neuen Zeitstempel
-        kurs.setJahr(new Timestamp(System.currentTimeMillis()));
-        
         // Wenn eine neue Stufe gesetzt wurde wird diese aus der Datenbank gesucht
         if (stufeNeu != null) {
             kurs.setStufe(this.findStufe(stufeNeu));
@@ -193,17 +191,20 @@ public class KursNB implements Serializable {
         }
        
         // Iteration über die Themen, die dem Kurs zugewiesen/entfernt werden sollen
-        for (Thema t : themen) {
+        List<Thema> tmpList = new ArrayList<>();
+        for (Eintrag e : this.getThemen()) {
+            Thema t = (Thema)e.getKey();
             if(t.getId() == null){
                 this.themaBean.create(t);
             }         
+            tmpList.add(t);
         }
         for(Thema t : kurs.getThema()){
-            if(!(this.themen.contains(t))){
+            if(!(tmpList.contains(t))){
                 this.themaBean.remove(t);
             }
         }
-        kurs.setThema(themen);
+        kurs.setThema(tmpList);
 
         this.kursBean.edit(kurs);
         for (Thema t : kurs.getThema()){
@@ -262,6 +263,10 @@ public class KursNB implements Serializable {
             rueckgabe = "Fehler";
         }       
      
+        if(this.getThemen().isEmpty()){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Bitte legen Sie mindestens 1 Thema an.");
+            rueckgabe = "Fehler";
+        }
         /**
          * Sollten während der vorherigen Überprüfungen keine Fehler aufgetreten sein, wird der Kurs in der Datenbank angelegt.
          * Außerdem werden die Themen angelegt und dem Kurs hinzugefügt.
@@ -279,20 +284,25 @@ public class KursNB implements Serializable {
             kursT.setThemengleich(p_kurs);
             kursT.setStufe(p_stufe);
 
-            for (Thema t : themen) {
-                this.themaBean.create(t);
+            for (Eintrag e : this.getThemen()) {
+                this.themaBean.create((Thema) e.getKey());
             }
-            kursT.setThema(themen);
-            this.kursBean.create(kursT);           
+
+            List<Thema> tmp = new ArrayList<>();
+            for (Eintrag e : this.getThemen()) {
+                tmp.add((Thema) e.getKey());
+            }
+            kursT.setThema(tmp);
+            this.kursBean.create(kursT);
         }
         return rueckgabe;
     }
 
     /**
      * @author Lisa
-     * 
-     * Diese Methode holt den ausgewählten Kurs, der angeschaut oder bearbeitet werden soll, aus dem akutellen
-     * Kontext.
+     *
+     * Diese Methode holt den ausgewählten Kurs, der angeschaut oder bearbeitet
+     * werden soll, aus dem akutellen Kontext.
      */
     public void getGewaehlterKurs() {
         this.kurs = ((Kurs) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("gewaehlterKurs"));
@@ -352,7 +362,8 @@ public class KursNB implements Serializable {
         // Die Anteile der bereits vorhandenen Themen werden summiert.
         int gesamtAnteil = 0;
         if (!this.getThemen().isEmpty()) {
-            for (Thema t : this.getThemen()) {
+            for (Eintrag e : this.getThemen()) {
+                Thema t = (Thema) e.getKey();
                 gesamtAnteil += t.getAnteil();
             }
         }
@@ -363,7 +374,7 @@ public class KursNB implements Serializable {
             tmp.setAnteil(anteil);
             tmp.setBezeichnung(bezeichnung);
             tmp.setSchwerpunkt(schwerpunkt);
-            this.themen.add(tmp);
+            this.getThemen().add(new Eintrag(tmp, false));
             return tmp;
         } else {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Die Summe der Themen-Anteile darf maximal 100 betragen!");
@@ -373,12 +384,23 @@ public class KursNB implements Serializable {
 
     /**
      * @author Lisa
-     * @param p_thema Thema
      * 
-     * Das übergebene Thema wird aus der Liste der Themen entfernt
+     * Die ausgewählten Themen werden aus der Liste der Themen entfernt
      */   
-    public void removeThema(Thema p_thema) {
-        this.themen.remove(p_thema);
+    public void removeThema() {
+        List<Eintrag> themenToRemove = new ArrayList<>();
+        for(Eintrag e : this.themen){
+            Thema t = (Thema)e.getKey();
+            System.out.println("##Einträge: " + t.getBezeichnung() + " " + (Boolean)e.getValue());
+            if((Boolean)e.getValue()){
+                System.out.println("######Zu löschen: " + t.getBezeichnung());
+                themenToRemove.add(e);
+            }
+        }
+        for(Eintrag e : themenToRemove){
+            System.out.println("## Index-of:" + ((Thema)e.getKey()).getBezeichnung());
+            this.themen.remove(e);
+        }
     }    
     
     //  ################# Getter- und Setter-Methoden. ########################################
@@ -554,19 +576,21 @@ public class KursNB implements Serializable {
     /**
      * @return the themen
      */
-    public List<Thema> getThemen() {
-        if (themen == null) {
+    public List<Eintrag<Thema, Boolean>> getThemen() {
+        if(this.themen == null){
             themen = new ArrayList<>();
         }
         return themen;
     }
 
     /**
-     * @param p_themen the themen to set
+     * @param themen the themen to set
      */
-    public void setThemen(List<Thema> p_themen) {
-        this.themen = p_themen;
+    public void setThemen(List<Eintrag<Thema, Boolean>> themen) {
+        this.themen = themen;
     }
+
+
 
     /**
      * @return the stufeNeu

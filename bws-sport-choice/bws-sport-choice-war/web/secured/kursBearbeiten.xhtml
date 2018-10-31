@@ -128,19 +128,22 @@
                                <fieldset>
                                     <legend>Thema bearbeiten</legend>   
                                     <h:outputText id="error" value="#{loginNB.error}" style="color: red"/>
-                                    <p:dataTable id="themenTabelle" var="thema" value="#{kursNB.themen}" >
+                                    <p:dataTable id="themenTabelle" var="eintrag" value="#{kursNB.themen}" >
                                         <p:column headerText="Anteil in %">
-                                            <h:outputText value="#{thema.anteil}"/>
+                                            <h:outputText value="#{eintrag.key.anteil}"/>
                                         </p:column>
                                         <p:column headerText="Bezeichnung">
-                                            <h:outputText value="#{thema.bezeichnung}"/>
+                                            <h:outputText value="#{eintrag.key.bezeichnung}"/>
                                         </p:column>
                                         <p:column headerText="Schwerpunkt">
-                                            <h:outputText value="#{thema.schwerpunkt}"/>
+                                            <h:outputText value="#{eintrag.key.schwerpunkt}"/>
                                         </p:column>
                                         <p:column>
-                                            <p:commandButton class="small button" value="Löschen" update="themenTabelle" action="#{kursNB.bearbeitenRemoveThema(thema)}" />
+                                            <h:selectBooleanCheckbox value="#{eintrag.value}" />
                                         </p:column>
+                                        <f:facet name='footer'>
+                                            <p:commandButton class="small button" value="Löschen" update="themenTabelle" action="#{kursNB.removeThema()}" />
+                                        </f:facet>>
                                     </p:dataTable>
                                     <div class="row collapse area">
                                         <div class="small-4 columns">
@@ -166,7 +169,7 @@
                                             <h:inputText id="schwerpunkt" class="input-group-field" value="#{kursNB.schwerpunkt}"/>
                                         </div>
                                     </div>
-                                    <p:commandButton id="addThema" class="small button" value="Hinzufügen" update="m1 m2 m3 m4 m5 error themenTabelle" action="#{kursNB.bearbeitenAddThema()}" />
+                                    <p:commandButton id="addThema" class="small button" value="Hinzufügen" update="m1 m2 m3 m4 m5 error themenTabelle" action="#{kursNB.addThema()}" />
                                 </fieldset>
                                 <h:commandButton class="small button" id="kursBearbeiten" value="Speichern" action="#{kursNB.bearbeiten()}" type="submit"/>
                             </fieldset>
