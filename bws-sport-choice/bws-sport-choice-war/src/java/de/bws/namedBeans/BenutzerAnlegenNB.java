@@ -93,20 +93,15 @@ public class BenutzerAnlegenNB implements Serializable{
         neuerBenutzer.setPerson(neuePerson);
         neuerBenutzer.setBenutzername(this.benutzername);
         neuerBenutzer.setRolle(this.rolle);
-        try {
-            neuerBenutzer.setNeuesPasswort(Passwort.passwortGenerieren());
+        try {           
             this.benutzerBean.create(neuerBenutzer);
+            this.passwort = Passwort.passwortGenerieren();
+            neuerBenutzer.setNeuesPasswort(this.passwort);
         } catch (Exception ex) {
             Logger.getLogger(BenutzerAnlegenNB.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Fehler beim Anlegen des Benutzers.");
         }
-            
-        
-        try {           
-            this.passwort = Passwort.passwortGenerieren();
-        } catch (NoSuchAlgorithmException ex) {
-            Logger.getLogger(BenutzerAnlegenNB.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
         System.out.println("Bean-Methode \"anmelden\" wird usgefürht. B: " + this.benutzername + ", P: " + this.passwort );
         
 //        String msgText = "Benutzer: " + this.benutzername + "\nPasswort: " + this.passwort;

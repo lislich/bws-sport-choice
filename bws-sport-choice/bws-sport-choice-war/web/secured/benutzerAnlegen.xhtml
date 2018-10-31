@@ -39,7 +39,7 @@
                                       modal="true" draggable="false" closable="true" fitViewport="true" resizable="false" width="400" position="center" >
                                 <p:outputPanel id="pnl">
                                     <h:outputText value="Der Benutzer wurde erfolgreich angelegt. Bitte notieren Sie sich das Passwort! Das Passwort kann nach dem Schließen dieses Fensters nicht mehr angezeigt werden."/><br/><br/>                           
-                                    <p:commandButton id="closeDialog" value="Ok" action="benutzerAnlegen" onclick="PF('dialogErstanmeldung').hide()"/>
+                                    <p:commandButton id="closeDialog" value="Ok" action="benutzerAnlegen" onclick="PF('dialogErstanmeldung').hide(); window.location.replace();"/>
                                 </p:outputPanel>
                                 
                             </p:dialog>
