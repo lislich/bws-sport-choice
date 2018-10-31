@@ -36,12 +36,12 @@
                     <div class="small-12 columns small-centered">
                         <h:form prependId="false">
                             <p:dialog id="dlgErstanmeldung" class="dialog" widgetVar="dialogErstanmeldung" header="Anmeldedaten Erstanmeldung"
-                                      modal="true" draggable="false" closable="true" fitViewport="true" resizable="false" >
-                                <h:outputText value="Der Benutzer wurde erfolgreich angelegt. Bitte notieren Sie sich das Passwort! Das Passwort kann nach dem Schließen dieses Fensters nicht mehr angezeigt werden."/><br/><br/>                           
-                                <h:outputText value="Benutzer: #{benutzerAnlegenNB.benutzername}"/><br/>
-                                <h:outputText value="Passwort: #{benutzerAnlegenNB.passwort}"/><br/>
-                                <!--<p:commandButton value="Anlegen" action="#7{benutzerAnlegenNB.anlegen()}" update="dlgErstanmeldung"/>-->
-                                <p:commandButton id="closeDialog" value="Ok" action="benutzerAnlegen" onclick="PF('dialogErstanmeldung').hide()"/>
+                                      modal="true" draggable="false" closable="true" fitViewport="true" resizable="false" width="400" position="center" >
+                                <p:outputPanel id="pnl">
+                                    <h:outputText value="Der Benutzer wurde erfolgreich angelegt. Bitte notieren Sie sich das Passwort! Das Passwort kann nach dem Schließen dieses Fensters nicht mehr angezeigt werden."/><br/><br/>                           
+                                    <p:commandButton id="closeDialog" value="Ok" action="benutzerAnlegen" onclick="PF('dialogErstanmeldung').hide()"/>
+                                </p:outputPanel>
+                                
                             </p:dialog>
                             <fieldset>
                                 <div>
@@ -112,7 +112,7 @@
                                 </div>
                                 <div>
                                     <!--<h:commandButton class="small button" id="benutzerAnlegen" value="Anlegen" action="#!{benutzerAnlegenNB.anlegen()}" />-->
-                                    <p:commandButton type="button" class="small button" id="benutzerAnlegen" value="Anlegen" action="#{benutzerAnlegenNB.anlegen()}" update="@form" onclick="PF('dialogErstanmeldung').show();"/>
+                                    <p:commandButton id="benutzerAnlegen" class="small button" value="Anlegen" action="#{benutzerAnlegenNB.anlegen()}" update="pnl"/>
                                 </div> 
                             </fieldset>
                         </h:form>

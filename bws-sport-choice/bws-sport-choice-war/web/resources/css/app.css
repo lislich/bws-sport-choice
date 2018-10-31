@@ -1130,7 +1130,7 @@ select::-ms-expand {
 .prefix,
 .postfix {
     display: block;
-    position: relative;
+    /*position: relative;*/
     z-index: 2;
     text-align: center;
     width: 100%;

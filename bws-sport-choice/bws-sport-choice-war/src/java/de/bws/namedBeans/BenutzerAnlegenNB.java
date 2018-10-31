@@ -27,6 +27,7 @@ import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -71,8 +72,8 @@ public class BenutzerAnlegenNB implements Serializable{
     
     @PostConstruct
     private void init(){
-        this.benutzername = "Hello";
-        this.passwort = "world";
+//        this.benutzername = "Hello";
+//        this.passwort = "world";
     }
     
     /**
@@ -114,6 +115,15 @@ public class BenutzerAnlegenNB implements Serializable{
 //        RequestContext context = RequestContext.getCurrentInstance();
 //        context.update(":dialogErstanmeldung");
 //        context.execute("PF('dialogErstanmeldung').open();");
+        RequestContext context = RequestContext.getCurrentInstance();
+        String execute = "$('#pnl').append('<p>Bentzername: ";
+        execute += this.benutzername;
+        execute += " Passwort: ";
+        execute += this.passwort;
+        execute += "</p>')";
+        
+        context.execute(execute);
+        context.execute("PF('dialogErstanmeldung').show();");
        
         return "benutzerAnlegen";
     }
