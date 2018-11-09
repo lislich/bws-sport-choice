@@ -328,9 +328,9 @@ public class Kurs implements Serializable {
     }
     
     /**
-     * @param p_teilnehmer der Teilnehmer, der hinzugefügt werden soll
-     * @return Diese Methode gibt true zurück, wenn der Teilnehmer hinzugefügt wurde, und
-     * false, falls der Teilnehmer bereits in der Liste vorhanden ist
+     * @param p_thema  das Thema, das hinzugefügt werden soll
+     * @return Diese Methode gibt true zurück, wenn das Thema hinzugefügt wurde, und
+     * false, falls das Thema bereits in der Liste vorhanden ist
      */
     public boolean addThema(Thema p_thema){
         for(Thema t:this.thema){
@@ -344,9 +344,9 @@ public class Kurs implements Serializable {
     }
     
     /**
-     * @param p_teilnehmer der Teilnehner, der aus dem Kurs entfernt werden soll
-     * @return Diese Methode gibt true zurück, wenn der Teilnehmer entfernt wurde, 
-     * und false, falls der Teilnehmer nicht in der Liste ist.
+     * @param p_thema  das Thema, das aus dem Kurs entfernt werden soll
+     * @return Diese Methode gibt true zurück, wenn das Thema entfernt wurde, 
+     * und false, falls das Thema nicht in der Liste ist.
      */
     public boolean removeThema(Thema p_thema){
         int index = this.thema.indexOf(p_thema);
