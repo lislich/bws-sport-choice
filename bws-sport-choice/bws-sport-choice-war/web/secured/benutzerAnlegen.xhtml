@@ -63,7 +63,8 @@
                                         <span class="prefix">Nachname</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="name" class="input-group-field" value="#{benutzerAnlegenNB.nachname}"/>
+                                        <h:inputText id="nachname" class="input-group-field" value="#{benutzerAnlegenNB.nachname}" required="true" requiredMessage="Bitte geben Sie einen Nachnamen an."/>
+                                        <h:message id="msgNachname" for="nachname" style="color:red"/>
                                     </div>
                                 </div>                                
                                 <div class="row collapse">
@@ -71,7 +72,8 @@
                                         <span class="prefix">Vorname</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="vorname" class="input-group-field" value="#{benutzerAnlegenNB.vorname}" />
+                                        <h:inputText id="vorname" class="input-group-field" value="#{benutzerAnlegenNB.vorname}" required="true" requiredMessage="Bitte geben Sie einen Nachnamen an."/>
+                                        <h:message id="msgVorname" for="vorname" style="color:red"/>
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -107,7 +109,8 @@
                                         <span class="prefix">Benutzername</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="benutzername" class="input-group-field" value="#{benutzerAnlegenNB.benutzername}"/>
+                                        <h:inputText id="benutzername" class="input-group-field" value="#{benutzerAnlegenNB.benutzername}" required="true" requiredMessage="Bitte geben Sie einen Benutzernamen an."/>
+                                        <h:message id="msgBenutzername" for="benutzername" style="color:red"/>
                                     </div>
                                 </div>
                                 <div>

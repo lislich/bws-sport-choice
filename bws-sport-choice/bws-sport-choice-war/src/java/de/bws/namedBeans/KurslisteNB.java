@@ -7,7 +7,9 @@ import de.bws.entities.Schueler;
 import de.bws.entities.Stufe;
 import de.bws.sessionbeans.KursFacadeLocal;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
@@ -67,6 +69,24 @@ public class KurslisteNB implements Serializable {
     }
     
     // ##### Getter- und Setter-Methoden #################################################################
+    
+    /**
+     * 
+     * @author joshua
+     * @param p_kurse
+     * @return 
+     */
+    public List<Kurs> getAktuelleKurseFromList(List<Kurs> p_kurse){
+        Date jetzt = new Date();
+        List<Kurs> aktuelleKurse = new ArrayList<>();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+        for(Kurs k:p_kurse){
+            if(dateFormat.format(k.getJahr()).equals(dateFormat.format(jetzt))){
+                aktuelleKurse.add(k);
+            }
+        }
+        return aktuelleKurse;
+    }
     
     /**
      * @author Lisa
@@ -151,7 +171,7 @@ public class KurslisteNB implements Serializable {
         Benutzer b = (Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
         Stufe stufe = b.getPerson().getStufe();
         List<Kurs> tmpList = this.kursBean.get("SELECT k FROM Kurs k WHERE k.stufe.id = " + stufe.getId());
-        stufeKurse = tmpList;
+        stufeKurse = this.getAktuelleKurseFromList(tmpList);
         return stufeKurse;
     }
 

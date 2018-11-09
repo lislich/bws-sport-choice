@@ -20,15 +20,16 @@ import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 /**
  * @author Lisa
  * 
  * Diese ManagedBean dient zum Anlegen eines Wahlzeitraumes und zum Anlegen einer Wahl eines Schülers.
  */
-@Named(value = "wahlNB")
+@Named(value = "wahlNBTest")
 @ViewScoped
-public class WahlNB implements Serializable{
+public class WahlNBTest implements Serializable{
 
     // Schnittstelle zur Datenbank für Entitäten vom Typ Wahl
     @EJB
@@ -46,6 +47,8 @@ public class WahlNB implements Serializable{
     @EJB
     private SchuelerFacadeLocal schuelerBean;
     
+    @Inject
+    private KurslisteNB kurslisteNB;
     
     /**
      * Variablen zum Anlegen eines Wahlzeitraumes.
@@ -61,17 +64,13 @@ public class WahlNB implements Serializable{
      * Variablen zum Anlegen einer Wahl.
      */
     
-    // Erstwahl eines Schülers
-    private String ersteWahl;
-    
-    // Zweitwahl eines Schülers
-    private String zweiteWahl;
-    
-    // Drittwahl eines Schülers
-    private String dritteWahl;
-    
     // Auslastung eines Kurses durch Erstwahlen, als Information für Schüler
     private double auslastung;
+    
+    // Liste für die Repräsentation der Wahl
+    private List<Eintrag<Kurs, Boolean>> kurse;
+    private List<Integer> wahl;
+    private Schueler angemeldeterSchueler;
     
     /**
      * @author Lisa
@@ -84,28 +83,41 @@ public class WahlNB implements Serializable{
     @PostConstruct
     public void init(){
         // Benutzer bzw. Schüler wird ermittelt
-        Schueler sTmp = (Schueler)((Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer")).getPerson();
-        
+        this.angemeldeterSchueler = (Schueler)((Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer")).getPerson();
+        if(this.angemeldeterSchueler != null){
         // Eventuell bereits gespeicherter Wahlzeitraum wird ermittelt
-        Wahlzeitraum tmp;
-        try{
-            tmp = wahlzeitraumBean.get("SELECT wz FROM Wahlzeitraum wz").get(0);
-            if (tmp.getBeginn() != null) {
-                this.setBeginn(tmp.getBeginn());
+            Wahlzeitraum tmp;
+            try{
+                tmp = this.wahlzeitraumBean.get("SELECT wz FROM Wahlzeitraum wz").get(0);
+                if (tmp.getBeginn() != null) {
+                    this.setBeginn(tmp.getBeginn());
+                }
+                if (tmp.getEnde() != null) {
+                    this.setEnde(tmp.getEnde());
+                }
+                
+                this.kurse = this.pruefeThemengleich(kurslisteNB.getStufeKurse(), this.angemeldeterSchueler);
+
+                // Eventuell bereits gespeicherte Wahl wird ermittelt
+                Wahl wTmp = this.angemeldeterSchueler.getWahl();
+                this.wahl = new ArrayList();
+                if(wTmp != null){
+                    int laenge = this.kurse.size();
+                    for(int i = 0; i < laenge; i++){
+                        if(this.kurse.get(i).getKey().equals(wTmp.getErstwahl())){
+                           this.wahl.set(i, 1);
+                        } else if (this.kurse.get(i).getKey().equals(wTmp.getZweitwahl())) {
+                            this.wahl.set(i, 2);
+                        } else if (this.kurse.get(i).getKey().equals(wTmp.getDrittwahl())) {
+                            this.wahl.set(i, 3);
+                        } else {
+                            this.wahl.set(i, 0);
+                        }
+                    }
+                }
+            } catch(Exception e) {
+
             }
-            if (tmp.getEnde() != null) {
-                this.setEnde(tmp.getEnde());
-            }
-            
-            // Eventuell bereits gespeicherte Wahl wird ermittelt
-            Wahl wTmp = sTmp.getWahl();
-            if(wTmp != null){
-                 this.setErsteWahl(wTmp.getErstwahl().getId().toString());
-                 this.setZweiteWahl(wTmp.getZweitwahl().getId().toString());
-                 this.setDritteWahl(wTmp.getDrittwahl().getId().toString());
-            }
-        }catch(Exception e){
-            
         }
         
     }
@@ -149,60 +161,45 @@ public class WahlNB implements Serializable{
     }
 
     /**
-     * @author Lisa
+     * @author Lisa, Joshua
      * @return String zur Navigation zur nächsten Seite
      */
     public String saveWahl() {
         String rueckgabe = "Fehler";
         
-        // Aktueller Benutzer, hier Schüler, wird ermittelt
-        Benutzer b = (Benutzer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
-        Schueler s = (Schueler) b.getPerson();
+        if(this.angemeldeterSchueler != null){
+            // Falls der Schueler bereits gewählt hat, 
+            // ansonsten gibt es eine neue Wahl
+            if(this.angemeldeterSchueler.getWahl() == null){
+                this.angemeldeterSchueler.setWahl(new Wahl());
+            }
+
+            // Die Liste der Wahlen wird durchlaufen um die Erst-, Zweit- und Drittwahl zu finden
+            // und diese in "kurswahl" zu schreiben
+            int laenge = this.wahl.size();
+            for(int i = 0; i < laenge; i++){
+                switch(this.wahl.get(i)){
+                    case 1: 
+                        this.angemeldeterSchueler.getWahl().setErstwahl(this.kurse.get(i).getKey());
+                        break;
+                    case 2:
+                        this.angemeldeterSchueler.getWahl().setZweitwahl(this.kurse.get(i).getKey());
+                        break;
+                    case 3: 
+                        this.angemeldeterSchueler.getWahl().setDrittwahl(this.kurse.get(i).getKey());
+                        break;
+                }
+            }
+
+            // nur wenn alle drei Stimmen abgegeben wurden wird die Wahl in de Datenbank geschrieben
+            if(this.angemeldeterSchueler.getWahl().getErstwahl() != null && this.angemeldeterSchueler.getWahl().getZweitwahl() != null 
+                    && this.angemeldeterSchueler.getWahl().getDrittwahl() != null){
+                this.wahlBean.create(this.angemeldeterSchueler.getWahl());
+                this.schuelerBean.edit(this.angemeldeterSchueler);
+                rueckgabe = "Erfolg";
+            }
+        }
         
-        // Prüfung ob die Erst-, Zweit- und Drittwahl dieselben Kurse enthalten -> Fehler
-        if (ersteWahl.equals(zweiteWahl) || ersteWahl.equals(dritteWahl) || zweiteWahl.equals(dritteWahl)) {
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Bitte wählen Sie unterschiedliche Kurse.");
-        } else {
-            // Suchen der gewählten Kurse aus der Datenbank
-            Kurs p_eins = this.kursBean.find(Long.parseLong(getErsteWahl()));
-            Kurs p_zwei = this.kursBean.find(Long.parseLong(getZweiteWahl()));
-            Kurs p_drei = this.kursBean.find(Long.parseLong(getDritteWahl()));
-
-//            Kurs p_einsThemengleich = p_eins.getThemengleich();
-//            Kurs p_zweiThemengleich = p_zwei.getThemengleich();
-//            Kurs p_dreiThemengleich = p_drei.getThemengleich();
-//
-//            boolean fehler = false;
-//            fehler = this.pruefeThemengleich(p_dreiThemengleich, s);
-//            fehler = this.pruefeThemengleich(p_zweiThemengleich, s);
-//            fehler = this.pruefeThemengleich(p_einsThemengleich, s);
-//
-//            if (!fehler) {
-
-            // Wenn noch keine Wahl eingetragen ist, wird eine neue angelegt, ansonsten die vorhandene aktualisiert.
-            Wahl wahl = s.getWahl();
-            if (wahl == null) {
-                wahl = new Wahl();
-                wahl.setErstwahl(p_eins);
-                wahl.setZweitwahl(p_zwei);
-                wahl.setDrittwahl(p_drei);
-                this.wahlBean.create(wahl);
-            } else {
-                wahl.setErstwahl(p_eins);
-                wahl.setZweitwahl(p_zwei);
-                wahl.setDrittwahl(p_drei);
-                this.wahlBean.edit(wahl);
-            }
-
-            // Der Schüler bekommt die Wahl zugewiesen und wird in der Datenbank aktualisiert.
-            s.setWahl(wahl);
-            this.schuelerBean.edit(s);
-
-            rueckgabe = "gewaehlt";
-            }
-
-//        }
-
         return rueckgabe;
     }
     
@@ -280,47 +277,47 @@ public class WahlNB implements Serializable{
         this.ende = p_ende;
     }
 
-    /**
-     * @return the ersteWahl
-     */
-    public String getErsteWahl() {
-        return ersteWahl;
-    }
-
-    /**
-     * @param p_ersteWahl the ersteWahl to set
-     */
-    public void setErsteWahl(String p_ersteWahl) {
-        this.ersteWahl = p_ersteWahl;
-    }
-
-    /**
-     * @return the zweiteWahl
-     */
-    public String getZweiteWahl() {
-        return zweiteWahl;
-    }
-
-    /**
-     * @param p_zweiteWahl the zweiteWahl to set
-     */
-    public void setZweiteWahl(String p_zweiteWahl) {
-        this.zweiteWahl = p_zweiteWahl;
-    }
-
-    /**
-     * @return the dritteWahl
-     */
-    public String getDritteWahl() {
-        return dritteWahl;
-    }
-
-    /**
-     * @param p_dritteWahl the dritteWahl to set
-     */
-    public void setDritteWahl(String p_dritteWahl) {
-        this.dritteWahl = p_dritteWahl;
-    }
+//    /**
+//     * @return the ersteWahl
+//     */
+//    public String getErsteWahl() {
+//        return ersteWahl;
+//    }
+//
+//    /**
+//     * @param p_ersteWahl the ersteWahl to set
+//     */
+//    public void setErsteWahl(String p_ersteWahl) {
+//        this.ersteWahl = p_ersteWahl;
+//    }
+//
+//    /**
+//     * @return the zweiteWahl
+//     */
+//    public String getZweiteWahl() {
+//        return zweiteWahl;
+//    }
+//
+//    /**
+//     * @param p_zweiteWahl the zweiteWahl to set
+//     */
+//    public void setZweiteWahl(String p_zweiteWahl) {
+//        this.zweiteWahl = p_zweiteWahl;
+//    }
+//
+//    /**
+//     * @return the dritteWahl
+//     */
+//    public String getDritteWahl() {
+//        return dritteWahl;
+//    }
+//
+//    /**
+//     * @param p_dritteWahl the dritteWahl to set
+//     */
+//    public void setDritteWahl(String p_dritteWahl) {
+//        this.dritteWahl = p_dritteWahl;
+//    }
 
     /**
      * @author Lisa
@@ -346,7 +343,7 @@ public class WahlNB implements Serializable{
         
         // Wenn der Kurs mehr als 0 mal gewählt wurde, wird die Auslastung berechnet
         if(anzahlGewaehlt != 0){
-            auslastung = ((int)((anzahlGewaehlt/anzahlTeilnehmer)*10000))/100.0;
+            auslastung = (anzahlGewaehlt/anzahlTeilnehmer)*100;
         }else{
             auslastung = anzahlGewaehlt;
         }
@@ -361,5 +358,39 @@ public class WahlNB implements Serializable{
         this.auslastung = p_auslastung;
     }
 
-    
+    public List<Eintrag<Kurs, Integer>> getKurseFuerWahl(){
+        List<Eintrag<Kurs, Integer>> listeFuerWahl = new ArrayList<>();
+        for(Kurs k:this.kurslisteNB.getStufeKurse()){
+            listeFuerWahl.add(new Eintrag<>(k, 0));
+        }
+        return listeFuerWahl;
+    }
+
+    /**
+     * @return the kurse
+     */
+    public List<Eintrag<Kurs, Boolean>> getKurse() {
+        return kurse;
+    }
+
+    /**
+     * @param kurse the kurse to set
+     */
+    public void setKurse(List<Eintrag<Kurs, Boolean>> kurse) {
+        this.kurse = kurse;
+    }
+
+    /**
+     * @return the wahl
+     */
+    public List<Integer> getWahl() {
+        return wahl;
+    }
+
+    /**
+     * @param wahl the wahl to set
+     */
+    public void setWahl(List<Integer> wahl) {
+        this.wahl = wahl;
+    }
 }
