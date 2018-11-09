@@ -11,7 +11,7 @@
       <from-view-id>/nosecure/login.xhtml</from-view-id>
       <navigation-case>
         <from-outcome>Login</from-outcome>
-        <to-view-id>/secured/startTest.xhtml</to-view-id>
+        <to-view-id>/secured/start.xhtml</to-view-id>
       </navigation-case>     
       <navigation-case>
         <from-outcome>Logout</from-outcome>
@@ -830,78 +830,6 @@
       <navigation-case>
         <from-outcome>wahlAbgeben</from-outcome>
         <to-view-id>/secured/start.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-        <from-outcome>benutzerAnlegen</from-outcome>
-        <to-view-id>/secured/benutzerAnlegen.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-        <from-outcome>benutzerVerwalten</from-outcome>
-        <to-view-id>/secured/benutzerVerwalten.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-        <from-outcome>passwortAendern</from-outcome>
-        <to-view-id>/secured/passwortAendern.xhtml</to-view-id>
-      </navigation-case>
-    </navigation-rule>
-    
-    <navigation-rule>
-      <from-view-id>/secured/startTest.xhtml</from-view-id>
-      <navigation-case>
-        <from-outcome>Logout</from-outcome>
-        <to-view-id>/nosecure/login.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-        <from-outcome>testseite</from-outcome>
-        <to-view-id>test.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-          <from-outcome>faq</from-outcome>
-          <to-view-id>/nosecure/faq.xhtml</to-view-id>
-      </navigation-case>   
-      <navigation-case>
-        <from-outcome>kontakt</from-outcome>
-        <to-view-id>/nosecure/kontakt.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-        <from-outcome>Fehler</from-outcome>
-        <to-view-id>/secured/startTest.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-        <from-outcome>Erfolg</from-outcome>
-        <to-view-id>/secured/startTest.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-        <from-outcome>gewaehlt</from-outcome>
-        <to-view-id>/secured/start.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-        <from-outcome>wahlAbgeben</from-outcome>
-        <to-view-id>/secured/start.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-        <from-outcome>kursAnlegen</from-outcome>
-        <to-view-id>/secured/kursAnlegen.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-        <from-outcome>kurslisteLehrer</from-outcome>
-        <to-view-id>/secured/kurseLehrer.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-        <from-outcome>kursWechseln</from-outcome>
-        <to-view-id>/secured/kursWechsel.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-        <from-outcome>kurseAlle</from-outcome>
-        <to-view-id>/secured/kurseAlle.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-        <from-outcome>wahlzeitraum</from-outcome>
-        <to-view-id>/secured/wahlzeitraum.xhtml</to-view-id>
-      </navigation-case>
-      <navigation-case>
-        <from-outcome>kursZuweisen</from-outcome>
-        <to-view-id>/secured/kurseZuweisen.xhtml</to-view-id>
       </navigation-case>
       <navigation-case>
         <from-outcome>benutzerAnlegen</from-outcome>
