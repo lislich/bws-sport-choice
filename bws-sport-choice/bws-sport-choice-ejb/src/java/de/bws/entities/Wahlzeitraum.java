@@ -27,11 +27,11 @@ public class Wahlzeitraum implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @Temporal(value = TemporalType.DATE)
+    @Temporal(TemporalType.DATE)
     @Column(name = "BEGINN")
     private Date beginn;
     
-    @Temporal(value = TemporalType.DATE)
+    @Temporal(TemporalType.DATE)
     @Column(name = "ENDE")
     private Date ende;
     

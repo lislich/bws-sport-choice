@@ -8,6 +8,8 @@ package de.bws.entities;
 import de.bws.data.Rolle;
 import de.bws.security.Passwort;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -127,9 +129,16 @@ public class Benutzer implements Serializable {
         this.passwort = p_passwort;
     }
     
-    public void setNeuesPasswort(String p_passwort) throws Exception {
-        this.setSalt(Passwort.saltGenerieren());
-        this.passwort = Passwort.hashen(p_passwort, this.salt);
+    public boolean setNeuesPasswort(String p_passwort)  {
+        byte[] saltNeu = Passwort.saltGenerieren();
+        try{
+            this.passwort = Passwort.hashen(p_passwort, this.salt);
+        } catch (Exception ex) {
+            Logger.getLogger(Benutzer.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+        this.setSalt(saltNeu);
+        return true;
     }
 
     /**

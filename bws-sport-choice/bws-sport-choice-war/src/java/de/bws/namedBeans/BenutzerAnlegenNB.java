@@ -17,7 +17,6 @@ import de.bws.sessionbeans.PersonFacadeLocal;
 import de.bws.sessionbeans.SchuelerFacadeLocal;
 import de.bws.sessionbeans.StufeFacadeLocal;
 import java.io.Serializable;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -85,8 +84,8 @@ public class BenutzerAnlegenNB implements Serializable{
         Person neuePerson = this.getNeuePersonFromRolle();
             
         if(neuePerson == null){
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lasterror", "Fehler beim zuweisen der Rolle.");
-        return "Anlegen";
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lasterror", "Fehler beim zuweisen der Rolle.");
+            return "Anlegen";
         }
             
         Benutzer neuerBenutzer = new Benutzer();
@@ -111,7 +110,7 @@ public class BenutzerAnlegenNB implements Serializable{
 //        context.update(":dialogErstanmeldung");
 //        context.execute("PF('dialogErstanmeldung').open();");
         RequestContext context = RequestContext.getCurrentInstance();
-        String execute = "$('#pnl').append('<p>Bentzername: ";
+        String execute = "$('#pnl').append('<p>Benutzername: ";
         execute += this.benutzername;
         execute += " Passwort: ";
         execute += this.passwort;
