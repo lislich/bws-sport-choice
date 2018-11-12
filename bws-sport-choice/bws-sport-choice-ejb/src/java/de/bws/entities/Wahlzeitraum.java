@@ -12,6 +12,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -25,9 +27,11 @@ public class Wahlzeitraum implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @Temporal(value = TemporalType.DATE)
     @Column(name = "BEGINN")
     private Date beginn;
     
+    @Temporal(value = TemporalType.DATE)
     @Column(name = "ENDE")
     private Date ende;
     
