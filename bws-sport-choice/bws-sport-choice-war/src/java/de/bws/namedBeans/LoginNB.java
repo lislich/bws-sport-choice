@@ -1,6 +1,5 @@
 package de.bws.namedBeans;
 
-import de.bws.data.Rolle;
 import de.bws.entities.Benutzer;
 import de.bws.security.Passwort;
 import de.bws.sessionbeans.BenutzerFacadeLocal;
@@ -8,7 +7,6 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -36,37 +34,6 @@ public class LoginNB implements Serializable{
      */
     public LoginNB() {
         
-    }
-    
-    /**
-     * Diese Methode wird mithilfe der Annotation "@PostConstruct" aufgerufen.
-     * Ruft "createRootUser" auf. Wird zu Release entfernt.
-     */
-    @Deprecated
-    @PostConstruct
-    private void init(){
-        this.createRootUser();
-    } 
-    
-    /**
-     * Methode, die für Testzwecke einen Adminbenutzer anlegt.
-     * Sei wird vor dem Release entfernt.
-     */
-    @Deprecated
-    private void createRootUser(){
-        Benutzer admin = this.benutzerBean.getByName("ChoiceRoot");
-        if(admin == null){
-            admin = new Benutzer();
-        
-            try {
-                admin.setBenutzername("ChoiceRoot");
-                admin.setNeuesPasswort("H444bicht");
-                admin.setRolle(Rolle.ADMIN);
-            } catch (Exception ex) {
-                Logger.getLogger(LoginNB.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            this.benutzerBean.create(admin);
-        }
     }
     
     /**
