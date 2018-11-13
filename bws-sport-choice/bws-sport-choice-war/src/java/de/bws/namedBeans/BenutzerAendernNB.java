@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.namedBeans;
 
 import de.bws.entities.Benutzer;
@@ -26,7 +21,10 @@ import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 
 /**
- *
+ *  Die named Bean für das Ändern von Benutzerdaten.
+ *  Diese stellt Methoden zum Speichern der geänderten Daten un zum Zurücksetzen 
+ *  des Passworts zur Verfügung.
+ * 
  * @author joshua
  */
 @Named("benutzerAendernNB")
@@ -46,6 +44,12 @@ public class BenutzerAendernNB implements Serializable{
     private String error;
     private String benutzername;
     
+    /**
+     * Diese Methode wird mit der Annotation "@PostConstruct" nach dem Konstruieren aufgerufen.
+     * Sie holt den ausgewählten Benutzer und die letzte Fehlermeldung.
+     * 
+     * @Author Joshua
+     */
     @PostConstruct
     private void init(){
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
@@ -69,6 +73,13 @@ public class BenutzerAendernNB implements Serializable{
         
     }
 
+    /**
+     * Die Änderungen am Benutzer (und der zugehörigen Person) werden in der Datenbank
+     * gespeichert.
+     * 
+     * @Author Joshua
+     * @return String für weitere Navigation
+     */
     public String aenderungenSpeichern(){ 
         if(this.benutzer != null){
             if(this.benutzer.getPerson() != null){
@@ -78,17 +89,25 @@ public class BenutzerAendernNB implements Serializable{
         } else {
             Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
             sessionMap.put("lastError", "Beim Aktualisieren der Benutzerdaten ist ein Fehler aufgetreten.");
-            return "benutzerVerwalten";
         }
         return "benutzerVerwalten";
     }
     
+    /**
+     * Diese Methode setzt generiert ein neues, zufälliges Passwort und zeigt dieses einmalig in einem Dialog.
+     * 
+     * @Author Joshua
+     * @return String für weitere Navigation
+     */
     public String passwortZuruecksetzen(){
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         String passwortNeu = "";
         RequestContext context = RequestContext.getCurrentInstance();
+        
+        // Prüft ob ein Benutzer ausgewählt ist.
         if(this.benutzer != null) {
             try{
+                // Das passwort wird generiert.
                 passwortNeu = Passwort.passwortGenerieren();
             } catch (Exception ex) {
                 Logger.getLogger(BenutzerAendernNB.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,6 +115,7 @@ public class BenutzerAendernNB implements Serializable{
                 return "benutzerVerwalten";
             }
             
+            // Wenn das Passwort geändert wurde, wird es einmalig in einem Dialog angezeigt.
             if(this.benutzer.setNeuesPasswort(passwortNeu)){
                 
                 String execute = "$('#pnl').append('<p>Benutzername: ";
@@ -115,14 +135,33 @@ public class BenutzerAendernNB implements Serializable{
         return "benutzerVerwalten";
     }
     
+    /**
+     * Prüft ob  der ausgewählte Benutzer ein Schüler ist.
+     * 
+     * @Author Joshua
+     * @return true - der ausgewählte Benutzer ist ein Schüler, false der ausgewählte Benutzer ist kein Schüler
+     */
     public boolean isSchueler(){
         return this.benutzer.getPerson() instanceof Schueler;
     }
     
+    /**
+     * Prüft ob  der ausgewählte Benutzer ein Lehrer ist.
+     * 
+     * @Author Joshua
+     * @return true - der ausgewählte Benutzer ist ein Lehrer, false der ausgewählte Benutzer ist kein Lehrer
+     */
     public boolean isLehrer(){
         return this.benutzer.getPerson() instanceof Lehrer;
     }
     
+    /**
+     * Gibt eine Liste aller Lehrer zurück. 
+     * (Jeder Lehrer wir als möglicher Tutor gewärtet.)
+     * 
+     * @Author Joshua
+     * @return Liste aller Lehrer
+     */
     public List<Lehrer> getTutoren(){
         return this.lehrerBean.findAll();
     }

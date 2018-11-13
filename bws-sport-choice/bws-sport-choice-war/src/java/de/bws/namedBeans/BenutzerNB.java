@@ -75,19 +75,11 @@ public class BenutzerNB implements Serializable{
     }
 
     /**
-     * @return Lste aller Benutzer
+     * 
+     * 
+     * @param p_rolle
+     * @param p_stufe 
      */
-    public List<Benutzer> getAlleBenutzer() {
-        return alleBenutzer;
-    }
-
-    /**
-     * @param alleBenutzer Liste aller Benutzer
-     */
-    public void setAlleBenutzer(List<Benutzer> alleBenutzer) {
-        this.alleBenutzer = alleBenutzer;
-    }
-    
     public void auswaehlen(String p_rolle, Stufe p_stufe){
         List<Benutzer> vorauswahl = this.getByRolle(p_rolle);
         if(p_rolle != null){
@@ -120,5 +112,17 @@ public class BenutzerNB implements Serializable{
         }
     }
     
-    
+    /**
+     * @return Liste aller Benutzer
+     */
+    public List<Benutzer> getAlleBenutzer() {
+        return alleBenutzer;
+    }
+
+    /**
+     * @param alleBenutzer Liste aller Benutzer
+     */
+    public void setAlleBenutzer(List<Benutzer> alleBenutzer) {
+        this.alleBenutzer = alleBenutzer;
+    }
 }

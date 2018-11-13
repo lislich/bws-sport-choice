@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.namedBeans;
 
 import de.bws.data.Rolle;
@@ -21,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -51,6 +45,8 @@ public class BenutzerAnlegenNB implements Serializable{
     @EJB
     private BenutzerFacadeLocal benutzerBean;
     
+    // Diese Attribute werden mit den Eingabe- / Auswahlfeldern auf der 
+    // Oberfläche verknüpft
     private Rolle rolle;
     private String benutzername;
     private String nachname;
@@ -64,28 +60,25 @@ public class BenutzerAnlegenNB implements Serializable{
 //******************************************************************************
     
     /**
-     * Creates a new instance of BenutzerAnlegenNB
+     * Erstellt eine neue Insatnz von BenutzerAnlegenNB
      */
     public BenutzerAnlegenNB() {
     }
     
-    @PostConstruct
-    private void init(){
-//        this.benutzername = "Hello";
-//        this.passwort = "world";
-    }
-    
     /**
+     * Legt eine neue Person mit den vom Benutzer angegebenen Daten an. 
      * 
-     * @return 
+     * @Author Joshua
+     * @return String für weitere Navigation
      */
     public String anlegen(){
+        
         
         Person neuePerson = this.getNeuePersonFromRolle();
             
         if(neuePerson == null){
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lasterror", "Fehler beim zuweisen der Rolle.");
-            return "Anlegen";
+            return "benutzerAnlegen";
         }
             
         Benutzer neuerBenutzer = new Benutzer();
@@ -99,16 +92,9 @@ public class BenutzerAnlegenNB implements Serializable{
         } catch (Exception ex) {
             Logger.getLogger(BenutzerAnlegenNB.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Fehler beim Anlegen des Benutzers.");
+            return "benutzerAnlegen";
         }
-
-        System.out.println("Bean-Methode \"anmelden\" wird usgefürht. B: " + this.benutzername + ", P: " + this.passwort );
         
-//        String msgText = "Benutzer: " + this.benutzername + "\nPasswort: " + this.passwort;
-//        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Anmededaten für die Erstanmeldung", msgText);
-//        RequestContext.getCurrentInstance().showMessageInDialog(message);
-//        RequestContext context = RequestContext.getCurrentInstance();
-//        context.update(":dialogErstanmeldung");
-//        context.execute("PF('dialogErstanmeldung').open();");
         RequestContext context = RequestContext.getCurrentInstance();
         String execute = "$('#pnl').append('<p>Benutzername: ";
         execute += this.benutzername;
@@ -122,6 +108,12 @@ public class BenutzerAnlegenNB implements Serializable{
         return "benutzerAnlegen";
     }
     
+    /**
+     * Erzeugt eine Person der angegeben Rolle
+     * 
+     * @Author Joshua
+     * @return die erstellte Person
+     */
     private Person getNeuePersonFromRolle(){
         Person neuePerson;
         switch (rolle) {
@@ -143,6 +135,12 @@ public class BenutzerAnlegenNB implements Serializable{
         return neuePerson;
     }
     
+    /**
+     * Erstellt einen Schüler mit den schülerspezifischen Attributen.
+     * 
+     * @Author Joshua
+     * @return Der erstellte Schüler
+     */
     private Schueler schuelerErstellen(){
         Schueler schueler = new Schueler();
         schueler.setTutor(this.lehrerBean.find(Long.parseLong(this.tutor)));
@@ -150,12 +148,25 @@ public class BenutzerAnlegenNB implements Serializable{
         return (Schueler) this.personErstellen(schueler);
     }
     
+    /**
+     * Erstellt einen Lehrer mit den Lehrerspezifischen Attributen.
+     * 
+     * @Author Joshua
+     * @return Der erstellet Lehrer
+     */
     private Lehrer lehrerErstellen(){
         Lehrer lehrer = new Lehrer();
         lehrer.setKuerzel(this.kuerzel);
         return (Lehrer) this.personErstellen(lehrer);
     }
     
+    /**
+     * Erstellt eine Person und setzt deren Vor- und Nachnamen. Falls eine Person 
+     * übergeben wird werden nur Vor- und Nachname gesetzt.
+     * 
+     * @param p_person Eine Person, deren Vor- und Nachname gesetzt werden soll
+     * @return Die erstellte bzw. geänderte Person
+     */
     private Person personErstellen(Person p_person){
         Person person;
         if(p_person != null){
@@ -255,8 +266,9 @@ public class BenutzerAnlegenNB implements Serializable{
     }
 
     /**
+     * Gibt eine Liste aller Rollen zurück.
      * 
-     * @return 
+     * @return Liste aller Rollen
      */
     public List<Rolle> getRollen(){
         List<Rolle> rollen = new ArrayList<>();
@@ -273,6 +285,12 @@ public class BenutzerAnlegenNB implements Serializable{
         return tutor;
     }
     
+    /**
+     * Erstellt eine Liste aller Tutoren. Aller Lehrer werden als mögliche Tutoren 
+     * angesehen.
+     * 
+     * @return Liste aller Lehrer
+     */
     public List<Lehrer> getTutoren(){
         return this.lehrerBean.findAll();
     }

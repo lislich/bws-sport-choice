@@ -45,16 +45,7 @@ public class LoginNB implements Serializable{
     @Deprecated
     @PostConstruct
     private void init(){
-//        this.createRootUser();
-//        Benutzer b = new Benutzer();
-//        try {
-//            b.setNeuesPasswort("Lehrer");
-//        } catch (Exception ex) {
-//            Logger.getLogger(LoginNB.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        b.setBenutzername("joshuag");
-//        b.setRolle(Rolle.LEHRER);
-//        this.benutzerBean.create(b);
+        this.createRootUser();
     } 
     
     /**
@@ -64,22 +55,18 @@ public class LoginNB implements Serializable{
     @Deprecated
     private void createRootUser(){
         Benutzer admin = this.benutzerBean.getByName("ChoiceRoot");
-        if(admin != null){
-            this.benutzerBean.remove(admin);
+        if(admin == null){
+            admin = new Benutzer();
+        
+            try {
+                admin.setBenutzername("ChoiceRoot");
+                admin.setNeuesPasswort("H444bicht");
+                admin.setRolle(Rolle.ADMIN);
+            } catch (Exception ex) {
+                Logger.getLogger(LoginNB.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.benutzerBean.create(admin);
         }
-        
-        admin = new Benutzer();
-        
-        try {
-            admin.setBenutzername("ChoiceRoot");
-            admin.setNeuesPasswort("H444bicht");
-            admin.setRolle(Rolle.ADMIN);
-            
-        } catch (Exception ex) {
-            Logger.getLogger(LoginNB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        this.benutzerBean.create(admin);
     }
     
     /**
