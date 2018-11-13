@@ -73,8 +73,8 @@ public class Wahl implements Serializable {
      * 
      * @param p_id the id to set
      */
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long p_id) {
+        this.id = p_id;
     }
 
     /**
