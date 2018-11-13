@@ -13,6 +13,15 @@ $(document).ready(function () {
         });
 
     });
+    
+    $("#responsiveMenu").click(function () {
+        $("#togglebar").toggle(function () {
+            $("#togglebar").addClass("hide");
+        }, function () {
+            $("#togglebar").removeClass("hide");
+        });
+
+    });
 
      // # Kurs anlegen ####################################################################################
     
