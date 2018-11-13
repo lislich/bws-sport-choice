@@ -1,18 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,26 +32,26 @@ public class Kurs implements Serializable {
     @Column(name = "KURS_ID")
     private Long id;
     
-    @Column(name = "TITEL")
+    @Column(name = "TITEL", nullable = false)
     private String titel;
     
-    @Column(name = "KUERZEL")
+    @Column(name = "KUERZEL", nullable = false)
     private String kuerzel;
     
-    @Column(name = "BEWERTUNG")
+    @Column(name = "BEWERTUNG", nullable = false)
     private String bewertung;
     
-    @Column(name = "TEILNEHMERZAHL")
+    @Column(name = "TEILNEHMERZAHL", nullable = false)
     private int teilnehmerzahl;
     
     @Temporal(value = TemporalType.DATE)
-    @Column(name = "JAHR")
+    @Column(name = "JAHR", nullable = false)
     private Date jahr;
     
-    @Column(name = "HINWEIS")
+    @Column(name = "HINWEIS", nullable = false)
     private String hinweis;
     
-    @Column(name = "BESCHREIBUNG")
+    @Column(name = "BESCHREIBUNG", nullable = false)
     private String beschreibung;
     
     @OneToMany
@@ -67,13 +60,10 @@ public class Kurs implements Serializable {
     
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "THEMENGLEICH_ID", nullable = true)
-//    @JoinTable(name = "THEMENGLEICH",
-//            joinColumns = @JoinColumn(name = "KURS_ID", referencedColumnName = "KURS_ID"),
-//            inverseJoinColumns = @JoinColumn(name = "GLEICHESTHEMA_ID", referencedColumnName = "KURS_ID"))
     private Kurs themengleich;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "LEHRER_ID")
+    @JoinColumn(name = "LEHRER_ID", nullable = false)
     private Lehrer lehrer;
     
     @ManyToMany(fetch = FetchType.EAGER)
@@ -83,17 +73,11 @@ public class Kurs implements Serializable {
     private List<Schueler> teilnehmer = new ArrayList<>();
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "STUFE_ID")
+    @JoinColumn(name = "STUFE_ID", nullable = false)
     private Stufe stufe;
 
 //****************************** Methoden **************************************
     
-    @PostConstruct
-    private void init(){
-        
-    }
-
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -121,10 +105,18 @@ public class Kurs implements Serializable {
     
 //******************************* Getter und Setter ****************************
     
+    /**
+     * 
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * 
+     * @param p_id the id to set
+     */
     public void setId(Long p_id) {
         this.id = p_id;
     }

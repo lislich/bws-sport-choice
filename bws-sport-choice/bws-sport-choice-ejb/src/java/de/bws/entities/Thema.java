@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.entities;
 
 import java.io.Serializable;
@@ -25,13 +20,13 @@ public class Thema implements Serializable {
     @Column(name = "THEMA_ID")
     private Long id;
     
-    @Column(name = "ANTEIL")
+    @Column(name = "ANTEIL", nullable = false)
     private int anteil;
     
-    @Column(name = "BEZEICHNUNG")
+    @Column(name = "BEZEICHNUNG", nullable = false)
     private String bezeichnung;
     
-    @Column(name = "SCHWERPUNKT")
+    @Column(name = "SCHWERPUNKT", nullable = false)
     private String schwerpunkt;
 
 //****************************** Methoden **************************************
@@ -61,12 +56,20 @@ public class Thema implements Serializable {
         return "de.bws.entities.Thema[ id=" + id + " ]";
     }
     
-//**************************** Setter und Getter *******************************
+//******************************* Getter und Setter ****************************
     
+    /**
+     * 
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * 
+     * @param p_id the id to set
+     */
     public void setId(Long p_id) {
         this.id = p_id;
     }

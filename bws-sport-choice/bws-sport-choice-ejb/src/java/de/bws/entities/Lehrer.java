@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.entities;
 
 import java.io.Serializable;
@@ -18,9 +13,10 @@ public class Lehrer extends Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @Column(name="KUERZEL")
+    @Column(name="KUERZEL", nullable = false)
     private String kuerzel;
 
+    //****************************** Methoden **************************************
     @Override
     public int hashCode() {
         int hash = 0;
@@ -46,6 +42,8 @@ public class Lehrer extends Person implements Serializable {
         return "de.bws.entities.Lehrer[ id=" + super.getId() + " ]";
     }
 
+    //******************************* Getter und Setter ****************************
+    
     /**
      * @return the kuerzel
      */

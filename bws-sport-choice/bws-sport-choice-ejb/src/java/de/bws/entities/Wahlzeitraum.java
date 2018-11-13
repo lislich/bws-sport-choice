@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.entities;
 
 import java.io.Serializable;
@@ -28,22 +23,14 @@ public class Wahlzeitraum implements Serializable {
     private Long id;
     
     @Temporal(TemporalType.DATE)
-    @Column(name = "BEGINN")
+    @Column(name = "BEGINN", nullable = false)
     private Date beginn;
     
     @Temporal(TemporalType.DATE)
-    @Column(name = "ENDE")
+    @Column(name = "ENDE", nullable = false)
     private Date ende;
     
     //************************* Methoden **************************************
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     @Override
     public int hashCode() {
@@ -70,6 +57,25 @@ public class Wahlzeitraum implements Serializable {
         return "de.bws.entities.Wahlzeitraum[ id=" + id + " ]";
     }
 
+    
+    //******************************* Getter und Setter ****************************
+    
+    /**
+     * 
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
+
+    /**
+     * 
+     * @param p_id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
+    
     /**
      * @return the beginn
      */

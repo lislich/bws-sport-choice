@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.entities;
 
 import de.bws.data.Rolle;
@@ -19,7 +14,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
 /**
  *
@@ -33,16 +27,16 @@ public class Benutzer implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @Column(name = "BENUTZERNAME")
+    @Column(name = "BENUTZERNAME", nullable = false)
     private String benutzername;
     
-    @Column(name = "SALT")
+    @Column(name = "SALT", nullable = false)
     private byte[] salt;
     
-    @Column(name = "PASSWORT")
+    @Column(name = "PASSWORT", nullable = false)
     private String passwort;
 
-    @Column(name = "ROLLE")
+    @Column(name = "ROLLE", nullable = false)
     private Rolle rolle;
     
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
@@ -78,10 +72,18 @@ public class Benutzer implements Serializable {
     
     //******************** Getter- und Setter *********************
     
+    /**
+     * 
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * 
+     * @param p_id the id to set
+     */
     private void setId(Long p_id) {
         this.id = p_id;
     }
@@ -132,7 +134,7 @@ public class Benutzer implements Serializable {
     public boolean setNeuesPasswort(String p_passwort)  {
         byte[] saltNeu = Passwort.saltGenerieren();
         try{
-            this.passwort = Passwort.hashen(p_passwort, this.salt);
+            this.passwort = Passwort.hashen(p_passwort, saltNeu);
         } catch (Exception ex) {
             Logger.getLogger(Benutzer.class.getName()).log(Level.SEVERE, null, ex);
             return false;

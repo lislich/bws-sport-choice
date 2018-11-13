@@ -1,13 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.namedBeans;
 
 import de.bws.data.Rolle;
 import de.bws.entities.Benutzer;
-import de.bws.entities.Lehrer;
 import de.bws.security.Passwort;
 import de.bws.sessionbeans.BenutzerFacadeLocal;
 import java.io.Serializable;

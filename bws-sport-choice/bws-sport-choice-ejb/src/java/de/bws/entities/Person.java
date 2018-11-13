@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.entities;
 
 import java.io.Serializable;
@@ -27,10 +22,10 @@ public class Person implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @Column(name = "NACHNAME")
+    @Column(name = "NACHNAME", nullable = false)
     private String nachname;
     
-    @Column(name = "VORNAME")
+    @Column(name = "VORNAME", nullable = false)
     private String vorname;
     
 
@@ -60,10 +55,18 @@ public class Person implements Serializable {
     
 //************************** Getter und Setter ******************************
     
+    /**
+     * 
+     * @return the id
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * 
+     * @param p_id the id to set
+     */
     public void setId(Long p_id) {
         this.id = p_id;
     }

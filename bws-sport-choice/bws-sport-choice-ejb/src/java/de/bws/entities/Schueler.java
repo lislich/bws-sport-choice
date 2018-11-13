@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.entities;
 
 import java.io.Serializable;
@@ -22,7 +17,7 @@ public class Schueler extends Person implements Serializable{
     private static final long serialVersionUID = 1L;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "STUFE_ID")
+    @JoinColumn(name = "STUFE_ID", nullable = false)
     private Stufe stufe;
     
     @OneToOne
@@ -30,7 +25,7 @@ public class Schueler extends Person implements Serializable{
     private Wahl wahl;
     
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "TUTOR_ID")
+    @JoinColumn(name = "TUTOR_ID", nullable = false)
     private Lehrer tutor;
 
     @Override
@@ -60,7 +55,7 @@ public class Schueler extends Person implements Serializable{
         return "de.bws.entities.Schueler[ id=" + super.getId() + " ]";
     }
 
-//******************************** Setter und Getter ***************************
+//******************************* Getter und Setter ****************************
     
     /**
      * @return the stufe
