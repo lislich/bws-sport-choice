@@ -15,6 +15,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -43,6 +44,9 @@ public class BenutzerAendernNB implements Serializable{
     private Benutzer benutzer;
     private String error;
     private String benutzername;
+    
+    private FacesMessage message;
+    private FacesContext context;
     
     /**
      * Diese Methode wird mit der Annotation "@PostConstruct" nach dem Konstruieren aufgerufen.
@@ -87,8 +91,11 @@ public class BenutzerAendernNB implements Serializable{
             }
             this.benutzerBean.edit(benutzer);
         } else {
-            Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-            sessionMap.put("lastError", "Beim Aktualisieren der Benutzerdaten ist ein Fehler aufgetreten.");
+            message = new FacesMessage("Beim Aktualisieren der Benutzerdaten ist ein Fehler aufgetreten.");
+            context = FacesContext.getCurrentInstance();
+            context.addMessage(error, message);
+//            Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+//            sessionMap.put("lastError", "Beim Aktualisieren der Benutzerdaten ist ein Fehler aufgetreten.");
         }
         return "benutzerVerwalten";
     }

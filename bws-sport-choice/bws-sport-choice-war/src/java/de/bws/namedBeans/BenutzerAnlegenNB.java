@@ -75,30 +75,30 @@ public class BenutzerAnlegenNB implements Serializable{
         
         boolean fehler = false;
   
-        Benutzer neuerBenutzer = new Benutzer();
-        neuerBenutzer.setBenutzername(this.benutzername);
-        neuerBenutzer.setRolle(this.rolle);
-        try {           
-            this.passwort = Passwort.passwortGenerieren();
-            neuerBenutzer.setNeuesPasswort(this.passwort);
-            this.benutzerBean.create(neuerBenutzer);
-        } catch (Exception ex) {
-            Logger.getLogger(BenutzerAnlegenNB.class.getName()).log(Level.SEVERE, null, ex);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Fehler beim Anlegen des Benutzers.");
-            fehler = true;
-        }
+        Person neuePerson = this.getNeuePersonFromRolle();
         
-        if(!fehler){
-            Person neuePerson = this.getNeuePersonFromRolle();
-            if(neuePerson != null){
-                neuerBenutzer.setPerson(neuePerson);
-                this.benutzerBean.edit(neuerBenutzer);
-            } else {
-                this.benutzerBean.remove(neuerBenutzer);
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lasterror", "Fehler beim zuweisen der Rolle.");
+        Benutzer neuerBenutzer = null;
+        
+        if (neuePerson != null) {
+            neuerBenutzer = new Benutzer();
+            neuerBenutzer.setBenutzername(this.benutzername);
+            neuerBenutzer.setRolle(this.rolle);
+            neuerBenutzer.setPerson(neuePerson);
+        }
+
+        if (neuerBenutzer != null) {
+            try {
+                this.passwort = Passwort.passwortGenerieren();
+                neuerBenutzer.setNeuesPasswort(this.passwort);
+                this.benutzerBean.create(neuerBenutzer);
+            } catch (Exception ex) {
+                Logger.getLogger(BenutzerAnlegenNB.class.getName()).log(Level.SEVERE, null, ex);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Fehler beim Anlegen des Benutzers.");
                 fehler = true;
             }
-            if(!fehler){
+            
+
+            if (!fehler) {
                 RequestContext context = RequestContext.getCurrentInstance();
                 String execute = "$('#pnl').append('<p>Benutzername: ";
                 execute += this.benutzername;
@@ -109,7 +109,13 @@ public class BenutzerAnlegenNB implements Serializable{
                 context.execute(execute);
                 context.execute("PF('dialogErstanmeldung').show();");
             }
+
+        }else{
+            this.personBean.remove(neuePerson);
         }
+        
+        
+        
        
         return "benutzerAnlegen";
     }
