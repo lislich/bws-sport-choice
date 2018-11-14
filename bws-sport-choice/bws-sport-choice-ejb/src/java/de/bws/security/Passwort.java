@@ -10,7 +10,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 import java.util.Base64;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
@@ -42,7 +41,9 @@ public class Passwort {
     }
     
     /**
-     * 
+     * Wandelt das angegebene Passwort mit dem Salt in ein Hash um. Selbts wenn 
+     * nur eine Stelle des Passworts anders ist, wird das Hash komplett anders 
+     * aussehen.
      * 
      * @author Joshau
      * @param p_passwort 
@@ -57,11 +58,23 @@ public class Passwort {
         return byteToString(hashedBytes);
     }
     
+    /**
+     * Wandelt ein Array von Bytes in einen String um.
+     * 
+     * @param p_byte Das Array von Bytes, das umgewandelt werden soll.
+     * @return Der String
+     */
     public static String byteToString(byte[] p_byte) {
         Base64.Encoder encoder = Base64.getEncoder();
         return  encoder.encodeToString(p_byte);
     }
     
+    /**
+     * Wandelt einen String in ein Array von Byes um.
+     * 
+     * @param p_string Das String, das umgewandelt werden soll.
+     * @return Das Byte-Array
+     */
     public static byte[] stringToByte(String p_string){
         int laenge = p_string.length();
         byte[] bytes = new byte[p_string.length()];
@@ -72,6 +85,9 @@ public class Passwort {
     }
     
     /**
+     * Vergleicht ein eingegebenes Passwort mit dem eines Benutzers. Während das 
+     * Passwortd es Benutzers bereits gehasht ist, muss das eingegebene Passwort 
+     * noch gehasht werden.
      * 
      * @param p_benutzer der Benutzer, der eingeloggt werden soll
      * @param p_passwort das zu prüfende Passwort

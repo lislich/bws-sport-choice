@@ -9,6 +9,8 @@ package de.bws.namedBeans;
 import de.bws.data.Eintrag;
 import de.bws.data.Rolle;
 import de.bws.entities.Benutzer;
+import de.bws.entities.Lehrer;
+import de.bws.entities.Schueler;
 import de.bws.entities.Stufe;
 import de.bws.sessionbeans.BenutzerFacadeLocal;
 import de.bws.sessionbeans.LehrerFacadeLocal;
@@ -77,10 +79,21 @@ public class BenutzerVerwaltenNB implements Serializable{
     
     /**
      * Löscht alle ausgewählten Benutzer
+     * 
      * @return 
      */
     public String loeschen(){
         for(Benutzer b: this.getAusgewaehlteBenutzer()){
+            switch(b.getRolle()){
+                case LEHRER:
+                    this.lehrerBean.remove((Lehrer)b.getPerson());
+                    break;
+                case SCHUELER:
+                    this.schuelerBean.remove((Schueler)b.getPerson());
+                    break;
+                default:
+                    this.personBean.remove(b.getPerson());
+            }
             this.benutzerBean.remove(b);
         }
         return "benutzerVerwalten";

@@ -3,6 +3,7 @@ package de.bws.namedBeans;
 import de.bws.data.Rolle;
 import de.bws.entities.Benutzer;
 import de.bws.entities.Kurs;
+import de.bws.entities.Lehrer;
 import de.bws.entities.Schueler;
 import de.bws.entities.Wahlzeitraum;
 import de.bws.sessionbeans.KursFacadeLocal;
@@ -135,7 +136,7 @@ public class MenueNB implements Serializable {
             zeitraum = zeitraumListe.get(0);
         }
         
-        /**
+        /*
          * Wenn der Zeitraum nicht 'null' ist und der Benutzer ermittelt werden kann, wird die Rolle
          * auf Schüler geprüft. Ist der Benutzer ein Schüler wird geprüft ob der Zeitstempel außerhalb des Wahlzeitraumes liegt.
          */
@@ -176,7 +177,7 @@ public class MenueNB implements Serializable {
             zeitraum = zeitraumListe.get(0);
         }
        
-        /**
+        /*
          * Wenn der Zeitraum nicht 'null' ist und der Benutzer ermittelt werden kann, wird die Rolle
          * auf Schüler geprüft. Ist der Benutzer ein Schüler wird geprüft ob der Zeitstempel im Wahlzeitraum liegt.
          */
@@ -263,6 +264,21 @@ public class MenueNB implements Serializable {
      */
     public boolean isAngemeldet(){
         return this.benutzer != null;
+    }
+    
+    public boolean startseiteRendern(){
+        boolean kannWaehlen = false;
+        if(this.benutzer != null){
+            // Ist der angemeldete Benutzer ein Schüler
+            if(this.benutzer.getPerson() instanceof Schueler){
+                kannWaehlen = schuelerDarfWaehlen();
+            } else if (this.benutzer.getPerson() instanceof Lehrer){
+
+            } else {
+
+            }
+        }
+        return kannWaehlen;
     }
     
     // ##### Getter- und Setter-Methoden #########################################################
