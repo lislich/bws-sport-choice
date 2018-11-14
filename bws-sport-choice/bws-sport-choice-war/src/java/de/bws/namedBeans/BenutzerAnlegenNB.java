@@ -73,16 +73,9 @@ public class BenutzerAnlegenNB implements Serializable{
      */
     public String anlegen(){
         
-        
-        Person neuePerson = this.getNeuePersonFromRolle();
-            
-        if(neuePerson == null){
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lasterror", "Fehler beim zuweisen der Rolle.");
-            return "benutzerAnlegen";
-        }
-            
+        boolean fehler = false;
+  
         Benutzer neuerBenutzer = new Benutzer();
-        neuerBenutzer.setPerson(neuePerson);
         neuerBenutzer.setBenutzername(this.benutzername);
         neuerBenutzer.setRolle(this.rolle);
         try {           
@@ -92,18 +85,31 @@ public class BenutzerAnlegenNB implements Serializable{
         } catch (Exception ex) {
             Logger.getLogger(BenutzerAnlegenNB.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Fehler beim Anlegen des Benutzers.");
-            return "benutzerAnlegen";
+            fehler = true;
         }
         
-        RequestContext context = RequestContext.getCurrentInstance();
-        String execute = "$('#pnl').append('<p>Benutzername: ";
-        execute += this.benutzername;
-        execute += " Passwort: ";
-        execute += this.passwort;
-        execute += "</p>')";
-        
-        context.execute(execute);
-        context.execute("PF('dialogErstanmeldung').show();");
+        if(!fehler){
+            Person neuePerson = this.getNeuePersonFromRolle();
+            if(neuePerson != null){
+                neuerBenutzer.setPerson(neuePerson);
+                this.benutzerBean.edit(neuerBenutzer);
+            } else {
+                this.benutzerBean.remove(neuerBenutzer);
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lasterror", "Fehler beim zuweisen der Rolle.");
+                fehler = true;
+            }
+            if(!fehler){
+                RequestContext context = RequestContext.getCurrentInstance();
+                String execute = "$('#pnl').append('<p>Benutzername: ";
+                execute += this.benutzername;
+                execute += " Passwort: ";
+                execute += this.passwort;
+                execute += "</p>')";
+
+                context.execute(execute);
+                context.execute("PF('dialogErstanmeldung').show();");
+            }
+        }
        
         return "benutzerAnlegen";
     }

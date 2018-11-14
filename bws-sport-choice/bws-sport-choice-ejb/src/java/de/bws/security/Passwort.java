@@ -23,9 +23,16 @@ public class Passwort {
     
     private static final int ITERATIONEN = 32;
     private static final int LAENGESALT = 64;
-    private static final int LAENGEKEY = 64;
+    private static final int LAENGEKEY = 128;
     private static final String ALGORITHMUS = "PBKDF2WithHmacSHA1";
     
+    /**
+     * Generiert ein Array mit zufälligen Bytes als Salt. Die Länge des Salt 
+     * ergibt sich aus der Konstante "LAENGESALT".
+     * 
+     * @author Joshau
+     * @return Das Byte-Array
+     */
     public static byte[] saltGenerieren(){
         SecureRandom random = new SecureRandom();
         byte salt[] = new byte[LAENGESALT];
@@ -33,6 +40,15 @@ public class Passwort {
         return salt;
     }
     
+    /**
+     * 
+     * 
+     * @author Joshau
+     * @param p_passwort 
+     * @param p_salt Das Salt zum verschlüsseln des Passworts
+     * @return
+     * @throws Exception 
+     */
     public static String hashen(String p_passwort, byte[] p_salt) throws Exception{
         KeySpec spec = new PBEKeySpec(p_passwort.toCharArray(), p_salt, ITERATIONEN, LAENGEKEY);
         SecretKeyFactory fabrik = SecretKeyFactory.getInstance(ALGORITHMUS);
