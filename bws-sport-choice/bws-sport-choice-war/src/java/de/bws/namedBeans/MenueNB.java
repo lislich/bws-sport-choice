@@ -16,6 +16,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 /**
  * @author Lisa
@@ -266,8 +267,19 @@ public class MenueNB implements Serializable {
         return this.benutzer != null;
     }
     
+    private String erstelletBegruessung(String p_nachricht){
+        
+        
+        
+        
+        return "null";
+    }
+    
     public boolean startseiteRendern(){
         boolean kannWaehlen = false;
+        String begruessung = "";
+        RequestContext context = RequestContext.getCurrentInstance();
+        
         if(this.benutzer != null){
             // Ist der angemeldete Benutzer ein Schüler
             if(this.benutzer.getPerson() instanceof Schueler){
@@ -278,6 +290,7 @@ public class MenueNB implements Serializable {
 
             }
         }
+        
         return kannWaehlen;
     }
     
