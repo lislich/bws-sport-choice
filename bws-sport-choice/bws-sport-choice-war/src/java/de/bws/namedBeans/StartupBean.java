@@ -32,11 +32,11 @@ public class StartupBean {
      */
     @PostConstruct
     private void createRootUser(){
-        this.createStufen();
+        
         Benutzer admin = this.benutzerBean.getByName("ChoiceRoot");
         if(admin == null){
             admin = new Benutzer();
-        
+            this.createStufen();
             try {
                 admin.setBenutzername("ChoiceRoot");
                 admin.setNeuesPasswort("H444bicht");
