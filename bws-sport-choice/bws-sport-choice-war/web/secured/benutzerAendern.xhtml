@@ -60,7 +60,11 @@
                                         <span class="prefix">Nachname</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="name" class="input-group-field" value="#{benutzerAendernNB.benutzer.person.nachname}"/>
+                                        <h:inputText id="name" class="input-group-field" value="#{benutzerAendernNB.benutzer.person.nachname}" required="true"
+                                                     requiredMessage="Bitte geben Sie einen Nachnamen an." validatorMessage="Nachname ungültig. Bitte geben sie mindestens 2 Buchstaben an.">
+                                            <f:validateRegex pattern="^[A-Z]{1}[a-z]+\D*[a-z]*$" />
+                                        </h:inputText>
+                                        <h:message id="msgNachname" for="nachname" style="color:red"/>
                                     </div>
                                 </div>                                
                                 <div class="row collapse">
@@ -68,7 +72,11 @@
                                         <span class="prefix">Vorname</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="vorname" class="input-group-field" value="#{benutzerAendernNB.benutzer.person.vorname}" />
+                                        <h:inputText id="vorname" class="input-group-field" value="#{benutzerAendernNB.benutzer.person.vorname}" required="true"
+                                                     requiredMessage="Bitte geben Sie einen Nachnamen an." validatorMessage="Vorname ungültig. Bitte geben Sie mindestens 2 Buchstaben an.">
+                                            <f:validateRegex pattern="^[A-Z]{1}[a-z]+\D*[a-z]*$" />
+                                        </h:inputText>
+                                        <h:message id="msgVorname" for="vorname" style="color:red"/>
                                     </div>
                                 </div>
                             <!--    <h:panelGroup rendered="#/{benutzerAendernNB.schueler}">

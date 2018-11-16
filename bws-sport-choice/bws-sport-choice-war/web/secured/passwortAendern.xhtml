@@ -53,7 +53,10 @@
                                         <span class="prefix">Neues Passwort</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputSecret id="neuesPasswort" class="input-group-field" value="#{passwortAendernNB.passwortNeu}" required="true" requiredMessage="Bitte geben Sie ein neues Passwort an."/>
+                                        <h:inputSecret id="neuesPasswort" class="input-group-field" value="#{passwortAendernNB.passwortNeu}" required="true"
+                                                       requiredMessage="Bitte geben Sie ein neues Passwort an." validatorMessage="Das Passwort muss aus mindestens 6 Zeichen bestehen.">
+                                            <f:validateRegex pattern="^(\S){6,}$" />
+                                        </h:inputSecret>
                                         <h:message id="msgNeuesPasswort" for="neuesPasswort" style="color: red" />
                                     </div>
                                 </div>
@@ -62,7 +65,10 @@
                                         <span class="prefix">Neues Passwort wiederholen</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputSecret id="wiederholtesPasswort" class="input-group-field" value="#{passwortAendernNB.passwortWiederholung}" required="true" requiredMessage="Bitte wiederholen Sie das neue Passwort."/>
+                                        <h:inputSecret id="wiederholtesPasswort" class="input-group-field" value="#{passwortAendernNB.passwortWiederholung}" required="true"
+                                                       requiredMessage="Bitte wiederholen Sie das neue Passwort." validatorMessage="Das Passwort muss aus mindestens 6 Zeichen bestehen.">
+                                            <f:validateRegex pattern="^(\S){6,}$" />
+                                        </h:inputSecret>
                                         <h:message id="msgWiederholtesPasswort" for="wiederholtesPasswort" style="color: red" />
                                     </div>
                                 </div>

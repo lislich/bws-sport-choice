@@ -43,7 +43,10 @@
                                         <span class="prefix">Titel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="titel" class="input-group-field" value="#{kursNB.titel}" required="true" requiredMessage="Geben Sie ein Titel an."/>
+                                        <h:inputText id="titel" class="input-group-field" value="#{kursNB.titel}" required="true"
+                                                     requiredMessage="Geben Sie ein Titel an." validatorMessage="Der Titel muss aus mindestens einem Buchstaben bestehen und mit einem Buchstaben anfangen.">
+                                            <f:validateRegex pattern="[a-zA-Z]+\D*[0-9]*" />
+                                        </h:inputText>
                                         <h:message id="m1" for="titel" style="color:red"/><p></p>
                                     </div>
                                 </div>
@@ -52,7 +55,10 @@
                                         <span class="prefix">Kürzel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="kuerzel" class="input-group-field" value="#{kursNB.kuerzel}" required="true" requiredMessage="Geben Sie ein Kürzel an."/>
+                                        <h:inputText id="kuerzel" class="input-group-field" value="#{kursNB.kuerzel}" required="true"
+                                                     requiredMessage="Geben Sie ein Kürzel an." validatorMessage="Das Kürzel muss aus 2-3 Großbuchstaben bestehen.">
+                                            <f:validateRegex pattern="^[A-Z]{2,3}$"/>
+                                        </h:inputText>
                                         <h:message id="m2" for="kuerzel" style="color:red"/><p></p>
                                     </div>
                                 </div>                                
@@ -71,7 +77,10 @@
                                         <span class="prefix">Beschreibung</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputTextarea id="beschreibung" class="input-group-field" value="#{kursNB.beschreibung}" required="true" requiredMessage="Geben Sie eine Beschreibung an."/>
+                                        <h:inputTextarea id="beschreibung" class="input-group-field" value="#{kursNB.beschreibung}" required="true"
+                                                         requiredMessage="Geben Sie eine Beschreibung an." validatorMessage="Die Beschreibung kann nicht mit einem Sonderzeichen anfangen oder leer bleiben.">
+                                            <f:validateRegex pattern="[a-zA-Z0-9]+\D*"/>
+                                        </h:inputTextarea>
                                         <h:message id="m3" for="beschreibung" style="color:red"/><p></p>
                                     </div>
                                 </div>
@@ -80,7 +89,10 @@
                                         <span class="prefix">Bewertung</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputTextarea id="bewertung" class="input-group-field" value="#{kursNB.bewertung}" required="true" requiredMessage="Geben Sie eine Bewertung an."/>
+                                        <h:inputTextarea id="bewertung" class="input-group-field" value="#{kursNB.bewertung}" required="true" 
+                                                         requiredMessage="Geben Sie eine Bewertung an." validatorMessage="Die Bewertung kann nicht mit einem Sonderzeichen anfangen oder leer bleiben.">
+                                            <f:validateRegex pattern="[a-zA-Z0-9]+\D*"/>
+                                        </h:inputTextarea>
                                         <h:message id="m4" for="bewertung" style="color:red"/><p></p>
                                     </div>
                                 </div>
@@ -89,7 +101,10 @@
                                         <span class="prefix">Hinweis</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputTextarea id="hinweis" class="input-group-field" value="#{kursNB.hinweis}" required="true" requiredMessage="Geben Sie einen Hinweis an."/>
+                                        <h:inputTextarea id="hinweis" class="input-group-field" value="#{kursNB.hinweis}" required="true"
+                                                         requiredMessage="Geben Sie einen Hinweis an." validatorMessage="Die Beschreibung kann nicht mit einem Sonderzeichen anfangen oder leer bleiben.">
+                                            <f:validateRegex pattern="[a-zA-Z0-9]+\D*" />
+                                        </h:inputTextarea>
                                         <h:message id="m5" for="hinweis" style="color:red"/><p></p>
                                     </div>
                                 </div>
@@ -105,7 +120,10 @@
                                         <span class="prefix">Teilnehmerzahl</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="teilnehmerzahl" class="input-group-field disable" value="#{kursNB.teilnehmerzahl}"/>                                        
+                                        <h:inputText id="teilnehmerzahl" class="input-group-field disable" value="#{kursNB.teilnehmerzahl}" required="true"
+                                                     requiredMessage="Bitte geben Sie die Teilnehmerzahl an." validatorMessage="Sie können nur Zahlen eingeben größer als 1.">
+                                        </h:inputText>               
+                                        <h:message id="m6" for="teilnehmerzahl" style="color:red"/>
                                     </div>
                                 </div>
                                 <div class="row collapse">
@@ -160,7 +178,7 @@
                                             <h:inputText id="schwerpunkt" class="input-group-field" value="#{kursNB.schwerpunkt}"/>
                                         </div>
                                     </div>
-                                    <p:commandButton id="addThema" class="small button hide-for-print" value="Hinzufügen" update="errorAnlegen m1 m2 m3 m4 m5 themenTabelle" action="#{kursNB.addThema()}" />
+                                    <p:commandButton id="addThema" class="small button hide-for-print" value="Hinzufügen" update="errorAnlegen m1 m2 m3 m4 m5 m6 themenTabelle" action="#{kursNB.addThema()}" />
                                 </fieldset>
                                 
                                 <h:commandButton class="small button hide-for-print" id="kursAnlegen" value="Anlegen" action="#{kursNB.anlegen()}" type="submit"></h:commandButton>
