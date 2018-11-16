@@ -16,6 +16,7 @@
                 <link href="../resources/css/foundation.min.css" rel="stylesheet" type="text/css" />
                 <link href="../resources/css/app.css" rel="stylesheet" type="text/css" />
                 <link href="../resources/css/foundation-icons.css" rel="stylesheet" type="text/css" />
+                <link href="./resources/css/print.css" rel="stylesheet" type="text/css" media="print" />
             </ui:define>
             <ui:define name="js">
                 <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
@@ -66,7 +67,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <h:commandButton type="submit" class="small button" id="benutzerAnlegen" value="ändern" action="#{passwortAendernNB.passwortAendern()}" />
+                                    <h:commandButton type="submit" class="small button hide-for-print" id="benutzerAnlegen" value="ändern" action="#{passwortAendernNB.passwortAendern()}" />
                                 </div> 
                             </fieldset>
                         </h:form>

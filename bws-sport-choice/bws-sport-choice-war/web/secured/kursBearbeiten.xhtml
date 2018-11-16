@@ -16,6 +16,7 @@
                 <link href="../resources/css/foundation.min.css" rel="stylesheet" type="text/css" />
                 <link href="../resources/css/app.css" rel="stylesheet" type="text/css" />
                 <link href="../resources/css/foundation-icons.css" rel="stylesheet" type="text/css" />
+                <link href="./resources/css/print.css" rel="stylesheet" type="text/css" media="print" />
             </ui:define>
             <ui:define name="js">
                 <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
@@ -141,10 +142,8 @@
                                         <p:column>
                                             <h:selectBooleanCheckbox value="#{eintrag.value}" />
                                         </p:column>
-                                        <f:facet name='footer'>
-                                            <p:commandButton class="small button" value="Löschen" update="themenTabelle" action="#{kursNB.removeThema()}" />
-                                        </f:facet>
                                     </p:dataTable>
+                                    <p:commandButton class="small button hide-for-print" value="Löschen" update="themenTabelle" action="#{kursNB.removeThema()}" />
                                     <div class="row collapse area">
                                         <div class="small-4 columns">
                                             <span class="prefix">Anteil in %</span>
@@ -169,9 +168,9 @@
                                             <h:inputText id="schwerpunkt" class="input-group-field" value="#{kursNB.schwerpunkt}"/>
                                         </div>
                                     </div>
-                                    <p:commandButton id="addThema" class="small button" value="Hinzufügen" update="m1 m2 m3 m4 m5 error themenTabelle" action="#{kursNB.addThema()}" />
+                                    <p:commandButton id="addThema" class="small button hide-for-print" value="Hinzufügen" update="m1 m2 m3 m4 m5 error themenTabelle" action="#{kursNB.addThema()}" />
                                 </fieldset>
-                                <h:commandButton class="small button" id="kursBearbeiten" value="Speichern" action="#{kursNB.bearbeiten()}" type="submit"/>
+                                <h:commandButton class="small button hide-for-print" id="kursBearbeiten" value="Speichern" action="#{kursNB.bearbeiten()}" type="submit"/>
                             </fieldset>
                         </h:form>
                     </div>

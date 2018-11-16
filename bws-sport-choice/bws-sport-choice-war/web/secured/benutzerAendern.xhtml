@@ -16,6 +16,7 @@
                 <link href="../resources/css/foundation.min.css" rel="stylesheet" type="text/css" />
                 <link href="../resources/css/app.css" rel="stylesheet" type="text/css" />
                 <link href="../resources/css/foundation-icons.css" rel="stylesheet" type="text/css" />
+                <link href="./resources/css/print.css" rel="stylesheet" type="text/css" media="print" />
             </ui:define>
             <ui:define name="js">
                 <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
@@ -113,8 +114,8 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <h:commandButton type="submit" class="small button" id="speichern" value="Speichern" action="#{benutzerAendernNB.aenderungenSpeichern()}" />
-                                    <p:commandButton id="passwortZuruecksetzen" class="small button" value="Passwort zurücksetzen" action="#{benutzerAendernNB.passwortZuruecksetzen()}" update="pnl"/>
+                                    <h:commandButton type="submit" class="small button hide-for-print" id="speichern" value="Speichern" action="#{benutzerAendernNB.aenderungenSpeichern()}" />
+                                    <p:commandButton id="passwortZuruecksetzen" class="small button hide-for-print" value="Passwort zurücksetzen" action="#{benutzerAendernNB.passwortZuruecksetzen()}" update="pnl"/>
                                 </div> 
                             </fieldset>
                         </h:form>
