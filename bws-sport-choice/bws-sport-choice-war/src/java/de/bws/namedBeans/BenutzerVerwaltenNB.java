@@ -19,7 +19,6 @@ import de.bws.sessionbeans.SchuelerFacadeLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -78,23 +77,25 @@ public class BenutzerVerwaltenNB implements Serializable{
     }
     
     /**
-     * Löscht alle ausgewählten Benutzer
+     * Löscht alle ausgewählten Benutzer, außer es ist der angemeldete Benutzer 
+     * oder der Rootadmin.
      * 
      * @return 
      */
     public String loeschen(){
+        Benutzer angemeldeterBenutzer = (Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
         for(Benutzer b: this.getAusgewaehlteBenutzer()){
-            switch(b.getRolle()){
-                case LEHRER:
-                    this.lehrerBean.remove((Lehrer)b.getPerson());
-                    break;
-                case SCHUELER:
-                    this.schuelerBean.remove((Schueler)b.getPerson());
-                    break;
-                default:
-                    this.personBean.remove(b.getPerson());
+            // prüft ob der zu löschende Benutzer der angemeldete Benutzer ist
+            if(b.equals(angemeldeterBenutzer)){
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Sie können sich nicht selbst löschen.");
+                continue;
+            // prüft ob der zu löschende Benutzer der Rootadmin ist
+            } else if(b.getBenutzername().equals("ChoiceRoot")) {
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Der Benutzer \"ChoiceRoot\" darf nicht gelöscht werden.");
+                continue;
             }
-            this.benutzerBean.remove(b);
+            // Benutzer wird samt zugehöriger Person (bzw. Lehrer, Schüler) gelöscht
+            this.benutzerBean.remove(b);            
         }
         return "benutzerVerwalten";
     }

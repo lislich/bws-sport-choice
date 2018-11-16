@@ -46,22 +46,22 @@
                 
                 
                 
-                <h:panelGroup layout="block" rendered="#{menueNB.schuelerDarfNichtWaehlen()}">               
+               <!-- <h:panelGroup layout="block" rendered="#/{menueNB.schuelerDarfNichtWaehlen()}">               
                     <div id="keineWahl" class="row">
                         <div class="small-12 columns small-centered">
                             <div class="panel paper">
                                 <p> Du kannst zur Zeit keine Wahl abgeben.</p> 
-                                <h:panelGroup layout="block" rendered="#{menueNB.nichtEingeteilt()}">
+                                <h:panelGroup layout="block" rendered="#/{menueNB.nichtEingeteilt()}">
                                     <p> Die Einteilung hat noch nicht stattgefunden.</p>
                                 </h:panelGroup>
-                                <h:panelGroup layout="block" rendered="#{menueNB.bereitsEingeteilt()}">
+                                <h:panelGroup layout="block" rendered="#/{menueNB.bereitsEingeteilt()}">
                                     <p> Du bist in folgendem Kurs: </p>
                                 <h:outputText value="" />
                                 </h:panelGroup>
                             </div>
                         </div>
                     </div>
-                </h:panelGroup>
+                </h:panelGroup> -->
                 
                 <h:panelGroup layout="block" >
                     <div id="output" class="row">
@@ -75,7 +75,7 @@
                     </div>
                 </h:panelGroup>
                                     
-                <h:panelGroup layout="block" rendered="#{menueNB.schuelerDarfWaehlen()}">               
+                <h:panelGroup layout="block" rendered="#{menueNB.startseiteRendern()}">               
                     <div id="wahlAbgeben" class="row">
                         <div class="small-12 columns small-centered">
                             <fieldset>

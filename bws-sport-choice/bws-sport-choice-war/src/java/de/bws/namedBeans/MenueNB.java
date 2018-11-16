@@ -11,6 +11,8 @@ import de.bws.sessionbeans.WahlzeitraumFacadeLocal;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -257,6 +259,24 @@ public class MenueNB implements Serializable {
         return tmp;
     }
     
+    private Kurs bereitsInKursEingeteilt(){
+        Kurs inKurs = null;
+        if(this.benutzer.getPerson() instanceof Schueler){
+            List<Kurs> kursListe = this.kursBean.get("SELECT k FROM Kurs k");
+            Calendar calendar = new GregorianCalendar();
+            int aktuellesJahr = Calendar.getInstance().get(Calendar.YEAR);
+            for(Kurs k:kursListe){
+                calendar.setTime(k.getJahr());
+                if(calendar.get(Calendar.YEAR) == aktuellesJahr){
+                    if(k.getTeilnehmer().contains((Schueler)this.benutzer.getPerson())){
+                        inKurs = k;
+                    }
+                }
+            }
+        }
+        return inKurs;
+    }
+    
     /**
      * @author Joshua
      * @return true or false
@@ -268,29 +288,33 @@ public class MenueNB implements Serializable {
     }
     
     private String erstelletBegruessung(String p_nachricht){
-        
-        
-        
-        
-        return "null";
+        return "$('#panelContent').append('<p>" + p_nachricht + "</p>')";
     }
     
     public boolean startseiteRendern(){
         boolean kannWaehlen = false;
-        String begruessung = "";
         RequestContext context = RequestContext.getCurrentInstance();
         
         if(this.benutzer != null){
             // Ist der angemeldete Benutzer ein Schüler
             if(this.benutzer.getPerson() instanceof Schueler){
                 kannWaehlen = schuelerDarfWaehlen();
+                if(!kannWaehlen){
+                    Kurs eingeteilterKurs = this.bereitsInKursEingeteilt();
+                    if(eingeteilterKurs != null){
+                       context.execute(this.erstelletBegruessung("Sie sind bereits in dem Kurs \"" + eingeteilterKurs + "\" eingetragen."));
+                    } else {
+                       context.execute(this.erstelletBegruessung("Die Einteilung wurde noch nicht durchgeführt."));
+                    } 
+                } else {
+                    context.execute(this.erstelletBegruessung("Sie können Ihre Wahl innerhalb des Wahlzeitraums ändern."));
+                }
             } else if (this.benutzer.getPerson() instanceof Lehrer){
-
+                context.execute(this.erstelletBegruessung("Hier können Sie Ihre Kurse verwalten. Zur Navigation Benutzen Sie bitte das Menu."));
             } else {
-
+                context.execute(this.erstelletBegruessung("Zur Navigation Benutzen Sie bitte das Menu."));
             }
         }
-        
         return kannWaehlen;
     }
     
