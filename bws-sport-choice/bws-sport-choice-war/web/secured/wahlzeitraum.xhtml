@@ -41,7 +41,7 @@
                                         <span class="prefix">Beginndatum</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="beginn" class="input-group-field" value="#{wahlNB.beginn}" converter="DateConverter" required="true" converterMessage="Benötigtes Datumsformat: dd.mm.yyy" requiredMessage="Bitte geben Sie ein Beginndatum ein."/>
+                                        <h:inputText id="beginn" class="input-group-field" value="#{wahlzeitraumNB.beginn}" converter="DateConverter" required="true" converterMessage="Benötigtes Datumsformat: dd.mm.yyy" requiredMessage="Bitte geben Sie ein Beginndatum ein."/>
                                         <h:message id="m6" for="beginn" style="color: red"/><p></p>
                                     </div>
                                 </div>
@@ -50,12 +50,12 @@
                                         <span class="prefix">Enddatum</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="ende" class="input-group-field" value="#{wahlNB.ende}" converter="DateConverter" required="true" converterMessage="Benötigtes Datumsformat: dd.mm.yyy" requiredMessage="Bitte geben Sie ein Enddatum ein."/>
+                                        <h:inputText id="ende" class="input-group-field" value="#{wahlzeitraumNB.ende}" converter="DateConverter" required="true" converterMessage="Benötigtes Datumsformat: dd.mm.yyy" requiredMessage="Bitte geben Sie ein Enddatum ein."/>
                                         <h:message id="m7" for="ende" style="color: red"/><p></p>
                                     </div>
                                 </div>                              
                                 <div>
-                                    <h:commandButton class="small button hide-for-print" id="saveDatum" value="Speichern" action="#{wahlNB.saveDatum()}" type="submit"/>
+                                    <h:commandButton class="small button hide-for-print" id="saveDatum" value="Speichern" action="#{wahlzeitraumNB.saveDatum()}" type="submit"/>
                                 </div>
                             </fieldset>
                         </div>
