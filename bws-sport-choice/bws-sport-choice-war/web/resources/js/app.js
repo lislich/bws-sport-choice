@@ -48,9 +48,9 @@ $(document).ready(function () {
     $(".filter").change(function(){
         $("#refreshFilter").click();
         $("#tableBenutzer").load();
-    });
+    }); */
 
-    $('#alleWaehlen').click(function(event) {   
+    $('#alleWaehlen').change(function() {   
        if(this.checked) {
            // Iterate each checkbox
            $(".cbWaehlen").each(function() {
@@ -67,7 +67,7 @@ $(document).ready(function () {
         $("#alleWaehlen").attr('checked', false);
     });
    
-*/   
+
     // # Kurs bearbeiten ####################################################################################
 
     $(".disableSelectStufe").addClass("hide");
