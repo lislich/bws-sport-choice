@@ -63,17 +63,7 @@
                     </div>
                 </h:panelGroup> -->
                 
-                <h:panelGroup layout="block" >
-                    <div id="output" class="row">
-                        <div class="small-12 columns small-centered">
-                            <div class="panel paper">
-                                <h:panelGroup layout="block" id="panelContent">
-                                    <h:outputText id="begruessung" value="#{menueNB.begruessungstext}" />
-                                </h:panelGroup>
-                            </div>
-                        </div>
-                    </div>
-                </h:panelGroup>
+                
                                     
                 <h:panelGroup layout="block" rendered="#{menueNB.startseiteRendern()}">               
                     <div id="wahlAbgeben" class="row">
@@ -147,6 +137,18 @@
                     </div>
                 </h:panelGroup>
 
+               <h:panelGroup layout="block" >
+                    <div id="output" class="row">
+                        <div class="small-12 columns small-centered">
+                            <div class="panel paper">
+                                <h:panelGroup layout="block" id="panelContent">
+                                    <h:outputText id="begruessung" value="#{menueNB.begruessungstext}" />
+                                </h:panelGroup>
+                            </div>
+                        </div>
+                    </div>
+                </h:panelGroup>
+               
             </ui:define>
 
         </ui:composition>

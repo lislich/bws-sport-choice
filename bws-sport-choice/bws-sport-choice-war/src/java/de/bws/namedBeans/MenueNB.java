@@ -290,16 +290,20 @@ public class MenueNB implements Serializable {
         return this.benutzer != null;
     }
     
-    private String erstelletBegruessung(String p_nachricht){
+    private String erstelleBegruessung(String p_nachricht){
         return "$('#panelContent').append('<p>" + p_nachricht + "</p>')";
     }
+    
     
     public boolean startseiteRendern(){
         boolean kannWaehlen = false;
         RequestContext context = RequestContext.getCurrentInstance();
+        System.out.println(benutzer);
         if(this.benutzer != null){
+            System.out.println("Benutzer ist nicht null.");
             // Ist der angemeldete Benutzer ein Schüler
             if(this.benutzer.getPerson() instanceof Schueler){
+                System.out.println("Benutzer ist Schüler.");
                 kannWaehlen = schuelerDarfWaehlen();
                 System.out.println("Schüler darf wählen: " + kannWaehlen);
                 if(!kannWaehlen){
@@ -314,11 +318,14 @@ public class MenueNB implements Serializable {
                     this.setBegruessungstext("Sie können Ihre Wahl innerhalb des Wahlzeitraums ändern.");
                 }
             } else if (this.benutzer.getPerson() instanceof Lehrer){
+                System.out.println("Benutzer ist Lehrer.");
                 this.setBegruessungstext("Hier können Sie Ihre Kurse verwalten. Zur Navigation Benutzen Sie bitte das Menu.");
             } else {
+                System.out.println("Benutzer ist Admin.");
                 this.setBegruessungstext("Zur Navigation Benutzen Sie bitte das Menu.");
             }
         }
+
         return kannWaehlen;
     }
     
@@ -342,6 +349,7 @@ public class MenueNB implements Serializable {
      * @return the begruessungstext
      */
     public String getBegruessungstext() {
+        System.out.println("Get Begrüßungstext.");
         return begruessungstext;
     }
 
@@ -349,6 +357,7 @@ public class MenueNB implements Serializable {
      * @param p_begruessungstext the begruessungstext to set
      */
     public void setBegruessungstext(String p_begruessungstext) {
+        System.out.println("Set Begrüßungstext");
         this.begruessungstext = p_begruessungstext;
     }
     

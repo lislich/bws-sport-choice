@@ -54,10 +54,12 @@
                                         <span class="prefix">Rolle</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="rolle" class="input-group-field" value="#{benutzerAnlegenNB.rolle}">
+                                        <h:selectOneMenu id="rolle" class="input-group-field" value="#{benutzerAnlegenNB.rolle}" required="true" requiredMessage="Bitte wählen Sie eine Rolle aus.">
+                                            <f:selectItem itemValue="" noSelectionOption="true" />
                                             <f:selectItems value="#{benutzerAnlegenNB.rollen}" var="rolle" itemValue="#{rolle}" itemLabel="#{rolle}"/>
                                             <f:ajax event="change" listener="#{benutzerAnlegenNB.filter}" render="stufe kuerzel tutor"/>
                                         </h:selectOneMenu>
+                                        <h:message id="msgRolle" for="rolle" style="color:red"/>
                                     </div> 
                                 </div>
                                 <div class="row collapse">
@@ -89,7 +91,8 @@
                                         <span class="prefix">Tutor</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="tutor" class="input-group-field" value="#{benutzerAnlegenNB.tutor}" disabled="true">
+                                        <h:selectOneMenu id="tutor" class="input-group-field" value="#{benutzerAnlegenNB.tutor}">
+                                            
                                             <f:selectItems value="#{benutzerAnlegenNB.tutoren}" var="tutor" itemValue="#{tutor.id}" itemLabel="#{tutor.kuerzel}"/>
                                         </h:selectOneMenu>
                                     </div>
@@ -99,7 +102,7 @@
                                         <span class="prefix">Kürzel</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="kuerzel" class="input-group-field" value="#{benutzerAnlegenNB.kuerzel}" disabled="true"/>
+                                        <h:inputText id="kuerzel" class="input-group-field" value="#{benutzerAnlegenNB.kuerzel}"/>
                                     </div>
                                 </div>
                                 <div class="row collapse area">
@@ -107,7 +110,7 @@
                                         <span class="prefix">Stufe</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="stufe" class="input-group-field" value="#{benutzerAnlegenNB.stufe}" disabled="true">
+                                        <h:selectOneMenu id="stufe" class="input-group-field" value="#{benutzerAnlegenNB.stufe}">
                                             <f:selectItems value="#{stufeNB.alleStufen}" var="stufe" itemValue="#{stufe.id}" itemLabel="#{stufe.bezeichnung}"/>
                                         </h:selectOneMenu>
                                     </div>
@@ -127,7 +130,7 @@
                                 </div>
                                 <div>
                                     <!--<h:commandButton class="small button" id="benutzerAnlegen" value="Anlegen" action="#!{benutzerAnlegenNB.anlegen()}" />-->
-                                    <p:commandButton id="benutzerAnlegen" class="small button hide-for-print" value="Anlegen" action="#{benutzerAnlegenNB.anlegen()}" update="pnl msgNachname msgVorname msgBenutzername"/>
+                                    <p:commandButton id="benutzerAnlegen" class="small button hide-for-print" value="Anlegen" action="#{benutzerAnlegenNB.anlegen()}" update="pnl msgNachname msgVorname msgBenutzername msgRolle"/>
                                 </div> 
                             </fieldset>
                         </h:form>
