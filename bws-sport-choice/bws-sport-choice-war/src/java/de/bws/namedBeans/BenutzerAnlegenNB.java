@@ -16,8 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import org.primefaces.context.RequestContext;
@@ -56,6 +59,7 @@ public class BenutzerAnlegenNB implements Serializable{
     private String tutor;
     private String kuerzel;
     
+    
 //*************************** Methoden *****************************************
 //******************************************************************************
     
@@ -63,6 +67,33 @@ public class BenutzerAnlegenNB implements Serializable{
      * Erstellt eine neue Insatnz von BenutzerAnlegenNB
      */
     public BenutzerAnlegenNB() {
+    }
+    
+    public void filter(AjaxBehaviorEvent event){
+        RequestContext context = RequestContext.getCurrentInstance();
+        String execute = "";
+        System.out.println("#" + rolle.toString());
+        
+        switch (rolle) {
+            case LEHRER:
+                System.out.println("Test Lehrer");
+                execute += "$('#tutor').attr('disabled',true);$('#stufe').attr('disabled',true);$('#kuerzel').attr('disabled',false);";
+                break;
+            case SCHUELER:
+                System.out.println("Test Schüler");
+                execute += "$('#tutor').attr('disabled',false);$('#stufe').attr('disabled',false);$('#kuerzel').attr('disabled',true);";
+                break;
+            case ADMIN:
+                System.out.println("Test Admin");
+                execute += "$('#tutor').attr('disabled',true);$('#stufe').attr('disabled',true);$('#kuerzel').attr('disabled',true);";
+                break; 
+            default:
+                execute = "";
+                break;
+        }
+        
+        System.out.println(execute);
+        context.execute(execute);
     }
     
     /**
@@ -327,5 +358,6 @@ public class BenutzerAnlegenNB implements Serializable{
     public void setKuerzel(String kuerzel) {
         this.kuerzel = kuerzel;
     }
-    
+
+
 }

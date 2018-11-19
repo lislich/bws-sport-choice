@@ -54,8 +54,9 @@
                                         <span class="prefix">Rolle</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="rolle" class="input-group-field" value="#{benutzerAnlegenNB.rolle}" onchange="onchange()">
+                                        <h:selectOneMenu id="rolle" class="input-group-field" value="#{benutzerAnlegenNB.rolle}">
                                             <f:selectItems value="#{benutzerAnlegenNB.rollen}" var="rolle" itemValue="#{rolle}" itemLabel="#{rolle}"/>
+                                            <f:ajax event="change" listener="#{benutzerAnlegenNB.filter}" render="stufe kuerzel tutor"/>
                                         </h:selectOneMenu>
                                     </div> 
                                 </div>
@@ -88,7 +89,7 @@
                                         <span class="prefix">Tutor</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="tutor" class="input-group-field" value="#{benutzerAnlegenNB.tutor}"  >
+                                        <h:selectOneMenu id="tutor" class="input-group-field" value="#{benutzerAnlegenNB.tutor}" >
                                             <f:selectItems value="#{benutzerAnlegenNB.tutoren}" var="tutor" itemValue="#{tutor.id}" itemLabel="#{tutor.kuerzel}"/>
                                         </h:selectOneMenu>
                                     </div>

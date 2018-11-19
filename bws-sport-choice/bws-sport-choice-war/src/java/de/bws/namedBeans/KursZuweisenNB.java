@@ -92,7 +92,7 @@ public class KursZuweisenNB implements Serializable{
                 Kurs kursAlt = this.getAktuellerKurs(p_schueler.getId());
 
                 // Wenn der Schüler bereits einem anderen Kurs zugewiesen war wird er dort als Teilnehmer gelöscht und der Eintrag wird in der Datenbank aktualisiert
-                if(kursAlt != null){
+                if(!(kursAlt.getTitel().equals("-"))){
                     Kurs tmp = this.kursBean.find(kursAlt.getId());
                     tmp.removeTeilnehmer(p_schueler);
                     this.kursBean.edit(tmp);

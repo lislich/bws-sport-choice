@@ -87,5 +87,6 @@ $(document).ready(function () {
         $(".disableSelectThemengleich").attr("disabled", false);
         $(".disableThemengleich").replaceWith($(".disableSelectThemengleich"));
     });
+    
 });
 
