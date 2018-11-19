@@ -68,12 +68,12 @@ public class BenutzerAnlegenNB implements Serializable{
      */
     public BenutzerAnlegenNB() {
     }
-    
+
     public void filter(AjaxBehaviorEvent event){
         RequestContext context = RequestContext.getCurrentInstance();
         String execute = "";
         System.out.println("#" + rolle.toString());
-        
+
         switch (rolle) {
             case LEHRER:
                 System.out.println("Test Lehrer");
@@ -95,6 +95,7 @@ public class BenutzerAnlegenNB implements Serializable{
         System.out.println(execute);
         context.execute(execute);
     }
+   
     
     /**
      * Legt eine neue Person mit den vom Benutzer angegebenen Daten an. 
