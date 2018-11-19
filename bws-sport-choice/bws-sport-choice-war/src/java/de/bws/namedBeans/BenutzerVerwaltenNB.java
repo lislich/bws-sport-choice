@@ -16,6 +16,7 @@ import de.bws.sessionbeans.BenutzerFacadeLocal;
 import de.bws.sessionbeans.LehrerFacadeLocal;
 import de.bws.sessionbeans.PersonFacadeLocal;
 import de.bws.sessionbeans.SchuelerFacadeLocal;
+import de.bws.sessionbeans.StufeFacadeLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,9 @@ public class BenutzerVerwaltenNB implements Serializable{
     
     @EJB
     private SchuelerFacadeLocal schuelerBean;
+    
+    @EJB
+    private StufeFacadeLocal stufeBean;
     
     @EJB
     private BenutzerFacadeLocal benutzerBean;
@@ -119,30 +123,51 @@ public class BenutzerVerwaltenNB implements Serializable{
     }
     
     /**
-     * Stuft die ausgewählten Schüler im eine Stufe hoch. Hierbei wird von einer 
-     * Stufenbezeichnung bestehend aus Stufe und Schulform gearbeitet.
-     * Beispiel:
-     * Die Stufe 12 des Berufsgymnasiums hätte die Bezeichnung 12BG.
+     * Stuft die ausgewählten Schüler im eine Stufe hoch.
      * 
      * @return String für die Navigation
      */
     public String hochstufen(){
+        List<Benutzer> ausgewaehlteBenutzer = this.getAusgewaehlteBenutzer();
+        String neueStufeBezeichnung = null;
+        List<Stufe> neueStufe;
+        for(Benutzer b:ausgewaehlteBenutzer){
+            if(b.getPerson() instanceof Schueler){
+                neueStufeBezeichnung = "" + (Integer.parseInt(b.getPerson().getStufe().getBezeichnung()) + 1);
+                neueStufe = this.stufeBean.get("SELECT s FROM Stufe s WHERE s.bezeichnung = " + neueStufeBezeichnung);
+                if(neueStufe != null && !neueStufe.isEmpty()){
+                    ((Schueler)b.getPerson()).setStufe(neueStufe.get(0));
+                    this.schuelerBean.edit((Schueler)b.getPerson());
+                } else {
+                    this.benutzerBean.remove(b);
+                }
+            }
+        }
         
-        
-        return null;
+        return "benutzerVerwalten";
     }
     
     /**
-     * Stuft die ausgewählten Schüler im eine Stufe ab. Hierbei wird von einer 
-     * Stufenbezeichnung bestehend aus Stufe und Schulform gearbeitet.
-     * Beispiel:
-     * Die Stufe 12 des Berufsgymnasiums hätte die Bezeichnung 12BG.
+     * Stuft die ausgewählten Schüler im eine Stufe ab.
      * 
      * @return String für die Navigation
      */
     public String abstufen(){
+        List<Benutzer> ausgewaehlteBenutzer = this.getAusgewaehlteBenutzer();
+        String neueStufeBezeichnung;
+        List<Stufe> neueStufe;
+        for(Benutzer b:ausgewaehlteBenutzer){
+            if(b.getPerson() instanceof Schueler){
+                neueStufeBezeichnung = "" + (Integer.parseInt(b.getPerson().getStufe().getBezeichnung()) - 1);
+                neueStufe = this.stufeBean.get("SELECT s FROM Stufe s WHERE s.bezeichnung = " + neueStufeBezeichnung);
+                if(neueStufe != null && !neueStufe.isEmpty()){
+                    ((Schueler)b.getPerson()).setStufe(neueStufe.get(0));
+                    this.schuelerBean.edit((Schueler)b.getPerson());
+                }
+            }
+        }
         
-        return null;
+        return "benutzerVerwalten";
     }
     
     /**

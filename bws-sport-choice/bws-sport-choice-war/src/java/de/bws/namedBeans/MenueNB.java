@@ -40,6 +40,9 @@ public class MenueNB implements Serializable {
     
     // Benutzer
     private Benutzer benutzer;
+    
+    // Begrüßungstext
+    private String begruessungstext;
 
     /**
      * @author Lisa
@@ -125,40 +128,40 @@ public class MenueNB implements Serializable {
      * 
      * Diese Methode ermittelt ob der aktuelle Tag nicht im Wahlzeitraum liegt, und somit nicht gewählt werden darf.
      */
-    public boolean schuelerDarfNichtWaehlen(){
-        boolean tmp = false;
-        // Sucht Wahlzeitraum aus Datenbank, Rückgabe als Liste von Wahlzeiträumen
-        List<Wahlzeitraum> zeitraumListe = this.wahlzeitraumBean.findAll();
-        Wahlzeitraum zeitraum = null;
-        
-        // Setzt den aktuellen Zeitstempel
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
-        // Wenn die Liste nicht leer ist und nicht 'null' ist dann wird der erste Wert der Variable zeitraum zugewiesen
-        if (zeitraumListe != null && !(zeitraumListe.isEmpty())) {
-            zeitraum = zeitraumListe.get(0);
-        }
-        
-        /*
-         * Wenn der Zeitraum nicht 'null' ist und der Benutzer ermittelt werden kann, wird die Rolle
-         * auf Schüler geprüft. Ist der Benutzer ein Schüler wird geprüft ob der Zeitstempel außerhalb des Wahlzeitraumes liegt.
-         */
-        if (zeitraum != null) {
-            if (getBenutzer() != null) {
-                if (getBenutzer().getRolle().equals(Rolle.SCHUELER)) {
-                    Schueler s = (Schueler) getBenutzer().getPerson();
-                    if (zeitraum.getBeginn() != null && zeitraum.getEnde() != null) {
-                        if (zeitraum.getBeginn().getTime() > timestamp.getTime() || zeitraum.getEnde().getTime() < timestamp.getTime()) {
-                        }
-                    }
-                    tmp = true;
-                }
-            }
-        }else{
-            tmp = true;
-        }
-        return tmp;
-    }
+//    public boolean schuelerDarfNichtWaehlen(){
+//        boolean tmp = false;
+//        // Sucht Wahlzeitraum aus Datenbank, Rückgabe als Liste von Wahlzeiträumen
+//        List<Wahlzeitraum> zeitraumListe = this.wahlzeitraumBean.findAll();
+//        Wahlzeitraum zeitraum = null;
+//        
+//        // Setzt den aktuellen Zeitstempel
+//        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+//
+//        // Wenn die Liste nicht leer ist und nicht 'null' ist dann wird der erste Wert der Variable zeitraum zugewiesen
+//        if (zeitraumListe != null && !(zeitraumListe.isEmpty())) {
+//            zeitraum = zeitraumListe.get(0);
+//        }
+//        
+//        /*
+//         * Wenn der Zeitraum nicht 'null' ist und der Benutzer ermittelt werden kann, wird die Rolle
+//         * auf Schüler geprüft. Ist der Benutzer ein Schüler wird geprüft ob der Zeitstempel außerhalb des Wahlzeitraumes liegt.
+//         */
+//        if (zeitraum != null) {
+//            if (getBenutzer() != null) {
+//                if (getBenutzer().getRolle().equals(Rolle.SCHUELER)) {
+//                    Schueler s = (Schueler) getBenutzer().getPerson();
+//                    if (zeitraum.getBeginn() != null && zeitraum.getEnde() != null) {
+//                        if (zeitraum.getBeginn().getTime() > timestamp.getTime() || zeitraum.getEnde().getTime() < timestamp.getTime()) {
+//                        }
+//                    }
+//                    tmp = true;
+//                }
+//            }
+//        }else{
+//            tmp = true;
+//        }
+//        return tmp;
+//    }
 
     /**
      * @author Lisa
@@ -203,30 +206,30 @@ public class MenueNB implements Serializable {
      * 
      * Diese Methode ermittelt ob ein Schüler bereits einem Kurs zugeordnet wurde.
      */
-    public boolean bereitsEingeteilt() {
-        boolean tmp = false;
-
-        // Ermittelt alles Kurse aus der Datenbank
-        List<Kurs> kursList = this.kursBean.get("SELECT k FROM Kurs k");
-        Kurs k = null;
-        
-            // Iteration über die Liste der Kurse und Überprüfung ob aktueller Benutzer, hier Schüler, Teilnehmer ist
-            if (this.benutzer.getPerson() instanceof Schueler) {
-                for (Kurs kTmp : kursList) {
-                    if (kTmp.getTeilnehmer().contains((Schueler) this.benutzer.getPerson())) {
-                        k = kTmp;
-                    }
-
-                }
-            }
-
-            // Wenn ein Kurs gefunden wurde dem der Schüler zugeordnet ist, ist das Ergebnis 'true'
-            if(k != null){
-                tmp = true;
-            }
-        
-        return tmp;
-    }
+//    public boolean bereitsEingeteilt() {
+//        boolean tmp = false;
+//
+//        // Ermittelt alles Kurse aus der Datenbank
+//        List<Kurs> kursList = this.kursBean.get("SELECT k FROM Kurs k");
+//        Kurs k = null;
+//        
+//            // Iteration über die Liste der Kurse und Überprüfung ob aktueller Benutzer, hier Schüler, Teilnehmer ist
+//            if (this.benutzer.getPerson() instanceof Schueler) {
+//                for (Kurs kTmp : kursList) {
+//                    if (kTmp.getTeilnehmer().contains((Schueler) this.benutzer.getPerson())) {
+//                        k = kTmp;
+//                    }
+//
+//                }
+//            }
+//
+//            // Wenn ein Kurs gefunden wurde dem der Schüler zugeordnet ist, ist das Ergebnis 'true'
+//            if(k != null){
+//                tmp = true;
+//            }
+//        
+//        return tmp;
+//    }
     
     /**
      * @author Lisa
@@ -234,30 +237,30 @@ public class MenueNB implements Serializable {
      * 
      * Diese Methode überprüft ob ein Schüler keinem Kurs zugeordnet ist.
      */
-    public boolean nichtEingeteilt(){
-         boolean tmp = false;
-        
-         // Ermittelt Liste von Kursen aus Datenbank
-        List<Kurs> kursList = this.kursBean.get("SELECT k FROM Kurs k");
-        Kurs k = null;
-        
-        // Iteration über Liste der Kurse und Überprüfung ob der aktuelle Benutzer, hier Schüler, Teilnehmer ist 
-        if (this.benutzer.getPerson() instanceof Schueler) {
-            for (Kurs kTmp : kursList) {
-                if (kTmp.getTeilnehmer().contains((Schueler) this.benutzer.getPerson())) {
-                    k = kTmp;
-                }
-
-            }
-        }
-
-        // Wenn kein Kurs gefunden wurde ist das Ergebnis 'true'
-        if(k == null){
-            tmp = true;
-        }
-        
-        return tmp;
-    }
+//    public boolean nichtEingeteilt(){
+//         boolean tmp = false;
+//        
+//         // Ermittelt Liste von Kursen aus Datenbank
+//        List<Kurs> kursList = this.kursBean.get("SELECT k FROM Kurs k");
+//        Kurs k = null;
+//        
+//        // Iteration über Liste der Kurse und Überprüfung ob der aktuelle Benutzer, hier Schüler, Teilnehmer ist 
+//        if (this.benutzer.getPerson() instanceof Schueler) {
+//            for (Kurs kTmp : kursList) {
+//                if (kTmp.getTeilnehmer().contains((Schueler) this.benutzer.getPerson())) {
+//                    k = kTmp;
+//                }
+//
+//            }
+//        }
+//
+//        // Wenn kein Kurs gefunden wurde ist das Ergebnis 'true'
+//        if(k == null){
+//            tmp = true;
+//        }
+//        
+//        return tmp;
+//    }
     
     private Kurs bereitsInKursEingeteilt(){
         Kurs inKurs = null;
@@ -294,25 +297,26 @@ public class MenueNB implements Serializable {
     public boolean startseiteRendern(){
         boolean kannWaehlen = false;
         RequestContext context = RequestContext.getCurrentInstance();
-        
         if(this.benutzer != null){
             // Ist der angemeldete Benutzer ein Schüler
             if(this.benutzer.getPerson() instanceof Schueler){
                 kannWaehlen = schuelerDarfWaehlen();
+                System.out.println("Schüler darf wählen: " + kannWaehlen);
                 if(!kannWaehlen){
                     Kurs eingeteilterKurs = this.bereitsInKursEingeteilt();
+                    System.out.println("Eingetragener Kurs: " + eingeteilterKurs);
                     if(eingeteilterKurs != null){
-                       context.execute(this.erstelletBegruessung("Sie sind bereits in dem Kurs \"" + eingeteilterKurs + "\" eingetragen."));
+                        this.setBegruessungstext("Sie sind bereits in dem Kurs \"" + eingeteilterKurs.getTitel() + " (" + eingeteilterKurs.getKuerzel()+ ") " + "\" eingetragen.");
                     } else {
-                       context.execute(this.erstelletBegruessung("Die Einteilung wurde noch nicht durchgeführt."));
+                        this.setBegruessungstext("Die Einteilung wurde noch nicht durchgeführt.");
                     } 
                 } else {
-                    context.execute(this.erstelletBegruessung("Sie können Ihre Wahl innerhalb des Wahlzeitraums ändern."));
+                    this.setBegruessungstext("Sie können Ihre Wahl innerhalb des Wahlzeitraums ändern.");
                 }
             } else if (this.benutzer.getPerson() instanceof Lehrer){
-                context.execute(this.erstelletBegruessung("Hier können Sie Ihre Kurse verwalten. Zur Navigation Benutzen Sie bitte das Menu."));
+                this.setBegruessungstext("Hier können Sie Ihre Kurse verwalten. Zur Navigation Benutzen Sie bitte das Menu.");
             } else {
-                context.execute(this.erstelletBegruessung("Zur Navigation Benutzen Sie bitte das Menu."));
+                this.setBegruessungstext("Zur Navigation Benutzen Sie bitte das Menu.");
             }
         }
         return kannWaehlen;
@@ -332,6 +336,20 @@ public class MenueNB implements Serializable {
      */
     public void setBenutzer(Benutzer p_benutzer) {
         this.benutzer = p_benutzer;
+    }
+
+    /**
+     * @return the begruessungstext
+     */
+    public String getBegruessungstext() {
+        return begruessungstext;
+    }
+
+    /**
+     * @param p_begruessungstext the begruessungstext to set
+     */
+    public void setBegruessungstext(String p_begruessungstext) {
+        this.begruessungstext = p_begruessungstext;
     }
     
     
