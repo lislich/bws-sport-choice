@@ -9,7 +9,6 @@ package de.bws.namedBeans;
 import de.bws.data.Eintrag;
 import de.bws.data.Rolle;
 import de.bws.entities.Benutzer;
-import de.bws.entities.Lehrer;
 import de.bws.entities.Schueler;
 import de.bws.entities.Stufe;
 import de.bws.sessionbeans.BenutzerFacadeLocal;
@@ -266,7 +265,6 @@ public class BenutzerVerwaltenNB implements Serializable{
      * @param p_benutzer Eine Liste mit Booleanwerten für die Auswahl von Benutzern
      */
     public void setAuswahl(List<Benutzer> p_benutzer) {
-        System.out.println("de.bws.namedBeans.BenutzerNB.setAuswahl()");
         this.auswahl.clear();
         for(Benutzer b: p_benutzer){
             this.auswahl.add(new Eintrag(b, false));

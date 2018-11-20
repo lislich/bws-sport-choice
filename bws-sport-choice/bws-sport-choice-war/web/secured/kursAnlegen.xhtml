@@ -133,7 +133,7 @@
                                     <div class="small-8 columns mobile-input">
                                         <h:selectOneMenu id="themengleich" class="input-group-field" value="#{kursNB.themengleich}">
                                             <f:selectItem itemValue="-1" itemLabel="Kein Themengleicher Kurs" />
-                                            <f:selectItems value="#{kurslisteBean.alleKurse}" var="kurs" itemValue="#{kurs.id}" itemLabel="#{kurs.titel}"/>
+                                            <f:selectItems value="#{kurslisteBean.kurseVorjahr}" var="kurs" itemValue="#{kurs.id}" itemLabel="#{kurs.titel}"/>
                                         </h:selectOneMenu>
                                     </div>
                                 </div>

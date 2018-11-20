@@ -142,25 +142,47 @@ public class WahlNB implements Serializable{
     }
     
     /**
-     * Überprüft die Liste der verfügbaren Kurse auf Themengleichheit. 
+     * Überprüft die Liste der verfügbaren Kurse auf Themengleichheit und gibt 
+     * eine Liste dieser Kurse samt eines Boolean Wertes zurück. In der Demoversion
+     * wird eine andere Version dieser Methode benutzt. Diese Methode wird ggf.
+     * zu einem späteren Zeitpunkt verwendet.
      * 
      * @author Joshua
      * @param p_aktuelleKurse Liste der verfügbaren Kurse
      * @param p_schueler Der wählende Schüler
      * @return Liste mit Einträgen, die einen Kurs und ein Booleanwert enthalten (true = themengleich, false = nicht themengleich))
      */
-    private List<Eintrag<Kurs, Boolean>> pruefeThemengleich(List<Kurs> p_aktuelleKurse, Schueler p_schueler){
-        List<Eintrag<Kurs, Boolean>> kurs = new ArrayList<>();
+//    private List<Eintrag<Kurs, Boolean>> pruefeThemengleich(List<Kurs> p_aktuelleKurse, Schueler p_schueler){
+//        List<Eintrag<Kurs, Boolean>> kurs = new ArrayList<>();
+//        for(Kurs k:p_aktuelleKurse){
+//            if(k.getThemengleich() != null && k.getThemengleich().getTeilnehmer().contains(p_schueler)){
+//                kurs.add(new Eintrag(k, true));
+//            } else {
+//                kurs.add(new Eintrag(k, false));
+//            }
+//        }
+//        return kurs;
+//    }
+
+    /**
+     * Erstellt eine Liste der Kurse, die nicht Themengleich mit der Wahl des 
+     * Vorjahres sind.
+     * 
+     * @param p_aktuelleKurse Liste der möglichen Kurse
+     * @param p_schueler Der wählende Schüler
+     * @return Liste der nicht-themengleichen Kurse
+     */
+    public List<Kurs> getNichtThemengleich(List<Kurs> p_aktuelleKurse){
+        List<Kurs> kurs = new ArrayList<>();
+        Schueler schueler = (Schueler) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
         for(Kurs k:p_aktuelleKurse){
-            if(k.getThemengleich() != null && k.getThemengleich().getTeilnehmer().contains(p_schueler)){
-                kurs.add(new Eintrag(k, true));
-            } else {
-                kurs.add(new Eintrag(k, false));
+            if(k.getThemengleich() == null || !k.getThemengleich().getTeilnehmer().contains(schueler)){
+                kurs.add(k);
             }
         }
         return kurs;
     }
-
+    
     /**
      * @author Lisa
      * @param p_themengleich Kurs

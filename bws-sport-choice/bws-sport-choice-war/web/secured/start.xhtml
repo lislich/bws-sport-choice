@@ -78,7 +78,7 @@
                                         </div>
                                         <div class="small-8 columns mobile-input">
                                             <h:selectOneMenu id="ersteWahl" class="input-group-field" value="#{wahlNB.ersteWahl}">
-                                                <f:selectItems value="#{kurslisteBean.stufeKurse}" var="kurs" itemValue="#{kurs.id}" itemLabel="#{kurs.kuerzel} - #{kurs.titel}" />
+                                                <f:selectItems value="#{wahlNB.getNichtThemengleich (kurslisteBean.stufeKurse)}" var="kurs" itemValue="#{kurs.id}" itemLabel="#{kurs.kuerzel} - #{kurs.titel}" />
                                             </h:selectOneMenu>
                                         </div>
                                     </div>

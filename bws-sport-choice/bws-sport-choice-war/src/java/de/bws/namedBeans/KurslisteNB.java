@@ -71,10 +71,11 @@ public class KurslisteNB implements Serializable {
     // ##### Getter- und Setter-Methoden #################################################################
     
     /**
-     * 
      * @author joshua
-     * @param p_kurse
-     * @return 
+     * @param p_kurse Liste, die gefiltert werden soll
+     * @return Liste mit Kursen des aktuellen Jahres
+     * 
+     * Selektiert alle Kurse des aktuellen Jahres aus einer Liste von Kursen.
      */
     public List<Kurs> getAktuelleKurseFromList(List<Kurs> p_kurse){
         Date jetzt = new Date();
@@ -86,6 +87,18 @@ public class KurslisteNB implements Serializable {
             }
         }
         return aktuelleKurse;
+    }
+    
+    public List<Kurs> getKurseVorjahr(){
+        List<Kurs> kurseVorjahr = new ArrayList();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");
+        String vorjahr = "" + (Integer.parseInt(dateFormat.format(new Date())) - 1);
+        for(Kurs k: this.getAlleKurse()){
+            if(k.getStufe().getBezeichnung().equals("12") && dateFormat.format(k.getJahr()).equals(vorjahr)){
+                kurseVorjahr.add(k);
+            }
+        }
+        return kurseVorjahr;
     }
     
     /**
