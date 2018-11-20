@@ -53,7 +53,7 @@ public class PasswortAendernNB implements Serializable{
             if(this.benutzer != null){
 
                 if(this.benutzer.getPasswort().equals(Passwort.hashen(passwortAlt, this.benutzer.getSalt()))){
-                    if(this.passwortNeu != null && this.passwortNeu.length() > 6){
+                    if(this.passwortNeu != null && this.passwortNeu.length() >= 6){
                         if(this.passwortNeu.equals(this.passwortWiederholung)){
                             this.benutzer.setNeuesPasswort(this.passwortNeu);
                             this.benutzerBean.edit(this.benutzer);
@@ -78,7 +78,7 @@ public class PasswortAendernNB implements Serializable{
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Beim Ändern des Passworts ist ein Fehler aufgetreten. Versuchen Sie es erneut.");
             return "passwortAendern"; 
         }
-        
+
         return "geaendert";
     }
 

@@ -84,8 +84,12 @@ public class KursZuweisenNB implements Serializable{
             Schueler p_schueler = (Schueler) e.getKey();  
             
             // Ermittelt die Kurs-ID des Kurses der dem Schüler zugewiesen ist, Kurs wird aus Datenbank gesucht
-            String p_kursId = (e.getValue().toString().split("="))[1].replace("]", "").trim();
-            Kurs kursNeu = this.kursBean.find(Long.parseLong(p_kursId));
+            Kurs kursNeu = null;
+            if(e.getValue() != null){
+                String p_kursId = (e.getValue().toString().split("="))[1].replace("]", "").trim();
+                kursNeu = this.kursBean.find(Long.parseLong(p_kursId));
+            }
+            
             
             // Wenn ein Kurs gefunden wurde wird ermittelt ob der Schüler bereits eine Zuweisung zu einem anderen Kurs hat
             if(kursNeu != null){

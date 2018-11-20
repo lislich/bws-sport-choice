@@ -16,9 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
@@ -138,7 +136,7 @@ public class BenutzerAnlegenNB implements Serializable{
                     execute += this.benutzername;
                     execute += " Passwort: ";
                     execute += this.passwort;
-                    execute += "</p>')";
+                    execute += "</p>'); $('#benutzerAnlegen').attr('disabled', true);";
 
                     context.execute(execute);
                     context.execute("PF('dialogErstanmeldung').show();");
