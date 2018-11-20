@@ -110,7 +110,7 @@ public class BenutzerAendernNB implements Serializable{
     public String passwortZuruecksetzen(){
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         
-        RequestContext request = RequestContext.getCurrentInstance();
+        
         
         // Prüft ob ein Benutzer ausgewählt ist.
         if(this.benutzer != null) {
@@ -126,13 +126,8 @@ public class BenutzerAendernNB implements Serializable{
             boolean isGeaendert = this.benutzer.setNeuesPasswort(this.getPasswortNeu());
             // Wenn das Passwort geändert wurde, wird es einmalig in einem Dialog angezeigt.
             if(isGeaendert){
+                RequestContext request = RequestContext.getCurrentInstance();
                 System.out.println("Neues Passwort: " + this.getPasswortNeu());
-                String execute = "$('#pnl').append('<p> ";
-                execute += " Passwort: ";
-//                execute += this.getPasswortNeu();
-                execute += "</p>')";
-                request.execute(execute);
-//                request.update("dlgZuruecksetzen");
                 request.execute("PF('dialogZuruecksetzen').show();");
                 
             } else {

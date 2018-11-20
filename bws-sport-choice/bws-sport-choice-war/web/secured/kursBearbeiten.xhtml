@@ -33,7 +33,7 @@
             <ui:define name="content">
                 <div class="row">
                     <div class="small-12 columns small-centered">
-                        <h:form prependId="false">
+                        <h:form prependId="false">                        
                             <fieldset>
                                 <legend>Kurs bearbeiten</legend>
                                 <div class="row collapse">
@@ -42,7 +42,7 @@
                                     </div>
                                     <div class="small-8 columns mobile-input">
                                         <h:inputText id="titelBearbeiten" class="input-group-field" value="#{kursNB.kurs.titel}" required="true"
-                                                     requiredMessage="Geben Sie ein Titel an."validatorMessage="Der Titel muss aus mindestens einem Buchstaben bestehen und mit einem Buchstaben anfangen.">
+                                                     requiredMessage="Geben Sie ein Titel an." validatorMessage="Der Titel muss aus mindestens einem Buchstaben bestehen und mit einem Buchstaben anfangen." >
                                             <f:validateRegex pattern="[a-zA-Z]+\D*[0-9]*" />
                                         </h:inputText>
                                         <h:message id="m1" for="titelBearbeiten" style="color:red"/><p></p>
@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="small-8 columns mobile-input">
                                         <h:inputText id="kuerzelBearbeiten" class="input-group-field" value="#{kursNB.kurs.kuerzel}" required="true" 
-                                                     requiredMessage="Geben Sie ein Kürzel an." validatorMessage="Das Kürzel muss aus 2-3 Großbuchstaben bestehen.">
+                                                     requiredMessage="Geben Sie ein Kürzel an." validatorMessage="Das Kürzel muss aus 2-3 Großbuchstaben bestehen." >
                                             <f:validateRegex pattern="^[A-Z]{2,3}$"/>
                                         </h:inputText>
                                         <h:message id="m2" for="kuerzelBearbeiten" style="color:red"/><p></p>
@@ -158,7 +158,7 @@
                                             <h:selectBooleanCheckbox value="#{eintrag.value}" />
                                         </p:column>
                                     </p:dataTable>
-                                    <p:commandButton class="small button hide-for-print" value="Löschen" update="themenTabelle" action="#{kursNB.removeThema()}" />
+                                    <p:commandButton id="delete" class="small button hide-for-print" value="Löschen" update="themenTabelle" action="#{kursNB.removeThema()}" />
                                     <div class="row collapse area">
                                         <div class="small-4 columns">
                                             <span class="prefix">Anteil in %</span>
@@ -185,7 +185,7 @@
                                     </div>
                                     <p:commandButton id="addThema" class="small button hide-for-print" value="Hinzufügen" update="m1 m2 m3 m4 m5 error themenTabelle" action="#{kursNB.addThema()}" />
                                 </fieldset>
-                                <h:commandButton class="small button hide-for-print" id="kursBearbeiten" value="Speichern" action="#{kursNB.bearbeiten()}" type="submit"/>
+                                <p:commandButton class="small button hide-for-print" id="kursBearbeiten" value="Speichern" action="#{kursNB.bearbeiten()}" update="panelKursbearbeitet m1 m2 m3 m4 m5 error"/>
                             </fieldset>
                         </h:form>
                     </div>

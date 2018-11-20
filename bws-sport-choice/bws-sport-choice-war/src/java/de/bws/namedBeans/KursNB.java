@@ -19,6 +19,7 @@ import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 /**
  * @author Lisa
@@ -294,6 +295,8 @@ public class KursNB implements Serializable {
             }
             kursT.setThema(tmp);
             this.kursBean.create(kursT);
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('dialogKursangelegt').show(); $('#kursAnlegen').attr('disabled', true); $('#addThema').attr('disabled', true); $('#delete').attr('disabled', true);");
         }
         return rueckgabe;
     }

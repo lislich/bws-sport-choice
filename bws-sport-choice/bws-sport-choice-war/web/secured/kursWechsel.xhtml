@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -31,8 +32,23 @@
 
             <ui:define name="content">
                 <div class="row">
-                    <h:form>
+                    <h:form prependId="false">
                         <div class="small-12 columns small-centered">
+                            <p:dialog id="dlgKurswechsel" widgetVar="dialogKurswechsel" class="dialog" closable="false" draggable="false" modal="true"
+                                      width="400" position="center" fitViewport="true" resizable="false">
+                                <p:outputPanel id="panelKurswechsel">
+                                    <div class="row">
+                                        <div class="small-12 columns small-centered">
+                                            <h:outputText value="Die Kurse wurden getauscht."/>
+                                        </div>                
+                                    </div>
+                                    <div class="row">
+                                        <div class="small-12 columns small-centered">
+                                            <p:commandButton id="closeKurswechsel" value="Ok" action="kursWechsel" onclick="PF('dialogKurswechsel').hide(); window.location.replace();"/>
+                                        </div>
+                                    </div>                                   
+                                </p:outputPanel>
+                            </p:dialog>
                             <fieldset>
                                 <legend>Kurs wechseln</legend>
                                 <div>
@@ -59,7 +75,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <h:commandButton class="small button hide-for-print" id="wechsel" value="Wechseln" action="#{kursZuweisenNB.wechsel()}" type="submit"/>
+                                    <p:commandButton class="small button hide-for-print" id="wechsel" value="Wechseln" action="#{kursZuweisenNB.wechsel()}" update="panelKurswechsel errorWechsel"/>
                                     </div>
                             </fieldset>
                         </div>

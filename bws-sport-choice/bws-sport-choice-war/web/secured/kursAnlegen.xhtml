@@ -34,7 +34,21 @@
                 <h:form prependId="false">
                     <div class="row">
                         <div class="small-12 columns small-centered">
-
+                            <p:dialog id="dlgKursangelegt" widgetVar="dialogKursangelegt" class="dialog" closable="false" draggable="false" modal="true"
+                                      width="400" position="center" fitViewport="true" resizable="false">
+                                <p:outputPanel id="panel">
+                                    <div class="row">
+                                        <div class="small-12 columns small-centered">
+                                            <h:outputText value="Der Kurs wurde angelegt"/>
+                                        </div>                
+                                    </div>
+                                    <div class="row">
+                                        <div class="small-12 columns small-centered">
+                                            <p:commandButton id="close" value="Ok" action="kursAnlegen" onclick="PF('dialogKursangelegt').hide(); window.location.replace();"/>
+                                        </div>
+                                    </div>                                   
+                                </p:outputPanel>
+                            </p:dialog>
                             <fieldset>
                                 <legend>Kurs anlegen</legend>
                                 <h:outputText id="errorAnlegen" value="#{loginNB.error}" style="color: red"/>
@@ -181,7 +195,7 @@
                                     <p:commandButton id="addThema" class="small button hide-for-print" value="Hinzufügen" update="errorAnlegen m1 m2 m3 m4 m5 m6 themenTabelle" action="#{kursNB.addThema()}" />
                                 </fieldset>
                                 
-                                <h:commandButton class="small button hide-for-print" id="kursAnlegen" value="Anlegen" action="#{kursNB.anlegen()}" type="submit"></h:commandButton>
+                                <p:commandButton class="small button hide-for-print" id="kursAnlegen" value="Anlegen" action="#{kursNB.anlegen()}" update="panel errorAnlegen m1 m2 m3 m4 m5 m6"></p:commandButton>
 
                             </fieldset>
 

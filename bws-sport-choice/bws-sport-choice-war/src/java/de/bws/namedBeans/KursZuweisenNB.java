@@ -16,6 +16,7 @@ import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 /**
  * @author Lisa
@@ -103,7 +104,9 @@ public class KursZuweisenNB implements Serializable{
                 }
                 // Der Schüler wird dem neuen Kurs hinzugefügt und der Eintrag wird in der Datenbank aktualisiert.
                 kursNeu.addTeilnehmer(p_schueler);
-                this.kursBean.edit(kursNeu);                
+                this.kursBean.edit(kursNeu);   
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('dialogKurszuweisen').show(); $('#zuweisungSpeichern').attr('disabled', true);");
             }           
         }                       
     }
@@ -161,6 +164,8 @@ public class KursZuweisenNB implements Serializable{
                 kursSchuelerEins.addTeilnehmer(zwei);
                 this.kursBean.edit(kursSchuelerEins);
                 this.kursBean.edit(kursSchuelerZwei);
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('dialogKurswechsel').show(); $('#wechsel').attr('disabled', true);");
             } 
         }
         

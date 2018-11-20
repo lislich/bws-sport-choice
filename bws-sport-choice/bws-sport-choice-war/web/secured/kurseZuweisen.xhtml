@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -32,8 +33,23 @@
             <ui:define name="content">
 
                 <div id="kursZuweisen" class="row">
-                    <h:form>
+                    <h:form prependId="false">
                         <div class="small-12 columns small-centered">
+                            <p:dialog id="dlgKurszuweisen" widgetVar="dialogKurszuweisen" class="dialog" closable="false" draggable="false" modal="true"
+                                      width="400" position="center" fitViewport="true" resizable="false">
+                                <p:outputPanel id="panelKurszuweisen">
+                                    <div class="row">
+                                        <div class="small-12 columns small-centered">
+                                            <h:outputText value="Die Kurse wurden zugewiesen."/>
+                                        </div>                
+                                    </div>
+                                    <div class="row">
+                                        <div class="small-12 columns small-centered">
+                                            <p:commandButton id="closeKurswechsel" value="Ok" action="kursZuweisen" onclick="PF('dialogKurszuweisen').hide(); window.location.replace();"/>
+                                        </div>
+                                    </div>                                   
+                                </p:outputPanel>
+                            </p:dialog>
                             <fieldset>
                                 <legend>Kurszuweisung</legend>
                                 <h:dataTable id="kursZuweisenTable" var="eintrag" value="#{kursZuweisenNB.zuordnung}">
@@ -94,7 +110,7 @@
                                         </ui:repeat>
                                     </tbody>
                                 </table>-->
-                                <h:commandButton class="small button hide-for-print" id="zuweisungSpeichern" type="submit" value="Speichern" action="#{kursZuweisenNB.zuweisen()}" />
+                                <p:commandButton class="small button hide-for-print" id="zuweisungSpeichern" type="submit" value="Speichern" action="#{kursZuweisenNB.zuweisen()}" update="panelKurszuweisen errorZuweisen" />
                                 <h:outputText id="errorZuweisen" value="#{loginNB.error}"/>
                             </fieldset>
                         </div>
