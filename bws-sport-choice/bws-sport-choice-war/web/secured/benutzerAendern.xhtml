@@ -34,13 +34,7 @@
                 <div class="row">
                     <div class="small-12 columns small-centered">
                         <h:form prependId="false">
-                           <p:dialog id="dlgZuruecksetzen" class="dialog" widgetVar="dialogZuruecksetzen" header="Anmeldedaten Erstanmeldung"
-                                      modal="true" draggable="false" closable="true" fitViewport="true" resizable="false" width="400" position="center" >
-                                <p:outputPanel id="pnl">
-                                    <h:outputText value="Das Passwort wurde erfolgreich zurückgestzt. Bitte notieren Sie sich das Passwort! Es kann nach dem Schließen dieses Fensters nicht mehr angezeigt werden."/><br/><br/>                           
-                                    <p:commandButton id="closeDialog" value="Ok" action="passwortZuruecksetzen" onclick="PF('dialogZuruecksetzen').hide(); window.location.replace();"/>
-                                </p:outputPanel> 
-                            </p:dialog>
+                            
                                 
                             <fieldset>
                                <div>
@@ -60,7 +54,7 @@
                                         <span class="prefix">Nachname</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="name" class="input-group-field" value="#{benutzerAendernNB.benutzer.person.nachname}" required="true"
+                                        <h:inputText id="nachname" class="input-group-field" value="#{benutzerAendernNB.benutzer.person.nachname}" required="true"
                                                      requiredMessage="Bitte geben Sie einen Nachnamen an." validatorMessage="Nachname ungültig. Bitte geben sie mindestens 2 Buchstaben an.">
                                             <f:validateRegex pattern="^[A-Z]{1}[a-z]+\D*[a-z]*$" />
                                         </h:inputText>
@@ -123,9 +117,20 @@
                                 </div>
                                 <div>
                                     <h:commandButton type="submit" class="small button hide-for-print" id="speichern" value="Speichern" action="#{benutzerAendernNB.aenderungenSpeichern()}" />
-                                    <p:commandButton id="passwortZuruecksetzen" class="small button hide-for-print" value="Passwort zurücksetzen" action="#{benutzerAendernNB.passwortZuruecksetzen()}" update="pnl"/>
+                                    <p:commandButton id="passwortZuruecksetzen" class="small button hide-for-print" value="Passwort zurücksetzen" action="#{benutzerAendernNB.passwortZuruecksetzen()}" update="pnl" />
                                 </div> 
+                                <p:dialog id="dlgZuruecksetzen" class="dialog" widgetVar="dialogZuruecksetzen" header="Neues Passwort" 
+                                    modal="true" draggable="false" closable="true" fitViewport="true" resizable="false" width="400" position="center" >    
+                                    <p:outputPanel id="pnl">
+                                        <h:outputText value="Das Passwort wurde erfolgreich zurückgestzt. Bitte notieren Sie sich das Passwort! Es kann nach dem Schließen dieses Fensters nicht mehr angezeigt werden."/><br/><br/>
+                                        <p:commandButton id="closeDialog" value="Ok" action="benutzerVerwalten"  onclick="PF('dialogZuruecksetzen').hide(); window.location.replace();" />
+                                    </p:outputPanel> 
+                                </p:dialog>
                             </fieldset>
+                        </h:form>
+                        <h:form>
+                            
+                                
                         </h:form>
                     </div>
                 </div>

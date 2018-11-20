@@ -44,6 +44,7 @@ public class BenutzerAendernNB implements Serializable{
     private Benutzer benutzer;
     private String error;
     private String benutzername;
+    private String passwortNeu;
     
     private FacesMessage message;
     private FacesContext context;
@@ -108,39 +109,41 @@ public class BenutzerAendernNB implements Serializable{
      */
     public String passwortZuruecksetzen(){
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        String passwortNeu = "";
-        RequestContext context = RequestContext.getCurrentInstance();
+        
+        RequestContext request = RequestContext.getCurrentInstance();
         
         // Prüft ob ein Benutzer ausgewählt ist.
         if(this.benutzer != null) {
             try{
                 // Das passwort wird generiert.
-                passwortNeu = Passwort.passwortGenerieren();
+                this.setPasswortNeu(Passwort.passwortGenerieren());
             } catch (Exception ex) {
                 Logger.getLogger(BenutzerAendernNB.class.getName()).log(Level.SEVERE, null, ex);
                 sessionMap.put("lastError", "Beim Aktualisieren des Passworts ist ein Fehler aufgetreten. Das Passwort wurde nicht geändert.");
                 return "benutzerVerwalten";
             }
             
+            boolean isGeaendert = this.benutzer.setNeuesPasswort(this.getPasswortNeu());
             // Wenn das Passwort geändert wurde, wird es einmalig in einem Dialog angezeigt.
-            if(this.benutzer.setNeuesPasswort(passwortNeu)){
-                
-                String execute = "$('#pnl').append('<p>Benutzername: ";
-                execute += this.benutzername;
+            if(isGeaendert){
+                System.out.println("Neues Passwort: " + this.getPasswortNeu());
+                String execute = "$('#pnl').append('<p> ";
                 execute += " Passwort: ";
-                execute += passwortNeu;
+//                execute += this.getPasswortNeu();
                 execute += "</p>')";
-        
-//                context.execute(execute);
-//                context.execute("PF('dialogZuruecksetzen').show();");
+                request.execute(execute);
+//                request.update("dlgZuruecksetzen");
+                request.execute("PF('dialogZuruecksetzen').show();");
+                
             } else {
                 sessionMap.put("lastError", "Beim Aktualisieren des Passworts ist ein Fehler aufgetreten. Das Passwort wurde nicht geändert.");
                 return "benutzerVerwalten";
             }
         }
-        context.execute("PF('dialogZuruecksetzen').show();");
         return "benutzerVerwalten";
     }
+    
+//**************************** Getter und Setter *******************************
     
     /**
      * Prüft ob  der ausgewählte Benutzer ein Schüler ist.
@@ -213,6 +216,20 @@ public class BenutzerAendernNB implements Serializable{
      */
     public void setBenutzername(String benutzername) {
         this.benutzername = benutzername;
+    }
+
+    /**
+     * @return the passwortNeu
+     */
+    public String getPasswortNeu() {
+        return passwortNeu;
+    }
+
+    /**
+     * @param passwortNeu the passwortNeu to set
+     */
+    public void setPasswortNeu(String passwortNeu) {
+        this.passwortNeu = passwortNeu;
     }
     
     
