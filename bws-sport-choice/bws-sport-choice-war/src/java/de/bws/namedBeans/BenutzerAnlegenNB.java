@@ -106,49 +106,50 @@ public class BenutzerAnlegenNB implements Serializable{
     public String anlegen(){
         
         boolean fehler = false;
-  
-        Person neuePerson = this.getNeuePersonFromRolle();
-        
+
+        Benutzer tmp = this.benutzerBean.getByName(this.benutzername);
+
         Benutzer neuerBenutzer = null;
-        
-        if (neuePerson != null) {
-            neuerBenutzer = new Benutzer();
-            neuerBenutzer.setBenutzername(this.benutzername);
-            neuerBenutzer.setRolle(this.rolle);
-            neuerBenutzer.setPerson(neuePerson);
-        }
 
-        if (neuerBenutzer != null) {
-            try {
-                this.passwort = Passwort.passwortGenerieren();
-                neuerBenutzer.setNeuesPasswort(this.passwort);
-                this.benutzerBean.create(neuerBenutzer);
-            } catch (Exception ex) {
-                Logger.getLogger(BenutzerAnlegenNB.class.getName()).log(Level.SEVERE, null, ex);
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Fehler beim Anlegen des Benutzers.");
-                fehler = true;
-            }
-            
+        if (tmp == null) {
+            Person neuePerson = this.getNeuePersonFromRolle();
+            if (neuePerson != null) {
 
-            if (!fehler) {
-                RequestContext context = RequestContext.getCurrentInstance();
-                String execute = "$('#pnl').append('<p>Benutzername: ";
-                execute += this.benutzername;
-                execute += " Passwort: ";
-                execute += this.passwort;
-                execute += "</p>')";
-
-                context.execute(execute);
-                context.execute("PF('dialogErstanmeldung').show();");
+                neuerBenutzer = new Benutzer();
+                neuerBenutzer.setBenutzername(this.benutzername);
+                neuerBenutzer.setRolle(this.rolle);
+                neuerBenutzer.setPerson(neuePerson);
             }
 
-        }else{
-            this.personBean.remove(neuePerson);
+            if (neuerBenutzer != null) {
+                try {
+                    this.passwort = Passwort.passwortGenerieren();
+                    neuerBenutzer.setNeuesPasswort(this.passwort);
+                    this.benutzerBean.create(neuerBenutzer);
+                } catch (Exception ex) {
+                    Logger.getLogger(BenutzerAnlegenNB.class.getName()).log(Level.SEVERE, null, ex);
+                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Fehler beim Anlegen des Benutzers.");
+                    fehler = true;
+                }
+
+                if (!fehler) {
+                    RequestContext context = RequestContext.getCurrentInstance();
+                    String execute = "$('#pnl').append('<p>Benutzername: ";
+                    execute += this.benutzername;
+                    execute += " Passwort: ";
+                    execute += this.passwort;
+                    execute += "</p>')";
+
+                    context.execute(execute);
+                    context.execute("PF('dialogErstanmeldung').show();");
+                }
+
+            } else {
+                this.personBean.remove(neuePerson);
+            }
+        } else {
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Dieser Benutzername existiert bereits. Bitte wählen Sie einen anderen.");
         }
-        
-        
-        
-       
         return "benutzerAnlegen";
     }
     
