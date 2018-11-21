@@ -13,7 +13,7 @@ import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
 /**
- * Die LoginNB ist die backing Bean für den Login. Sie enthält die Methoden zum 
+ * Die LoginNB ist die managed Bean für den Login. Sie enthält die Methoden zum 
  * ein- und ausloggen.
  * 
  * @author joshua
@@ -21,55 +21,60 @@ import javax.faces.view.ViewScoped;
 @Named(value = "loginNB")
 @ViewScoped
 public class LoginNB implements Serializable{
-
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Benutzer
     @EJB
     private BenutzerFacadeLocal benutzerBean;
     
+    
     private String passwort;
     private String benutzerName;
-    private boolean angemeldet;
     
     /**
-     * Erstellt eine neue Instanz von LoginNB
-     */
-    public LoginNB() {
-        
-    }
-    
-    /**
+     * Dies ist die Methode zum Einloggen. Sie überprüft ob ein Benutzer mit dem 
+     * angegeben Benutzernamen bereits existiert. Wenn der Benutzer existiert und 
+     * das Passwort übereistimmt wird der Benutzer angemeldet.
      * 
-     * 
+     * @author joshua
      * @return String für die Navigation
      */
     public String login(){
+        // Sessionmap in der Fehlermeldungen und der angemeldete Benutzer 
+        // gespeichert werden
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        angemeldet = false;
-
+        // String für Navigation
+        String fuerNavigation;
+        // Der Benutzer mit dem angegeben Benutzernamen
         Benutzer benutzer = this.benutzerBean.getByName(getBenutzerName());
+        // prüft ob der Benutzer aus der Datenbank geholt wurde
         if(benutzer != null){
             try {
+                // Prüft ob das eingegebene Passwort mit dem gespeicherten übereinstimmt.
                 if(Passwort.pruefen(benutzer, this.getPasswort())){
+                    // Der Benutzer wird in die Sessionmap geschrieben und somit eingeloggt.
                     sessionMap.put("benutzer", benutzer);
-                    angemeldet = true;
-                    return "Login";
+                    fuerNavigation = "Login";
                 } else {
                     sessionMap.put("lastError", "Benutzername und/oder Passwort ungültig");
-                    angemeldet = false;
-                      return "Fehler";
+                    fuerNavigation = "Fehler";
                 }
             } catch (Exception ex) {
                 Logger.getLogger(LoginNB.class.getName()).log(Level.SEVERE, null, ex);
                 sessionMap.put("lastError", "Beim einloggen ist ein Problem aufgetreten. Versuchen Sie es bitte erneut.");
-                angemeldet = false;
-                return "Fehler";
+                fuerNavigation = "Fehler";
             }
         } else {
             sessionMap.put("lastError", "Benutzername und/oder Passwort ungültig");
-            angemeldet = false;
-            return "Fehler";
+            fuerNavigation = "Fehler";
         }
+        return fuerNavigation;
     }
     
+    /**
+     * Methode zum Ausloggen. 
+     * 
+     * @author joshua
+     * @return 
+     */
     public String logout(){
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "Logout";
@@ -118,20 +123,6 @@ public class LoginNB implements Serializable{
         }
         
         return error;
-    }
-
-    /**
-     * @return the angemeldet
-     */
-    public boolean isAngemeldet() {
-        return angemeldet;
-    }
-
-    /**
-     * @param angemeldet the angemeldet to set
-     */
-    public void setAngemeldet(boolean angemeldet) {
-        this.angemeldet = angemeldet;
     }
     
 }

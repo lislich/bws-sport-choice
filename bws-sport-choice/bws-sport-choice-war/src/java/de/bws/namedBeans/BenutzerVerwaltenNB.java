@@ -38,19 +38,19 @@ import org.primefaces.context.RequestContext;
 @Named(value = "benutzerVerwaltenNB")
 @ViewScoped
 public class BenutzerVerwaltenNB implements Serializable{
-
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Person
     @EJB
     private PersonFacadeLocal personBean;
-    
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Lehrer
     @EJB
     private LehrerFacadeLocal lehrerBean;
-    
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Schueler
     @EJB
     private SchuelerFacadeLocal schuelerBean;
-    
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Stufe
     @EJB
     private StufeFacadeLocal stufeBean;
-    
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Benutzer
     @EJB
     private BenutzerFacadeLocal benutzerBean;
         
@@ -58,22 +58,27 @@ public class BenutzerVerwaltenNB implements Serializable{
     private BenutzerNB benutzerNB;
     
     private final Logger log = Logger.getLogger("BenutzerVerwaltenNB");
-    
+    // Attribut wird später mit benutzerVerwalten.xhtml verbunden, um nach der
+    // Stufe zu filtern
     private Stufe stufe;
+    
+    // Attribut wird später mit benutzerVerwalten.xhtml verbunden, um nach der 
+    // Rolle zu filtern
     private String rolle;
     
+    // Die letzte Fehlermeldung
     private String error;
     
+    // Eine Liste von Benutzern mit boolean-Werten, die Checkboxen auf der Oberfläche 
+    //repräsentieren.
     private List<Eintrag<Benutzer, Boolean>> auswahl;
-    
-    /** 
-     * Creates a new instance of BenutzerVerwaltenNB
-     */
-    public BenutzerVerwaltenNB() {
         
-    }
-
-    
+    /**
+     * Diese Methode wird mit der Annotation "@PostConstruct" nach dem Konstruieren aufgerufen.
+     * Sie holt die letzte Fehlermeldung und die Liste aller Benutzer
+     * 
+     * @author joshau
+     */
     @PostConstruct
     private void init(){
         this.error = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("lastError");
@@ -87,7 +92,8 @@ public class BenutzerVerwaltenNB implements Serializable{
      * Löscht alle ausgewählten Benutzer, außer es ist der angemeldete Benutzer 
      * oder der Rootadmin.
      * 
-     * @return 
+     * @author joshua
+     * @return String für die Navigation
      */
     public String loeschen(){
         Benutzer angemeldeterBenutzer = (Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
@@ -112,6 +118,7 @@ public class BenutzerVerwaltenNB implements Serializable{
      * Benutzer auf die Seite zum Ändern eines Benutzers weiter.Im Fall, dass 
      * mehrere Benutzer ausgewählt sind wird eine Fehlermeldung ausgegeben.
      * 
+     * @author joshua
      * @return String für die Navigation
      */
     public String aendern(){
@@ -128,6 +135,7 @@ public class BenutzerVerwaltenNB implements Serializable{
     /**
      * Stuft die ausgewählten Schüler im eine Stufe hoch.
      * 
+     * @author joshua
      * @return String für die Navigation
      */
     public String hochstufen(){
@@ -153,6 +161,7 @@ public class BenutzerVerwaltenNB implements Serializable{
     /**
      * Stuft die ausgewählten Schüler im eine Stufe ab.
      * 
+     * @author joshua
      * @return String für die Navigation
      */
     public String abstufen(){
@@ -177,7 +186,7 @@ public class BenutzerVerwaltenNB implements Serializable{
      * Diese Methode setzt generiert ein neues, zufälliges Passwort und zeigt dieses einmalig in einem Dialog.
      * 
      * @param p_benutzer der ausgewählte Benutzer
-     * @Author Joshua
+     * @Author joshua
      * @return String für weitere Navigation
      */
     public String passwortZuruecksetzen(Benutzer p_benutzer){
@@ -220,6 +229,7 @@ public class BenutzerVerwaltenNB implements Serializable{
     /**
      * Gibt eine Liste mit den ausgewählten Benutzern zurück.
      * 
+     * @author joshua
      * @return Liste der Benutzer, die auf der Oberfläche ausgewählt wurden
      */
     private List<Benutzer> getAusgewaehlteBenutzer(){
@@ -236,6 +246,7 @@ public class BenutzerVerwaltenNB implements Serializable{
      * Erstellt eine Liste mit den Bezeichnungen aller Rollen und dem Wort 
      * "Alle". Dies wird für den Filter der Benutzerverwaltung benötigt.
      * 
+     * @author joshua
      * @return Liste mit den Bezeichnungen der Rollen
      */
     public List<String> getAlleRollen(){
@@ -281,7 +292,10 @@ public class BenutzerVerwaltenNB implements Serializable{
     
     /**
      * Ändert bei einer Änderung des Filters die Tabelle mit den ausgewählten 
-     * Benutzern.
+     * Benutzern. 
+     * Der Filter steht in der Demoversion noch nicht zur Verfügung.
+     * 
+     * @author joshua
      */
     public void auswaehlen(){
         this.benutzerNB.auswaehlen(this.rolle, this.stufe);

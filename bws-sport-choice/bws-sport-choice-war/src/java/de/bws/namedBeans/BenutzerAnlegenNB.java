@@ -24,25 +24,26 @@ import javax.faces.view.ViewScoped;
 import org.primefaces.context.RequestContext;
 
 /**
- *
+ * ManagedBean für benutzerAnlegen.xhtml. Mit ihr werden Benutzer angelegt.
+ * 
  * @author joshua
  */
 @Named(value = "benutzerAnlegenNB")
 @ViewScoped
 public class BenutzerAnlegenNB implements Serializable{
-
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Stufe
     @EJB
     private StufeFacadeLocal stufeBean;
-    
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Person
     @EJB
     private PersonFacadeLocal personBean;
-    
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Lehrer
     @EJB
     private LehrerFacadeLocal lehrerBean;
-    
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Schüler
     @EJB
     private SchuelerFacadeLocal schuelerBean;
-    
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Benutzer
     @EJB
     private BenutzerFacadeLocal benutzerBean;
     
@@ -59,7 +60,6 @@ public class BenutzerAnlegenNB implements Serializable{
     
     
 //*************************** Methoden *****************************************
-//******************************************************************************
     
     /**
      * Diese Methode filtert die möglichen Eingaben in der Oberfläche zum Benutzer anlegen, je nach Rolle die ausgewählt wird.
@@ -102,20 +102,22 @@ public class BenutzerAnlegenNB implements Serializable{
         
         boolean fehler = false;
 
-        Benutzer tmp = this.benutzerBean.getByName(this.benutzername);
-
         Benutzer neuerBenutzer = null;
-
-        if (tmp == null) {
+        
+        // prüft ob der Benutzer bereits existiert
+        if (this.benutzerBean.getByName(this.benutzername) == null) {
+            // Person wird je nach Rolle erstellt
             Person neuePerson = this.getNeuePersonFromRolle();
+            // Falls eine Person erstellt wurde, wird ein neuer Benutzer erstellt 
+            // und die Werte von der Oberfläche zugewiesen.
             if (neuePerson != null) {
-
                 neuerBenutzer = new Benutzer();
                 neuerBenutzer.setBenutzername(this.benutzername);
                 neuerBenutzer.setRolle(this.rolle);
                 neuerBenutzer.setPerson(neuePerson);
             }
-
+            // Wenn der Benutzer erfolgrich erzeugt ist, wird er persistiert.
+            // Andernfals wird die persistierte Person wieder Gelöscht.
             if (neuerBenutzer != null) {
                 try {
                     this.passwort = Passwort.passwortGenerieren();
@@ -126,7 +128,8 @@ public class BenutzerAnlegenNB implements Serializable{
                     FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Fehler beim Anlegen des Benutzers.");
                     fehler = true;
                 }
-
+                // Wenn beim Anlegen des Benutzers kein Fehler ausgetreten ist,
+                // werden Benutzername und Passwort einmalig in einem Dialog ausgegeben.
                 if (!fehler) {
                     RequestContext context = RequestContext.getCurrentInstance();
                     String execute = "$('#pnl').append('<p>Benutzername: ";
@@ -189,7 +192,7 @@ public class BenutzerAnlegenNB implements Serializable{
     }
     
     /**
-     * Erstellt einen Lehrer mit den Lehrerspezifischen Attributen.
+     * Erstellt einen Lehrer mit den lehrerspezifischen Attributen.
      * 
      * @Author Joshua
      * @return Der erstellet Lehrer
@@ -219,8 +222,8 @@ public class BenutzerAnlegenNB implements Serializable{
         return person;
     }
     
- //**************************** Setter und Getter ******************************
- //*****************************************************************************   
+ //**************************** Setter und Getter ******************************   
+    
     /**
      * @return the rolle
      */

@@ -100,17 +100,6 @@ public class WahlNB implements Serializable{
             Kurs p_zwei = this.kursBean.find(Long.parseLong(getZweiteWahl()));
             Kurs p_drei = this.kursBean.find(Long.parseLong(getDritteWahl()));
 
-//            Kurs p_einsThemengleich = p_eins.getThemengleich();
-//            Kurs p_zweiThemengleich = p_zwei.getThemengleich();
-//            Kurs p_dreiThemengleich = p_drei.getThemengleich();
-//
-//            boolean fehler = false;
-//            fehler = this.pruefeThemengleich(p_dreiThemengleich, s);
-//            fehler = this.pruefeThemengleich(p_zweiThemengleich, s);
-//            fehler = this.pruefeThemengleich(p_einsThemengleich, s);
-//
-//            if (!fehler) {
-
             // Wenn noch keine Wahl eingetragen ist, wird eine neue angelegt, ansonsten die vorhandene aktualisiert.
             Wahl wahl = s.getWahl();
             if (wahl == null) {
@@ -133,40 +122,14 @@ public class WahlNB implements Serializable{
             rueckgabe = "gewaehlt";
             }
 
-//        }
-
         return rueckgabe;
     }
-    
-    /**
-     * Überprüft die Liste der verfügbaren Kurse auf Themengleichheit und gibt 
-     * eine Liste dieser Kurse samt eines Boolean Wertes zurück. In der Demoversion
-     * wird eine andere Version dieser Methode benutzt. Diese Methode wird ggf.
-     * zu einem späteren Zeitpunkt verwendet.
-     * 
-     * @author Joshua
-     * @param p_aktuelleKurse Liste der verfügbaren Kurse
-     * @param p_schueler Der wählende Schüler
-     * @return Liste mit Einträgen, die einen Kurs und ein Booleanwert enthalten (true = themengleich, false = nicht themengleich))
-     */
-//    private List<Eintrag<Kurs, Boolean>> pruefeThemengleich(List<Kurs> p_aktuelleKurse, Schueler p_schueler){
-//        List<Eintrag<Kurs, Boolean>> kurs = new ArrayList<>();
-//        for(Kurs k:p_aktuelleKurse){
-//            if(k.getThemengleich() != null && k.getThemengleich().getTeilnehmer().contains(p_schueler)){
-//                kurs.add(new Eintrag(k, true));
-//            } else {
-//                kurs.add(new Eintrag(k, false));
-//            }
-//        }
-//        return kurs;
-//    }
 
     /**
      * Erstellt eine Liste der Kurse, die nicht Themengleich mit der Wahl des 
      * Vorjahres sind.
      * 
      * @param p_aktuelleKurse Liste der möglichen Kurse
-     * @param p_schueler Der wählende Schüler
      * @return Liste der nicht-themengleichen Kurse
      */
     public List<Kurs> getNichtThemengleich(List<Kurs> p_aktuelleKurse){

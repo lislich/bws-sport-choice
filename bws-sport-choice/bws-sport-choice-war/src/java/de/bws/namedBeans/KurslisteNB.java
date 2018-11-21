@@ -49,7 +49,6 @@ public class KurslisteNB implements Serializable {
      * Schlüssel auch in anderen ManagedBeans ermitteln kann und zum Bearbeiten des Kurses verwenden kann.
      */
     public String setGewaehlterKursBearbeiten(Kurs p_kurs){
-        System.out.println("de.bws.namedBeans.KurslisteNB.setGewaehlterKurs()" + p_kurs.getTitel());
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("gewaehlterKurs", p_kurs);
         return "kursBearbeiten";
     }
@@ -63,7 +62,6 @@ public class KurslisteNB implements Serializable {
      * Schlüssel auch in anderen ManagedBeans ermitteln kann und zum Anschauen des Kurses verwenden kann.
      */
     public String setGewaehlterKurs(Kurs p_kurs){
-        System.out.println("de.bws.namedBeans.KurslisteNB.setGewaehlterKurs()" + p_kurs.getTitel());
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("gewaehlterKurs", p_kurs);
         return "kursAnschauen";
     }
@@ -89,6 +87,13 @@ public class KurslisteNB implements Serializable {
         return aktuelleKurse;
     }
     
+    /**
+     * @author joshua
+     * @return Liste mit Kursen des Vorjahrs der Stufe 12
+     * 
+     * Gibt eine Liste alle Kurse des Vorjahrs der Stufe 12 aus. Diese können 
+     * Thmenegleiche Kurse in der Stufe 13 sein.
+     */
     public List<Kurs> getKurseVorjahr(){
         List<Kurs> kurseVorjahr = new ArrayList();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy");

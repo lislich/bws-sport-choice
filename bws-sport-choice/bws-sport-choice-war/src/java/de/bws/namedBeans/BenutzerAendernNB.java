@@ -4,56 +4,57 @@ import de.bws.entities.Benutzer;
 import de.bws.entities.Lehrer;
 import de.bws.entities.Person;
 import de.bws.entities.Schueler;
-import de.bws.security.Passwort;
 import de.bws.sessionbeans.BenutzerFacadeLocal;
 import de.bws.sessionbeans.LehrerFacadeLocal;
 import de.bws.sessionbeans.PersonFacadeLocal;
+import de.bws.sessionbeans.SchuelerFacadeLocal;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import org.primefaces.context.RequestContext;
 
 /**
- *  Die named Bean für das Ändern von Benutzerdaten.
- *  Diese stellt Methoden zum Speichern der geänderten Daten un zum Zurücksetzen 
- *  des Passworts zur Verfügung.
+ *  Die managed Bean für das Ändern von Benutzerdaten.
+ *  Diese stellt Methoden zum Speichern der geänderten Daten zur Verfügung.
  * 
  * @author joshua
  */
 @Named("benutzerAendernNB")
 @ViewScoped
 public class BenutzerAendernNB implements Serializable{
-    
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Benutzer
     @EJB
     private BenutzerFacadeLocal benutzerBean;
-    
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Lehrer
     @EJB
     private LehrerFacadeLocal lehrerBean;
-    
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Person
     @EJB
     private PersonFacadeLocal personBean;
+    // Schnittstelle zur Datenbank für Entitäten vom Typ Schueler
+    @EJB
+    private SchuelerFacadeLocal schuelerBean;
     
+    // Der ausgewählte Benutzer
     private Benutzer benutzer;
-    private String error;
-    private String benutzername;
-    private String passwortNeu;
     
-    private FacesMessage message;
+    // Die letzte Fehlermeldung
+    private String error;
+    
+    
+//    private String benutzername;
+    
     private FacesContext context;
     
     /**
      * Diese Methode wird mit der Annotation "@PostConstruct" nach dem Konstruieren aufgerufen.
      * Sie holt den ausgewählten Benutzer und die letzte Fehlermeldung.
      * 
-     * @Author Joshua
+     * @author Joshua
      */
     @PostConstruct
     private void init(){
@@ -64,7 +65,7 @@ public class BenutzerAendernNB implements Serializable{
             this.error = "Beim Laden des Benutzers ist ein Fehler aufgetreten.";
         } else {
             this.benutzer = (Benutzer) sessionMap.get("gewaehlterBenutzer");
-            this.setBenutzername(this.benutzer.getBenutzername());
+//            this.setBenutzername(this.benutzer.getBenutzername());
             sessionMap.put("gewaehlterBenutzer", null);
         }
         if(this.benutzer.getPerson() == null){
@@ -87,53 +88,21 @@ public class BenutzerAendernNB implements Serializable{
      */
     public String aenderungenSpeichern(){ 
         if(this.benutzer != null){
-            if(this.benutzer.getPerson() != null){
-                this.personBean.edit(this.benutzer.getPerson());
+            Person person = this.benutzer.getPerson();
+            if(person != null){
+                switch(this.benutzer.getRolle()){
+                    case LEHRER: 
+                        this.lehrerBean.edit((Lehrer)person); break;
+                    case SCHUELER:
+                        this.schuelerBean.edit((Schueler) person); break;
+                    default:
+                        this.personBean.edit(person);
+                }
             }
             this.benutzerBean.edit(benutzer);
         } else {
-            message = new FacesMessage("Beim Aktualisieren der Benutzerdaten ist ein Fehler aufgetreten.");
             context = FacesContext.getCurrentInstance();
-            context.addMessage(error, message);
-//            Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-//            sessionMap.put("lastError", "Beim Aktualisieren der Benutzerdaten ist ein Fehler aufgetreten.");
-        }
-        return "benutzerVerwalten";
-    }
-    
-    /**
-     * Diese Methode setzt generiert ein neues, zufälliges Passwort und zeigt dieses einmalig in einem Dialog.
-     * 
-     * @Author Joshua
-     * @return String für weitere Navigation
-     */
-    public String passwortZuruecksetzen(){
-        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        
-        
-        
-        // Prüft ob ein Benutzer ausgewählt ist.
-        if(this.benutzer != null) {
-            try{
-                // Das passwort wird generiert.
-                this.setPasswortNeu(Passwort.passwortGenerieren());
-            } catch (Exception ex) {
-                Logger.getLogger(BenutzerAendernNB.class.getName()).log(Level.SEVERE, null, ex);
-                sessionMap.put("lastError", "Beim Aktualisieren des Passworts ist ein Fehler aufgetreten. Das Passwort wurde nicht geändert.");
-                return "benutzerVerwalten";
-            }
-            
-            boolean isGeaendert = this.benutzer.setNeuesPasswort(this.getPasswortNeu());
-            // Wenn das Passwort geändert wurde, wird es einmalig in einem Dialog angezeigt.
-            if(isGeaendert){
-                RequestContext request = RequestContext.getCurrentInstance();
-                System.out.println("Neues Passwort: " + this.getPasswortNeu());
-                request.execute("PF('dialogZuruecksetzen').show();");
-                
-            } else {
-                sessionMap.put("lastError", "Beim Aktualisieren des Passworts ist ein Fehler aufgetreten. Das Passwort wurde nicht geändert.");
-                return "benutzerVerwalten";
-            }
+            context.getExternalContext().getSessionMap().put("lastError", "Beim Aktualisieren der Benutzerdaten ist ein Fehler aufgetreten.");
         }
         return "benutzerVerwalten";
     }
@@ -199,33 +168,18 @@ public class BenutzerAendernNB implements Serializable{
         this.error = error;
     }
 
-    /**
-     * @return the benutzername
-     */
-    public String getBenutzername() {
-        return benutzername;
-    }
+//    /**
+//     * @return the benutzername
+//     */
+//    public String getBenutzername() {
+//        return benutzername;
+//    }
 
-    /**
-     * @param benutzername the benutzername to set
-     */
-    public void setBenutzername(String benutzername) {
-        this.benutzername = benutzername;
-    }
-
-    /**
-     * @return the passwortNeu
-     */
-    public String getPasswortNeu() {
-        return passwortNeu;
-    }
-
-    /**
-     * @param passwortNeu the passwortNeu to set
-     */
-    public void setPasswortNeu(String passwortNeu) {
-        this.passwortNeu = passwortNeu;
-    }
-    
+//    /**
+//     * @param benutzername the benutzername to set
+//     */
+//    public void setBenutzername(String benutzername) {
+//        this.benutzername = benutzername;
+//    }  
     
 }

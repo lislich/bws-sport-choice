@@ -34,14 +34,6 @@
                 <div class="row">
                     <div class="small-12 columns small-centered">
                         <h:form prependId="false">
-                            <p:dialog id="dlgZuruecksetzen" class="dialog" widgetVar="dialogZuruecksetzen" header="Neues Passwort" 
-                                      modal="true" draggable="false" closable="true" fitViewport="true" resizable="false" width="400" position="center" >    
-                                <p:outputPanel id="pnl">
-                                    <h:outputText value="Das Passwort wurde erfolgreich zurückgestzt. Bitte notieren Sie sich das Passwort! Es kann nach dem Schließen dieses Fensters nicht mehr angezeigt werden."/><br/><br/>
-                                    <p:commandButton id="closeDialog" value="Ok" action="benutzerVerwalten"  onclick="PF('dialogZuruecksetzen').hide(); window.location.replace();" />
-                                </p:outputPanel> 
-                            </p:dialog>
-
                             <fieldset>
                                <div>
                                    <h:outputText id="error" value="#{benutzerAendernNB.error}" style="color: red" />
@@ -81,40 +73,37 @@
                                         <h:message id="msgVorname" for="vorname" style="color:red"/>
                                     </div>
                                 </div>
-                            <!--    <h:panelGroup rendered="#/{benutzerAendernNB.schueler}">
+                                <h:panelGroup rendered="#{benutzerAendernNB.schueler}">
                                     <div class="row collapse area">
+                                        <div class="small-4 columns">
+                                            <span class="prefix">Stufe</span>
+                                        </div>
+                                        <div class="small-8 columns mobile-input">
+                                            <h:inputText id="stufe" class="input-group-field" value="#{benutzerAendernNB.benutzer.person.stufe.bezeichnung}" disabled="true"></h:inputText>
+                                        </div>
+                                    </div>
+                                    <!--<div class="row collapse area">
                                         <div class="small-4 columns">
                                             <span class="prefix">Tutor</span>
                                         </div>
-                                        <div class="small-8 columns mobile-input">
-                                            <h:selectOneMenu id="tutor" class="input-group-field" value="#/{benutzerAendernNB.benutzer.person.tutor}"  >
-                                                <f:selectItems value="#/{benutzerAendernNB.tutoren}" var="tutor" itemValue="#/{tutor.id}" itemLabel="#/{tutor.kuerzel}"/>
-                                            </h:selectOneMenu>
-                                        </div>
+                                    <div class="small-8 columns mobile-input">
+                                        <h:selectOneMenu id="tutor" class="input-group-field" value="#/{benutzerAendernNB.benutzer.person.tutor}">                                           
+                                            <f:selectItems value="#/{benutzerAendernNB.tutoren}" var="tutor" itemValue="#/{tutor.id}" itemLabel="#/{tutor.kuerzel}"/>
+                                        </h:selectOneMenu>
                                     </div>
+                                </div>-->
                                 </h:panelGroup>
-                                <h:panelGroup rendered="#/{benutzerAendernNB.lehrer}">
+                                <h:panelGroup rendered="#{benutzerAendernNB.lehrer}">
                                     <div class="row collapse area">
                                         <div class="small-4 columns">
                                             <span class="prefix">Kürzel</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">
-                                            <h:inputText id="kuerzel" class="input-group-field" value="#/{benutzerAendernNB.benutzer.person.kuerzel}" />
+                                            <h:inputText id="kuerzel" class="input-group-field" value="#{benutzerAendernNB.benutzer.person.kuerzel}" />
                                         </div>
                                     </div>
                                 </h:panelGroup>
-                                <h:panelGroup rendered="#/{benutzerAendernNB.schueler}">
-                                    <div class="row collapse area">
-                                        <div class="small-4 columns">
-                                            <span class="prefix">Stufe</span>
-                                        </div>
-                                        <div class="small-8 columns mobile-input" > 
-                                            <h:selectOneMenu id="stufe" class="input-group-field" value="#/{benutzerAendernNB.benutzer.person.stufe}">
-                                                <f:selectItems value="#/{stufeNB.alleStufen}" var="stufe" itemValue="#/{stufe.id}" itemLabel="#/{stufe.bezeichnung}"/>
-                                            </h:selectOneMenu>
-                                        </div>
-                                    </div>
-                                </h:panelGroup> -->
+                                
                                 <div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Benutzername</span>
@@ -124,8 +113,8 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <!--<h:commandButton type="submit" class="small button hide-for-print" id="speichern" value="Speichern" action="#/{benutzerAendernNB.aenderungenSpeichern()}" />-->
-                                    <p:commandButton id="passwortZuruecksetzen" class="small button hide-for-print" value="Passwort zurücksetzen" action="#{benutzerAendernNB.passwortZuruecksetzen()}" update="pnl" />
+                                    <h:commandButton type="submit" class="small button hide-for-print" id="speichern" value="speichern" action="#{benutzerAendernNB.aenderungenSpeichern()}" />
+                                    <h:commandButton type="submit" class="small button hide-for-print" id="zurueck" value="zurück" action="benutzerVerwalten.xhtml" />
                                 </div>                             
                             </fieldset>
                         </h:form>
