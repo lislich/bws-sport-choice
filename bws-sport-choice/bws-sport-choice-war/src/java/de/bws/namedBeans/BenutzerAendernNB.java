@@ -42,6 +42,9 @@ public class BenutzerAendernNB implements Serializable{
     // Der ausgewählte Benutzer
     private Benutzer benutzer;
     
+    // Der ausgwählte neue Tutor
+    private Lehrer tutorNeu;
+    
     // Die letzte Fehlermeldung
     private String error;
     
@@ -94,7 +97,10 @@ public class BenutzerAendernNB implements Serializable{
                     case LEHRER: 
                         this.lehrerBean.edit((Lehrer)person); break;
                     case SCHUELER:
-                        this.schuelerBean.edit((Schueler) person); break;
+                        Schueler tmp = this.schuelerBean.find(((Schueler) person).getId());
+                        tmp.setTutor(tutorNeu);
+//                        ((Schueler)person).setTutor(tutorNeu);
+                        this.schuelerBean.edit(tmp); break;
                     default:
                         this.personBean.edit(person);
                 }
@@ -181,5 +187,19 @@ public class BenutzerAendernNB implements Serializable{
 //    public void setBenutzername(String benutzername) {
 //        this.benutzername = benutzername;
 //    }  
+
+    /**
+     * @return the tutorNeu
+     */
+    public Lehrer getTutorNeu() {
+        return tutorNeu;
+    }
+
+    /**
+     * @param tutorNeu the tutorNeu to set
+     */
+    public void setTutorNeu(Lehrer tutorNeu) {
+        this.tutorNeu = tutorNeu;
+    }
     
 }

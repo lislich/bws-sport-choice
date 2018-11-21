@@ -82,16 +82,22 @@
                                             <h:inputText id="stufe" class="input-group-field" value="#{benutzerAendernNB.benutzer.person.stufe.bezeichnung}" disabled="true"></h:inputText>
                                         </div>
                                     </div>
-                                    <!--<div class="row collapse area">
+                                </h:panelGroup>
+                                <h:panelGroup rendered="#{benutzerAendernNB.schueler}">
+                                    <div class="row collapse">
                                         <div class="small-4 columns">
                                             <span class="prefix">Tutor</span>
                                         </div>
-                                    <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="tutor" class="input-group-field" value="#/{benutzerAendernNB.benutzer.person.tutor}">                                           
-                                            <f:selectItems value="#/{benutzerAendernNB.tutoren}" var="tutor" itemValue="#/{tutor.id}" itemLabel="#/{tutor.kuerzel}"/>
-                                        </h:selectOneMenu>
+                                        <div class="small-8 columns mobile-input">
+                                            <h:inputText id="tutorAktuell" class="disableTutor" value="#{benutzerAendernNB.benutzer.person.tutor.kuerzel}" disabled="true"/>                                        
+                                        </div>
+                                        <div class="small-8 columns mobile-input">
+                                            <input id="tutorNeu" type="button" class="small button" value="Neu setzen"/>
+                                            <h:selectOneMenu id="tutorBearbeiten" class="input-group-field disableSelectTutor"  value="#{benutzerAendernNB.tutorNeu}">                                           
+                                                <f:selectItems value="#{benutzerAendernNB.tutoren}" var="tutor"  itemValue="#{tutor.id}" itemLabel="#{tutor.kuerzel}"/>
+                                            </h:selectOneMenu>
+                                        </div>
                                     </div>
-                                </div>-->
                                 </h:panelGroup>
                                 <h:panelGroup rendered="#{benutzerAendernNB.lehrer}">
                                     <div class="row collapse area">
