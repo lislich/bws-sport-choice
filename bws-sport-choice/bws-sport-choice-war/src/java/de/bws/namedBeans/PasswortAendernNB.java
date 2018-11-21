@@ -16,6 +16,7 @@ import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -78,7 +79,8 @@ public class PasswortAendernNB implements Serializable{
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Beim Ändern des Passworts ist ein Fehler aufgetreten. Versuchen Sie es erneut.");
             return "passwortAendern"; 
         }
-
+        RequestContext context = RequestContext.getCurrentInstance();
+        context.execute("PF('dialogPasswortgeaendert').show(); $('#passwortAendern').attr('disabled', true);");
         return "geaendert";
     }
 

@@ -11,6 +11,7 @@ import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
+import org.primefaces.context.RequestContext;
 
 /**
  * @author Lisa
@@ -71,7 +72,7 @@ public class WahlzeitraumNB implements Serializable{
     public void saveDatum() {
         // Aktueller Zeitstempel
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
-
+        
         // Prüfung ob eingegebenes Enddatum in der Vergangenheit liegt -> Fehler
         if (ende.getTime() < timestamp.getTime()) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Das Enddatum darf nicht in der Vergangenheit liegen");
@@ -96,6 +97,8 @@ public class WahlzeitraumNB implements Serializable{
                     tmp.setEnde(ende);
                     this.wahlzeitraumBean.edit(tmp);
                 }
+                RequestContext context = RequestContext.getCurrentInstance();
+                context.execute("PF('dialogWahlzeitraum').show(); $('#saveDatum').attr('disabled', true);");
             }
         }
     }

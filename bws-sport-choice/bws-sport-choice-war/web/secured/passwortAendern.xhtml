@@ -34,6 +34,21 @@
                 <div class="row">
                     <div class="small-12 columns small-centered">
                         <h:form>
+                            <p:dialog id="dlgPasswortgeaendert" widgetVar="dialogPasswortgeaendert" class="dialog" closable="false" draggable="false" modal="true"
+                                      width="400" position="center" fitViewport="true" resizable="false">
+                                <p:outputPanel id="panelPasswortgeaendert">
+                                    <div class="row">
+                                        <div class="small-12 columns small-centered">
+                                            <h:outputText value="Das Passwort wurde geändert."/>
+                                        </div>                
+                                    </div>
+                                    <div class="row">
+                                        <div class="small-12 columns small-centered">
+                                            <p:commandButton id="close" value="Ok" action="passwortAendern" onclick="PF('dialogPasswortgeaendert').hide(); window.location.replace();"/>
+                                        </div>
+                                    </div>                                   
+                                </p:outputPanel>
+                            </p:dialog>
                             <fieldset>
                                <div>
                                     <h:outputText id="error" value="#{passwortAendernNB.error}" style="color: red"/>
@@ -73,7 +88,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <h:commandButton type="submit" class="small button hide-for-print" id="benutzerAnlegen" value="ändern" action="#{passwortAendernNB.passwortAendern()}" />
+                                    <p:commandButton class="small button hide-for-print" id="passwortAendern" value="ändern" action="#{passwortAendernNB.passwortAendern()}" update="panelPasswortgeaendert msgAltesPasswort msgNeuesPasswort msgWiederholtesPasswort error"/>
                                 </div> 
                             </fieldset>
                         </h:form>

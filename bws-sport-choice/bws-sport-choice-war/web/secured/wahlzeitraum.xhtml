@@ -33,6 +33,21 @@
                 <div class="row">
                     <h:form>
                         <div class="small-12 columns small-centered">
+                            <p:dialog id="dlgWahlzeitraum" widgetVar="dialogWahlzeitraum" class="dialog" closable="false" draggable="false" modal="true"
+                                      width="400" position="center" fitViewport="true" resizable="false">
+                                <p:outputPanel id="panelWahlzeitraum">
+                                    <div class="row">
+                                        <div class="small-12 columns small-centered">
+                                            <h:outputText value="Der Wahlzeitraum wurde gespeichert."/>
+                                        </div>                
+                                    </div>
+                                    <div class="row">
+                                        <div class="small-12 columns small-centered">
+                                            <p:commandButton id="close" value="Ok" action="wahlzeitraum" onclick="PF('dialogWahlzeitraum').hide(); window.location.replace();"/>
+                                        </div>
+                                    </div>                                   
+                                </p:outputPanel>
+                            </p:dialog>
                             <fieldset>
                                 <legend>Wahlzeitraum</legend>
                                 <h:outputText id="errorWahlzeitraum" value="#{loginNB.error}" style="color: red"/>
@@ -55,7 +70,7 @@
                                     </div>
                                 </div>                              
                                 <div>
-                                    <h:commandButton class="small button hide-for-print" id="saveDatum" value="Speichern" action="#{wahlzeitraumNB.saveDatum()}" type="submit"/>
+                                    <p:commandButton class="small button hide-for-print" id="saveDatum" value="Speichern" action="#{wahlzeitraumNB.saveDatum()}" update="panelWahlzeitraum errorWahlzeitraum m6 m7"/>
                                 </div>
                             </fieldset>
                         </div>
