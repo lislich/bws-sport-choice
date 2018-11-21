@@ -158,7 +158,6 @@ public class KursNB implements Serializable {
     
     /**
      * @author Lisa
-     * @param p_thema Thema wird übergeben
      * 
      * Diese Methode ruft eine andere Methode der Klasse auf und
      * wird für das Bearbeiten eines Kurses genutzt.
@@ -208,9 +207,7 @@ public class KursNB implements Serializable {
         kurs.setThema(tmpList);
 
         this.kursBean.edit(kurs);
-        for (Thema t : kurs.getThema()){
-            System.out.println("##THEMEN## " + t.getBezeichnung());
-        }
+
         return "kursBearbeitet";
     }
 
@@ -349,7 +346,6 @@ public class KursNB implements Serializable {
      */
     
     public Thema addThema() {
-        System.out.println("de.bws.namedBeans.KursNB.addThema()");
         // Bezeichnung und Schwerpunkt werden auf leeren String überprüft, da dies nicht zulässig ist.
         if(bezeichnung.equals("") || schwerpunkt.equals("")){
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Bitte geben Sie eine Bezeichnung und einen Schwerpunkt an.");
@@ -394,14 +390,12 @@ public class KursNB implements Serializable {
         List<Eintrag> themenToRemove = new ArrayList<>();
         for(Eintrag e : this.themen){
             Thema t = (Thema)e.getKey();
-            System.out.println("##Einträge: " + t.getBezeichnung() + " " + (Boolean)e.getValue());
+
             if((Boolean)e.getValue()){
-                System.out.println("######Zu löschen: " + t.getBezeichnung());
                 themenToRemove.add(e);
             }
         }
         for(Eintrag e : themenToRemove){
-            System.out.println("## Index-of:" + ((Thema)e.getKey()).getBezeichnung());
             this.themen.remove(e);
         }
     }    

@@ -1,6 +1,5 @@
 package de.bws.namedBeans;
 
-import de.bws.data.Eintrag;
 import de.bws.entities.Benutzer;
 import de.bws.entities.Kurs;
 import de.bws.entities.Schueler;
@@ -58,18 +57,15 @@ public class WahlNB implements Serializable{
     /**
      * @author Lisa
      * 
-     * Diese Methode wird beim Erzeugen der ManagedBean aufgerufen und ermittelt ob es bereits einen 
-     * gespeicherten Wahlzeitraum in der Datenbank gibt.
-     * Außerdem wird der akutell angemeldete Benutzer, für die Wahl Schüler, und dessen eventuell bereits 
+     * Diese Methode wird beim Erzeugen der ManagedBean aufgerufen.
+     * Es wird der akutell angemeldete Benutzer, für die Wahl Schüler, und dessen eventuell bereits 
      * gespeicherte Wahl ermittelt.
      */
     @PostConstruct
     public void init(){
         // Benutzer bzw. Schüler wird ermittelt
         Schueler sTmp = (Schueler)((Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer")).getPerson();
-        try{
- 
-            
+        try{   
             // Eventuell bereits gespeicherte Wahl wird ermittelt
             Wahl wTmp = sTmp.getWahl();
             if(wTmp != null){
@@ -79,13 +75,14 @@ public class WahlNB implements Serializable{
             }
         }catch(Exception e){
             
-        }
-        
+        }      
     }
 
     /**
      * @author Lisa
      * @return String zur Navigation zur nächsten Seite
+     * 
+     * In dieser Methode werden die ausgewählten Kurse des Schülers als seine Wahl gespeichert.
      */
     public String saveWahl() {
         String rueckgabe = "Fehler";
