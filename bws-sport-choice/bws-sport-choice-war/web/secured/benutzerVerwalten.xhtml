@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
 
     <body>
 
@@ -37,6 +38,13 @@
                             <fieldset>
                                 <legend>Benutzerverwaltung</legend>
                                 <h:outputText id="error" value="#{benutzerVerwaltenNB.error}" style="color: red" />
+                                <p:dialog id="dlgZuruecksetzen" class="dialog" widgetVar="dialogZuruecksetzen" header="Neues Passwort" 
+                                    modal="true" draggable="false" closable="true" fitViewport="true" resizable="false" width="400" position="center" >    
+                                    <p:outputPanel id="pnl">
+                                        <h:outputText value="Das Passwort wurde erfolgreich zurückgestzt. Bitte notieren Sie sich das Passwort! Es kann nach dem Schließen dieses Fensters nicht mehr angezeigt werden."/><br/><br/>
+                                        <p:commandButton id="closeDialog" value="Ok" action="benutzerVerwalten"  onclick="PF('dialogZuruecksetzen').hide(); window.location.replace();" />
+                                    </p:outputPanel> 
+                                </p:dialog>
                                 <!-- Filter für die Benutzerliste wird in einer späteren Version hinzugefügt -->
                                 <!--<div class="row collapse">
                                     <div class="small-4 columns">
@@ -69,7 +77,8 @@
                                             <th class="lehrer" width="50">Kürzel</th>
                                             <th class="schueler" width="50">Tutor</th>
                                             <th class="schueler" width="25">Stufe</th> 
-                                            <th><h:selectBooleanCheckbox id="alleWaehlen" value="false" /></th>
+                                            <th width="50"><h:selectBooleanCheckbox id="alleWaehlen" value="false" /></th>
+                                            <th width="50">Passwort zurücksetzten</th>
                                         </tr>
                                     </thead>    
                                     <tbody id="tbodyBenutzer">
@@ -83,6 +92,7 @@
                                                 <td class="schueler"><h:outputText value="#{entry.key.person.tutor.kuerzel}" /></td>
                                                 <td class="schueler"><h:outputText value="#{entry.key.person.stufe.bezeichnung}" /></td>
                                                 <td><h:selectBooleanCheckbox immediate="true" class="cbWaehlen" value="#{entry.value}" /></td>
+                                                <td><p:commandLink action="#{benutzerVerwaltenNB.passwortZuruecksetzen(entry.key)}"><i class="fi-loop"></i></p:commandLink></td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>

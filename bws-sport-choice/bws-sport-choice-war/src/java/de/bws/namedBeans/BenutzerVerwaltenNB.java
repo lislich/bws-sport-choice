@@ -11,6 +11,7 @@ import de.bws.data.Rolle;
 import de.bws.entities.Benutzer;
 import de.bws.entities.Schueler;
 import de.bws.entities.Stufe;
+import de.bws.security.Passwort;
 import de.bws.sessionbeans.BenutzerFacadeLocal;
 import de.bws.sessionbeans.LehrerFacadeLocal;
 import de.bws.sessionbeans.PersonFacadeLocal;
@@ -19,6 +20,8 @@ import de.bws.sessionbeans.StufeFacadeLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -26,6 +29,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import org.primefaces.context.RequestContext;
 
 /**
  *
@@ -166,6 +170,48 @@ public class BenutzerVerwaltenNB implements Serializable{
             }
         }
         
+        return "benutzerVerwalten";
+    }
+    
+    /**
+     * Diese Methode setzt generiert ein neues, zufälliges Passwort und zeigt dieses einmalig in einem Dialog.
+     * 
+     * @param p_benutzer der ausgewählte Benutzer
+     * @Author Joshua
+     * @return String für weitere Navigation
+     */
+    public String passwortZuruecksetzen(Benutzer p_benutzer){
+        Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+        String passwortNeu;
+        RequestContext request = RequestContext.getCurrentInstance();
+        
+        // Prüft ob ein Benutzer ausgewählt ist.
+        if(p_benutzer != null) {
+            try{
+                // Das passwort wird generiert.
+                passwortNeu = Passwort.passwortGenerieren();
+            } catch (Exception ex) {
+                Logger.getLogger(BenutzerAendernNB.class.getName()).log(Level.SEVERE, null, ex);
+                sessionMap.put("lastError", "Beim Aktualisieren des Passworts ist ein Fehler aufgetreten. Das Passwort wurde nicht geändert.");
+                return "benutzerVerwalten";
+            }
+            
+            boolean isGeaendert = p_benutzer.setNeuesPasswort(passwortNeu);
+            this.benutzerBean.edit(p_benutzer);
+            // Wenn das Passwort geändert wurde, wird es einmalig in einem Dialog angezeigt.
+            if(isGeaendert){
+                String execute = "$('#pnl').append('<p> ";
+                execute += " Passwort: ";
+                execute += passwortNeu;
+                execute += "</p>')";
+                request.execute(execute);
+                request.execute("PF('dialogZuruecksetzen').show();");
+                
+            } else {
+                sessionMap.put("lastError", "Beim Aktualisieren des Passworts ist ein Fehler aufgetreten. Das Passwort wurde nicht geändert.");
+                return "benutzerVerwalten";
+            }
+        }
         return "benutzerVerwalten";
     }
     
