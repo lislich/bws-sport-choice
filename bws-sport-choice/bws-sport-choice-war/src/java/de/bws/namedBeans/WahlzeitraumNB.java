@@ -4,6 +4,7 @@ import de.bws.entities.Wahlzeitraum;
 import de.bws.sessionbeans.WahlzeitraumFacadeLocal;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -72,9 +73,10 @@ public class WahlzeitraumNB implements Serializable{
     public void saveDatum() {
         // Aktueller Zeitstempel
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         
         // Prüfung ob eingegebenes Enddatum in der Vergangenheit liegt -> Fehler
-        if (ende.getTime() < timestamp.getTime()) {
+        if (dateFormat.format(ende.getTime()).compareTo(dateFormat.format(timestamp.getTime())) > 0) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Das Enddatum darf nicht in der Vergangenheit liegen");
         } else {
             // Prüfung ob eingegebenes Beginndatum hinter dem Enddatum liegt -> Fehler

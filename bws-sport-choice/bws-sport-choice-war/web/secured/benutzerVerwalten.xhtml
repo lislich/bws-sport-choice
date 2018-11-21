@@ -41,21 +41,21 @@
                                 <p:dialog id="dlgZuruecksetzen" class="dialog" widgetVar="dialogZuruecksetzen" header="Neues Passwort" 
                                     modal="true" draggable="false" closable="true" fitViewport="true" resizable="false" width="400" position="center" >    
                                     <p:outputPanel id="pnl">
-                                        <h:outputText value="Das Passwort wurde erfolgreich zurückgestzt. Bitte notieren Sie sich das Passwort! Es kann nach dem Schließen dieses Fensters nicht mehr angezeigt werden."/><br/><br/>
+                                        <h:outputText value="Das Passwort wurde erfolgreich zurückgesetzt. Bitte notieren Sie sich das Passwort! Es kann nach dem Schließen dieses Fensters nicht mehr angezeigt werden."/><br/><br/>
                                         <p:commandButton id="closeDialog" value="Ok" action="benutzerVerwalten"  onclick="PF('dialogZuruecksetzen').hide(); window.location.replace();" />
                                     </p:outputPanel> 
                                 </p:dialog>
-                                <!-- Filter für die Benutzerliste wird in einer späteren Version hinzugefügt -->
-                                <!--<div class="row collapse">
+                            <!-- Filter für die Benutzerliste wird in einer späteren Version hinzugefügt -->
+                                <!-- <div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Rolle</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:selectOneMenu id="filterRolle" class="filter input-group-field" value="#!{benutzerVerwaltenNB.rolle}" >
-                                            <f:selectItems value="#!{benutzerVerwaltenNB.alleRollen}" />
+                                        <h:selectOneMenu id="filterRolle" class="filter input-group-field" value="#/{benutzerVerwaltenNB.rolle}" >
+                                            <f:selectItems value="#/{benutzerVerwaltenNB.alleRollen}" />
                                         </h:selectOneMenu>
                                     </div> 
-                                </div>-->
+                                </div> -->
                                 <!--<div class="row collapse">
                                     <div class="small-4 columns">
                                         <span class="prefix">Stufe</span>

@@ -201,6 +201,8 @@ public class BenutzerVerwaltenNB implements Serializable{
             // Wenn das Passwort geändert wurde, wird es einmalig in einem Dialog angezeigt.
             if(isGeaendert){
                 String execute = "$('#pnl').append('<p> ";
+                execute += "Benutzer: ";
+                execute += p_benutzer.getBenutzername();
                 execute += " Passwort: ";
                 execute += passwortNeu;
                 execute += "</p>')";
