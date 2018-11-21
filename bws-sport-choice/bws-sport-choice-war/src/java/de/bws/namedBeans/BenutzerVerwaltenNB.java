@@ -66,24 +66,18 @@ public class BenutzerVerwaltenNB implements Serializable{
     // Rolle zu filtern
     private String rolle;
     
-    // Die letzte Fehlermeldung
-    private String error;
-    
     // Eine Liste von Benutzern mit boolean-Werten, die Checkboxen auf der Oberfläche 
     //repräsentieren.
     private List<Eintrag<Benutzer, Boolean>> auswahl;
         
     /**
      * Diese Methode wird mit der Annotation "@PostConstruct" nach dem Konstruieren aufgerufen.
-     * Sie holt die letzte Fehlermeldung und die Liste aller Benutzer
+     * Sie holt die Liste aller Benutzer
      * 
      * @author joshau
      */
     @PostConstruct
-    private void init(){
-        this.error = (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("lastError");
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "");
-        
+    private void init(){        
         this.auswahl = new ArrayList<>();
         this.setAuswahl(this.benutzerBean.findAll());
     }
@@ -299,20 +293,6 @@ public class BenutzerVerwaltenNB implements Serializable{
      */
     public void auswaehlen(){
         this.benutzerNB.auswaehlen(this.rolle, this.stufe);
-    }
-
-    /**
-     * @return Die auf der Seite angezeigte Fehlermeldung
-     */
-    public String getError() {
-        return error;
-    }
-
-    /**
-     * @param error Die Fehlermeldung, die auf der Seite angezeigt werden soll
-     */
-    public void setError(String error) {
-        this.error = error;
     }
 
     /**

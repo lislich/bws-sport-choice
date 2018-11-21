@@ -9,6 +9,7 @@ import de.bws.entities.Benutzer;
 import de.bws.security.Passwort;
 import de.bws.sessionbeans.BenutzerFacadeLocal;
 import java.io.Serializable;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -34,8 +35,6 @@ public class PasswortAendernNB implements Serializable{
     private String passwortNeu;
     private String passwortWiederholung;
     
-    private String error;
-    
     public PasswortAendernNB(){
         
     }
@@ -43,13 +42,10 @@ public class PasswortAendernNB implements Serializable{
     @PostConstruct
     private void init(){
         this.setBenutzer((Benutzer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer"));
-        this.setError((String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("lastError"));
-        if(this.error != null && !this.error.equals("")){
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "");
-        }
     }
     
     public String passwortAendern(){
+        Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         try{
             if(this.benutzer != null){
 
@@ -59,24 +55,24 @@ public class PasswortAendernNB implements Serializable{
                             this.benutzer.setNeuesPasswort(this.passwortNeu);
                             this.benutzerBean.edit(this.benutzer);
                         } else {
-                            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Die angegebenen Passwörter stimmen nicht überein.");
+                            sessionMap.put("lastError", "Die angegebenen Passwörter stimmen nicht überein.");
                             return "passwortAendern";
                         }
                     } else {
-                        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Das Passwort muss mindestens 6 Zeichen haben.");
+                        sessionMap.put("lastError", "Das Passwort muss mindestens 6 Zeichen haben.");
                         return "passwortAendern";
                     }
                 } else {
-                    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Zugriff verweigert: Das aktuelle Passwort stimmt nicht.");
+                    sessionMap.put("lastError", "Zugriff verweigert: Das aktuelle Passwort stimmt nicht.");
                     return "passwortAendern";
                 }
             } else {
-                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Benutzerdaten konnten nicht geladen werden. Bitte melden Sie sich erneut an.");
+                sessionMap.put("lastError", "Benutzerdaten konnten nicht geladen werden. Bitte melden Sie sich erneut an.");
                     return "passwortAendern";
             }
         } catch (Exception e) {
             Logger.getLogger(BenutzerAnlegenNB.class.getName()).log(Level.SEVERE, null, e);
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Beim Ändern des Passworts ist ein Fehler aufgetreten. Versuchen Sie es erneut.");
+            sessionMap.put("lastError", "Beim Ändern des Passworts ist ein Fehler aufgetreten. Versuchen Sie es erneut.");
             return "passwortAendern"; 
         }
         RequestContext context = RequestContext.getCurrentInstance();
@@ -138,19 +134,5 @@ public class PasswortAendernNB implements Serializable{
      */
     public void setPasswortAlt(String passwortAlt) {
         this.passwortAlt = passwortAlt;
-    }
-
-    /**
-     * @return the error
-     */
-    public String getError() {
-        return error;
-    }
-
-    /**
-     * @param error the error to set
-     */
-    public void setError(String error) {
-        this.error = error;
     }
 }

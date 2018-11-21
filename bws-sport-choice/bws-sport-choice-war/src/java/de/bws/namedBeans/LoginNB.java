@@ -8,9 +8,9 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import javax.faces.view.ViewScoped;
 
 /**
  * Die LoginNB ist die managed Bean für den Login. Sie enthält die Methoden zum 
@@ -19,7 +19,7 @@ import javax.faces.view.ViewScoped;
  * @author joshua
  */
 @Named(value = "loginNB")
-@ViewScoped
+@SessionScoped
 public class LoginNB implements Serializable{
     // Schnittstelle zur Datenbank für Entitäten vom Typ Benutzer
     @EJB
@@ -66,6 +66,7 @@ public class LoginNB implements Serializable{
             sessionMap.put("lastError", "Benutzername und/oder Passwort ungültig");
             fuerNavigation = "Fehler";
         }
+        this.passwort = null;
         return fuerNavigation;
     }
     
@@ -73,13 +74,13 @@ public class LoginNB implements Serializable{
      * Methode zum Ausloggen. 
      * 
      * @author joshua
-     * @return 
+     * @return String zur Navigation
      */
     public String logout(){
+        // Session wird gelöscht und der Benutzer somit ausgeloggt
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "Logout";
     }
-
 
     /**
      * @return the passwort
@@ -112,17 +113,10 @@ public class LoginNB implements Serializable{
     /**
      * @return the error
      */
-    public String getError() {
-        String error;
+    public String getError() { 
         Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
-        if(sessionMap.get("lastError") != null){
-            error = sessionMap.get("lastError").toString();
-            sessionMap.remove("lastError");
-        } else {
-            error = "";
-        }
-        
+        String error = (String) sessionMap.get("lastError");
+        sessionMap.remove("lastError");
         return error;
     }
-    
 }

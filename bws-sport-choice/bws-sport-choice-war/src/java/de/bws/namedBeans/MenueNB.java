@@ -18,7 +18,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import org.primefaces.context.RequestContext;
 
 /**
  * @author Lisa
@@ -160,15 +159,27 @@ public class MenueNB implements Serializable {
         return tmp;
     }
     
+    /**
+     * @author joshua
+     * @return null - noch nicht eingeteilt; not null - Kurs in den der Schüler eingeteilt ist
+     * 
+     * Diese Methode überprüft ob der angemeldete Schüler bereits in einem Kurs 
+     * eingeteilt ist. Falls der Schüler bereits in einen Kurs eingetragen ist, 
+     * wird der entsprechende Kurs zurückgegeben.
+     */
     private Kurs bereitsInKursEingeteilt(){
         Kurs inKurs = null;
+        // ZUr Sicherheit wird geprüft ob der angemeldete Benutzer ein Schüler ist
         if(this.benutzer.getPerson() instanceof Schueler){
+            // alle Kurse werden geholt
             List<Kurs> kursListe = this.kursBean.get("SELECT k FROM Kurs k");
             Calendar calendar = new GregorianCalendar();
             int aktuellesJahr = Calendar.getInstance().get(Calendar.YEAR);
             for(Kurs k:kursListe){
                 calendar.setTime(k.getJahr());
+                // prüft ob der Kurs im aktuellen Jahr liegt
                 if(calendar.get(Calendar.YEAR) == aktuellesJahr){
+                    // prüft ob der Schüler ein Teilnehmer des Kurses ist
                     if(k.getTeilnehmer().contains((Schueler)this.benutzer.getPerson())){
                         inKurs = k;
                     }
@@ -188,15 +199,24 @@ public class MenueNB implements Serializable {
         return this.benutzer != null;
     }
     
+    /**
+     * @author joshua
+     * @return true - Wahl soll gerendert werden, false - Wahl soll nicht gerendert werden 
+     * 
+     * Diese Methode wählt einen Bergrüßungstext auf Basis der Rolle des 
+     * angemeldeten Benutzers und dem Status der Wahl aus. 
+     */
     public boolean startseiteRendern(){
         boolean kannWaehlen = false;
-        RequestContext context = RequestContext.getCurrentInstance();
         if(this.benutzer != null){
             // Ist der angemeldete Benutzer ein Schüler
             if(this.benutzer.getPerson() instanceof Schueler){
                 kannWaehlen = schuelerDarfWaehlen();
+                // Prüft ob der Schüler wähllen kann
                 if(!kannWaehlen){
                     Kurs eingeteilterKurs = this.bereitsInKursEingeteilt();
+                    // Wenn er nicht wählen kann, wird je nach dem ob er in einen 
+                    // Kurs eingeteilt ist eine Nachricht angezeigt.
                     if(eingeteilterKurs != null){
                         this.setBegruessungstext("Sie sind bereits in dem Kurs \"" + eingeteilterKurs.getTitel() + " (" + eingeteilterKurs.getKuerzel()+ ") " + "\" eingetragen.");
                     } else {
@@ -205,13 +225,14 @@ public class MenueNB implements Serializable {
                 } else {
                     this.setBegruessungstext("Sie können Ihre Wahl innerhalb des Wahlzeitraums ändern.");
                 }
+            // Ist der angemeldete Benutzer ein Lehrer
             } else if (this.benutzer.getPerson() instanceof Lehrer){
                 this.setBegruessungstext("Hier können Sie Ihre Kurse verwalten. Zur Navigation Benutzen Sie bitte das Menu.");
+            // der angemeldete Benutzer ist ein Admin
             } else {
                 this.setBegruessungstext("Zur Navigation Benutzen Sie bitte das Menu.");
             }
         }
-
         return kannWaehlen;
     }
     
