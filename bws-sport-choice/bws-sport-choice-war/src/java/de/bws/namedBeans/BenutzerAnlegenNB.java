@@ -62,27 +62,25 @@ public class BenutzerAnlegenNB implements Serializable{
 //******************************************************************************
     
     /**
-     * Erstellt eine neue Insatnz von BenutzerAnlegenNB
+     * Diese Methode filtert die möglichen Eingaben in der Oberfläche zum Benutzer anlegen, je nach Rolle die ausgewählt wird.
+     * Ändert sich die Rolle im Auswahlfeld, werden nötige Felder freigegeben und unnötige gesperrt.
+     * 
+     * @author Lisa
+     * @param event 
      */
-    public BenutzerAnlegenNB() {
-    }
-
     public void filter(AjaxBehaviorEvent event){
         RequestContext context = RequestContext.getCurrentInstance();
         String execute = "";
-        System.out.println("#" + rolle.toString());
 
+        // Je nach ausgewählter Rolle werden verschiedene Felder freigeschaltet/gesperrt
         switch (rolle) {
             case LEHRER:
-                System.out.println("Test Lehrer");
                 execute += "$('#tutor').attr('disabled',true);$('#stufe').attr('disabled',true);$('#kuerzel').attr('disabled',false);";
                 break;
             case SCHUELER:
-                System.out.println("Test Schüler");
                 execute += "$('#tutor').attr('disabled',false);$('#stufe').attr('disabled',false);$('#kuerzel').attr('disabled',true);";
                 break;
             case ADMIN:
-                System.out.println("Test Admin");
                 execute += "$('#tutor').attr('disabled',true);$('#stufe').attr('disabled',true);$('#kuerzel').attr('disabled',true);";
                 break; 
             default:
@@ -90,7 +88,6 @@ public class BenutzerAnlegenNB implements Serializable{
                 break;
         }
         
-        System.out.println(execute);
         context.execute(execute);
     }
    
