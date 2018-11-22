@@ -116,17 +116,7 @@ $(document).ready(function () {
         $(".disableSelectThemengleich").attr("disabled", false);
         $(".disableThemengleich").replaceWith($(".disableSelectThemengleich"));
     });
-    
-    
-//    ## Benutzer ändern ###################################################################################
-    $(".disableSelectTutor").addClass("hide");
-    $(".disableSelectTutor").attr("disabled", true);
-    $("#tutorNeu").click(function () {
-        $(".disableTutor").val("");
-        $(".disableSelectTutor").removeClass("hide");       
-        $(".disableSelectTutor").attr("disabled", false);
-        $(".disableTutor").replaceWith($(".disableSelectTutor"));
-    });
+
     
 });
 

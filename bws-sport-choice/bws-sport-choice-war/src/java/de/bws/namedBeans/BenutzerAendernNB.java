@@ -97,9 +97,9 @@ public class BenutzerAendernNB implements Serializable{
                     case LEHRER: 
                         this.lehrerBean.edit((Lehrer)person); break;
                     case SCHUELER:
-                        Schueler tmp = this.schuelerBean.find(((Schueler) person).getId());
-                        tmp.setTutor(tutorNeu);
-//                        ((Schueler)person).setTutor(tutorNeu);
+                        Schueler tmp = this.schuelerBean.find(((Schueler)person).getId());
+                        System.out.println(((Schueler)person).getTutor().getId());
+                        tmp.setTutor(((Schueler)person).getTutor());
                         this.schuelerBean.edit(tmp); break;
                     default:
                         this.personBean.edit(person);
