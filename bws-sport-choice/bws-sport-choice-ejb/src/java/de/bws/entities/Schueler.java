@@ -8,34 +8,35 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
- *
+ * Entity-Klasse für einen Schüler. 
+ * 
  * @author joshua
  */
 @Entity
 public class Schueler extends Person implements Serializable{
 
     private static final long serialVersionUID = 1L;
-    
+    // Die Stufe des Schülers
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "STUFE_ID", nullable = false)
     private Stufe stufe;
-    
+    // DIe Wahl des Schülers
     @OneToOne
     @JoinColumn(name = "WAHL", referencedColumnName = "ID")
     private Wahl wahl;
-    
+    // Der Tutor des Schülers
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "TUTOR_ID", nullable = false)
     private Lehrer tutor;
 
+ //*************************** generierte Methoden *****************************
+    
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (super.getId() != null ? super.getId().hashCode() : 0);
         return hash;
     }
-
-//******************************** Methoden ***********************************
 
     @Override
     public boolean equals(Object object) {
@@ -55,11 +56,12 @@ public class Schueler extends Person implements Serializable{
         return "de.bws.entities.Schueler[ id=" + super.getId() + " ]";
     }
 
-//******************************* Getter und Setter ****************************
+//***************************** Getter und Setter ******************************
     
     /**
      * @return the stufe
      */
+    @Override
     public Stufe getStufe() {
         return stufe;
     }
@@ -88,6 +90,7 @@ public class Schueler extends Person implements Serializable{
     /**
      * @return the tutor
      */
+    @Override
     public Lehrer getTutor() {
         return tutor;
     }

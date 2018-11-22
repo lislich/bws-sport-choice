@@ -20,63 +20,65 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
+ * Entity-Klasse für einen Kurs. 
+ * 
  * @author joshua
  */
 @Entity
 public class Kurs implements Serializable {
     
     private static final long serialVersionUID = 1L;
+    // Die ID des Datensatzes in der Datenbank
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "KURS_ID")
     private Long id;
-    
+    // Der Titel des Kurses
     @Column(name = "TITEL", nullable = false)
     private String titel;
-    
+    // Das Kürzel des Kurses
     @Column(name = "KUERZEL", nullable = false)
     private String kuerzel;
-    
+    // Die Erklärung zur Bewetung des Kurses
     @Column(name = "BEWERTUNG", nullable = false)
     private String bewertung;
-    
+    // Die Anzahl der eingetragenen Teilnehmer
     @Column(name = "TEILNEHMERZAHL", nullable = false)
     private int teilnehmerzahl;
-    
+    // Das Erstelldatum des Kurses
     @Temporal(value = TemporalType.DATE)
     @Column(name = "JAHR", nullable = false)
     private Date jahr;
-    
+    // Der Hinweistext des Kurses
     @Column(name = "HINWEIS", nullable = false)
     private String hinweis;
-    
+    // Die Beschreibung des Kurses
     @Column(name = "BESCHREIBUNG", nullable = false)
     private String beschreibung;
-    
+    // Die Liste der Themen des Kurses mit Anteil in Prozent
     @OneToMany
     @JoinColumn(referencedColumnName = "KURS_ID", name = "KURS_ID")
     private List<Thema> thema = new ArrayList<>();    
-    
+    // Der Themengleiche Kurs des Vorjahres
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "THEMENGLEICH_ID", nullable = true)
     private Kurs themengleich;
-    
+    // Der Lehrer, der den Kurs leitet
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "LEHRER_ID", nullable = false)
     private Lehrer lehrer;
-    
+    // Die teilnehmenden Schueler
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "SCHUELER_KURS",
             joinColumns = @JoinColumn(name = "KURS_ID", referencedColumnName = "KURS_ID"),
             inverseJoinColumns = @JoinColumn(name = "SCHUELER_ID", referencedColumnName = "ID"))
     private List<Schueler> teilnehmer = new ArrayList<>();
-    
+    // Die Stufe für die der Kurs angeboten wird
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "STUFE_ID", nullable = false)
     private Stufe stufe;
 
-//****************************** Methoden **************************************
+//****************************** Generierte Methoden **************************************
     
     @Override
     public int hashCode() {
@@ -295,6 +297,9 @@ public class Kurs implements Serializable {
     }
     
     /**
+     * Fügt der Teilnehmerliste einen Schüler hinzu, sofern er noch nicht eingetragen ist.
+     * 
+     * @author joshua
      * @param p_teilnehmer der Teilnehmer, der hinzugefügt werden soll
      * @return Diese Methode gibt true zurück, wenn der Teilnehmer hinzugefügt wurde, und
      * false, falls der Teilnehmer bereits in der Liste vorhanden ist
@@ -311,6 +316,9 @@ public class Kurs implements Serializable {
     }
     
     /**
+     * Entfernt einen Teilnehmer aus der Liste.
+     * 
+     * @author joshua
      * @param p_teilnehmer der Teilnehner, der aus dem Kurs entfernt werden soll
      * @return Diese Methode gibt true zurück, wenn der Teilnehmer entfernt wurde, 
      * und false, falls der Teilnehmer nicht in der Liste ist.
@@ -336,6 +344,9 @@ public class Kurs implements Serializable {
     }
     
     /**
+     * Enfernt ein Thema aus der Liste.
+     * 
+     * @author joshua
      * @param p_thema  das Thema, das aus dem Kurs entfernt werden soll
      * @return Diese Methode gibt true zurück, wenn das Thema entfernt wurde, 
      * und false, falls das Thema nicht in der Liste ist.

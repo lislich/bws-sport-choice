@@ -54,6 +54,8 @@ public class WahlNB implements Serializable{
     // Auslastung eines Kurses durch Erstwahlen, als Information für Schüler
     private double auslastung;
     
+// ################################## Methoden #################################
+    
     /**
      * @author Lisa
      * 
@@ -126,11 +128,12 @@ public class WahlNB implements Serializable{
     }
 
     /**
-     * Erstellt eine Liste der Kurse, die nicht Themengleich mit der Wahl des 
-     * Vorjahres sind.
-     * 
+     * @author joshua
      * @param p_aktuelleKurse Liste der möglichen Kurse
      * @return Liste der nicht-themengleichen Kurse
+     * 
+     * Erstellt eine Liste der Kurse, die nicht Themengleich mit der Wahl des 
+     * Vorjahres sind.
      */
     public List<Kurs> getNichtThemengleich(List<Kurs> p_aktuelleKurse){
         List<Kurs> kurs = new ArrayList<>();
@@ -168,7 +171,7 @@ public class WahlNB implements Serializable{
     }
 
     
-    // #### Getter- und Setter-Methoden ############################################################
+// ############################ Getter- und Setter-Methoden ####################
 
     /**
      * @return the ersteWahl

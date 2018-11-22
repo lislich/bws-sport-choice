@@ -16,34 +16,36 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 /**
+ * Entity-Klasse für einen Benutezr. 
  *
- * @author Lisa
+ * @author joshua
  */
 @Entity
 public class Benutzer implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    // Die ID des Datensatzes in der Datenbank
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+    // Der Name des Benutzers
     @Column(name = "BENUTZERNAME", nullable = false)
     private String benutzername;
-    
+    // Das Salt zur Verschlüsselung des Passworts
     @Column(name = "SALT", nullable = false)
     private byte[] salt;
-    
+    // Das gehashte Passwort des Benutzers 
     @Column(name = "PASSWORT", nullable = false)
     private String passwort;
-
+    // Die Rolle des Benutzers
     @Column(name = "ROLLE", nullable = false)
     private Rolle rolle;
-    
+    // Die zugehörige Person
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinColumn(name = "PERSON_ID", referencedColumnName = "ID", nullable = true)
     private Person person;
     
-//*************************** Methoden ****************************
+//*************************** generierte Methoden ******************************
     
     @Override
     public int hashCode() {
@@ -125,12 +127,18 @@ public class Benutzer implements Serializable {
 
     /**
      * @param p_passwort the passwort to set
-     * @throws java.lang.Exception
      */
-    public void setPasswort(String p_passwort) throws Exception {
+    public void setPasswort(String p_passwort) {
         this.passwort = p_passwort;
     }
     
+    /**
+     * Diese Methode generiert ein neues Salt, hasht das Passwort und setzt es 
+     * dann beim Benutzer.
+     * 
+     * @param p_passwort
+     * @return true - Passwort wurde gestezt, false - beim Hashen ist ein Fehler aufgetreten
+     */
     public boolean setNeuesPasswort(String p_passwort)  {
         byte[] saltNeu = Passwort.saltGenerieren();
         try{
@@ -161,12 +169,6 @@ public class Benutzer implements Serializable {
      * @return the person
      */
     public Person getPerson() {
-//        if(this.person == null){
-//            EntityManager em = Persistence.createEntityManagerFactory("bws-sport-choice-ejbPU").createEntityManager();
-//            Query q = em.createQuery("SELECT b.person FROM Benutzer b WHERE b.id = :id");
-//            q.setParameter("id", this.id);
-//            this.person = (Person) q.getSingleResult();
-//        }
         return person;
     }
 

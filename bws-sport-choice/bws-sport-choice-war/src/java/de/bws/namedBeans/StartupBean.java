@@ -13,7 +13,8 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 /**
- * 
+ * Diese Methode legt einen Admin-Benutzer und die Stufen an.
+ * Durch @Startup wird diese Bean immer beim Start der Applikation erzeugt.
  * 
  * @author joshua
  */
@@ -27,8 +28,8 @@ public class StartupBean {
     private StufeFacadeLocal stufeBean;
     
     /**
-     * Diese Methode wird einmalig beim Deploy
-     * aufgerufen. 
+     * Ruft die Methoden zum Erstellen vom Admin-Benutzer und den Stufen auf.
+     * Wird nach dem Erstellen der Bean aufgerufen.
      * 
      * @author joshua
      */
@@ -39,8 +40,8 @@ public class StartupBean {
     }
     
     /**
-     * Methode, die für Testzwecke einen Adminbenutzer anlegt.
-     * Sei wird vor dem Release entfernt. 
+     * Methode, die einen Adminbenutzer anlegt.
+     * Anmeldedaten des Benutzers werden vor dem Release geändert. 
      * 
      * @author joshua
      */
@@ -65,10 +66,7 @@ public class StartupBean {
         Stufe dreizehn = new Stufe();
         dreizehn.setBezeichnung("13");
         
-        
         this.stufeBean.create(zwoelf);
         this.stufeBean.create(dreizehn);
-        
-        
     }
 }

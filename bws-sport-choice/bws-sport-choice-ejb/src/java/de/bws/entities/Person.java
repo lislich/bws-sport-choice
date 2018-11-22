@@ -10,6 +10,12 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
 /**
+ * Entity-Klasse für eine Person.
+ * Durch den InheritanceType "JOINED" werden die erbenden Klassen zwar in eigene 
+ * Tabellen geschrieben, haben jedoch keine eigene ID. In der Datenbank erhalten 
+ * sie die ID der  zugehörigen Person. Wird eine erbende Entity aus der Datenbank 
+ * geholt, werden auch die Attribute der zugehörigen vererbenden Klasse (in diesem 
+ * Fall Person) geholt und das ganze als eine Entity dargestellt.
  *
  * @author joshua
  */
@@ -18,18 +24,19 @@ import javax.persistence.InheritanceType;
 public class Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    // Die ID des Datensatzes in der Datenbank
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+    // Der Nachname der Person
     @Column(name = "NACHNAME", nullable = false)
     private String nachname;
-    
+    // Der Vorname der Person
     @Column(name = "VORNAME", nullable = false)
     private String vorname;
     
 
-//****************************** Methoden *****************************
+//****************************** generierte Methoden *****************************
     
     @Override
     public int hashCode() {
@@ -100,8 +107,11 @@ public class Person implements Serializable {
     }
     
     /**
+     * Falls die Person ein Schüler ist, gibt die Methode dessen Stufe zurück. 
+     * Ansonsten wird eine Stufe mit leerer Bezeichnung zurück gegeben.
      * 
-     * @return 
+     * @author joshua
+     * @return die Stufe des Schülers oder eine Stufe mit der leeren Bezeichnung
      */
     public Stufe getStufe(){
         if(this instanceof Schueler){
@@ -113,8 +123,11 @@ public class Person implements Serializable {
     }
     
     /**
+     * Falls die Person ein Schüler ist, gibt die Methode dessen Tutor zurück. 
+     * Ansonsten wird ein Lehrer mit leerem Kürzel zurück gegeben.
      * 
-     * @return 
+     * @author joshua
+     * @return Der Tutor des Schuelers oder in Lehrer mit leerem Kuerzel
      */
     public Lehrer getTutor(){
         if(this instanceof Schueler){
@@ -126,8 +139,11 @@ public class Person implements Serializable {
     }
     
     /**
+     * Falls die Person ein Lehrer ist, wird das Kürzel zurückgegeben. Andernfalls 
+     * ein leerer String.
      * 
-     * @return 
+     * @author joshua
+     * @return Das Kürzel des Lehrers oder ein leerer String
      */
     public String getKuerzel(){
         if(this instanceof Lehrer){

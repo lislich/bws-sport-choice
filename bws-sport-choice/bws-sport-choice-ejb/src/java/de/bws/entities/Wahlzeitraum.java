@@ -11,26 +11,28 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- *
+ * Entity-Klasse für den Wahlzeitraum.
+ * 
  * @author Lisa
  */
 @Entity
 public class Wahlzeitraum implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    // Die ID des Datenstazes in der Datenbank
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+    // Der Beginn des Wahlzeitraums
     @Temporal(TemporalType.DATE)
     @Column(name = "BEGINN", nullable = false)
     private Date beginn;
-    
+    // Das Ende des Wahlzeitraums
     @Temporal(TemporalType.DATE)
     @Column(name = "ENDE", nullable = false)
     private Date ende;
     
-    //************************* Methoden **************************************
+    //************************* generierte Methoden ****************************
 
     @Override
     public int hashCode() {
@@ -72,8 +74,8 @@ public class Wahlzeitraum implements Serializable {
      * 
      * @param id the id to set
      */
-    public void setId(Long p_id) {
-        this.id = p_id;
+    public void setId(Long id) {
+        this.id = id;
     }
     
     /**

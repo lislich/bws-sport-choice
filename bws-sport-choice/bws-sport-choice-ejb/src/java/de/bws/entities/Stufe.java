@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
+ * Entity-Klasse für eine Stufe.
  *
  * @author joshua
  */
@@ -15,14 +16,16 @@ import javax.persistence.Id;
 public class Stufe implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    // Die ID des Datensatzes in der Datenbank
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    // Die Bezeichnung der Stufe
     @Column(name = "BEZEICHNUNG", nullable = false)
     private String bezeichnung;
 
-//*************************************** Methoden *****************************
+//****************************** generierte Methoden ***************************
     
     @Override
     public int hashCode() {
@@ -61,7 +64,7 @@ public class Stufe implements Serializable {
 
     /**
      * 
-     * @param p_id the id to set
+     * @param id the id to set
      */
     public void setId(Long id) {
         this.id = id;

@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
+ * Entity-Klasse für eine Wahl.
  *
  * @author joshua
  */
@@ -16,23 +17,24 @@ import javax.persistence.ManyToOne;
 public class Wahl implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    // Die ID des Datensatzes in der Datenbank
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+    // Die Erstwahl des Schülers
     @ManyToOne
     @JoinColumn(name = "ERSTWAHL", referencedColumnName = "KURS_ID", nullable = false)
     private Kurs erstwahl;
-    
+    // Die Zweiwahl des Schülers
     @ManyToOne
     @JoinColumn(name = "ZWEITWAHL", referencedColumnName = "KURS_ID", nullable = false)
     private Kurs zweitwahl;
-    
+    // Die Drittwahl des Schülers
     @ManyToOne
     @JoinColumn(name = "DRITTWAHL", referencedColumnName = "KURS_ID", nullable = false)
     private Kurs drittwahl;
 
-//************************* Methoden **************************************
+//**************************** generierte Methoden *****************************
 
     @Override
     public int hashCode() {
@@ -119,6 +121,13 @@ public class Wahl implements Serializable {
         this.drittwahl = drittwahl;
     }
     
+    /**
+     * Gibt alle Gewählten Kurse des Schülers in einem Array zurück. Dabei ist 
+     * das ertse Element die Ertwahl, das zweite Element die Zweitwahl und das 
+     * dritte Element die Drittwahl
+     * 
+     * @return Array mit den gewählten Kursen
+     */
     public Kurs[] getAlleKurse(){
         Kurs[] wahlen = new Kurs[3];
         wahlen[0] = this.erstwahl;

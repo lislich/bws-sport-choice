@@ -8,28 +8,31 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
- *
+ * Entity-Klasse für einen Thema.
+ * 
  * @author joshua
  */
 @Entity
 public class Thema implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    // Die ID des Datensatzes in der Datenbank
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "THEMA_ID")
     private Long id;
     
+    // Der Anteil am Kurs in Prozent
     @Column(name = "ANTEIL", nullable = false)
     private int anteil;
-    
+    // Die Bezeichnung des Themas
     @Column(name = "BEZEICHNUNG", nullable = false)
     private String bezeichnung;
-    
+    // Der Schwerpunkt des Kurses
     @Column(name = "SCHWERPUNKT", nullable = false)
     private String schwerpunkt;
 
-//****************************** Methoden **************************************
+//***************************** generierte Methoden ****************************
 
     @Override
     public int hashCode() {
@@ -56,7 +59,7 @@ public class Thema implements Serializable {
         return "de.bws.entities.Thema[ id=" + id + " ]";
     }
     
-//******************************* Getter und Setter ****************************
+//***************************** Getter und Setter ******************************
     
     /**
      * 

@@ -5,18 +5,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
- *
+ *  Entity-Klasse für einen Lehrer. 
+ * 
  * @author joshua
  */
 @Entity
 public class Lehrer extends Person implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+    // Das Kürzel des Lehrers
     @Column(name="KUERZEL", nullable = false)
     private String kuerzel;
 
-    //****************************** Methoden **************************************
+    //****************************** generierte Methoden **************************************
     @Override
     public int hashCode() {
         int hash = 0;
@@ -47,6 +48,7 @@ public class Lehrer extends Person implements Serializable {
     /**
      * @return the kuerzel
      */
+    @Override
     public String getKuerzel() {
         return kuerzel;
     }

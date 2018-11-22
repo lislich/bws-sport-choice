@@ -24,6 +24,8 @@ public class StufeNB implements Serializable{
     // Liste aller Stufen
     private List<Stufe> alleStufen;
 
+// ############################ Getter und Setter ##############################
+    
     /**
      * @author Lisa
      * @return the stufen

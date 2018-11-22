@@ -5,8 +5,6 @@
  */
 package de.bws.data;
 
-import de.bws.entities.Benutzer;
-
 /**
  * Weist einem Schlüssel einen Wert zu.
  *
