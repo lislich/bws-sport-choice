@@ -60,7 +60,5 @@ public class Eintrag <K,V>{
      */
     public void setValue(V p_value) {
         this.value = p_value;
-        if(this.key instanceof Benutzer)
-        System.out.println(((Benutzer)this.key).getBenutzername() + " set value: " + this.value);
     }
 }

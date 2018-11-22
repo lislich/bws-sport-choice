@@ -43,13 +43,7 @@ public class BenutzerAendernNB implements Serializable{
     private Benutzer benutzer;
     
     // Der ausgwählte neue Tutor
-    private Lehrer tutorNeu;
-    
-    // Die letzte Fehlermeldung
-    private String error;
-    
-    
-//    private String benutzername;
+    private long tutorNeu;
     
     private FacesContext context;
     
@@ -65,7 +59,7 @@ public class BenutzerAendernNB implements Serializable{
         this.benutzer = (Benutzer) sessionMap.get("gewaehlterBenutzer");
         if(this.benutzer == null){
             this.benutzer = new Benutzer();
-            this.error = "Beim Laden des Benutzers ist ein Fehler aufgetreten.";
+            sessionMap.put("lastError", "Beim Laden des Benutzers ist ein Fehler aufgetreten.");
         } else {
             this.benutzer = (Benutzer) sessionMap.get("gewaehlterBenutzer");
 //            this.setBenutzername(this.benutzer.getBenutzername());
@@ -73,13 +67,7 @@ public class BenutzerAendernNB implements Serializable{
         }
         if(this.benutzer.getPerson() == null){
             this.benutzer.setPerson(new Person());
-        }
-        
-        if(sessionMap.get("lastError") != null || ((String)sessionMap.get("lastError")).length() == 0){
-            this.error = (String) sessionMap.get("lastError");
-            sessionMap.put("lastError", "");
-        }
-        
+        }        
     }
 
     /**
@@ -97,10 +85,12 @@ public class BenutzerAendernNB implements Serializable{
                     case LEHRER: 
                         this.lehrerBean.edit((Lehrer)person); break;
                     case SCHUELER:
-                        Schueler tmp = this.schuelerBean.find(((Schueler)person).getId());
-                        System.out.println(((Schueler)person).getTutor().getId());
-                        tmp.setTutor(((Schueler)person).getTutor());
-                        this.schuelerBean.edit(tmp); break;
+                        Schueler tmp = (Schueler)this.benutzer.getPerson();
+                        System.out.println("tutorNeu: " + this.getTutorNeu());
+                        tmp.setTutor(this.lehrerBean.find(this.getTutorNeu()));
+                        System.out.println("Tutor von Benutzer: " + this.benutzer.getPerson().getTutor().getKuerzel());
+                        this.schuelerBean.edit(tmp); 
+                        break;
                     default:
                         this.personBean.edit(person);
                 }
@@ -161,44 +151,16 @@ public class BenutzerAendernNB implements Serializable{
     }
 
     /**
-     * @return the error
-     */
-    public String getError() {
-        return error;
-    }
-
-    /**
-     * @param error the error to set
-     */
-    public void setError(String error) {
-        this.error = error;
-    }
-
-//    /**
-//     * @return the benutzername
-//     */
-//    public String getBenutzername() {
-//        return benutzername;
-//    }
-
-//    /**
-//     * @param benutzername the benutzername to set
-//     */
-//    public void setBenutzername(String benutzername) {
-//        this.benutzername = benutzername;
-//    }  
-
-    /**
      * @return the tutorNeu
      */
-    public Lehrer getTutorNeu() {
+    public long getTutorNeu() {
         return tutorNeu;
     }
 
     /**
      * @param tutorNeu the tutorNeu to set
      */
-    public void setTutorNeu(Lehrer tutorNeu) {
+    public void setTutorNeu(long tutorNeu) {
         this.tutorNeu = tutorNeu;
     }
     

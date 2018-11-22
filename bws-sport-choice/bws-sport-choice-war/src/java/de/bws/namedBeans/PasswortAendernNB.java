@@ -20,30 +20,47 @@ import javax.inject.Named;
 import org.primefaces.context.RequestContext;
 
 /**
- *
+ * Die ManagedBean zum Ändern des Passworts des angemeldeten Benutzers.
+ * 
  * @author joshua
  */
 @Named("passwortAendernNB")
 @ViewScoped
 public class PasswortAendernNB implements Serializable{
-    
+    // Schnittstelle zur Datanbank für Entities vom Typ Benutzer
     @EJB
     private BenutzerFacadeLocal benutzerBean;
     
+    // Der angemeldete Benutzer
     private Benutzer benutzer;
+    
+    // Diese Attribute sind mit den Eingabefeldern auf der Oberfläche verbunden 
+    // und nehmen deren Werte entgegen
     private String passwortAlt;
     private String passwortNeu;
     private String passwortWiederholung;
     
-    public PasswortAendernNB(){
-        
-    }
+// ******************************* Methoden ************************************
     
+    /**
+     * Holt den aktuell angemeldeten Benutzer.
+     * Diese Methode wird mit der Annotation "@PostConstruct" nach dem erzeugen 
+     * der ManagedBean aufgerufen.
+     * 
+     * @author joshua
+     */
     @PostConstruct
     private void init(){
         this.setBenutzer((Benutzer) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer"));
     }
     
+    /**
+     * Ändert das Passwort des angemeldeten Benutzers, sofern er das alte Passwort 
+     * korrekt eingibt und das neue Passwort in beiden Eigabefeldern übereinstimmt.
+     * 
+     * @author joshua
+     * @return String zur Navigation
+     */
     public String passwortAendern(){
         Map<String,Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
         try{
@@ -79,6 +96,8 @@ public class PasswortAendernNB implements Serializable{
         context.execute("PF('dialogPasswortgeaendert').show(); $('#passwortAendern').attr('disabled', true);");
         return "geaendert";
     }
+
+//*************************** Getter und Setter ********************************   
 
     /**
      * @return the benutzer

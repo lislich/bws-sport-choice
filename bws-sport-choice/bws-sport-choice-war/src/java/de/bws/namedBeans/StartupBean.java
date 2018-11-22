@@ -13,7 +13,8 @@ import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
 /**
- *
+ * 
+ * 
  * @author joshua
  */
 @Singleton
@@ -26,17 +27,27 @@ public class StartupBean {
     private StufeFacadeLocal stufeBean;
     
     /**
-     * Methode, die für Testzwecke einen Adminbenutzer anlegt.
-     * Sei wird vor dem Release entfernt. Diese Methode wird einmalig beim Deploy
-     * aufgerufen.
+     * Diese Methode wird einmalig beim Deploy
+     * aufgerufen. 
+     * 
+     * @author joshua
      */
     @PostConstruct
+    private void startUp(){
+        this.createRootUser();
+        this.createStufen();
+    }
+    
+    /**
+     * Methode, die für Testzwecke einen Adminbenutzer anlegt.
+     * Sei wird vor dem Release entfernt. 
+     * 
+     * @author joshua
+     */
     private void createRootUser(){
-        
         Benutzer admin = this.benutzerBean.getByName("ChoiceRoot");
         if(admin == null){
             admin = new Benutzer();
-            this.createStufen();
             try {
                 admin.setBenutzername("ChoiceRoot");
                 admin.setNeuesPasswort("H444bicht");

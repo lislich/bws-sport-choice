@@ -36,7 +36,7 @@
                         <h:form prependId="false">
                             <fieldset>
                                <div>
-                                   <h:outputText id="error" value="#{benutzerAendernNB.error}" style="color: red" />
+                                   <h:outputText id="error" value="#{loginNB.error}" style="color: red" />
                                 </div>
                                 <legend>Benutzer anlegen</legend>
                                <div class="row collapse">
@@ -89,7 +89,7 @@
                                             <span class="prefix">Tutor</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">                        
-                                            <h:selectOneMenu id="tutorBearbeiten" class="input-group-field disableSelectTutor"  value="#{benutzerAendernNB.benutzer.person.tutor.id}">                                           
+                                            <h:selectOneMenu id="tutorBearbeiten" class="input-group-field disableSelectTutor"  value="#{benutzerAendernNB.tutorNeu}">                                           
                                                 <f:selectItems value="#{benutzerAendernNB.tutoren}" var="tutor"  itemValue="#{tutor.id}" itemLabel="#{tutor.kuerzel}"/>
                                             </h:selectOneMenu>
                                         </div>
