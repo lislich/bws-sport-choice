@@ -5,6 +5,7 @@ import de.bws.entities.Benutzer;
 import de.bws.entities.Stufe;
 import de.bws.sessionbeans.BenutzerFacadeLocal;
 import de.bws.sessionbeans.StufeFacadeLocal;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -61,17 +62,39 @@ public class StartupBean {
     }
     
     /**
-     * Methode, die die Stufen 12 und 13 anlegt.
+     * Methode, die die Stufen 12 und 13 anlegt, wenn diese noch nicht vorhanden sind.
      * 
      * @author Lisa
      */
     private void createStufen(){
-        Stufe zwoelf = new Stufe();
-        zwoelf.setBezeichnung("12");
-        Stufe dreizehn = new Stufe();
-        dreizehn.setBezeichnung("13");
+        Stufe zwoelf = null;
+        Stufe dreizehn = null;
         
-        this.stufeBean.create(zwoelf);
-        this.stufeBean.create(dreizehn);
+        // Sucht alle eingetragenen Stufen aus der Datenbank und ermittelt, ob Stufe "12" und "13" vorhanden sind
+        List<Stufe> stufen = this.stufeBean.findAll();
+        if(stufen != null && !(stufen.isEmpty())){
+            for(Stufe s : stufen){
+                if(s.getBezeichnung().equals("12")){
+                    zwoelf = s;
+                }
+                if(s.getBezeichnung().equals("13")){
+                    dreizehn = s;
+                }
+            }
+        }
+        
+        // Wenn keine Stufe "12" vorhanden ist wird diese angelegt
+        if(zwoelf == null){
+            zwoelf = new Stufe();
+            zwoelf.setBezeichnung("12");
+            this.stufeBean.create(zwoelf);
+        }
+        // Wenn keine Stufe "13" vorhanden ist wird diese angelegt
+        if(dreizehn == null){
+            dreizehn = new Stufe();
+            dreizehn.setBezeichnung("13");
+            this.stufeBean.create(dreizehn);
+        }       
+        
     }
 }
