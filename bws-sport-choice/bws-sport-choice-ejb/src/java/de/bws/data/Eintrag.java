@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.data;
 
 /**
@@ -21,7 +16,7 @@ public class Eintrag <K,V>{
     private V value;
     
     /**
-     * Erstellt eine neue Instanz von Eintrag. Der übergebenen Schlüssel und Wert
+     * Erstellt eine neue Instanz von Eintrag. Der übergebene Schlüssel und Wert
      * werden den Attributen "key" und "value" zugewiesen;
      * 
      * @param p_key

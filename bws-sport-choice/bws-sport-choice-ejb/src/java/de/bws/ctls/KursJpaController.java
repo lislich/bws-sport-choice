@@ -63,8 +63,8 @@ public class KursJpaController {
     }
     
     /**
-     * Sucht in der Datenbank nach einem Kurs mit der übergeben ID. Fall ein 
-     * Kurs mit diese ID existiert, wird diese zurück gegeben. Andernfalls  gibt
+     * Sucht in der Datenbank nach einem Kurs mit der übergeben ID. Falls ein 
+     * Kurs mit dieser ID existiert, wird dieser zurück gegeben. Andernfalls  gibt
      * die Methode null zurück
      * 
      * @author joshua
@@ -77,11 +77,11 @@ public class KursJpaController {
     
     /**
      * Führt das Übergebene JPQL (Java Persistence Query Language) Statement aus.
-     * Falls dabei Benutzer gefunden werden, werden diese zurück gegeben.
+     * Falls dabei Kurse gefunden werden, werden diese zurück gegeben.
      * 
      * @author joshua
      * @param p_query ein JPQL Statement
-     * @return Liste mit den gefundenen Benutzern
+     * @return Liste mit den gefundenen Kursen
      */
     public List<Kurs> get(String p_query){
         Query qu = this.em.createQuery(p_query, Kurs.class);

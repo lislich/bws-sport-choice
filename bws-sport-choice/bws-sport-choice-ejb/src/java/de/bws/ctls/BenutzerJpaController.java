@@ -55,8 +55,8 @@ public class BenutzerJpaController {
     }
     
     /**
-     * Sucht in der Datenbank nach einem Benutzer mit der übergeben ID. Fall ein 
-     * Benutzer mit diese ID existiert, wird diese zurück gegeben. Andernfalls 
+     * Sucht in der Datenbank nach einem Benutzer mit der übergeben ID. Falls ein 
+     * Benutzer mit dieser ID existiert, wird dieser zurück gegeben. Andernfalls 
      * gibt die Methode null zurück.
      * 
      * @author joshua

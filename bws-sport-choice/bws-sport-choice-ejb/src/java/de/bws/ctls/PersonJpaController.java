@@ -53,8 +53,8 @@ public class PersonJpaController {
     }
     
     /**
-     * Sucht in der Datenbank nach einer Person mit der übergeben ID. Fall ein 
-     * Person mit diese ID existiert, wird diese zurück gegeben. Andernfalls 
+     * Sucht in der Datenbank nach einer Person mit der übergeben ID. Falls eine 
+     * Person mit dieser ID existiert, wird diese zurück gegeben. Andernfalls 
      * gibt die Methode null zurück.
      * 
      * @author joshua
@@ -67,7 +67,7 @@ public class PersonJpaController {
     
     /**
      * Führt das Übergebene JPQL (Java Persistence Query Language) Statement aus.
-     * Falls dabei Personen gefunden werden, werden diese zurück gegeben
+     * Falls dabei Personen gefunden werden, werden diese zurück gegeben.
      * 
      * @author joshua
      * @param p_query ein JPQL Statement

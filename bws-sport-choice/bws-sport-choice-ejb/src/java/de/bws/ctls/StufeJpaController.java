@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.ctls;
 
 import de.bws.entities.Stufe;
@@ -57,8 +52,8 @@ public class StufeJpaController {
     }
     
     /**
-     * Sucht in der Datenbank nach einem Stufe mit der übergeben ID. Fall ein 
-     * Stufe mit diese ID existiert, wird diese zurück gegeben. Andernfalls 
+     * Sucht in der Datenbank nach einem Stufe mit der übergeben ID. Falls eine 
+     * Stufe mit dieser ID existiert, wird diese zurück gegeben. Andernfalls 
      * gibt die Methode null zurück.
      * 
      * @author joshua

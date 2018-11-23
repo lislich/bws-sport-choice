@@ -54,8 +54,8 @@ public class LehrerJpaController {
     }
     
     /**
-     * Sucht in der Datenbank nach einem Lehrer mit der übergeben ID. Fall ein 
-     * Lehrer mit diese ID existiert, wird diese zurück gegeben. Andernfalls 
+     * Sucht in der Datenbank nach einem Lehrer mit der übergeben ID. Falls ein 
+     * Lehrer mit dieser ID existiert, wird dieser zurück gegeben. Andernfalls 
      * gibt die Methode null zurück.
      * 
      * @author joshua

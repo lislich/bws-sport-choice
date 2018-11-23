@@ -60,6 +60,11 @@ public class StartupBean {
         }
     }
     
+    /**
+     * Methode, die die Stufen 12 und 13 anlegt.
+     * 
+     * @author Lisa
+     */
     private void createStufen(){
         Stufe zwoelf = new Stufe();
         zwoelf.setBezeichnung("12");

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.ctls;
 
 import de.bws.entities.Thema;
@@ -59,8 +54,8 @@ public class ThemaJpaController {
     }
     
     /**
-     * Sucht in der Datenbank nach einem Thema mit der übergeben ID. Fall ein 
-     * Thema mit diese ID existiert, wird diese zurück gegeben. Andernfalls 
+     * Sucht in der Datenbank nach einem Thema mit der übergeben ID. Falls ein 
+     * Thema mit dieser ID existiert, wird dieses zurück gegeben. Andernfalls 
      * gibt die Methode null zurück.
      * 
      * @author joshua
@@ -73,7 +68,7 @@ public class ThemaJpaController {
     
     /**
      * Führt das Übergebene JPQL (Java Persistence Query Language) Statement aus.
-     * Falls dabei Thema gefunden werden, werden diese zurück gegeben.
+     * Falls dabei Themen gefunden werden, werden diese zurück gegeben.
      * 
      * @athor joshua
      * @param p_query ein JPQL Statement

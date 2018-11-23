@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package de.bws.filter;
 
 import java.io.IOException;
@@ -19,7 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- *
+ * Der Login Filter bewirkt, dass die Weibseiten, die im Ordner "secured" liegen von Benutzern,
+ * dessen Session abgelaufen ist, nicht mehr aufgerufen werden können. Außerdem können die Seiten
+ * so auch nicht ohne Anmeldung aufgerufen werden.
+ * 
  * @author Lisa
  */
 @WebFilter("/secured/*")
@@ -30,7 +28,7 @@ public class LoginFilter implements Filter{
     
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        // TODO
+       
     }
 
     @Override
@@ -49,10 +47,10 @@ public class LoginFilter implements Filter{
         boolean ajaxRequest = "partial/ajax".equals(httpRequest.getHeader("Faces-Request"));
         
         if(loggedIn || loginRequest || resourceRequest){
-            if (!resourceRequest) { // Prevent browser from caching restricted resources. See also https://stackoverflow.com/q/4194207/157882
-                httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); // HTTP 1.1.
-                httpResponse.setHeader("Pragma", "no-cache"); // HTTP 1.0.
-                httpResponse.setDateHeader("Expires", 0); // Proxies.
+            if (!resourceRequest) { 
+                httpResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate");
+                httpResponse.setHeader("Pragma", "no-cache");
+                httpResponse.setDateHeader("Expires", 0);
             }
             chain.doFilter(httpRequest, httpResponse);
         } else if(ajaxRequest) {
@@ -67,7 +65,7 @@ public class LoginFilter implements Filter{
 
     @Override
     public void destroy() {
-        //TODO
+        
     }
     
 }
