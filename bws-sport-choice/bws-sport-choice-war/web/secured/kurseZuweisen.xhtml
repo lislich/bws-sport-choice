@@ -79,6 +79,12 @@
                                             <f:selectItems value="#{kursZuweisenNB.getStufeKurs(eintrag.key.id)}" var="kurs" itemValue="#{kurs}" itemLabel="#{kurs.titel} - #{kurs.kuerzel}" />
                                         </h:selectOneMenu>
                                     </h:column>
+                                    <h:column>
+                                        <f:facet name="header">Wahl des Schülers</f:facet>
+                                        <h:outputText value="Erstwahl: " style="font-weight: bold"/>#{eintrag.key.wahl.erstwahl.titel}<br/>
+                                        <h:outputText value="Zweitwahl: " style="font-weight: bold"/>#{eintrag.key.wahl.zweitwahl.titel}<br/>
+                                        <h:outputText value="Drittwahl: " style="font-weight: bold"/>#{eintrag.key.wahl.drittwahl.titel}
+                                    </h:column>
                                 </h:dataTable>
                                 <!--<table>
                                     <thead>
