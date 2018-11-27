@@ -76,7 +76,7 @@ public class WahlzeitraumNB implements Serializable{
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         
         // Prüfung ob eingegebenes Enddatum in der Vergangenheit liegt -> Fehler
-        if (dateFormat.format(ende.getTime()).compareTo(dateFormat.format(timestamp.getTime())) > 0) {
+        if (dateFormat.format(ende.getTime()).compareTo(dateFormat.format(timestamp.getTime())) < 0) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Das Enddatum darf nicht in der Vergangenheit liegen");
         } else {
             // Prüfung ob eingegebenes Beginndatum hinter dem Enddatum liegt -> Fehler

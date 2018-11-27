@@ -137,7 +137,7 @@ public class WahlNB implements Serializable{
      */
     public List<Kurs> getNichtThemengleich(List<Kurs> p_aktuelleKurse){
         List<Kurs> kurs = new ArrayList<>();
-        Schueler schueler = (Schueler) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer");
+        Schueler schueler = (Schueler) ((Benutzer)FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("benutzer")).getPerson();
         for(Kurs k:p_aktuelleKurse){
             if(k.getThemengleich() == null || !k.getThemengleich().getTeilnehmer().contains(schueler)){
                 kurs.add(k);
