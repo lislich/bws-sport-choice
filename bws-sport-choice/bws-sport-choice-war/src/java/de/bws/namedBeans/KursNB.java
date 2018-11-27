@@ -174,40 +174,50 @@ public class KursNB implements Serializable {
      * @return String zur Navigation auf nächste Seite
      */
     public String bearbeiten() {
-        // Wenn eine neue Stufe gesetzt wurde wird diese aus der Datenbank gesucht
-        if (stufeNeu != null) {
-            kurs.setStufe(this.findStufe(stufeNeu));
-        }
+        // Sobald ein Fehler auftaucht wird diese false
+        boolean fehler = false;
         
-        // Wenn ein neuer Themengleicher Kurs gesetzt wurde wird dieser aus der Datenbank gesucht
-        if (themengleichNeu != null) {
-            Kurs k = this.findKurs(themengleichNeu);
-            kurs.setThemengleich(k);
+        // Wenn keine Themen in der Liste stehen wird ein Fehler ausgegeben
+        if(this.getThemen().isEmpty()){
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("lastError", "Bitte legen Sie mindestens 1 Thema an.");
+            fehler = true;
+            return "Fehler";
         }
-        
-        // Wenn das Häkchen in Teilnehmerzahl-Unbegrenzt gesetzt ist, wird 999 gespeichert
-        if(teilnehmerUnbegrenzt){
-            kurs.setTeilnehmerzahl(999);
-        }
-       
-        // Iteration über die Themen, die dem Kurs zugewiesen/entfernt werden sollen
-        List<Thema> tmpList = new ArrayList<>();
-        for (Eintrag e : this.getThemen()) {
-            Thema t = (Thema)e.getKey();
-            if(t.getId() == null){
-                this.themaBean.create(t);
-            }         
-            tmpList.add(t);
-        }
-        for(Thema t : kurs.getThema()){
-            if(!(tmpList.contains(t))){
-                this.themaBean.remove(t);
+        if (!fehler) {
+            // Wenn eine neue Stufe gesetzt wurde wird diese aus der Datenbank gesucht
+            if (stufeNeu != null) {
+                kurs.setStufe(this.findStufe(stufeNeu));
             }
+
+            // Wenn ein neuer Themengleicher Kurs gesetzt wurde wird dieser aus der Datenbank gesucht
+            if (themengleichNeu != null) {
+                Kurs k = this.findKurs(themengleichNeu);
+                kurs.setThemengleich(k);
+            }
+
+            // Wenn das Häkchen in Teilnehmerzahl-Unbegrenzt gesetzt ist, wird 999 gespeichert
+            if (teilnehmerUnbegrenzt) {
+                kurs.setTeilnehmerzahl(999);
+            }
+
+            // Iteration über die Themen, die dem Kurs zugewiesen/entfernt werden sollen
+            List<Thema> tmpList = new ArrayList<>();
+            for (Eintrag e : this.getThemen()) {
+                Thema t = (Thema) e.getKey();
+                if (t.getId() == null) {
+                    this.themaBean.create(t);
+                }
+                tmpList.add(t);
+            }
+            for (Thema t : kurs.getThema()) {
+                if (!(tmpList.contains(t))) {
+                    this.themaBean.remove(t);
+                }
+            }
+            kurs.setThema(tmpList);
+
+            this.kursBean.edit(kurs);
         }
-        kurs.setThema(tmpList);
-
-        this.kursBean.edit(kurs);
-
         return "kursBearbeitet";
     }
 

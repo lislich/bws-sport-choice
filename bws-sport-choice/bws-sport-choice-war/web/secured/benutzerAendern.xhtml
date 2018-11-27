@@ -101,7 +101,12 @@
                                             <span class="prefix">Kürzel</span>
                                         </div>
                                         <div class="small-8 columns mobile-input">
-                                            <h:inputText id="kuerzel" class="input-group-field" value="#{benutzerAendernNB.benutzer.person.kuerzel}" />
+                                            <h:inputText id="kuerzel" class="input-group-field" value="#{benutzerAendernNB.benutzer.person.kuerzel}" required="true"
+                                                     requiredMessage="Bitte geben Sie ein Kürzel an."
+                                                     validatorMessage="Das Kürzel sollte muss mit einem Großbuchstaben anfangen und darf höchstens 3 Zeichen lang sein.">
+                                            <f:validateRegex pattern="^[A-Z]{1}[a-z]{1,2}$" />                                        
+                                        </h:inputText>
+                                        <h:message id="msgKuerzel" for="kuerzel" style="color:red"/>
                                         </div>
                                     </div>
                                 </h:panelGroup>
@@ -111,7 +116,12 @@
                                         <span class="prefix">Benutzername</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="benutzername" class="input-group-field" value="#{benutzerAendernNB.benutzer.benutzername}"/>
+                                        <h:inputText id="benutzername" class="input-group-field" value="#{benutzerAendernNB.benutzer.benutzername}" required="true"
+                                                     requiredMessage="Bitte geben Sie einen Benutzernamen an." 
+                                                     validatorMessage="Der Benutzername muss mit einem Buchstaben anfangen und darf aus Buchstaben und Zahlen bestehen. Die Länge muss mindestens 6 betragen. Bitte verwenden Sie keine diakritischen Zeichen.">
+                                            <f:validateRegex pattern="^[a-zA-ZÄÖÜäöü]{1,}(\w){5,}$" />
+                                        </h:inputText>
+                                        <h:message id="msgBenutzername" for="benutzername" style="color:red"/>
                                     </div>
                                 </div>
                                 <div>

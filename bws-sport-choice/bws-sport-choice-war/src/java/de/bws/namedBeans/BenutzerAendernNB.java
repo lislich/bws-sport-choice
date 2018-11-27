@@ -78,27 +78,34 @@ public class BenutzerAendernNB implements Serializable{
      * @return String für weitere Navigation
      */
     public String aenderungenSpeichern(){ 
-        if(this.benutzer != null){
-            Person person = this.benutzer.getPerson();
-            if(person != null){
-                switch(this.benutzer.getRolle()){
-                    case LEHRER: 
-                        this.lehrerBean.edit((Lehrer)person); break;
-                    case SCHUELER:
-                        Schueler tmp = (Schueler)person;
-                        Schueler schueler = this.schuelerBean.find(tmp.getId());
-                        schueler.setTutor(this.lehrerBean.find(schueler.getTutor().getId()));
-                        this.schuelerBean.edit(schueler); 
-                        
-                        break;
-                    default:
-                        this.personBean.edit(person);
+        if (this.benutzerBean.getByName(this.benutzer.getBenutzername()) == null) {
+            if (this.benutzer != null) {
+                Person person = this.benutzer.getPerson();
+                if (person != null) {
+                    switch (this.benutzer.getRolle()) {
+                        case LEHRER:
+                            this.lehrerBean.edit((Lehrer) person);
+                            break;
+                        case SCHUELER:
+                            Schueler tmp = (Schueler) person;
+                            Schueler schueler = this.schuelerBean.find(tmp.getId());
+                            schueler.setTutor(this.lehrerBean.find(schueler.getTutor().getId()));
+                            this.schuelerBean.edit(schueler);
+
+                            break;
+                        default:
+                            this.personBean.edit(person);
+                    }
                 }
+                this.benutzerBean.edit(benutzer);
+            } else {
+                context = FacesContext.getCurrentInstance();
+                context.getExternalContext().getSessionMap().put("lastError", "Beim Aktualisieren der Benutzerdaten ist ein Fehler aufgetreten.");
             }
-            this.benutzerBean.edit(benutzer);
         } else {
             context = FacesContext.getCurrentInstance();
-            context.getExternalContext().getSessionMap().put("lastError", "Beim Aktualisieren der Benutzerdaten ist ein Fehler aufgetreten.");
+            context.getExternalContext().getSessionMap().put("lastError", "Dieser Benutzername existiert bereits. Bitte wählen Sie einen anderen.");
+            return "Fehler";
         }
         return "benutzerVerwalten";
     }

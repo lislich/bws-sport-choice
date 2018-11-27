@@ -104,7 +104,7 @@
                                     </div>
                                     <div class="small-8 columns mobile-input">
                                         <h:inputTextarea id="hinweisBearbeiten" class="input-group-field" value="#{kursNB.kurs.hinweis}" required="true"
-                                                         requiredMessage="Geben Sie einen Hinweis an." validatorMessage="Die Beschreibung kann nicht mit einem Sonderzeichen anfangen oder leer bleiben.">
+                                                         requiredMessage="Geben Sie einen Hinweis an." validatorMessage="Der Hinweis kann nicht mit einem Sonderzeichen anfangen oder leer bleiben.">
                                             <f:validateRegex pattern="[a-zA-Z0-9]+\D*" />
                                         </h:inputTextarea>
                                         <h:message id="m5" for="hinweisBearbeiten" style="color:red"/><p></p>
@@ -122,8 +122,10 @@
                                         <span class="prefix">Teilnehmerzahl</span>
                                     </div>
                                     <div class="small-8 columns mobile-input">
-                                        <h:inputText id="teilnehmerzahl" class="input-group-field disable" value="#{kursNB.kurs.teilnehmerzahl}"/>                                        
+                                        <h:inputText id="teilnehmerzahl" class="input-group-field disable" value="#{kursNB.kurs.teilnehmerzahl}" required="true"
+                                                     requiredMessage="Bitte geben Sie die Teilnehmerzahl an." validatorMessage="Sie können nur Zahlen eingeben größer als 1."/>                                        
                                     </div>
+                                    <h:message id="m6" for="teilnehmerzahl" style="color:red"/>
                                 </div>
                                 <div class="row collapse">
                                     <div class="small-4 columns">
@@ -185,7 +187,7 @@
                                     </div>
                                     <p:commandButton id="addThema" class="small button hide-for-print" value="Hinzufügen" update="m1 m2 m3 m4 m5 error themenTabelle" action="#{kursNB.addThema()}" />
                                 </fieldset>
-                                <p:commandButton class="small button hide-for-print" id="kursBearbeiten" value="Speichern" action="#{kursNB.bearbeiten()}" update="m1 m2 m3 m4 m5 error"/>
+                                <h:commandButton class="small button hide-for-print" id="kursBearbeiten" value="Speichern" action="#{kursNB.bearbeiten()}"/>
                             </fieldset>
                         </h:form>
                     </div>
