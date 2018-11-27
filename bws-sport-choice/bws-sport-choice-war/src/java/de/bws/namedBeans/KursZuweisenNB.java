@@ -156,6 +156,9 @@ public class KursZuweisenNB implements Serializable{
         if(eins.getId().compareTo(zwei.getId()) == 0){
             sessionMap.put("lastError", "Bitten geben Sie zwei verschiedene Schüler an");
             rueckgabe = "wechselFehlgeschlagen";
+        }else if(!(eins.getStufe().getId().equals(zwei.getStufe().getId()))){
+            sessionMap.put("lastError", "Die Schüler befinden sich nicht in derselben Stufe. Ein Wechsel ist nicht möglich.");
+            rueckgabe = "wechselFehlgeschlagen";
         }else{
             if(kursSchuelerEins != null && kursSchuelerZwei != null){
                 kursSchuelerEins.removeTeilnehmer(eins);
